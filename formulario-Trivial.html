@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <!--  <link rel="stylesheet" href="./output.css"> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!--no se instala, sino que se accede desde la página de talwind css y en play cdn copias el script primero 
+    Tailwind CLI es el más recomendable para subirlo -->
+    <title>Document</title>
+</head>
+
+<body class="bg-blue-400">
+    
+    <form action="" class="bg-white w-90 mx-auto mt-16 rounded-lg p-13">        
+        <!-- width: para el alto del contenedor
+         mx-auto para que centre el contenedor
+         mt- para bajar contenedor blanco
+         
+         INPUT:
+         w-full para que ocupe todo el contenedor a lo largo
+         px-3 para dar separación entre rectángulo e inicio palabra
+         py-2 para dar altura al rectángulo
+         mb-4 para dar separación entre los imputs 
+         rounded-md para redondear esquinas
+         disabled para colorear el interior
+         focus:ring para el perímetro
+         peer para que salga texto adicional si no cumple-->
+
+         <h1 class="mx-auto mt-20 w-22 font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 via-purple-700 to-pink-500">Usssssuario:
+
+         <input class="mx-auto border border-gray-950 w-40 px-1 py-1 mb-6 rounded-2xl disabled:bg-red-200" type="text" placeholder>
+        
+         <h1 class="mx-auto w-22 font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-600 via-purple-700 to-pink-500">Contraseña:
+
+        <input class="mx-auto border border-gray-950 w-40 px-1 py-1 mb-4 rounded-2xl " type="password" placeholder="">
+        
+        <input class=" mx-10 mt-2 w-20 py-2 text-white rounded-2xl cursor-pointer hover:bg-blue-400  bg-gradient-to-r from-pink-500 via-purple-700 to-pink-500 to-90%" type="submit" value="Entrar">
+
+   
+    </form>
+
+</body>
+
+</html> 
