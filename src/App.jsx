@@ -1,6 +1,5 @@
 
 //Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
-import Tarjeta_Pregunta from './components/Tarjeta_Pregunta'
 export default function App() {
   return (
     <div className="min-h-screen bg-slate-100">
@@ -11,7 +10,6 @@ export default function App() {
       </header>
       <main className="container mx-auto px-4">
         {/* Your game content will go here */}
-        <Tarjeta_Pregunta />
       </main>
     </div>
   )
