@@ -1,2 +1,2 @@
-02-Trivial-Customizable
+# 02-Trivial-Customizable
 Desarrollo de un juego tipo Trivial customizable
