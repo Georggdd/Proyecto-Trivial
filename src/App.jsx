@@ -1,17 +1,22 @@
-import { useState } from 'react'
+import React from 'react';
+import Header from './components/Header';
 
-//Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
-export default function App() {
+function App() {
   return (
-    <div className="min-h-screen bg-slate-100">
-      <header className="py-6">
-        <h1 className="text-3xl font-bold text-center text-slate-800">
-          Trivial Customizable
-        </h1>
-      </header>
-      <main className="container mx-auto px-4">
-        {/* Your game content will go here */}
+    <div className="">
+      <Header />
+      <main className="container mx-auto p-4 mt-32">
+        <div className="flex justify-center">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+          ¡Bienvenido al Trivial!
+        </h2>
+        <p className="text-gray-600">
+          Comienza a jugar y pon a prueba tus conocimientos.
+        </p>
+        </div>
       </main>
     </div>
-  )
+  );
 }
+
+export default App;
