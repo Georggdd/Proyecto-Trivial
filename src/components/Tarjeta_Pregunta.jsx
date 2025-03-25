@@ -5,17 +5,30 @@ function Tarjeta_Pregunta() {
 
     return (
     // Tablero Madera
-    <div className='bg-tablero flex items-center justify-center min-h-screen' >
+    <div className='h-screen w-screen bg-tablero flex items-center justify-center min-h-screen' >
         {/* Fondo Verde */}
-        <div className='bg-[#5B9642] bg-opacity-50 flex items-center justify-center 
-        h-full w-full' >
+        <div className='bg-[#5B9642] bg-opacity-50 flex items-center justify-center h-screen w-screen' >
             {/* Tarjeta */}
-            <div className='bg-[#5B9642] flex items-center justify-center max-h-[82%] 
-            max-w-[75%] rounded-lg border-black border-[4px]'>
-                <h1 className="text-3xl font-bold underline">
-                    Hola caracola
-                </h1>
-            </div>
+            <section id='tarjeta' className='bg-[#5B9642] flex flex-col h-[80vh] w-[74vw] rounded-lg border-black border-[4px]'>
+                <div id='titulo' className='w-full h-[106px] mt-7 bg-[#213E14] flex items-center'>
+                    <h1 className='text-white text-7xl pl-20 font-secular'>GEOGRAFIA</h1>
+                </div>
+                <div id='contenido-tarjeta' className='flex-1 w-full flex justify-between'>
+                    <div id='pregunta' className='w-1/2 ml-16 flex flex-col items-center justify-center'>
+                        <div id='marco-pregunta' className='p-4 bg-white bg-opacity-50 rounded-2xl items-center justify-center'>
+                            <h1 className="font-bold text-[57px] text-center text-black leading-tight px-4 font-lemon">
+                            ¿Qué país fue el primero en enviar un satélite al espacio?
+                            </h1>
+                        </div>
+                        </div>    
+                    <div id='respuestas' className='w-1/2 flex flex-col items-center justify-center'>
+                        <h1 className="text-3xl font-bold"> Estados Unidos </h1>
+                        <h1 className="text-3xl font-bold"> Unión Soviética </h1>
+                        <h1 className="text-3xl font-bold"> Alemania </h1>
+                        <h1 className="text-3xl font-bold"> China </h1>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
     )
