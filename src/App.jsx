@@ -1,15 +1,11 @@
-import React from 'react';
-import Header from './components/Header';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes'; // automáticamente importa routes/index.jsx
 
 function App() {
   return (
-    <div className="">
-      <Header />
-      <main className="container mx-auto p-4 mt-32">
-        <div className="flex justify-center">
-        </div>
-      </main>
-    </div>
+    <Router>
+      <AppRoutes />
+    </Router>
   );
 }
 
