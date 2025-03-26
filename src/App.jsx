@@ -1,3 +1,4 @@
+import Tarjeta_Pregunta from "./components/Tarjeta_Pregunta";
 
 //Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
 export default function App() {
@@ -11,7 +12,7 @@ export default function App() {
       <main className="container mx-auto px-4">
   
       </main>*/}
-        <Tarjeta_Pregunta></Tarjeta_Pregunta> 
+      <Tarjeta_Pregunta></Tarjeta_Pregunta>
     </div> 
     
   
