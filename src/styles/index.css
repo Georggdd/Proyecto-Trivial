@@ -59,6 +59,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+@font-face {
+  font-family: 'Milford Condensed';
+  src: url('/src/assets/fonts/MilfordCondensed.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
