@@ -10,22 +10,23 @@ function Tarjeta_Pregunta() {
         <div className='bg-verdeClaro bg-opacity-70 flex items-center justify-center h-screen w-screen' >
             {/* Tarjeta */}
             <section id='tarjeta' className='bg-verdeClaro flex flex-col h-[80vh] w-[74vw] rounded-lg border-black border-[4px]'>
-                <div id='titulo' className='w-full h-[106px] mt-7 bg-verdeOscuro flex items-center'>
-                    <h1 className='text-white text-7xl pl-20 font-secular'>GEOGRAFIA</h1>
+                <div id='titulo' className='w-full h-[106px] mt-7 bg-verdeOscuro flex items-center gap-96'>
+                    <h1 className='text-white text-7xl pl-20 font-secular text-shadow'>GEOGRAFIA</h1>
+                    <img src="/public/assets/img/tarjeta-queso.png" className='w-[160px] pt-10' alt="" />
                 </div>
-                <div id='contenido-tarjeta' className='flex-1 w-full flex justify-between'>
-                    <div id='pregunta' className='w-1/2 ml-16 flex flex-col items-center justify-center'>
-                        <div id='marco-pregunta' className='p-4 bg-white bg-opacity-50 rounded-2xl items-center justify-center'>
-                            <h1 className="font-bold text-[57px] text-center text-black leading-tight px-4 font-lemon">
+                <div id='contenido-tarjeta' className='flex-1 w-full flex justify-between font-lemon'>
+                    <div id='pregunta' className='w-1/2 ml-14 flex flex-col items-center justify-center'>
+                        <div id='marco-pregunta' className='p-7 h-[90%] w-[90%] bg-white bg-opacity-50 rounded-2xl items-center justify-center text-center'>
+                            <h1 className="font-bold text-[50px] text-black text-opacity-85 leading-tight px-4">
                             ¿Qué país fue el primero en enviar un satélite al espacio?
                             </h1>
                         </div>
-                        </div>    
-                    <div id='respuestas' className='w-1/2 flex flex-col items-center justify-center font-lemon'>
-                        <h1 className="bg-white py-2 pt-1 text-black text-3xl font-bold"> Estados Unidos </h1>
-                        <h1 className="bg-white py-2 pt-1 text-black text-3xl font-bold"> Unión Soviética </h1>
-                        <h1 className="bg-white py-2 pt-1 text-black text-3xl font-bold"> Alemania </h1>
-                        <h1 className="bg-white py-2 pt-1 text-black text-3xl font-bold"> China </h1>
+                        </div>
+                    <div id='respuestas' className='w-1/2 flex flex-col items-center justify-center gap-4'>
+                        <button className="w-[75%] h-20 rounded-xl flex items-center gap-4 text-nowrap bg-white pl-5 text-black text-3xl font-bold hover:bg-verdeOscuro hover:text-white"> <img className='w-[39.46px] h-[43.45px]' src="/public/assets/img/icono-queso.png" alt="" /> Estados Unidos </button>
+                        <button className="w-[75%] h-20 rounded-xl flex items-center gap-4 text-nowrap bg-white pl-5 text-black text-3xl font-bold hover:bg-verdeOscuro hover:text-white"> <img className='w-[39.46px] h-[43.45px]' src="/public/assets/img/icono-queso.png" alt="" /> Unión Soviética </button>
+                        <button className="w-[75%] h-20 rounded-xl flex items-center gap-4 text-nowrap bg-white pl-5 text-black text-3xl font-bold hover:bg-verdeOscuro hover:text-white"> <img className='w-[39.46px] h-[43.45px]' src="/public/assets/img/icono-queso.png" alt="" /> Alemania </button>
+                        <button className="w-[75%] h-20 rounded-xl flex items-center gap-4 text-nowrap bg-white pl-5 text-black text-3xl font-bold hover:bg-verdeOscuro hover:text-white"> <img className='w-[39.46px] h-[43.45px]' src="/public/assets/img/icono-queso.png" alt="" /> China </button>
                     </div>
                 </div>
             </section>
