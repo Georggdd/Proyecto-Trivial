@@ -1,5 +1,6 @@
+import React from "react";
+const Ranking = () => {
 
-function Ranking() {
   return (
     <>
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
