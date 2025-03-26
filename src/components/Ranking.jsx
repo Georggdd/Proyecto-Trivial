@@ -25,7 +25,7 @@ const Ranking = () => {
 
         {/* //  <-----------IMAGEN---------------> */}
         <h1 className=" bg-transparent ml-16"> {/* bg: sin fondo, ml para dejar margen a la izquierda */}
-          <img src='./public/assets/img/ninio.png' className="w-52 -mt-3 -ml-8" alt="Imagen del equipo" />
+          <img src='/assets/img/ninio.png' className="w-52 -mt-3 -ml-8" alt="Imagen del equipo" />
           {/* w: establece el ancho de la imagen
           mt: margen superior negativo, para que sobresalga del espacio
           -ml margen izquierdo negativo,  */}
@@ -49,7 +49,7 @@ const Ranking = () => {
           <h3 className="text-center font-bold text-7xl">200
           </h3>
         </h1>
-
+        
       </div>
       {/* //  <-----------fin CONTENEDOR individual----------------> */}
 
