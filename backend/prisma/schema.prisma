@@ -17,14 +17,14 @@ model partidatorespuestapartida {
 }
 
 model casilla {
-  id       String       @id
+  id       String       @id @default(uuid())
   tipo     casilla_tipo
   efecto   String
   posicion Int
 }
 
 model grupo {
-  id        String  @id
+  id        String  @id @default(uuid())
   nombre    String
   foto      String?
   activo    Boolean @default(true)
@@ -34,7 +34,7 @@ model grupo {
 }
 
 model integrante {
-  id      String @id
+  id      String @id @default(uuid())
   nombre  String
   grupoId String
 
@@ -42,7 +42,7 @@ model integrante {
 }
 
 model partida {
-  id            String         @id
+  id            String         @id @default(uuid())
   codigo        String         @unique(map: "Partida_codigo_key")
   estado        partida_estado
   fechaCreacion DateTime       @default(now())
@@ -52,7 +52,7 @@ model partida {
 }
 
 model pregunta {
-  id         String              @id
+  id         String              @id @default(uuid())
   asignatura pregunta_asignatura
   dificultad pregunta_dificultad
   texto      String
@@ -68,7 +68,7 @@ model puntuaciongrupo {
 }
 
 model respuesta {
-  id         String  @id
+  id         String  @id @default(uuid())
   preguntaId String
   texto      String
   esCorrecta Boolean
@@ -77,7 +77,7 @@ model respuesta {
 }
 
 model respuestapartida {
-  id              String  @id
+  id              String  @id  @default(uuid())
   grupoId         String
   preguntaId      String
   respuestaId     String
@@ -91,7 +91,7 @@ model respuestapartida {
 }
 
 model tirada {
-  id          String   @id
+  id          String   @id @default(uuid())
   grupoId     String
   partidaId   String
   valorDado   Int

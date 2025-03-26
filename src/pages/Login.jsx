@@ -3,7 +3,7 @@ import fondo from '../assets/fondo.svg';
 import pizarra from '../assets/pizarra.svg';
 import logo from '../assets/logo.svg';
 import profesor from '../assets/profesor.svg';
-
+import Header from '../components/Header';
 
 
 const Login = () => {
@@ -43,6 +43,7 @@ const Login = () => {
             className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center"
             style={{ backgroundImage: `url(${fondo})` }}
         >
+            <Header />
             {/* Pizarra con fondo */}
             <div
                 className="relative bg-no-repeat bg-cover bg-center p-10 rounded shadow-lg w-full max-w-2xl min-h-[500px] flex items-center justify-center"
