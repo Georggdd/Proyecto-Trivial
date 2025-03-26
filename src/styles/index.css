@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components{
+  .alineacion{
+    @apply flex items-center justify-center;
+  }
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

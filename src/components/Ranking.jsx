@@ -5,7 +5,7 @@ const Ranking = () => {
     <>
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
-      <div className="flex items-center justify-center w-screen gap-10  bg-morado border-white border-4 rounded-full shadow-lg relative">
+      <div className="alineacion w-screen gap-10  bg-morado border-white border-4 rounded-full shadow-lg relative">
         {/*
           flex: el contenedor se divide en columnas
           items-center alineación vertical
@@ -32,7 +32,7 @@ const Ranking = () => {
         </h1>
 
         {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
-        <div className="w-2/4 h-32 bg-fuchsia-300  rounded-full border-white border-4 flex items-center justify-center">
+        <div className="w-2/4 h-32 bg-fuchsia-300  rounded-full border-white border-4 alineacion">
           { /*w-2/4 lo que ocupa en el espacio.
         h: la altura del contenedor interno.
         bg: el color de fondo
@@ -40,12 +40,12 @@ const Ranking = () => {
         border-4 el grosor
         flex, items-center justify-center: elementos dentro de flex centrados vertical y horizontalmente.
         */ }
-          <h3 className="text-center font-primera text-5xl"> Nombre del equipo</h3>
+          <h3 className="text-center font-primera text-5xl"> Nombre del equipo </h3>
         </div>
 
 
         {/* //  <-----------PUNTUACIÓN----------------> */}
-        <h1 className="w-1/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 flex items-center justify-center mr-16">
+        <h1 className="w-1/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 alineacion mr-16">
           <h3 className="text-center text-7xl">200
           </h3>
         </h1>
