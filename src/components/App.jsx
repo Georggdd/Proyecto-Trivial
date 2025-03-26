@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import './App.css'
+/*<import Categorias from "./components/feature_Categorias";
 
-//Estos son ejemplos de componentes de React cuando desarrolleis otros eliminad estos
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+    <>
+      <Categorias texto="Categorías" />
+      <Categorias texto="Customizar" />
+      <Categorias texto="Equipos" />
+    </>
+  );
 }
 
-export default App
+export default App;*/
