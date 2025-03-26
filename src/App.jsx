@@ -11,6 +11,8 @@ export default function App() {
           Trivial Customizable
         </h1>
         <Ranking></Ranking>
+       
+        
   
 
       </header>
