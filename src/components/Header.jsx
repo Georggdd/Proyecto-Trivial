@@ -19,7 +19,7 @@ const HamburgerIcon = () => (
 
 const Header = () => {
   return (
-    <header className="h-32 fixed top-0 left-0 right-0 z-50 w-full shadow-lg bg-[url('public/texturapizarra.jpg')]">
+    <header className="h-32 fixed top-0 left-0 right-0 z-50 w-full bg-[url('/img/pizarra.jpg')] shadow-lg bg-cover bg-center">
       <div className="container mx-auto h-full px-4 py-3 flex items-center justify-center">
         {/* Título */}
         <div className="text-center relative">
