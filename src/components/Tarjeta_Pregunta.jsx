@@ -12,7 +12,7 @@ function Tarjeta_Pregunta() {
             <section id='tarjeta' className='bg-verdeClaro flex flex-col h-[80vh] w-[74vw] rounded-lg border-black border-[4px]'>
                 <div id='titulo' className='w-full h-[106px] mt-7 bg-verdeOscuro flex items-center gap-80'>
                     <h1 className='text-white text-7xl pl-20 font-secular [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>GEOGRAFIA</h1>
-                    <img src="/public/assets/img/tarjeta-queso.png" className='w-[160px] pt-10' alt="" />
+                    <img src="/public/assets/img/queso-color.png" className='w-[160px] pt-10' alt="" />
                 </div>
                 <div id='contenido-tarjeta' className='flex-1 w-full flex justify-between font-lemon'>
                     {/*Pregunta*/}
