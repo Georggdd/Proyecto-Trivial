@@ -40,7 +40,7 @@ const Ranking = () => {
         border-4 el grosor
         flex, items-center justify-center: elementos dentro de flex centrados vertical y horizontalmente.
         */ }
-          <h3 className="text-center font-primera text-5xl"> Nombre del equipo </h3>
+          <h3 className="text-center font-hueca text-5xl"> Nombre del equipo </h3>
         </div>
 
 
