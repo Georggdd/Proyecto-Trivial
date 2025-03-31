@@ -1,8 +1,9 @@
-// src/components/Tablero.jsx
-const casillasRaw = import.meta.glob('./casillas/Casilla*.jsx', {
-  eager: true,
-  import: 'default',
-});
+import Casilla0 from '/src/components/casillas/Casilla0';
+import Casilla1 from '/src/components/casillas/Casilla1';
+import Casilla2 from '/src/components/casillas/Casilla2';
+import Casilla3 from '/src/components/casillas/Casilla3';
+import Casilla4 from '/src/components/casillas/Casilla4';
+import Casilla5 from '/src/components/casillas/Casilla5';
 
 
 function Tablero() {
@@ -21,11 +22,20 @@ function Tablero() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[10%] z-20">
         <Casilla0/>
         </div>
-        <div className="absolute top-[40.5%] left-[52.5%] w-[4.3%] z-10">
-        <Casilla1/>
+        <div className="absolute top-[41%] left-[52.5%] w-[4%] z-10">
+        <Casilla1 />
         </div>
-        <div className="absolute left-[63.8%] top-[46.5%] w-[4.3%] z-10">
-        <Casilla2/>
+        <div className="absolute top-[38.4%] left-[54.8%] w-[4%] z-10">
+        <Casilla2 />
+        </div>
+        <div className="absolute top-[36%] left-[57%] w-[4%] z-10">
+        <Casilla3 />
+        </div>
+        <div className="absolute top-[33.5%] left-[59.3%] w-[4%] z-10">
+        <Casilla4 />
+        </div>
+        <div className="absolute top-[31.2%] left-[61.6%] w-[4%] z-10">
+        <Casilla5 />
         </div>
 
 
@@ -33,7 +43,9 @@ function Tablero() {
       </div>
 
     );
+
   }
   
   export default Tablero;
-  
+
+
