@@ -18,7 +18,7 @@ function Tarjeta_Pregunta() {
                     {/*Pregunta*/}
                     <div id='pregunta' className='w-1/2 ml-14 flex flex-col items-center justify-center'>
                         <div id='marco-pregunta' className='p-7 h-[90%] w-[90%] bg-white bg-opacity-50 rounded-2xl items-center justify-center text-center'>
-                            <h1 className="font-bold text-[46px] text-black text-opacity-90 leading-tight px-4">
+                            <h1 className="font-bold text-[50px] text-black text-opacity-90 leading-tight px-4">
                             ¿Qué país fue el primero en enviar un satélite al espacio?
                             </h1>
                         </div>
