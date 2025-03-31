@@ -5,7 +5,8 @@ export default function App() {
   return (
     <div className="w-screen h-screen">
       <div className="bg-tablero w-full h-full">
-        <Tablero></Tablero>
+
+      <Tablero></Tablero>
       </div>
     </div>
   )
