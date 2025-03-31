@@ -1,6 +1,6 @@
 export default function Casilla15() {
   return (
-    <svg className="w-full h-full" viewBox="0 0 100 100" width="72" height="48" viewBox="0 0 72 48" fill="none" >
+    <svg className="w-full h-full" width="72" height="48" viewBox="0 0 72 48" fill="none" >
 <path d="M10.0001 0.5H62.0001C67.2468 0.5 71.5001 4.75329 71.5001 10V36.3162C71.5001 41.2226 67.7677 45.3208 62.8838 45.7457C53.3204 46.5777 41.7363 47.5 38.0378 47.5C34.201 47.5 20.3211 46.5087 9.22811 45.6552C4.29608 45.2757 0.500061 41.1565 0.500061 36.2069V10C0.500061 4.75329 4.75336 0.5 10.0001 0.5Z" fill="#E9CA1A" stroke="black"/>
 </svg>
   );
