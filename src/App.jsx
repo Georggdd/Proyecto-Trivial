@@ -1,4 +1,4 @@
-import Tablero from "./components/Tablero";
+import Tablero from './components/Tablero';
 
 //Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
 export default function App() {
