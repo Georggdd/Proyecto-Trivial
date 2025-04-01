@@ -1,27 +1,26 @@
 import React, { useState } from "react"; //UseState permite cambiar entre estados (Ratón no encima-Ratón encima).
 
-export default function Categorias({ texto }) {
-  const [Flotar, setFlotar] = useState(false); //Definimos un estado "Flotar" que cambia cuando el ratón entra o sale del botón.
-  // setFlotar es la función que permite actualizar el estado de Flotar.
-  // useState devuelve un array con 2 valores (flotar y setFlotar). Se inicializa en false, es decir, el cursor no está encima del botón.
-
+export default function Categorias({ texto, onClick, className }) {
+  const [Flotar, setFlotar] = useState(false);
+  //onClick controla la función que se ejecutará cuando se haga click en el botón.
+  //Se agrega className para permitir personalizar el estilo del componente desde el lugar donde se usa sin alterar el código base del componente.
   return (
-    //Las comillas invertidas permiten usar template literals (permite escribir en varias líneas
-    <button // y cambiar clases dinámicamente en className con ${}). El operador ternario (? :) evalua la condición de Flotar:
+    <button //${} (template literals) que permite hacer cambios dinámicos
       className={`${
-        //condición ? expresión_si_verdadero : expresión_si_falso.
         Flotar
-          ? "bg-morado text-white transform translate-y-[-2px] cursor-pointer" //True
-          : "bg-beige text-black shadow-xl" //False
-      } drop-shadow-2xl font-secular border-4 border-black py-3 px-6 rounded-lg font-bold text-xl uppercase transition-all duration-300 ease-in-out`} //Ambos
-      onMouseEnter={() => setFlotar(true)}
+          ? "bg-morado text-white transform translate-y-[-2px] cursor-pointer hover:scale-95 hover: transition-all duration-150" // True
+          : "bg-beige text-black" // False
+      } drop-shadow-2xl font-lemon border-4 py-3 px-6 rounded-lg uppercase transition-all duration-300 ease-in-out ${className}`} // Añadimos className aquí para
+      onMouseEnter={() => setFlotar(true)} //permitir añadir clases extra cuando el componente se usa en otro archivo y no cambiar los estilos base.
       onMouseLeave={() => setFlotar(false)}
+      onClick={onClick} //Ejecuta la función onClick que se le pase como prop. Lo permite que el botón realice acciones personalizadas cuando se usa en diferentes partes del código.
     >
-      <span //La etiqueta de span para aplicar el estilo solamente al texto porque si lo pongo arriba se aplica al botón.
+      <span //Lo pongo aquí para darlse efecto de sombreado al texto porque si lo pongo arriba se aplica solo al botón.
         className={`${
+          //Se usa span y no div porque span es un elemento en línea y solo ocupa ese espacio, si fuese div ocuparía toda la línea entera.
           Flotar
-            ? "text-white text-shadow text-border transition-all duration-300 ease-in-out" // Sombra y borde suaves
-            : ""
+            ? "text-white text-shadow text-border transition-all duration-300 ease-in-out"
+            : "text-shadow-light"
         }`}
       >
         {texto}

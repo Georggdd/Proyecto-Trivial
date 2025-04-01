@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-shadow {
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.8);
+.text-shadow-light {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-medium {
+  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.6);
+}
+
+.text-shadow-heavy {
+  text-shadow: 6px 6px 8px rgba(0, 0, 0, 0.8);
 }
 
 .text-border {
