@@ -85,104 +85,42 @@ function Tablero() {
 
 
 
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[10%] z-20">
-          <Casilla0 />
-        </div>
-        <div className="absolute top-[41%] left-[52.5%] w-[4%] z-10">
-          <Casilla1 />
-        </div>
-        <div className="absolute top-[38.4%] left-[54.8%] w-[4%] z-10">
-          <Casilla2 />
-        </div>
-        <div className="absolute top-[36%] left-[57%] w-[4%] z-10">
-          <Casilla3 />
-        </div>
-        <div className="absolute top-[33.5%] left-[59.3%] w-[4%] z-10">
-          <Casilla4 />
-        </div>
-        <div className="absolute top-[31.2%] left-[61.6%] w-[4%] z-10">
-          <Casilla5 />
-        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[10%] z-20"> <Casilla0 /> </div>
+        <div className="absolute top-[41%] left-[52.5%] w-[4%] z-10"> <Casilla1 /> </div>
+        <div className="absolute top-[38.4%] left-[54.8%] w-[4%] z-10"> <Casilla2 /> </div>
+        <div className="absolute top-[36%] left-[57%] w-[4%] z-10"> <Casilla3 /> </div>
+        <div className="absolute top-[33.5%] left-[59.3%] w-[4%] z-10"> <Casilla4 /> </div>
+        <div className="absolute top-[31.2%] left-[61.6%] w-[4%] z-10"> <Casilla5 /> </div>
         {/* */}
-        <div className="absolute bottom-[41%] left-[52.5%] w-[4%] z-10">
-          <Casilla6 />
-        </div>
-        <div className="absolute bottom-[38.4%] left-[54.8%] w-[4%] z-10">
-          <Casilla7 />
-        </div>
-        <div className="absolute bottom-[36%] left-[57%] w-[4%] z-10">
-          <Casilla8 />
-        </div>
-        <div className="absolute bottom-[33.5%] left-[59.3%] w-[4%] z-10">
-          <Casilla9 />
-        </div>
-        <div className="absolute bottom-[31.2%] left-[61.6%] w-[4%] z-10">
-          <Casilla10 />
-        </div>
+        <div className="absolute bottom-[41%] left-[52.5%] w-[4%] z-10"> <Casilla6 /> </div>
+        <div className="absolute bottom-[38.4%] left-[54.8%] w-[4%] z-10"> <Casilla7 /> </div>
+        <div className="absolute bottom-[36%] left-[57%] w-[4%] z-10"> <Casilla8 /> </div>
+        <div className="absolute bottom-[33.5%] left-[59.3%] w-[4%] z-10"> <Casilla9 /> </div>
+        <div className="absolute bottom-[31.2%] left-[61.6%] w-[4%] z-10"> <Casilla10 /> </div>
         {/* */}
-        <div className="absolute bottom-[39%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla11 />
-        </div>
-        <div className="absolute bottom-[34.5%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla12 />
-        </div>
-        <div className="absolute bottom-[30%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla13 />
-        </div>
-        <div className="absolute bottom-[25.5%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla14 />
-        </div>
-        <div className="absolute bottom-[20.5%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla15 />
-        </div>
+        <div className="absolute bottom-[39%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla11 /> </div>
+        <div className="absolute bottom-[34.5%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla12 /> </div>
+        <div className="absolute bottom-[30%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla13 /> </div>
+        <div className="absolute bottom-[25.5%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla14 /> </div>
+        <div className="absolute bottom-[20.5%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla15 /> </div>
         {/* */}
-        <div className="absolute bottom-[41.3%] right-[52.5%] w-[4%] z-10">
-          <Casilla16 />
-        </div>
-        <div className="absolute bottom-[39%] right-[54.7%] w-[4%] z-10">
-          <Casilla17 />
-        </div>
-        <div className="absolute bottom-[36.5%] right-[57%] w-[4%] z-10">
-          <Casilla18 />
-        </div>
-        <div className="absolute bottom-[34%] right-[59.3%] w-[4%] z-10">
-          <Casilla19 />
-        </div>
-        <div className="absolute bottom-[31.7%] right-[61.6%] w-[4%] z-10">
-          <Casilla20 />
-        </div>
+        <div className="absolute bottom-[41.3%] right-[52.5%] w-[4%] z-10"> <Casilla16 /> </div>
+        <div className="absolute bottom-[39%] right-[54.7%] w-[4%] z-10"> <Casilla17 /> </div>
+        <div className="absolute bottom-[36.5%] right-[57%] w-[4%] z-10"> <Casilla18 /> </div>
+        <div className="absolute bottom-[34%] right-[59.3%] w-[4%] z-10"> <Casilla19 /> </div>
+        <div className="absolute bottom-[31.7%] right-[61.6%] w-[4%] z-10"> <Casilla20 /> </div>
         {/* */}
-        <div className="absolute top-[41%] right-[52.5%] w-[4%] z-10">
-          <Casilla21 />
-        </div>
-        <div className="absolute top-[38.4%] right-[54.8%] w-[4%] z-10">
-          <Casilla22 />
-        </div>
-        <div className="absolute top-[36%] right-[57%] w-[4%] z-10">
-          <Casilla23 />
-        </div>
-        <div className="absolute top-[33.5%] right-[59.3%] w-[4%] z-10">
-          <Casilla24 />
-        </div>
-        <div className="absolute top-[31%] right-[61.6%] w-[4%] z-10">
-          <Casilla25 />
-        </div>
+        <div className="absolute top-[41%] right-[52.5%] w-[4%] z-10"> <Casilla21 /> </div>
+        <div className="absolute top-[38.4%] right-[54.8%] w-[4%] z-10"> <Casilla22 /> </div>
+        <div className="absolute top-[36%] right-[57%] w-[4%] z-10"> <Casilla23 /> </div>
+        <div className="absolute top-[33.5%] right-[59.3%] w-[4%] z-10"> <Casilla24 /> </div>
+        <div className="absolute top-[31%] right-[61.6%] w-[4%] z-10"> <Casilla25 /> </div>
         {/* */}
-        <div className="absolute top-[38.5%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla26 />
-        </div>
-        <div className="absolute top-[33.9%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla27 />
-        </div>
-        <div className="absolute top-[29.5%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla28 />
-        </div>
-        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla29 />
-        </div>
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[4%] z-10">
-          <Casilla30 />
-        </div>
+        <div className="absolute top-[38.5%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla26 /> </div>
+        <div className="absolute top-[33.9%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla27 /> </div>
+        <div className="absolute top-[29.5%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla28 /> </div>
+        <div className="absolute top-[25%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla29 /> </div>
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla30 /> </div>
         {/* */}
         <div className="absolute top-[14%] left-1/2 -translate-x-1/2 w-[4%] z-10"> <Casilla31 /> </div>
         <div className="absolute top-[14.4%] left-[52.4%] h-[6.5%] z-10"> <Casilla32 /> </div>
