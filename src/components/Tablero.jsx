@@ -24,17 +24,24 @@ import Casilla29 from '/src/components/casillas/Casilla29';
 import Casilla3 from '/src/components/casillas/Casilla3';
 import Casilla30 from '/src/components/casillas/Casilla30';
 import Casilla31 from '/src/components/casillas/Casilla31';
+import Casilla32 from '/src/components/casillas/Casilla32';
+import Casilla33 from '/src/components/casillas/Casilla33';
+import Casilla34 from '/src/components/casillas/Casilla34';
+import Casilla35 from '/src/components/casillas/Casilla35';
+import Casilla36 from '/src/components/casillas/Casilla36';
+import Casilla37 from '/src/components/casillas/Casilla37';
 import Casilla4 from '/src/components/casillas/Casilla4';
 import Casilla5 from '/src/components/casillas/Casilla5';
 import Casilla6 from '/src/components/casillas/Casilla6';
 import Casilla7 from '/src/components/casillas/Casilla7';
+import Casilla72 from '/src/components/casillas/Casilla72';
 import Casilla8 from '/src/components/casillas/Casilla8';
 import Casilla9 from '/src/components/casillas/Casilla9';
 
 
 function Tablero() {
     return (
-      <><div className="relative w-full h-screen">
+      <div className="relative w-full h-screen">
         {/* Fondo del tablero */}
         <img
           src="/assets/img/fondo-tablero2.png"
@@ -143,13 +150,25 @@ function Tablero() {
           <Casilla30 />
         </div>
         {/* */}
-      </div><div className="absolute top-[14%] left-1/2 -translate-x-1/2 w-[4%] z-10">
+        <div className="absolute top-[14%] left-1/2 -translate-x-1/2 w-[4%] z-10">
           <Casilla31 />
+        </div>
+        <div className="absolute top-[14.4%] left-[52.4%] h-[6.5%] z-10"> <Casilla32 /> </div>
+        <div className="absolute top-[15.4%] left-[54.2%] h-[6.5%] z-10"> <Casilla33 /> </div>
+        <div className="absolute top-[17%] left-[56.3%] h-[6.5%] z-10"> <Casilla34 /> </div>
+        <div className="absolute top-[19.2%] left-[58.3%] h-[6.5%] z-10"> <Casilla35 /> </div>
+        <div className="absolute top-[21.5%] left-[59.9%] h-[6.5%] z-10"> <Casilla36 /> </div>
+        <div className="absolute top-[24.5%] left-[61.5%] h-[6.5%] z-10"> <Casilla37 /></div>
+
+
+        <div className="absolute top-[14.5%] right-[52.5%] h-[6.5%] z-10">
+          <Casilla72 />
+        </div>
 
 
 
 
-        </div></>
+        </div>
 
     );
 
