@@ -30,7 +30,15 @@ import Casilla34 from '/src/components/casillas/Casilla34';
 import Casilla35 from '/src/components/casillas/Casilla35';
 import Casilla36 from '/src/components/casillas/Casilla36';
 import Casilla37 from '/src/components/casillas/Casilla37';
+import Casilla38 from '/src/components/casillas/Casilla38';
+import Casilla39 from '/src/components/casillas/Casilla39';
 import Casilla4 from '/src/components/casillas/Casilla4';
+import Casilla40 from '/src/components/casillas/Casilla40';
+import Casilla41 from '/src/components/casillas/Casilla41';
+import Casilla42 from '/src/components/casillas/Casilla42';
+import Casilla43 from '/src/components/casillas/Casilla43';
+import Casilla44 from '/src/components/casillas/Casilla44';
+import Casilla45 from '/src/components/casillas/Casilla45';
 import Casilla46 from '/src/components/casillas/Casilla46';
 import Casilla47 from '/src/components/casillas/Casilla47';
 import Casilla48 from '/src/components/casillas/Casilla48';
@@ -45,7 +53,14 @@ import Casilla55 from '/src/components/casillas/Casilla55';
 import Casilla56 from '/src/components/casillas/Casilla56';
 import Casilla57 from '/src/components/casillas/Casilla57';
 import Casilla58 from '/src/components/casillas/Casilla58';
+import Casilla59 from '/src/components/casillas/Casilla59';
 import Casilla6 from '/src/components/casillas/Casilla6';
+import Casilla60 from '/src/components/casillas/Casilla60';
+import Casilla61 from '/src/components/casillas/Casilla61';
+import Casilla62 from '/src/components/casillas/Casilla62';
+import Casilla63 from '/src/components/casillas/Casilla63';
+import Casilla64 from '/src/components/casillas/Casilla64';
+import Casilla65 from '/src/components/casillas/Casilla65';
 import Casilla66 from '/src/components/casillas/Casilla66';
 import Casilla67 from '/src/components/casillas/Casilla67';
 import Casilla68 from '/src/components/casillas/Casilla68';
@@ -178,8 +193,18 @@ function Tablero() {
         <div className="absolute top-[24.5%] left-[61.5%] h-[6.5%] z-10"> <Casilla37 /></div>
 
         {/* */}
-        <div className="absolute bottom-[24.5%] left-[61.5%] h-[6.5%] z-10"> <Casilla46 /> </div>
-        <div className="absolute bottom-[21.5%] left-[59.9%] h-[6.5%] z-10"> <Casilla47 /> </div>
+        <div className="absolute top-[29.5%] left-[63.7%] w-[4%] z-10"> <Casilla38 /> </div>
+        <div className="absolute bottom-[58%] left-[65.4%] w-[3.5%] h-[6%]  z-10"> <Casilla39 /> </div>
+        <div className="absolute bottom-[54%] left-[66%] w-[3.5%] h-[6%] z-10"> <Casilla40 /> </div>
+        <div className="absolute bottom-[50%] left-[66.3%] w-[3.5%] h-[6%] z-10"> <Casilla41 /> </div>
+        <div className="absolute bottom-[45.5%] left-[66.3%] w-[3.5%] h-[6%] z-10"> <Casilla42 /> </div>
+        <div className="absolute bottom-[41%] left-[66%] w-[3.5%] h-[6%] z-10"> <Casilla43 /> </div>
+        <div className="absolute bottom-[36.5%] left-[65.3%] w-[3.8%] h-[6%] z-10"> <Casilla44 /></div> 
+
+        {/* */}
+        <div className="absolute bottom-[29.5%] left-[63.5%] w-[4%] z-10"> <Casilla45 /> </div>
+        <div className="absolute bottom-[25%] left-[61.5%] h-[5.9%] z-10"> <Casilla46 /> </div>
+        <div className="absolute bottom-[21.8%] left-[59.9%] h-[6.5%] z-10"> <Casilla47 /> </div>
         <div className="absolute bottom-[19.2%] left-[58.3%] h-[6.5%] z-10"> <Casilla48 /> </div>
         <div className="absolute bottom-[17%] left-[56.3%] h-[6.5%] z-10"> <Casilla49 /> </div>
         <div className="absolute bottom-[15.4%] left-[54.2%] h-[6.5%] z-10"> <Casilla50 /> </div>
@@ -193,6 +218,15 @@ function Tablero() {
         <div className="absolute bottom-[19.5%] right-[58.3%] h-[6.5%] z-10"> <Casilla56 /> </div>
         <div className="absolute bottom-[22%] right-[59.9%] h-[6.5%] z-10"> <Casilla57 /> </div>
         <div className="absolute bottom-[25%] right-[61.5%] h-[6.5%] z-10"> <Casilla58 /></div>
+        {/* */}
+        <div className="absolute bottom-[30%] right-[63.7%] w-[4%] z-10"> <Casilla59 /> </div>
+        <div className="absolute bottom-[36.5%] right-[65.3%] w-[3.5%] h-[6%]  z-10"> <Casilla60 /> </div>
+        <div className="absolute bottom-[41%] right-[66%] w-[3.5%] h-[6%] z-10"> <Casilla61 /> </div>
+        <div className="absolute bottom-[45.5%] right-[66.3%] w-[3.5%] h-[6%] z-10"> <Casilla62 /> </div>
+        <div className="absolute bottom-[50%] right-[66.3%] w-[3.5%] h-[6%] z-10"> <Casilla63 /> </div>
+        <div className="absolute bottom-[54%] right-[66%] w-[3.5%] h-[6%] z-10"> <Casilla64 /> </div>
+        <div className="absolute bottom-[58%] right-[65.4%] w-[3.8%] h-[6%] z-10"> <Casilla65 /></div> 
+
         {/* */}
 
         <div className="absolute top-[29%] right-[63.5%] w-[4%] z-10"> <Casilla66 /> </div>
