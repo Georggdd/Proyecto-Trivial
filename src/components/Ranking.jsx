@@ -32,7 +32,7 @@ const Ranking = () => {
         </h1>
 
         {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
-        <div className="w-2/4 h-32 bg-fuchsia-300  rounded-full border-white border-4 alineacion">
+        <div className="w-2/4 h-32 bg-fuchsia-300  rounded-full border-white border-4 font-personalizada alineacion">
           { /*w-2/4 lo que ocupa en el espacio.
         h: la altura del contenedor interno.
         bg: el color de fondo
@@ -40,7 +40,7 @@ const Ranking = () => {
         border-4 el grosor
         flex, items-center justify-center: elementos dentro de flex centrados vertical y horizontalmente.
         */ }
-          <h3 className="text-center font-hueca text-5xl"> Nombre del equipo </h3>
+          <h3 className="text-center font-personalizada text-5xl"> Nombre del equipo </h3>
         </div>
 
 
