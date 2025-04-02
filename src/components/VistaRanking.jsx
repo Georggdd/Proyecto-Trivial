@@ -3,56 +3,58 @@ import Ranking from "./Ranking";
 const VistaRanking = () => { //creación de componente//
 
     return (
-        <>
-
+        <div className="w-full h-full">
+            {/* -----------------FONDO PIZARRA------------------- */}
+            <div className="bg-pizarra absolute w-screen h-screen top-0 left-0 z-10 object-cover"></div>
+            {/* <img src="../assets/img/pizarra.png"
+                alt="pizarra de fondo"
+                className="absolute w-screen h-screen top-0 left-0 z-0 object-cover"></img> */}
 
             {/* -----------------FONDO DE BANDERINES------------------- */}
 
-
-
             <img src="../assets/img/banderines.png"
                 alt="banderines de fondo"
-                className="absolute w-screen h-screen top-0 left-0 z-0 object-cover object-top"></img>
+                className="absolute w-screen h-screen top-0 left-0 z-20 object-cover"></img>
 
             {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
+            <div className=" flex mt-60 p-6 z-30 " >
 
-            <div className=" absolute z-10 flex justify-center items-center w-full h-full" >
-                {/* -----------------TABLERO RANKING 2/3 ------------------- */}
-                <div className=" bg-tablero bg-center bg-cover h-[500px] w-2/3 bg-no-repeat mt-44 z-20">
+                {/* -----------------TABLERO  2/3 ------------------- */}
+                <div className="w-2/3 z-30 relative">
+                    {/* relative para posicionar el texto dentro */}
+                    <img src="../assets/img/tablero_base.png" className="relative w-full h-auto m-10" alt="Tablero mesa"></img>
+                    {/* <div className="flex flex-col justify-center items-center"> */}
+                    {/* inset-0 */}
+                    <div className="flex flex-col w-2/3">
+                        <h3 className=" text-3xl font-personalizada font-bold text-morado w-full space-y-4 content-center">Ranking actualizado</h3>
+                        <div className="w-2/3 ">
+                            <Ranking></Ranking>
+                            <Ranking></Ranking>
 
-                {/* NO CONSIGO PONER LA ALTURA EN PROPORCIÓN A LA IMAGEN SIN SABER EL TAMAÑO DE LA PIZARRA DONDE SE VISUALIZARÁ EL JUEGO */}
-                   
-                    <div className=" flex flex-col justify-center items-center w-full h-full">
-                        {/* inset-0 */}
-                        <h3 className="text-3xl font-personalizada font-bold text-morado z-20 mb-6 ">Ranking actualizado</h3>
-
-                        <array className="flex flex-col justify-start items-center w-full space-y-4">
-                            <div><Ranking></Ranking></div>
-
-                        </array>
+                        </div>
 
                     </div>
                 </div>
 
-
                 {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
-                <div className="flex justify-center items-center flex-col w-1/3 mt-44 m-3 gap-4">
-                    <h7 className="font-personalizada text-6xl text-center">Gracias por participar</h7>
+                <div className="flex justify-center items-center flex-col w-1/3 relative z-40 gap-6">
+                    <h7 className="text-6xl text-center text-morado font-personalizada font-bold">Gracias por participar</h7>
                     <img src="../assets/img/carpeta_descarga.png"
                         alt="Carpeta Descarga Profesores"
-                        className=" w-1/2 h-auto " />
+                        className="" />
 
                 </div>
-
             </div>
 
 
 
 
-        </>
+
+
+        </div>
     );
 
-}
+};
 
 
 export default VistaRanking;

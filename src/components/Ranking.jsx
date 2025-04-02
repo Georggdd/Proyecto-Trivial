@@ -32,7 +32,7 @@ const Ranking = () => {
         </h1>
 
         {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
-        <div className="w-2/4 h-32 bg-fuchsia-300  rounded-full border-white border-4 font-personalizada alineacion">
+        <div className="w-2/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 font-personalizada alineacion">
           { /*w-2/4 lo que ocupa en el espacio.
         h: la altura del contenedor interno.
         bg: el color de fondo
