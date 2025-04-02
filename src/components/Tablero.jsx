@@ -37,11 +37,12 @@ function Tablero() {
         <div className="absolute bottom-[31.2%] left-[61.6%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={10} /></div>
         {/* */}
         
-        <div className="absolute bottom-[39%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={11} /></div>
-        <div className="absolute bottom-[34.5%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={12} /></div>
-        <div className="absolute bottom-[30%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={13} /></div>
-        <div className="absolute bottom-[25.5%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={14} /></div>
-        <div className="absolute bottom-[20.5%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={15} /></div>
+        <div className="absolute bottom-[33%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={11} /></div>
+        <div className="absolute bottom-[27.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={12} /></div>
+        <div className="absolute bottom-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={13} /></div>
+        <div className="absolute bottom-[16.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={14} /></div>
+        <div className="absolute bottom-[10.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={15} /></div>
+
         {/* */}
         
         <div className="absolute bottom-[41.3%] right-[52.5%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={16} /></div>
@@ -58,14 +59,15 @@ function Tablero() {
         <div className="absolute top-[31%] right-[61.6%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={25} /></div>
         {/* */}
         
-        <div className="absolute top-[38.5%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={26} /></div>
-        <div className="absolute top-[33.9%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={27} /></div>
-        <div className="absolute top-[29.5%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={28} /></div>
-        <div className="absolute top-[25%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={29} /></div>
-        <div className="absolute top-[20%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={30} /></div>
+        <div className="absolute top-[39%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={26} /></div>
+        <div className="absolute top-[33.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={27} /></div>
+        <div className="absolute top-[28%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={28} /></div>
+        <div className="absolute top-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={29} /></div>
+        <div className="absolute top-[16%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={30} /></div>
+
         {/* */}
-        <div className="absolute top-[14%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={31} /></div>
-        <div className="absolute top-[14.4%] left-[52.4%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={32} /></div>
+        <div className="absolute top-[9.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={31} /></div>
+        <div className="absolute top-[14.4%] left-[52.4%] w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={32} /></div>
         <div className="absolute top-[15.4%] left-[54.2%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={33} /></div>
         <div className="absolute top-[17%] left-[56.3%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={34} /></div>
         <div className="absolute top-[19.2%] left-[58.3%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={35} /></div>
@@ -92,7 +94,7 @@ function Tablero() {
         
         {/* */}
 
-        <div className="absolute bottom-[14.5%] left-1/2 w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={52} /></div>
+        <div className="absolute bottom-[3%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={52} /></div>
         <div className="absolute bottom-[14.7%] right-[52.4%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={53} /></div>
         <div className="absolute bottom-[15.8%] right-[54.2%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={54} /></div>
         <div className="absolute bottom-[17.5%] right-[56.3%] w-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={55} /></div>
