@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Ranking from './components/Ranking'
 import Hamburger from './components/PruebaBotonHamburguesa'
 import VistaRanking from './components/VistaRanking'
+import Header from './components/Header'
 
 
 
@@ -12,12 +13,10 @@ export default function App() {
   return (
     <div className="">
       <header className="">
-        
-       <VistaRanking/>
- 
-            
-        
-  
+        <Header />
+        <VistaRanking className=""/>
+
+
 
       </header>
 

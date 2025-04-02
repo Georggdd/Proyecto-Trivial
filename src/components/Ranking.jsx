@@ -2,10 +2,10 @@ import React from "react";
 const Ranking = () => {
 
   return (
-    <>
+    <div className="">
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
-      <div className="alineacion w-screen gap-10  bg-morado border-white border-4 rounded-full shadow-lg relative">
+      <div className="alineacion w-full gap-10  bg-morado border-white border-4 rounded-full shadow-lg relative">
         {/*
           flex: el contenedor se divide en columnas
           items-center alineación vertical
@@ -24,12 +24,12 @@ const Ranking = () => {
 
 
         {/* //  <-----------IMAGEN---------------> */}
-        <h1 className=" bg-transparent ml-16"> {/* bg: sin fondo, ml para dejar margen a la izquierda */}
+        <div className=" bg-transparent ml-16"> {/* bg: sin fondo, ml para dejar margen a la izquierda */}
           <img src='/assets/img/ninio.png' className="w-52 -mt-3 -ml-8" alt="Imagen del equipo" />
           {/* w: establece el ancho de la imagen
           mt: margen superior negativo, para que sobresalga del espacio
           -ml margen izquierdo negativo,  */}
-        </h1>
+        </div>
 
         {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
         <div className="w-2/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 font-personalizada alineacion">
@@ -56,7 +56,7 @@ const Ranking = () => {
 
 
 
-    </>
+    </div>
   );
 
 }
