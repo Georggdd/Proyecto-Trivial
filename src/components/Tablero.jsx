@@ -1,16 +1,45 @@
 import * as Casillas from '/src/components/casillas';
-
+import { useState } from 'react';
+import ZonaInferior from './ZonaInferior';
+import Ficha from './Ficha';
+import Mesa from '../assets/Mesa.svg';
+import Header from './Header';
 const Casilla = ({ numero }) => {
-    const CasillaComponent = Casillas[`Casilla${numero}`];
-    return CasillaComponent ? <CasillaComponent /> : null;
-  };
+  const CasillaComponent = Casillas[`Casilla${numero}`];
+  return CasillaComponent ? <CasillaComponent /> : null;
+};
 
 
 function Tablero() {
-    return (
-      <div className="relative w-full h-screen">
-        {/* Contenedor Tablero */}
-        <div className='absolute aspect-square w-[40%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+
+
+  const [fichaIndex, setFichaIndex] = useState(0);
+  const [casillasActivas, setCasillasActivas] = useState([]);
+  const [fichaPos, setFichaPos] = useState({ top: 50, left: 50 }); // Posición en %
+
+  const tirarDado = (valor) => {
+    const casillas = [];
+
+    for (let i = 1; i <= valor; i++) {
+      casillas.push(fichaIndex + i);
+    }
+
+    setCasillasActivas(casillas);
+  };
+  return (
+
+    
+
+    <div className="relative w-full h-screen overflow-hidden"
+    style={{
+      backgroundImage: `url(${Mesa})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}
+    >
+      <Header />
+      {/* Contenedor Tablero */}
+      <div className='absolute aspect-square w-[40%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
         {/* Fondo del tablero */}
         <img
           src="/assets/img/fondo-tablero2.png"
@@ -26,7 +55,7 @@ function Tablero() {
         {/* Resto de casillas */}
         <div className="absolute top-[44.5%] right-[32%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={1} /> </div>
         <div className="absolute top-[41.5%] right-[27%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={2} /> </div>
-        <div className="absolute top-[38.5%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={3}/> </div>
+        <div className="absolute top-[38.5%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={3} /> </div>
         <div className="absolute top-[35.5%] right-[17%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={4} /> </div>
         <div className="absolute top-[32.5%] right-[12%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={5} /> </div>
 
@@ -34,11 +63,11 @@ function Tablero() {
 
         <div className="absolute bottom-[34.5%] right-[32%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={6} /> </div>
         <div className="absolute bottom-[31.5%] right-[27.1%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={7} /> </div>
-        <div className="absolute bottom-[28.7%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={8}/> </div>
+        <div className="absolute bottom-[28.7%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={8} /> </div>
         <div className="absolute bottom-[25.5%] right-[17%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={9} /> </div>
         <div className="absolute bottom-[23%] right-[11.8%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={10} /> </div>
         {/* */}
-        
+
         <div className="absolute bottom-[33%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={11} /></div>
         <div className="absolute bottom-[27.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={12} /></div>
         <div className="absolute bottom-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={13} /></div>
@@ -46,23 +75,23 @@ function Tablero() {
         <div className="absolute bottom-[10.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={15} /></div>
 
         {/* */}
-        
+
         <div className="absolute bottom-[35.5%] left-[41%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={16} /> </div>
         <div className="absolute bottom-[32.5%] left-[36%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={17} /> </div>
-        <div className="absolute bottom-[29.7%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={18}/> </div>
+        <div className="absolute bottom-[29.7%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={18} /> </div>
         <div className="absolute bottom-[26.5%] left-[26%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={19} /> </div>
         <div className="absolute bottom-[24%] left-[21%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={20} /> </div>
 
         {/* */}
-        
+
         <div className="absolute top-[44.5%] left-[41%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={21} /> </div>
         <div className="absolute top-[41.5%] left-[36%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={22} /> </div>
-        <div className="absolute top-[38.5%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={23}/> </div>
+        <div className="absolute top-[38.5%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={23} /> </div>
         <div className="absolute top-[35.5%] left-[26%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={24} /> </div>
         <div className="absolute top-[32.5%] left-[21%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={25} /> </div>
 
         {/* */}
-        
+
         <div className="absolute top-[39%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={26} /></div>
         <div className="absolute top-[33.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={27} /></div>
         <div className="absolute top-[27.7%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={28} /></div>
@@ -70,7 +99,7 @@ function Tablero() {
         <div className="absolute top-[16%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={30} /></div>
 
         {/* */}
-      
+
         <div className="absolute top-[9.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={31} /></div>
         <div className="absolute top-[10.5%] right-[36.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={32} /></div>
         <div className="absolute top-[11.8%] right-[30.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={33} /></div>
@@ -88,7 +117,7 @@ function Tablero() {
         <div className="absolute bottom-[41.2%] right-[2.5%] h-[6%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={42} /></div>
         <div className="absolute bottom-[35.5%] right-[2.9%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={43} /></div>
         <div className="absolute bottom-[29.6%] right-[4.2%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={44} /></div>
-        
+
         {/* */}
 
         <div className="absolute bottom-[19.5%] right-[5.8%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={45} /></div>
@@ -98,9 +127,9 @@ function Tablero() {
         <div className="absolute bottom-[6%] right-[25%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={49} /></div>
         <div className="absolute bottom-[4.3%] right-[30.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={50} /></div>
         <div className="absolute bottom-[3%] right-[36%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={51} /></div>
-        
+
         {/* */}
-       
+
         <div className="absolute bottom-[3%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={52} /></div>
         <div className="absolute bottom-[3%] left-[41.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={53} /></div>
         <div className="absolute bottom-[4.4%] left-[37%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={54} /></div>
@@ -109,7 +138,7 @@ function Tablero() {
         <div className="absolute bottom-[12.4%] left-[23.3%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={57} /></div>
         <div className="absolute bottom-[16.7%] left-[19.8%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={58} /></div>
 
-       {/* */}
+        {/* */}
 
         <div className="absolute bottom-[20.5%] left-[15.5%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={59} /></div>
         <div className="absolute bottom-[30.7%] left-[12.3%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={60} /></div>
@@ -119,7 +148,7 @@ function Tablero() {
         <div className="absolute bottom-[51.9%] left-[11%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={64} /></div>
         <div className="absolute bottom-[56.5%] left-[12.5%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={65} /></div>
 
-       {/* */}
+        {/* */}
 
         <div className="absolute top-[29.3%] left-[15.5%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={66} /></div>
         <div className="absolute top-[23%] left-[20%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={67} /></div>
@@ -128,14 +157,20 @@ function Tablero() {
         <div className="absolute top-[14%] left-[32.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={70} /></div>
         <div className="absolute top-[12%] left-[37.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={71} /></div>
         <div className="absolute top-[10.7%] left-[41.7%] h-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={72} /></div>
-      
-        </div>
       </div>
 
-    );
+      <Ficha position={fichaPos} />
 
-  }
-  
-  export default Tablero;
+
+      <div className="absolute bottom-0 left-0 w-full z-50">
+        <ZonaInferior onDadoResultado={tirarDado} />
+      </div>
+    </div>
+
+  );
+
+}
+
+export default Tablero;
 
 

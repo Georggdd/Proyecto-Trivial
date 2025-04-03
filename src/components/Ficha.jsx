@@ -1,14 +1,16 @@
 import React from 'react';
 
 const Ficha = ({ position }) => {
+  const style = {
+    top: `${position.top}%`,
+    left: `${position.left}%`,
+    transform: 'translate(-50%, -50%)',
+  };
+
   return (
     <div
-      className="absolute w-10 h-10 bg-yellow-400 rounded-full border-2 border-white shadow-lg transition-all duration-700 ease-in-out z-30"
-      style={{
-        top: `${position.top}%`,
-        left: `${position.left}%`,
-        transform: 'translate(-50%, -50%)',
-      }}
+      className="absolute z-30 w-[1.5vw] h-[1.5vw] rounded-full bg-red-500"
+      style={style}
     />
   );
 };

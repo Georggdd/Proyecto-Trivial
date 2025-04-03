@@ -14,7 +14,7 @@ const BotonSimple = ({ icono, onClick, extraClass = '' }) => (
   </button>
 );
 
-const ZonaInferior = () => {
+const ZonaInferior = ({onDadoResultado}) => {
   return (
     <div className="relative w-full h-44">
       {/* Curva morada */}
