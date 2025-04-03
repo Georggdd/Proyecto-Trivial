@@ -69,6 +69,7 @@ export { default as Casilla7 } from './Casilla7';
 export { default as Casilla70 } from './Casilla70';
 export { default as Casilla71 } from './Casilla71';
 export { default as Casilla72 } from './Casilla72';
+export { default as Casilla73 } from './Casilla73';
 export { default as Casilla8 } from './Casilla8';
 export { default as Casilla9 } from './Casilla9';
 
