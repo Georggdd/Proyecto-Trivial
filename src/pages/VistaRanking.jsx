@@ -1,5 +1,5 @@
 import React from "react";
-import Ranking from "./Ranking";
+import Ranking from "../components/Ranking";
 const VistaRanking = () => { //creación de componente//
 
     return (

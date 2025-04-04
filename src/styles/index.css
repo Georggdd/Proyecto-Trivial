@@ -11,13 +11,10 @@
 
 @layer base {
   @font-face {
-    font-family: primera;
+    font-family: personalizada;
     src: url(/assets/fonts/MILF____.TTF);
   }
-  @font-face {
-    font-family: hueca;
-    src: url(/assets/fonts/MILFHO__.TTF);
-  }
+  
 }
 
 

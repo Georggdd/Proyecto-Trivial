@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Ranking from './components/Ranking'
 import Hamburger from './components/PruebaBotonHamburguesa'
-import VistaRanking from './components/VistaRanking'
+import VistaRanking from './pages/VistaRanking'
 import Header from './components/Header'
 import Categorias from './components/Feature_Categorias'
 
