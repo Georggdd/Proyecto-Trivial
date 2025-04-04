@@ -1,7 +1,10 @@
 import React from "react";
+
 const Ranking = () => {
 
   return (
+    <>
+
     <div className="">
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
@@ -57,6 +60,8 @@ const Ranking = () => {
 
 
     </div>
+
+    </>
   );
 
 }
