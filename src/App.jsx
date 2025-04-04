@@ -1,30 +1,12 @@
-import { useState } from 'react'
-import Ranking from './components/Ranking'
-import Hamburger from './components/PruebaBotonHamburguesa'
-import VistaRanking from './pages/VistaRanking'
-import Header from './components/Header'
-import Categorias from './components/Feature_Categorias'
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes'; // automáticamente importa routes/index.jsx
 
-
-
-
-
-
-export default function App() {
+function App() {
   return (
-    <div className="">
-      <header className="">
-        {/* <Header /> */}
-        {/* <Ranking/> */}
-       <Header/>
-        <VistaRanking className=""/>
-      
-
-      </header>
-
-      <main className="">
-        {/* Your game content will go here */}
-      </main>
-    </div>
-  )
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
 }
+
+export default App;
