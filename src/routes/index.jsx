@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import VistaRanking from '../pages/VistaRanking';
+// import Login from '../pages/Login';
 
 // Importa aquí las demás páginas a medida que las vayas creando
 
@@ -8,9 +9,9 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Navigate to="/VistaRanking" />} />
       <Route path="/VistaRanking" element={<VistaRanking />} />
-      {/* <Route path="*" element={<h2>Página no encontrada</h2>} /> */}
-     {/* <Route path="/" element={<Navigate to="/login" />} />
+      {/* <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login />} /> */}
+      <Route path="*" element={<h2>Página no encontrada</h2>} />
 
       {/* Ejemplo:
       <Route path="/dashboard" element={<Dashboard />} />
