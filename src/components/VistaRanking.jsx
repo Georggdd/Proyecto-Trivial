@@ -3,7 +3,7 @@ import Ranking from "./Ranking";
 const VistaRanking = () => { //creación de componente//
 
     return (
-        <div className="w-screen h-screen">
+        <span className="w-screen h-screen">
             {/* -----------------FONDO PIZARRA------------------- */}
             <div className="bg-pizarra absolute w-screen h-screen top-0 left-0 z-10 object-cover"></div>
             {/* <img src="../assets/img/pizarra.png"
@@ -48,7 +48,7 @@ const VistaRanking = () => { //creación de componente//
 
 
 
-        </div>
+        </span>
     );
 
 };

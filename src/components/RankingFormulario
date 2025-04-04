@@ -1,0 +1,3 @@
+export default function Categorias({ texto, onClick, className }) {
+    {texto}
+    probar con span en vez div para que ocupe solo espacio deseado
