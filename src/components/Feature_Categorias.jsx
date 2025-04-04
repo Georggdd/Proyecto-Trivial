@@ -10,7 +10,7 @@ export default function Categorias({ texto, onClick, className }) {
         Flotar
           ? "bg-morado text-white transform translate-y-[-2px] cursor-pointer hover:scale-95 hover: transition-all duration-150" // True
           : "bg-beige text-black" // False
-      } drop-shadow-2xl font-lemon border-4 py-3 px-6 rounded-lg uppercase transition-all duration-300 ease-in-out ${className}`} // Añadimos className aquí para
+        } drop-shadow-2xl font-lemon border-4 py-3 px-6 rounded-lg uppercase transition-all duration-300 ease-in-out ${className}`} // Añadimos className aquí para
       onMouseEnter={() => setFlotar(true)} //permitir añadir clases extra cuando el componente se usa en otro archivo y no cambiar los estilos base.
       onMouseLeave={() => setFlotar(false)}
       onClick={onClick} //Ejecuta la función onClick que se le pase como prop. Lo permite que el botón realice acciones personalizadas cuando se usa en diferentes partes del código.
@@ -21,7 +21,7 @@ export default function Categorias({ texto, onClick, className }) {
           Flotar
             ? "text-white text-shadow text-border transition-all duration-300 ease-in-out"
             : "text-shadow-light"
-        }`}
+          }`}
       >
         {texto}
       </span>

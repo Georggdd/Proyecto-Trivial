@@ -29,6 +29,10 @@ const VistaRanking = () => { //creación de componente//
                       
                             <Ranking></Ranking>
                             <Ranking></Ranking>
+                            <Ranking></Ranking>
+                            <Ranking></Ranking>
+                            <Ranking></Ranking>
+                            <Ranking></Ranking>
                     
                     </div>
                 </div>

@@ -16,10 +16,9 @@ export default function App() {
       <header className="">
         {/* <Header /> */}
         {/* <Ranking/> */}
-        {/* <VistaRanking className=""/> */}
-        <Categorias></Categorias>
-
-
+       <Header/>
+        <VistaRanking className=""/>
+      
 
       </header>
 
