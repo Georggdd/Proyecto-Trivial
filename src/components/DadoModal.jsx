@@ -16,7 +16,7 @@ const carasDado = [
   { valor: 6, imagen: Cara6 },
 ];
 
-const DadoModal = ({ children }) => {
+const DadoModal = ({ children, onResultado }) => {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [caraActual, setCaraActual] = useState(null);
   const [animando, setAnimando] = useState(false);
@@ -36,6 +36,11 @@ const DadoModal = ({ children }) => {
       const resultadoFinal = Math.floor(Math.random() * 6);
       setCaraActual(carasDado[resultadoFinal]);
       setAnimando(false);
+
+      // Guarda el valor para usarlo al cerrar
+      setTimeout(() => {
+        if (onResultado) onResultado(resultadoFinal + 1);
+      }, 300); // pequeño delay si quieres
     }, duracion);
   };
 

@@ -1,9 +1,11 @@
 import * as Casillas from '/src/components/casillas';
-import { useState } from 'react';
 import ZonaInferior from './ZonaInferior';
 import Ficha from './Ficha';
 import Mesa from '../assets/Mesa.svg';
 import Header from './Header';
+import { useJuegoStore } from '../store/useJuegoStore';
+import { casillas } from '../components/Posiciones/tableroData'; // o la ruta correcta según tu estructura
+
 const Casilla = ({ numero }) => {
   const CasillaComponent = Casillas[`Casilla${numero}`];
   return CasillaComponent ? <CasillaComponent /> : null;
@@ -12,162 +14,173 @@ const Casilla = ({ numero }) => {
 
 function Tablero() {
 
-
-  const [fichaIndex, setFichaIndex] = useState(0);
-  const [casillasActivas, setCasillasActivas] = useState([]);
-  const [fichaPos, setFichaPos] = useState({ top: 50, left: 50 }); // Posición en %
-
-  const tirarDado = (valor) => {
-    const casillas = [];
-
-    for (let i = 1; i <= valor; i++) {
-      casillas.push(fichaIndex + i);
-    }
-
-    setCasillasActivas(casillas);
-  };
+  const fichaPos = useJuegoStore((state) => state.fichaPos);
+  const casillasActivas = useJuegoStore((state) => state.casillasActivas);
+  const setValorDado = useJuegoStore((state) => state.setValorDado);
+  const moverFicha = useJuegoStore((state) => state.moverFicha);
   return (
 
-    
 
-    <div className="relative w-full h-screen overflow-hidden"
-    style={{
-      backgroundImage: `url(${Mesa})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-    }}
+
+    <div className="flex flex-col min-h-screen w-full"
+      style={{
+        backgroundImage: `url(${Mesa})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
     >
       <Header />
       {/* Contenedor Tablero */}
-      <div className='absolute aspect-square w-[40%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-        {/* Fondo del tablero */}
-        <img
-          src="/assets/img/fondo-tablero2.png"
-          alt="Tablero"
-          className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-contain z-0" />
+      <div className="flex-grow flex items-center justify-center relative">
+        <div className="relative aspect-square w-[90%] max-w-[700px]">
+          {/* Fondo del tablero */}
+          <img
+            src="/assets/img/fondo-tablero2.png"
+            alt="Tablero"
+            className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-contain z-0" />
 
 
 
 
-        {/* Casilla central */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[23%] z-20"> <Casilla numero={0} /> </div>
+          {/* Casilla central */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[23%] z-20"> <Casilla numero={0} /> </div>
 
-        {/* Resto de casillas */}
-        <div className="absolute top-[44.5%] right-[32%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={1} /> </div>
-        <div className="absolute top-[41.5%] right-[27%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={2} /> </div>
-        <div className="absolute top-[38.5%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={3} /> </div>
-        <div className="absolute top-[35.5%] right-[17%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={4} /> </div>
-        <div className="absolute top-[32.5%] right-[12%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={5} /> </div>
+          {/* Camino 1: diagonal de arriba a la derecha */}
+          <div className="absolute top-[44.5%] right-[32%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={1} /> </div>
+          <div className="absolute top-[41.5%] right-[27%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={2} /> </div>
+          <div className="absolute top-[38.5%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={3} /> </div>
+          <div className="absolute top-[35.5%] right-[17%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={4} /> </div>
+          <div className="absolute top-[32.5%] right-[12%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={5} /> </div>
+          {/* Camino 1: diagonal de arriba a la derecha */}
 
-        {/* */}
+          {/* Camino 2: Diagonal de abajo a la derecha */}
+          <div className="absolute bottom-[34.5%] right-[32%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={6} /> </div>
+          <div className="absolute bottom-[31.5%] right-[27.1%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={7} /> </div>
+          <div className="absolute bottom-[28.7%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={8} /> </div>
+          <div className="absolute bottom-[25.5%] right-[17%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={9} /> </div>
+          <div className="absolute bottom-[23%] right-[11.8%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={10} /> </div>
+          {/* Camino 2: Diagonal de abajo a la derecha */}
 
-        <div className="absolute bottom-[34.5%] right-[32%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={6} /> </div>
-        <div className="absolute bottom-[31.5%] right-[27.1%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={7} /> </div>
-        <div className="absolute bottom-[28.7%] right-[22%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={8} /> </div>
-        <div className="absolute bottom-[25.5%] right-[17%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={9} /> </div>
-        <div className="absolute bottom-[23%] right-[11.8%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={10} /> </div>
-        {/* */}
+          {/* Camino 3: Justo abajo*/}
+          <div className="absolute bottom-[33%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={11} /></div>
+          <div className="absolute bottom-[27.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={12} /></div>
+          <div className="absolute bottom-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={13} /></div>
+          <div className="absolute bottom-[16.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={14} /></div>
+          <div className="absolute bottom-[10.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={15} /></div>
+          {/* Camino 3: Justo abajo*/}
 
-        <div className="absolute bottom-[33%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={11} /></div>
-        <div className="absolute bottom-[27.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={12} /></div>
-        <div className="absolute bottom-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={13} /></div>
-        <div className="absolute bottom-[16.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={14} /></div>
-        <div className="absolute bottom-[10.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={15} /></div>
+          {/* Camino 4: Diagonal de abajo a la izquierda */}
 
-        {/* */}
+          <div className="absolute bottom-[35.5%] left-[41%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={16} /> </div>
+          <div className="absolute bottom-[32.5%] left-[36%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={17} /> </div>
+          <div className="absolute bottom-[29.7%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={18} /> </div>
+          <div className="absolute bottom-[26.5%] left-[26%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={19} /> </div>
+          <div className="absolute bottom-[24%] left-[21%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={20} /> </div>
+          {/* Camino 4: Diagonal de abajo a la izquierda */}
 
-        <div className="absolute bottom-[35.5%] left-[41%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={16} /> </div>
-        <div className="absolute bottom-[32.5%] left-[36%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={17} /> </div>
-        <div className="absolute bottom-[29.7%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={18} /> </div>
-        <div className="absolute bottom-[26.5%] left-[26%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={19} /> </div>
-        <div className="absolute bottom-[24%] left-[21%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={20} /> </div>
+          {/* Camino 5: Diagonal de arriba a la izquierda */}
+          <div className="absolute top-[44.5%] left-[41%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={21} /> </div>
+          <div className="absolute top-[41.5%] left-[36%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={22} /> </div>
+          <div className="absolute top-[38.5%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={23} /> </div>
+          <div className="absolute top-[35.5%] left-[26%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={24} /> </div>
+          <div className="absolute top-[32.5%] left-[21%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={25} /> </div>
+          {/* Camino 5: Diagonal de arriba a la izquierda */}
 
-        {/* */}
+          {/* Camino 6: Arriba */}
+          <div className="absolute top-[39%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={26} /></div>
+          <div className="absolute top-[33.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={27} /></div>
+          <div className="absolute top-[27.7%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={28} /></div>
+          <div className="absolute top-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={29} /></div>
+          <div className="absolute top-[16%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={30} /></div>
+          {/* Camino 6: Arriba */}
 
-        <div className="absolute top-[44.5%] left-[41%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={21} /> </div>
-        <div className="absolute top-[41.5%] left-[36%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={22} /> </div>
-        <div className="absolute top-[38.5%] left-[31%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={23} /> </div>
-        <div className="absolute top-[35.5%] left-[26%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={24} /> </div>
-        <div className="absolute top-[32.5%] left-[21%] w-[8.5%] -translate-x-1/2 -translate-y-1/2 z-10"> <Casilla numero={25} /> </div>
+          {/* Circulo exterior */}
+          <div className="absolute top-[9.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={31} /></div>
+          <div className="absolute top-[10.5%] right-[36.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={32} /></div>
+          <div className="absolute top-[11.8%] right-[30.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={33} /></div>
+          <div className="absolute top-[13.8%] right-[25.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={34} /></div>
+          <div className="absolute top-[16.5%] right-[20%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={35} /></div>
+          <div className="absolute top-[19.5%] right-[15.5%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={36} /></div>
+          <div className="absolute top-[23%] right-[12%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={37} /></div>
 
-        {/* */}
+          {/* */}
 
-        <div className="absolute top-[39%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={26} /></div>
-        <div className="absolute top-[33.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={27} /></div>
-        <div className="absolute top-[27.7%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={28} /></div>
-        <div className="absolute top-[22%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={29} /></div>
-        <div className="absolute top-[16%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={30} /></div>
+          <div className="absolute top-[29.5%] right-[5.8%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={38} /></div>
+          <div className="absolute bottom-[56.7%] right-[4%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={39} /></div>
+          <div className="absolute bottom-[52%] right-[2.9%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={40} /></div>
+          <div className="absolute bottom-[47%] right-[2.3%] h-[5.7%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={41} /></div>
+          <div className="absolute bottom-[41.2%] right-[2.5%] h-[6%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={42} /></div>
+          <div className="absolute bottom-[35.5%] right-[2.9%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={43} /></div>
+          <div className="absolute bottom-[29.6%] right-[4.2%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={44} /></div>
 
-        {/* */}
+          {/* */}
 
-        <div className="absolute top-[9.5%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={31} /></div>
-        <div className="absolute top-[10.5%] right-[36.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={32} /></div>
-        <div className="absolute top-[11.8%] right-[30.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={33} /></div>
-        <div className="absolute top-[13.8%] right-[25.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={34} /></div>
-        <div className="absolute top-[16.5%] right-[20%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={35} /></div>
-        <div className="absolute top-[19.5%] right-[15.5%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={36} /></div>
-        <div className="absolute top-[23%] right-[12%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={37} /></div>
+          <div className="absolute bottom-[19.5%] right-[5.8%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={45} /></div>
+          <div className="absolute bottom-[16.5%] right-[11.9%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={46} /></div>
+          <div className="absolute bottom-[11.6%] right-[15.2%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={47} /></div>
+          <div className="absolute bottom-[8.8%] right-[20%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={48} /></div>
+          <div className="absolute bottom-[6%] right-[25%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={49} /></div>
+          <div className="absolute bottom-[4.3%] right-[30.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={50} /></div>
+          <div className="absolute bottom-[3%] right-[36%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={51} /></div>
 
-        {/* */}
+          {/* */}
 
-        <div className="absolute top-[29.5%] right-[5.8%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={38} /></div>
-        <div className="absolute bottom-[56.7%] right-[4%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={39} /></div>
-        <div className="absolute bottom-[52%] right-[2.9%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={40} /></div>
-        <div className="absolute bottom-[47%] right-[2.3%] h-[5.7%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={41} /></div>
-        <div className="absolute bottom-[41.2%] right-[2.5%] h-[6%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={42} /></div>
-        <div className="absolute bottom-[35.5%] right-[2.9%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={43} /></div>
-        <div className="absolute bottom-[29.6%] right-[4.2%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={44} /></div>
+          <div className="absolute bottom-[3%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={52} /></div>
+          <div className="absolute bottom-[3%] left-[41.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={53} /></div>
+          <div className="absolute bottom-[4.4%] left-[37%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={54} /></div>
+          <div className="absolute bottom-[6.5%] left-[32.4%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={55} /></div>
+          <div className="absolute bottom-[9%] left-[27.5%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={56} /></div>
+          <div className="absolute bottom-[12.4%] left-[23.3%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={57} /></div>
+          <div className="absolute bottom-[16.7%] left-[19.8%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={58} /></div>
 
-        {/* */}
+          {/* */}
 
-        <div className="absolute bottom-[19.5%] right-[5.8%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={45} /></div>
-        <div className="absolute bottom-[16.5%] right-[11.9%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={46} /></div>
-        <div className="absolute bottom-[11.6%] right-[15.2%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={47} /></div>
-        <div className="absolute bottom-[8.8%] right-[20%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={48} /></div>
-        <div className="absolute bottom-[6%] right-[25%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={49} /></div>
-        <div className="absolute bottom-[4.3%] right-[30.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={50} /></div>
-        <div className="absolute bottom-[3%] right-[36%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={51} /></div>
+          <div className="absolute bottom-[20.5%] left-[15.5%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={59} /></div>
+          <div className="absolute bottom-[30.7%] left-[12.3%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={60} /></div>
+          <div className="absolute bottom-[36%] left-[11%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={61} /></div>
+          <div className="absolute bottom-[41.6%] left-[10.3%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={62} /></div>
+          <div className="absolute bottom-[47%] left-[10.5%] h-[6%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={63} /></div>
+          <div className="absolute bottom-[51.9%] left-[11%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={64} /></div>
+          <div className="absolute bottom-[56.5%] left-[12.5%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={65} /></div>
 
-        {/* */}
+          {/* */}
+          <div className="absolute top-[29.3%] left-[15.5%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={66} /></div>
+          <div className="absolute top-[23%] left-[20%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={67} /></div>
+          <div className="absolute top-[19.5%] left-[23.7%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={68} /></div>
+          <div className="absolute top-[16.3%] left-[27.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={69} /></div>
+          <div className="absolute top-[14%] left-[32.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={70} /></div>
+          <div className="absolute top-[12%] left-[37.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={71} /></div>
+          <div className="absolute top-[10.7%] left-[41.7%] h-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={72} /></div>
+          {/* Circulo exterior */}
 
-        <div className="absolute bottom-[3%] left-1/2 w-[9%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={52} /></div>
-        <div className="absolute bottom-[3%] left-[41.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={53} /></div>
-        <div className="absolute bottom-[4.4%] left-[37%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={54} /></div>
-        <div className="absolute bottom-[6.5%] left-[32.4%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={55} /></div>
-        <div className="absolute bottom-[9%] left-[27.5%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={56} /></div>
-        <div className="absolute bottom-[12.4%] left-[23.3%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={57} /></div>
-        <div className="absolute bottom-[16.7%] left-[19.8%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={58} /></div>
+          {casillasActivas.map((numero) => {
+            const pos = casillas.find(c => c.id === numero);
+            if (!pos) return null;
+            return (
+              <div
+                key={numero}
+                className="absolute w-[8%] h-[8%] rounded-full border-4 border-yellow-400 animate-pulse cursor-pointer z-30"
+                style={{
+                  top: `${pos.top}%`,
+                  ...(pos.left !== undefined
+                    ? { left: `${pos.left}%` }
+                    : { right: `${pos.right}%` }),
+                  transform: 'translate(-50%, -50%)',
+                }}
+                onClick={() => moverFicha(numero)}
+              />
+            );
+          })}
 
-        {/* */}
-
-        <div className="absolute bottom-[20.5%] left-[15.5%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={59} /></div>
-        <div className="absolute bottom-[30.7%] left-[12.3%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={60} /></div>
-        <div className="absolute bottom-[36%] left-[11%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={61} /></div>
-        <div className="absolute bottom-[41.6%] left-[10.3%] w-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={62} /></div>
-        <div className="absolute bottom-[47%] left-[10.5%] h-[6%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={63} /></div>
-        <div className="absolute bottom-[51.9%] left-[11%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={64} /></div>
-        <div className="absolute bottom-[56.5%] left-[12.5%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={65} /></div>
-
-        {/* */}
-
-        <div className="absolute top-[29.3%] left-[15.5%] h-[10%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={66} /></div>
-        <div className="absolute top-[23%] left-[20%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={67} /></div>
-        <div className="absolute top-[19.5%] left-[23.7%] w-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={68} /></div>
-        <div className="absolute top-[16.3%] left-[27.7%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={69} /></div>
-        <div className="absolute top-[14%] left-[32.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={70} /></div>
-        <div className="absolute top-[12%] left-[37.2%] h-[8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={71} /></div>
-        <div className="absolute top-[10.7%] left-[41.7%] h-[7.8%] -translate-x-1/2 -translate-y-1/2 z-10"><Casilla numero={72} /></div>
+          <Ficha position={fichaPos} />
+        </div>
       </div>
-
-      <Ficha position={fichaPos} />
-
-
-      <div className="absolute bottom-0 left-0 w-full z-50">
-        <ZonaInferior onDadoResultado={tirarDado} />
-      </div>
+      <ZonaInferior onDadoResultado={setValorDado} />
     </div>
 
+
   );
+
 
 }
 
