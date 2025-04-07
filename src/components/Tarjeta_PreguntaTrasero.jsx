@@ -5,9 +5,9 @@ function Tarjeta_PreguntaTrasero() {
 
     return (
     // Tablero Madera
-    <div className='h-full w-screen bg-tablero flex items-center justify-center min-h-screen' >
+    <div className='h-screen w-full flex items-center justify-center min-h-screen' >
         {/* Fondo Verde */}
-        <div className='bg-verdeClaro bg-opacity-70 flex items-center justify-center h-screen w-screen' >
+        <div className=' bg-verdeClaro bg-opacity-70 flex items-center justify-center h-screen w-screen' >
             {/* Tarjeta */}
             <section id='tarjeta' className='bg-verdeClaro flex flex-col h-[90%] w-[74vw] rounded-lg border-black border-[4px]'>
                 <div id='titulo' className='w-full h-[106px] mt-7 bg-verdeOscuro flex items-center gap-80'> 
