@@ -1,12 +1,11 @@
 import React from 'react';
 import { useJuegoStore } from '../store/useJuegoStore';
-import { casillas } from '../components/Posiciones/tableroData';
 
 const Ficha = () => {
   const fichaPos = useJuegoStore((state) => state.fichaPos);
 
-  if (!fichaPos) {
-    console.warn('No se encontró posición para fichaPos:', fichaPos);
+  if (!fichaPos || (fichaPos.left === undefined && fichaPos.right === undefined)) {
+    console.warn('⚠️ Posición inválida para ficha:', fichaPos);
     return null;
   }
 
@@ -18,11 +17,11 @@ const Ficha = () => {
     transform: 'translate(-50%, -50%)',
   };
 
-  console.log('Ficha en:', fichaPos, 'Coordenadas aplicadas:', styleFicha);
+  console.log('✅ Posición de ficha:', fichaPos, 'Estilo aplicado:', styleFicha);
 
   return (
     <div
-      className="absolute z-30 w-[1.5vw] h-[1.5vw] rounded-full bg-red-500"
+      className="absolute z-30 w-[1.5vw] h-[1.5vw] rounded-full bg-red-500 transition-all duration-500"
       style={styleFicha}
     />
   );

@@ -15,9 +15,8 @@ const Casilla = ({ numero }) => {
 function Tablero() {
 
   const fichaPos = useJuegoStore((state) => state.fichaPos);
-  const casillasActivas = useJuegoStore((state) => state.casillasActivas);
   const setValorDado = useJuegoStore((state) => state.setValorDado);
-  const moverFicha = useJuegoStore((state) => state.moverFicha);
+  const { casillasActivas, moverFicha } = useJuegoStore();
   return (
 
 
@@ -156,15 +155,14 @@ function Tablero() {
           {casillasActivas.map((numero) => {
             const pos = casillas.find(c => c.id === numero);
             if (!pos) return null;
+
             return (
               <div
                 key={numero}
                 className="absolute w-[8%] h-[8%] rounded-full border-4 border-yellow-400 animate-pulse cursor-pointer z-30"
                 style={{
                   top: `${pos.top}%`,
-                  ...(pos.left !== undefined
-                    ? { left: `${pos.left}%` }
-                    : { right: `${pos.right}%` }),
+                  left: `${pos.left}%`,
                   transform: 'translate(-50%, -50%)',
                 }}
                 onClick={() => moverFicha(numero)}
