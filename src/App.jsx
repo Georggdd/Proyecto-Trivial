@@ -5,7 +5,7 @@ import { preguntas } from './data/preguntas';
 
 export default function App() {
   return (
-    <div className="h-screen w-screen bg-tablero">
+    <div className="h-screen w-screen bg-tablero bg-cover bg-no-repeat">
      {/* <header>
     <HeaderNav></HeaderNav>
       </header>   */}

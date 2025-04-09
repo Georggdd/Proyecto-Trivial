@@ -1,6 +1,6 @@
 export const preguntas = [
     {
-      categoria: "GEOFRAFIA",
+      categoria: "GEOGRAFIA",
       pregunta: "¿Qué país fue el primero en enviar un satélite al espacio?",
       puntuacion: 20,
       respuestas: [
