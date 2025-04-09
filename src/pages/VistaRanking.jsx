@@ -1,8 +1,12 @@
 import React from "react";
 import Ranking from "../components/Ranking";
 import Header from "../components/Header";
+import PruebaRanking from "../components/pruebaRanking";
+// cambié el nombre del componente a prueba con MAYUSCULA, PERO NO  lo reconoce
+import PruebaFormulario from "../components/PruebaFormulario";
 
-const VistaRanking = () => { //creación de componente//
+const VistaRanking = () => { 
+    //creación de componente//
 
     return (
                     
@@ -33,8 +37,7 @@ const VistaRanking = () => { //creación de componente//
                             {/* inset-0 */}
                             <div className="absolute top-0 left-0 w-full z-50 grid place-items-center my-10">
 
-                                <Ranking></Ranking>
-                                <Ranking></Ranking>
+                                <PruebaRanking/>
                          
 
                             </div>
