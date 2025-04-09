@@ -4,7 +4,6 @@ import { textToSpeech } from '../services/elevenLabsService';
 const TextToSpeech = () => {
     const [text, setText] = useState('Hola, esto es una prueba de voz');
     const [isPlaying, setIsPlaying] = useState(false);
-    const [audioUrl, setAudioUrl] = useState(null);
     const [error, setError] = useState('');
     const [debug, setDebug] = useState('');
     const [apiStatus, setApiStatus] = useState('no-verificado');
@@ -53,14 +52,8 @@ const TextToSpeech = () => {
             // Crear un Blob con los datos binarios recibidos
             const blob = new Blob([audioData], { type: 'audio/mpeg' });
             
-            // Revocar URL anterior si existe
-            if (audioUrl) {
-                URL.revokeObjectURL(audioUrl);
-            }
-            
             // Crear una URL para el blob
             const url = URL.createObjectURL(blob);
-            setAudioUrl(url);
             
             setDebug(prev => `${prev}\n🔊 Reproduciendo audio...`);
             
@@ -69,11 +62,13 @@ const TextToSpeech = () => {
             audioElement.onended = () => {
                 setIsPlaying(false);
                 setDebug(prev => `${prev}\n✅ Reproducción finalizada`);
+                URL.revokeObjectURL(url); // Liberar memoria
             };
             audioElement.onerror = (e) => {
                 setError(`Error al reproducir el audio: ${e.message || 'Error desconocido'}`);
                 setDebug(prev => `${prev}\n❌ Error de reproducción: ${JSON.stringify(e)}`);
                 setIsPlaying(false);
+                URL.revokeObjectURL(url); // Liberar memoria
             };
             await audioElement.play();
         } catch (error) {
@@ -147,7 +142,7 @@ const TextToSpeech = () => {
                 </div>
             )}
             
-            <div className="flex justify-between">
+            <div className="flex justify-start">
                 <button
                     onClick={handlePlay}
                     disabled={isPlaying}
@@ -159,20 +154,6 @@ const TextToSpeech = () => {
                 >
                     {isPlaying ? 'Reproduciendo...' : 'Reproducir'}
                 </button>
-                
-                {audioUrl && !isPlaying && (
-                    <button
-                        onClick={() => {
-                            const a = document.createElement('a');
-                            a.href = audioUrl;
-                            a.download = 'audio.mp3';
-                            a.click();
-                        }}
-                        className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded font-medium transition-colors duration-200"
-                    >
-                        Descargar Audio
-                    </button>
-                )}
             </div>
         </div>
     );
