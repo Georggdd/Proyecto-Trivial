@@ -3,9 +3,8 @@ import axios from 'axios';
 export const textToSpeech = async (text) => {
     try {
         const apiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
-        // Usamos un ID de voz específico que sabemos que existe
-        // En lugar de usar eleven_multilingual_v2 como ID de voz (que es un modelo, no una voz)
-        const voiceId = "21m00Tcm4TlvDq8ikWAM"; // ID de voz Rachel (una de las voces predeterminadas)
+        // Cambiamos a la voz de Antoni, que es una voz masculina con acento español
+        const voiceId = "ErXwobaYiN019PkySvjV"; // Antoni - voz masculina hispana
         
         console.log('Usando API Key:', apiKey ? `${apiKey.substring(0, 5)}...${apiKey.substring(apiKey.length - 5)}` : 'No definida');
         console.log('Usando Voice ID:', voiceId || 'No definido');
@@ -25,7 +24,7 @@ export const textToSpeech = async (text) => {
             model_id: "eleven_multilingual_v2", // Esto es el modelo, no la voz
             voice_settings: {
                 stability: 0.5,
-                similarity_boost: 0.5
+                similarity_boost: 0.75
             }
         };
         

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { textToSpeech } from '../services/elevenLabsService';
 
 const TextToSpeech = () => {
-    const [text, setText] = useState('Hola, esto es una prueba de voz');
+    const [text, setText] = useState('Hola, esto es una prueba de voz en español');
     const [isPlaying, setIsPlaying] = useState(false);
     const [error, setError] = useState('');
     const [debug, setDebug] = useState('');
@@ -22,7 +22,7 @@ const TextToSpeech = () => {
             debugInfo.push(`✅ Clave API configurada: ${apiKey.substring(0, 5)}...${apiKey.substring(apiKey.length - 5)}`);
         }
         
-        debugInfo.push('✅ Usando voz: Rachel (predeterminada)');
+        debugInfo.push('✅ Usando voz: Antoni (voz masculina en español)');
         
         setDebug(debugInfo.join('\n'));
     }, []);
