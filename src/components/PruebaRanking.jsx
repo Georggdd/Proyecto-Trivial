@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import PruebaFormulario from './PruebaFormulario';  // Importamos el componente Formulario
+import PruebaFormulario from './pruebaFormulario';
+// import PruebaFormulario from './PruebaFormulario';  // Importamos el componente Formulario
 
 
 const PruebaRanking = () => {

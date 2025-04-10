@@ -1,7 +1,7 @@
 import React from "react";
 
-const Ranking = () => {
-
+const Ranking = ({nombre, puntos}) => {
+  
   return (
     <>
 
@@ -43,14 +43,17 @@ const Ranking = () => {
         border-4 el grosor
         flex, items-center justify-center: elementos dentro de flex centrados vertical y horizontalmente.
         */ }
-          <h3 className="text-center font-personalizada text-5xl"> Nombre del equipo </h3>
+          <h3 className="text-center font-personalizada text-5xl">
+            {nombre}
+          </h3>
         </div>
 
 
         {/* //  <-----------PUNTUACIÓN----------------> */}
         <h1 className="w-1/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 alineacion mr-16">
-          <h3 className="text-center text-7xl">200
-          </h3>
+          <h3 className="text-center text-7xl">
+            {puntos}
+            </h3>
         </h1>
 
       </div>
@@ -65,6 +68,19 @@ const Ranking = () => {
   );
 
 }
+
+// const RankingDatos = ({ nombre, puntos }) => {
+//   // este es un componente dentro de otro . luego lo llamamos para pasarlos datos recibidos
+//   // encargado de mostrar datos individuales de cada equipo.
+
+//   return (
+//       // vamos a ver por donde sale el sol
+//       <div className="w-5/6 bg-white rounded-full shadow-md py-2 px-6 flex justify-between items-center text-lg font-semibold text-morado">
+//           <span>{nombre}</span>
+//           <span>{puntos} pts</span>
+//       </div>
+//   )
+// }
 
 
 export default Ranking;

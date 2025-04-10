@@ -1,61 +1,72 @@
 import React from "react";
-import Ranking from "../components/Ranking";
 import Header from "../components/Header";
-import PruebaRanking from "../components/pruebaRanking";
+import Ranking from "../components/Ranking";
+// import PruebaRanking from "../components/PruebaRanking";
 // cambié el nombre del componente a prueba con MAYUSCULA, PERO NO  lo reconoce
-import PruebaFormulario from "../components/PruebaFormulario";
+// import PruebaFormulario from "../components/PruebaFormulario";
 
-const VistaRanking = () => { 
-    //creación de componente//
-
+const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del archivo PadreRanking.jsx
+    //recibe propiedades de padreRanking
+  // Validamos que `equipo` es un array antes de hacer .map()
+  if (!Array.isArray(equipo)) {
+    return <div>Cargando...</div>; // O algún otro mensaje mientras no se tenga el array
+  }
     return (
-                    
-            <div>
-                <Header/> 
-                {/* no se visualiza el header */}
-                <div className="w-screen h-screen">
-                    {/* -----------------FONDO PIZARRA------------------- */}
-                    <div className="bg-pizarra absolute w-screen h-screen top-0 left-0 z-10 object-cover"></div>
-                    {/* <img src="../assets/img/pizarra.png"
-                alt="pizarra de fondo"
-                className="absolute w-screen h-screen top-0 left-0 z-0 object-cover"></img> */}
 
-                    {/* -----------------FONDO DE BANDERINES------------------- */}
+        <div>
+            <Header />
+            {/* {imagenes de fondo (banderines y pizarra)} */}
+            <div className="relative">
+                <img src="../assets/img/banderines.png"
+                    alt="banderines de fondo"
+                    className="absolute w-screen top-0 left-0 z-20 object-cover"></img>
+                <img src="../assets/img/mesa_madera.jpg"
+                    alt="mesa de madera de fondo"
+                    className="absolute w-screen top-0 left-0 z-10 object-cover"></img>
+            </div>
 
-                    <img src="../assets/img/banderines.png"
-                        alt="banderines de fondo"
-                        className="absolute w-screen h-screen top-0 left-0 z-20 object-cover"></img>
+            <div className="w-screen">
 
-                    {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
-                    <div className=" flex mt-60 p-6 z-30" >
+                {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
+                <div className=" flex mt-[20vh] p-[6vh]" >
 
-                        {/* -----------------TABLERO  2/3 ------------------- */}
-                        <div className="w-2/3 relative ">
-                            {/* relative para posicionar el texto dentro */}
-                            <img src="../assets/img/tablero_base.png" className=" w-full h-auto  z-40 relative" alt="Tablero mesa"></img>
-                            {/* <div className="flex flex-col justify-center items-center"> */}
-                            {/* inset-0 */}
-                            <div className="absolute top-0 left-0 w-full z-50 grid place-items-center my-10">
+                    {/* -----------------TABLERO  2/3 ------------------- */}
+                    <div className="w-2/3 relative ">
+                        {/* relative para posicionar el texto dentro */}
+                        <img src="../assets/img/tablero_base.png" className=" w-full h-auto z-30 relative" alt="Tablero mesa"></img>
+                        {/* <div className="flex flex-col justify-center items-center"> */}
+                        {/* inset-0 */}
+                        {/* <div className="absolute top-0 left-0 w-full z-40 grid place-items-center my-10">
 
-                                <PruebaRanking/>
-                         
+                            <Ranking className="h-[1-5 parte del espacio]"/>
+                            <Ranking />
+                            <Ranking />
+                            <Ranking />
+                            <Ranking /> */}
 
-                            </div>
-                        </div>
+                        <div className="absolute top-0 left-0 w-full h-full z-40 grid grid-rows-5 gap-1 p-10">
+                            {equipo.map((x, y) => ( //mapeamos los datos de importados
+                                <Ranking key={y} nombre={x.nombre} puntos={x.puntos} />
+                            ))
+                            }
 
-                        {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
-                        <div className="flex justify-center items-center flex-col w-1/3 z-40 gap-6">
-                            <h7 className="text-6xl text-center text-morado font-personalizada font-bold">Gracias por participar</h7>
-                            <img src="../assets/img/carpeta_descarga.png"
-                                alt="Carpeta Descarga Profesores"
-                                className="" />
 
                         </div>
                     </div>
 
+                    {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
+                    <div className="flex justify-center items-center flex-col w-1/3 z-40 gap-6">
+                        <h7 className="text-6xl text-center text-morado font-personalizada font-bold">Gracias por participar</h7>
+                        <img src="../assets/img/carpeta_descarga.png"
+                            alt="Carpeta Descarga Profesores"
+                            className="" />Para descargar la imagen pulse aquí
+
+                    </div>
                 </div>
+
             </div>
-      
+        </div >
+
     );
 
 };
