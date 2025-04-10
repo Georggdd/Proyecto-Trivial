@@ -16,7 +16,7 @@ import React, { useEffect, useState } from 'react';
 
     return (
     // Diseño responsive para laptop y proyector 1920px x 1080px (2xl)
-    // Tablero Madera - Ocupa el 88% de la screen height = 950px 
+    // Tablero Madera - Ocupa el 88% de la screen height = 950px
     <div className='h-[85%] w-full flex items-center justify-center' >
         {/* Fondo Verde */}
         <div className='h-full w-full flex items-center justify-center ' >
@@ -98,7 +98,7 @@ import React, { useEffect, useState } from 'react';
                             <div className='flex flex-col gap-2'>
                             <span>{r.texto}</span>
                             {seleccion && esCorrecta && r.explicacion && (
-                                <p className='text-base text-sm font-normal 2xl:text-xl text-white text-left leading-relaxed break-words max-w-full'>
+                                <p className='text-sm font-normal 2xl:text-xl text-white text-left leading-relaxed break-words max-w-full'>
                                 {r.explicacion}
                                 </p>
                             )}
