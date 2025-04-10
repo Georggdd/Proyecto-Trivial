@@ -6,12 +6,12 @@ import { preguntas } from './data/preguntas';
 
 export default function App() {
   return (
-    <div className="h-screen w-screen">
-      <header>
+    <div className="h-screen w-screen flex flex-col">
+      <header className='flex-1]'>
         <Header/> 
       </header>  
       
-      <main className='flex items-center justify-center bg-tablero bg-cover bg-no-repeat'>
+      <main className='flex-1 h-[88%] flex items-center justify-center bg-tablero bg-cover bg-center bg-no-repeat overflow-auto'>
      
        <Tarjeta_Pregunta pregunta={preguntas[0]}/>
       </main>
