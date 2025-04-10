@@ -37,10 +37,9 @@ const DadoModal = ({ children, onResultado }) => {
       setCaraActual(carasDado[resultadoFinal]);
       setAnimando(false);
 
-      // Guarda el valor para usarlo al cerrar
       setTimeout(() => {
         if (onResultado) onResultado(resultadoFinal + 1);
-      }, 300); // pequeño delay si quieres
+      }, 300);
     }, duracion);
   };
 
@@ -55,32 +54,36 @@ const DadoModal = ({ children, onResultado }) => {
         {children}
       </div>
 
-      {mostrarModal && (
-        createPortal(
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
-            <div className="w-60 h-60 bg-white rounded-full flex items-center justify-center shadow-lg relative">
-              {caraActual && caraActual.imagen ? (
-                <img
-                  src={caraActual.imagen}
-                  alt={`Cara ${caraActual.valor}`}
-                  className="w-24 h-24"
-                />
-              ) : (
-                <p className="text-xl font-bold">Cargando...</p>
-              )}
+      {mostrarModal && createPortal(
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
+          onClick={cerrarModal} // ← permite cerrar al hacer clic fuera
+        >
+          <div
+            className="w-60 h-60 bg-white rounded-full flex items-center justify-center shadow-lg relative"
+            onClick={(e) => e.stopPropagation()} // ← evita cerrar al hacer clic dentro del dado
+          >
+            {caraActual && caraActual.imagen ? (
+              <img
+                src={caraActual.imagen}
+                alt={`Cara ${caraActual.valor}`}
+                className="w-24 h-24"
+              />
+            ) : (
+              <p className="text-xl font-bold">Cargando...</p>
+            )}
 
-              {!animando && (
-                <button
-                  onClick={cerrarModal}
-                  className="absolute bottom-4 text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                >
-                  Cerrar
-                </button>
-              )}
-            </div>
-          </div>,
-          document.body
-        )
+            {!animando && (
+              <button
+                onClick={cerrarModal}
+                className="absolute bottom-4 text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              >
+                Cerrar
+              </button>
+            )}
+          </div>
+        </div>,
+        document.body
       )}
     </>
   );

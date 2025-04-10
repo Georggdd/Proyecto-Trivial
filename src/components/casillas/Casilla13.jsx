@@ -1,7 +1,0 @@
-export default function Casilla13() {
-  return (
-    <svg className="w-full h-full"  width="72" height="43" viewBox="0 0 72 43" fill="none" >
-<rect x="0.500061" y="0.5" width="71" height="42" rx="9.5" fill="#D6573D" stroke="black"/>
-</svg>
-  );
-}

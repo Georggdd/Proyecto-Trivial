@@ -1,5 +1,5 @@
 import React from 'react';
-import { useJuegoStore } from '../store/useJuegoStore';
+import { useJuegoStore } from '../hooks/useJuegoStore';
 
 const Ficha = () => {
   const fichaPos = useJuegoStore((state) => state.fichaPos);
@@ -21,7 +21,7 @@ const Ficha = () => {
 
   return (
     <div
-      className="absolute z-30 w-[1.5vw] h-[1.5vw] rounded-full bg-red-500 transition-all duration-500"
+      className="absolute z-30 w-[4%] h-[4%] rounded-full bg-gradient-to-br from-purple-500 to-purple-700 border-4 border-white shadow-lg shadow-black transition-all duration-500"
       style={styleFicha}
     />
   );
