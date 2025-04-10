@@ -36,7 +36,7 @@ const Header = () => {
          {/* Título */}
          <div className="text-center relative">
           <h1 className="text-white text-5xl font-pinyon tracking-wide mb-3">
-          EDUCARD
+          EduK
           </h1>
         </div>
         {/* Botón de menú hamburguesa y menú desplegable */}
