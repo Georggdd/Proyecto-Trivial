@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import fondo from '../assets/fondo.svg';
 import pizarra from '../assets/pizarra.svg';
 import logo from '../assets/logo.svg';
