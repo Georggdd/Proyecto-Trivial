@@ -23,8 +23,8 @@ import React, { useEffect, useState } from 'react';
             {/* Tarjeta */}
             <section id='tarjeta' className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1500ms] ease-out transform ${ show ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
                 <div id='titulo' className='w-full h-[19%] mt-6 bg-verdeOscuro flex items-center gap-[27%] 2xl:gap-[30%]'>
-                    <h1 className='text-white text-7xl pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
-                    <img src="/public/assets/img/queso-color-blanco.png" className='w-[17%] pt-6' alt="" />
+                    <h1 className='text-white text-7xl pt-6 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
+                    <img src="/public/assets/img/queso-color-blanco.png" className='w-[15%] pt-6' alt="" />
                 </div>
 
                 {/* Si no se ha seleccionado ninguna pregunta */}
@@ -57,7 +57,7 @@ import React, { useEffect, useState } from 'react';
                 
                  {/* Si se ha seleccionado ninguna pregunta */}
                 {seleccion && (
-                <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center font-lemon p-10 gap-4'>
+                <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center font-lemon p-6 gap-4'>
                     <div id='respuestas' className='w-full flex flex-col items-center justify-center gap-2'>
                     {pregunta.respuestas.map((r, i) => {
                         const esSeleccionada = seleccion === r;
@@ -72,15 +72,17 @@ import React, { useEffect, useState } from 'react';
 
                         if (seleccion) {
                         if (esCorrecta) {
-                            fondo = 'bg-black';
-                            texto = 'text-white';
+                            fondo = 'bg-white';
+                            texto = 'text-black';
                             extra = 'flex-col gap-3'; // Para incluir explicación debajo
+                            borde = 'border-black border-2';
                         } else if (esSeleccionada) {
-                            fondo = 'bg-red-700';
-                            texto = 'text-white';
+                            fondo = 'bg-white';
+                            texto = 'text-black';
+                            borde = 'border-red-600 border-2';
                         } else {
                             fondo = 'bg-white';
-                            borde = 'border-gray-900 border-2';
+                            borde = 'border-gray-900 border';
                         }
                         }
 
@@ -98,7 +100,7 @@ import React, { useEffect, useState } from 'react';
                             <div className='flex flex-col gap-2'>
                             <span>{r.texto}</span>
                             {seleccion && esCorrecta && r.explicacion && (
-                                <p className='text-sm font-normal 2xl:text-xl text-white text-left leading-relaxed break-words max-w-full'>
+                                <p className='text-md font-light 2xl:text-xl text-black text-left font-secular leading-relaxed break-words max-w-full'>
                                 {r.explicacion}
                                 </p>
                             )}
