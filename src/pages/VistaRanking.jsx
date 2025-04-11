@@ -56,10 +56,15 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
 
                     {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
                     <div className="flex justify-center items-center flex-col w-1/3 z-40 gap-6">
-                        <h7 className="text-6xl text-center text-morado font-personalizada font-bold">Gracias por participar</h7>
-                        <img src="../assets/img/carpeta_descarga.png"
-                            alt="Carpeta Descarga Profesores"
-                            className="" />Para descargar la imagen pulse aquí
+                        <h7 className="text-6xl text-center text-naranja font-personalizada font-bold">Gracias por participar</h7>
+                      
+                        <img src="../assets/img/carpeta_descarga.png" alt="Carpeta Descarga Profesores"className="items-end" />
+
+                        <p className="text-4xl text-right text-bottom text-naranja font-personalizada font-bold"> Descarga de resultados: </p> <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
+                        download="Preguntas-Trivial-BBDD.xlsx"
+                        className="inline-block bg-naranja text-white text-3xl font-semibold py-2 px-4 rounded-full cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl "> aquí </a>
+                       
+
 
                     </div>
                 </div>

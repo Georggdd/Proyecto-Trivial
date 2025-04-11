@@ -8,7 +8,7 @@ const Ranking = ({nombre, puntos}) => {
     <div className="">
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
-      <div className="alineacion w-full gap-10  bg-morado border-white border-4 rounded-full shadow-lg relative">
+      <div className="alineacion w-full gap-10 border-naranja border-2 rounded-full shadow-lg relative">
         {/*
           flex: el contenedor se divide en columnas
           items-center alineación vertical
@@ -35,7 +35,7 @@ const Ranking = ({nombre, puntos}) => {
         </div>
 
         {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
-        <div className="w-2/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 font-personalizada alineacion">
+        <div className="w-2/4 h-32 bg-white  rounded-full border-naranja border-2 text-naranja font-personalizada alineacion">
           { /*w-2/4 lo que ocupa en el espacio.
         h: la altura del contenedor interno.
         bg: el color de fondo
@@ -50,7 +50,7 @@ const Ranking = ({nombre, puntos}) => {
 
 
         {/* //  <-----------PUNTUACIÓN----------------> */}
-        <h1 className="w-1/4 h-32 bg-fuchsia-300 rounded-full border-white border-4 alineacion mr-16">
+        <h1 className="w-1/4 h-32 bg-white rounded-full border-naranja text-naranja border-2 alineacion mr-16">
           <h3 className="text-center text-7xl">
             {puntos}
             </h3>
