@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./node_modules/@prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model partidatorespuestapartida {
+  A String
+  B String
+
+  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
+  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
+  @@map("_partidatorespuestapartida")
+}
+
+model casilla {
+  id       String       @id @default(uuid())
+  tipo     casilla_tipo
+  efecto   String
+  posicion Int
+}
+
+model grupo {
+  id        String  @id @default(uuid())
+  nombre    String
+  foto      String?
+  activo    Boolean @default(true)
+  partidaId String
+
+  @@index([partidaId], map: "Grupo_partidaId_fkey")
+}
+
+model integrante {
+  id      String @id @default(uuid())
+  nombre  String
+  grupoId String
+
+  @@index([grupoId], map: "Integrante_grupoId_fkey")
+}
+
+model partida {
+  id            String         @id @default(uuid())
+  codigo        String         @unique(map: "Partida_codigo_key")
+  estado        partida_estado
+  fechaCreacion DateTime       @default(now())
+  profesorId    String
+
+  @@index([profesorId], map: "Partida_profesorId_fkey")
+}
+
+model pregunta {
+  id         String              @id @default(uuid())
+  asignatura pregunta_asignatura
+  dificultad pregunta_dificultad
+  texto      String
+}
+
+model puntuaciongrupo {
+  id            String @id
+  grupoId       String @unique(map: "PuntuacionGrupo_grupoId_key")
+  partidaId     String
+  puntosTotales Int
+
+  @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
+}
+
+model respuesta {
+  id         String  @id @default(uuid())
+  preguntaId String
+  texto      String
+  esCorrecta Boolean
+
+  @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
+}
+
+model respuestapartida {
+  id              String  @id  @default(uuid())
+  grupoId         String
+  preguntaId      String
+  respuestaId     String
+  esCorrecta      Boolean
+  puntosObtenidos Int
+  comodinActivado Boolean @default(false)
+
+  @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
+  @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
+  @@index([respuestaId], map: "RespuestaPartida_respuestaId_fkey")
+}
+
+model tirada {
+  id          String   @id @default(uuid())
+  grupoId     String
+  partidaId   String
+  valorDado   Int
+  casillaId   String
+  fechaTirada DateTime @default(now())
+
+  @@index([casillaId], map: "Tirada_casillaId_fkey")
+  @@index([grupoId], map: "Tirada_grupoId_fkey")
+  @@index([partidaId], map: "Tirada_partidaId_fkey")
+}
+
+model usuario {
+  id       String @id @default(uuid())
+  usuario  String @unique
+  password String
+}
+
+enum pregunta_asignatura {
+  Matematicas
+  Historia
+  Ciencias
+  Lengua
+  Ingles
+}
+
+enum casilla_tipo {
+  normal
+  suerte
+  mala_suerte
+}
+
+enum partida_estado {
+  esperando
+  en_curso
+  finalizada
+}
+
+enum pregunta_dificultad {
+  facil
+  intermedia
+  dificil
+}
+
+enum usuario_rol {
+  admin
+  profesor
+}
