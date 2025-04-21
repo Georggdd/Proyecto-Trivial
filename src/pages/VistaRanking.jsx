@@ -9,11 +9,22 @@ import Ranking from "../components/Ranking";
 const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del archivo PadreRanking.jsx
     //recibe propiedades de padreRanking
     // Validamos que `equipo` es un array antes de hacer .map()
-    const numequipo = equipo.length < 5 ? "gap-6" : "gap-1";
-    
     if (!Array.isArray(equipo)) {
         return <div>Cargando...</div>; // O algún otro mensaje mientras no se tenga el array
     }
+    //según el número de equipos tendrá un gap u otro
+    const numequipo = equipo.length < 5 ? "gap-6" : "gap-1";
+
+    //ordenación según la puntuación 
+    const ordenEquipo = [...equipo].sort((a, b) => b.puntos - a.puntos);
+
+    //en caso de que se produzcan empates, le daremos efecto visual
+
+    const mismapuntuacion = equipo //para darle efecto cuando coincida la puntuación entre equipos
+        .map(e => e.puntos)
+        .filter((valor, i, arr) => arr.indexOf(valor) !== i);
+
+
     return (
 
         <div>
@@ -21,10 +32,12 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
 
             {/* {imagenes de fondo (banderines y pizarra)} */}
             <div className="relative">
-                <img src="../assets/img/banderines.png"
+                <img
+                    src="../assets/img/banderines.png"
                     alt="banderines de fondo"
                     className="absolute w-screen top-0 left-0 z-20 object-cover"></img>
-                <img src="../assets/img/mesa_madera.jpg"
+                <img
+                    src="../assets/img/mesa_madera.jpg"
                     alt="mesa de madera de fondo"
                     className="absolute w-screen top-0 left-0 z-10 object-cover"></img>
             </div>
@@ -49,14 +62,16 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
                             <Ranking /> */}
 
                         <div className={`absolute top-0 left-0 w-full h-full z-40 flex flex-col alineacion pb-[11vw] pr-[5vw] pl-[3vw] pt-[10vw] ${numequipo}`}>
-                            {equipo.map((x, y) => ( //mapeamos los datos de importados
-                                <Ranking key={y} nombre={x.nombre} puntos={x.puntos} />
-                            ))
-                            }
-
-
+                            {ordenEquipo.map((x, y) => { //mapeamos los datos de importados
+                                const destacar = mismapuntuacion.includes(x.puntos);
+                                return(
+                          <Ranking key={y} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
+                            );
+                            })}
+                        
                         </div>
-                    </div>
+                    </div>  
+                
 
                     {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
                     <div className="flex flex-col w-1/3 z-40 p-8">

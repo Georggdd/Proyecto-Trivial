@@ -1,6 +1,6 @@
 import React from "react";
 
-const Ranking = ({nombre, puntos}) => {
+const Ranking = ({nombre, puntos, destacado}) => {
   
   return (
     <>
@@ -51,8 +51,8 @@ const Ranking = ({nombre, puntos}) => {
 
 
         {/* //  <-----------PUNTUACIÓN----------------> */}
-        <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja alineacion">
-          <h3 className="text-center font-personalizada text-[4vw]">
+        <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja font-bold alineacion">
+          <h3 className={`text-center font-personalizada text-[4vw] ${destacado ? "animate-pulse text-naranja scale-110" : ""}`}>
             {puntos}
             </h3>
         </div>

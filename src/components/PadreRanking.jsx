@@ -7,7 +7,7 @@ export const PadreRanking = () => {
         { nombre: "Saltamontes", puntos: 1500 },
         { nombre: "Mariposa", puntos: 2000 },
         { nombre: "Libélula", puntos: 500 },
-        { nombre: "Mariquita", puntos: 1200 },
+        { nombre: "Mariquita", puntos: 1000 },
         { nombre: "Escarabajo", puntos: 1000 },
     ]);
     console.log(equipo);
