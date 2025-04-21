@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tablero from "./pages/Tablero";
 import VistaCategorias from "./pages/VistaCategorias";
+import Login from "./pages/Login";
 import axios from "axios"; // Importa axios para las peticiones al backend
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
     <Router>
       <Routes>
         <Route
-          path="/Catregorias"
+          path="/Categorias"
           element={
             <VistaCategorias
               onUpload={handleUpload}
