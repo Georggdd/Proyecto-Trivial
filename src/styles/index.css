@@ -27,3 +27,12 @@ La 1ª línea hace que el borde se mueva hacía arriba e izquierda (por el negat
 La 2ª línea es para el desplazamiento en la dirección opuesta (abajo derecha).
 
 Lo pongo en css y no en tailwind.config porque no lo he conseguido*/
+
+
+@font-face {
+  font-family: 'Milford Condensed';
+  src: url('/src/assets/fonts/MilfordCondensed.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
