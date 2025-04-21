@@ -16,7 +16,7 @@ function Tablero() {
 
 
 
-    <div className="flex flex-col min-h-screen w-full"
+    <div className="flex flex-col min-h-screen w-full pt-32"
       style={{
         backgroundImage: `url(${Mesa})`,
         backgroundSize: 'cover',
@@ -25,7 +25,7 @@ function Tablero() {
     >
       <Header />
       {/* Contenedor Tablero */}
-      <div className="flex-grow flex items-center justify-center relative">
+      <div className="flex-grow flex items-center justify-center relative pb-10">
         <div className="relative aspect-square w-[90%] max-w-[700px]">
           {/* Fondo del tablero */}
           <img
