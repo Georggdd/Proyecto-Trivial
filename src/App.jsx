@@ -43,6 +43,7 @@ function App() {
           }
         />
         <Route path="/tablero" element={<Tablero />} />
+        <Route path="/login" element={<Login />} />
         {/* Ejemplo de rutas adicionales */}
         {/* <Route path="/login" element={<Login />} /> */}
         {/* <Route path="/lobby" element={<Lobby />} /> */}
