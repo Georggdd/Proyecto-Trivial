@@ -37,13 +37,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
       <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-24">
         {/* Izquierda: Tirada doble + imagen del dado */}
         <BotonSimple icono={Tirada} onClick={() => alert('Tirada doble')} extraClass="top-8">
-          {valorDado && (
-            <img
-              src={carasDado[valorDado - 1]}
-              alt={`Dado ${valorDado}`}
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-12"
-            />
-          )}
+
         </BotonSimple>
 
         {/* Centro: Dado */}
@@ -54,6 +48,13 @@ const ZonaInferior = ({ onDadoResultado }) => {
             className="w-36 h-36 hover:scale-105 transition-transform"
           />
         </DadoModal>
+        {valorDado && (
+          <img
+            src={carasDado[valorDado - 1]}
+            alt={`Dado ${valorDado}`}
+            className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-12 h-12"
+          />
+        )}
 
         {/* Derecha: Comodín */}
         <BotonSimple icono={Comodin} onClick={() => alert('Usar comodín')} extraClass="top-8" />
