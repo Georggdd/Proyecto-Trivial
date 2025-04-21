@@ -8,7 +8,8 @@ const Ranking = ({nombre, puntos}) => {
     <div className="">
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
-      <div className="alineacion w-full gap-10 border-naranja border-2 rounded-full shadow-lg relative">
+      <div className="alineacion w-full gap-10 
+      rounded-full shadow-lg relative">
         {/*
           flex: el contenedor se divide en columnas
           items-center alineación vertical

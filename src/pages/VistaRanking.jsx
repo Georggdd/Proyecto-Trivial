@@ -7,14 +7,15 @@ import Ranking from "../components/Ranking";
 
 const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del archivo PadreRanking.jsx
     //recibe propiedades de padreRanking
-  // Validamos que `equipo` es un array antes de hacer .map()
-  if (!Array.isArray(equipo)) {
-    return <div>Cargando...</div>; // O algún otro mensaje mientras no se tenga el array
-  }
+    // Validamos que `equipo` es un array antes de hacer .map()
+    if (!Array.isArray(equipo)) {
+        return <div>Cargando...</div>; // O algún otro mensaje mientras no se tenga el array
+    }
     return (
 
         <div>
             <Header />
+
             {/* {imagenes de fondo (banderines y pizarra)} */}
             <div className="relative">
                 <img src="../assets/img/banderines.png"
@@ -28,7 +29,7 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
             <div className="w-screen">
 
                 {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
-                <div className=" flex mt-[20vh] p-[6vh]" >
+                <div className=" flex mt-[30vh] p-[6vh]" >
 
                     {/* -----------------TABLERO  2/3 ------------------- */}
                     <div className="w-2/3 relative ">
@@ -55,21 +56,30 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
                     </div>
 
                     {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
-                    <div className="flex justify-center items-center flex-col w-1/3 z-40 gap-6">
-                        <h7 className="text-6xl text-center text-naranja font-personalizada font-bold">Gracias por participar</h7>
-                      
-                        <img src="../assets/img/carpeta_descarga.png" alt="Carpeta Descarga Profesores"className="items-end" />
+                    <div className="flex justify-center flex-col w-1/3 z-40 gap-6">
+                        <h7 className="text-8xl text-center text-naranja font-personalizada font-bold">Gracias por participar
+                        </h7>
 
-                        <p className="text-4xl text-right text-bottom text-naranja font-personalizada font-bold"> Descarga de resultados: </p> <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
-                        download="Preguntas-Trivial-BBDD.xlsx"
-                        className="inline-block bg-naranja text-white text-3xl font-semibold py-2 px-4 rounded-full cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl "> aquí </a>
-                       
-
-
+  {/* -----------------nuevo contenedor donde se almacena descarga, carpeta y enlace------------------- */}
+  <div className=" flex">
+                            <p className="text-4xl text-right text-bottom text-naranja font-personalizada font-bold">
+                                Descarga de resultados:
+                            </p>
+                            <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
+                                download="Preguntas-Trivial-BBDD.xlsx"
+                                className="text-white text-3xl font-semibold cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl">
+                                <img src="../assets/img/carpeta_descarga_naranja.png"
+                                    alt="Carpeta Descarga Profesores"
+                                    className="" />
+                                <p className="-mt-9 text-center font-personalizada">
+                                    aquí
+                                </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-            </div>
+            </div >
         </div >
 
     );
