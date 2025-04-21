@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import Cara1 from '../assets/Cara1.svg';
-import Cara2 from '../assets/Cara2.svg';
-import Cara3 from '../assets/Cara3.svg';
-import Cara4 from '../assets/Cara4.svg';
-import Cara5 from '../assets/Cara5.svg';
-import Cara6 from '../assets/Cara6.svg';
 
 const carasDado = [
-  { valor: 1, imagen: Cara1 },
-  { valor: 2, imagen: Cara2 },
-  { valor: 3, imagen: Cara3 },
-  { valor: 4, imagen: Cara4 },
-  { valor: 5, imagen: Cara5 },
-  { valor: 6, imagen: Cara6 },
+  { valor: 1, imagen: "/Cara1.svg" },
+  { valor: 2, imagen: "/Cara2.svg" },
+  { valor: 3, imagen: "/Cara3.svg" },
+  { valor: 4, imagen: "/Cara4.svg" },
+  { valor: 5, imagen: "/Cara5.svg" },
+  { valor: 6, imagen: "/Cara6.svg" },
 ];
 
 const DadoModal = ({ children, onResultado }) => {
@@ -57,11 +51,11 @@ const DadoModal = ({ children, onResultado }) => {
       {mostrarModal && createPortal(
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]"
-          onClick={cerrarModal} // ← permite cerrar al hacer clic fuera
+          onClick={cerrarModal}
         >
           <div
             className="w-60 h-60 bg-white rounded-full flex items-center justify-center shadow-lg relative"
-            onClick={(e) => e.stopPropagation()} // ← evita cerrar al hacer clic dentro del dado
+            onClick={(e) => e.stopPropagation()}
           >
             {caraActual && caraActual.imagen ? (
               <img
@@ -90,3 +84,4 @@ const DadoModal = ({ children, onResultado }) => {
 };
 
 export default DadoModal;
+

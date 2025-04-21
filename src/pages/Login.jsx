@@ -1,30 +1,22 @@
 import React, { useState } from 'react';
-import  Header from '../components/Header';
-import fondo from '../assets/fondo.svg';
-import pizarra from '../assets/pizarra.svg';
-import logo from '../assets/logo.svg';
-import profesor from '../assets/profesor.svg';
-
-
+import Header from '../components/Header';
 
 const Login = () => {
     return (
-
         <div
             className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center"
-            style={{ backgroundImage: `url(${fondo})` }}
+            style={{ backgroundImage: `url(/assets/Fondo.svg)` }}
         >
-
             <Header />
+
             {/* Pizarra con fondo */}
             <div
                 className="relative bg-no-repeat bg-cover bg-center p-10 rounded shadow-lg w-full max-w-2xl min-h-[500px] flex items-center justify-center"
-                style={{ backgroundImage: `url(${pizarra})` }}
+                style={{ backgroundImage: `url(/assets/Pizarra-login.svg)` }}
             >
-
                 {/* Imagen del profesor posicionada a la izquierda del form sin afectar su centrado */}
                 <img
-                    src={profesor}
+                    src="/assets/Profesor.svg"
                     alt="Profesor"
                     className="hidden md:block absolute left-32 w-40 h-auto"
                 />
@@ -32,7 +24,7 @@ const Login = () => {
                 {/* Formulario completamente centrado en la pizarra */}
                 <form className="text-white font-secular z-10">
                     <div className="w-32 space-y-4 text-sm">
-                        <img src={logo} alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />
+                        <img src="/img/Logo_educación.png" alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />
 
                         <div className="flex flex-col">
                             <label htmlFor="usuario" className="mb-1 text-black font-itim">Usuario:</label>
@@ -58,7 +50,6 @@ const Login = () => {
                         >
                             Entrar
                         </button>
-
                     </div>
                 </form>
             </div>

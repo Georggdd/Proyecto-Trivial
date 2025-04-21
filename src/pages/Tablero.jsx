@@ -1,6 +1,5 @@
 import ZonaInferior from '../components/ZonaInferior';
 import Ficha from '../components/Ficha';
-import Mesa from '../assets/Mesa.svg';
 import Header from '../components/Header';
 import { useJuegoStore } from '../hooks/useJuegoStore';
 import { casillas } from '../components/Posiciones/tableroData'; // o la ruta correcta según tu estructura
@@ -18,10 +17,11 @@ function Tablero() {
 
     <div className="flex flex-col min-h-screen w-full pt-32"
       style={{
-        backgroundImage: `url(${Mesa})`,
+        backgroundImage: `url(/Mesa.svg)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
+
     >
       <Header />
       {/* Contenedor Tablero */}
