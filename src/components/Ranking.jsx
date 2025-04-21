@@ -5,11 +5,11 @@ const Ranking = ({nombre, puntos}) => {
   return (
     <>
 
-    <div className="">
+  
       {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
-      <div className="alineacion w-full gap-10 
-      rounded-full shadow-lg relative">
+      <div className="alineacion w-full gap-5 
+      rounded-full relative">
         {/*
           flex: el contenedor se divide en columnas
           items-center alineación vertical
@@ -28,15 +28,15 @@ const Ranking = ({nombre, puntos}) => {
 
 
         {/* //  <-----------IMAGEN---------------> */}
-        <div className=" bg-transparent ml-16"> {/* bg: sin fondo, ml para dejar margen a la izquierda */}
-          <img src='/assets/img/ninio.png' className="w-52 -mt-3 -ml-8" alt="Imagen del equipo" />
+        <div className=" bg-transparent"> {/* bg: sin fondo, ml para dejar margen a la izquierda */}
+          <img src='/assets/img/ninio.png' className="w-[7vw]" alt="Imagen del equipo" />
           {/* w: establece el ancho de la imagen
           mt: margen superior negativo, para que sobresalga del espacio
           -ml margen izquierdo negativo,  */}
         </div>
 
         {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
-        <div className="w-2/4 h-32 bg-white  rounded-full border-naranja border-2 text-naranja font-personalizada alineacion">
+        <div className="w-2/4  bg-white  rounded-full border-naranja border-2 text-naranja alineacion">
           { /*w-2/4 lo que ocupa en el espacio.
         h: la altura del contenedor interno.
         bg: el color de fondo
@@ -44,18 +44,18 @@ const Ranking = ({nombre, puntos}) => {
         border-4 el grosor
         flex, items-center justify-center: elementos dentro de flex centrados vertical y horizontalmente.
         */ }
-          <h3 className="text-center font-personalizada text-5xl">
+          <h3 className="text-center font-personalizada text-[4vw]">
             {nombre}
           </h3>
         </div>
 
 
         {/* //  <-----------PUNTUACIÓN----------------> */}
-        <h1 className="w-1/4 h-32 bg-white rounded-full border-naranja text-naranja border-2 alineacion mr-16">
-          <h3 className="text-center text-7xl">
+        <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja alineacion">
+          <h3 className="text-center font-personalizada text-[4vw]">
             {puntos}
             </h3>
-        </h1>
+        </div>
 
       </div>
       {/* //  <-----------fin CONTENEDOR individual----------------> */}
@@ -63,7 +63,6 @@ const Ranking = ({nombre, puntos}) => {
 
 
 
-    </div>
 
     </>
   );

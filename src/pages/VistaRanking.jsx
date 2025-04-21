@@ -5,9 +5,12 @@ import Ranking from "../components/Ranking";
 // cambié el nombre del componente a prueba con MAYUSCULA, PERO NO  lo reconoce
 // import PruebaFormulario from "../components/PruebaFormulario";
 
+
 const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del archivo PadreRanking.jsx
     //recibe propiedades de padreRanking
     // Validamos que `equipo` es un array antes de hacer .map()
+    const numequipo = equipo.length < 5 ? "gap-6" : "gap-1";
+    
     if (!Array.isArray(equipo)) {
         return <div>Cargando...</div>; // O algún otro mensaje mientras no se tenga el array
     }
@@ -32,7 +35,7 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
                 <div className=" flex mt-[30vh] p-[6vh]" >
 
                     {/* -----------------TABLERO  2/3 ------------------- */}
-                    <div className="w-2/3 relative ">
+                    <div className="w-2/3 relative  ">
                         {/* relative para posicionar el texto dentro */}
                         <img src="../assets/img/tablero_base.png" className=" w-full h-auto z-30 relative" alt="Tablero mesa"></img>
                         {/* <div className="flex flex-col justify-center items-center"> */}
@@ -45,7 +48,7 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
                             <Ranking />
                             <Ranking /> */}
 
-                        <div className="absolute top-0 left-0 w-full h-full z-40 grid grid-rows-5 gap-1 p-10">
+                        <div className={`absolute top-0 left-0 w-full h-full z-40 flex flex-col alineacion pb-[11vw] pr-[5vw] pl-[3vw] pt-[10vw] ${numequipo}`}>
                             {equipo.map((x, y) => ( //mapeamos los datos de importados
                                 <Ranking key={y} nombre={x.nombre} puntos={x.puntos} />
                             ))
@@ -56,25 +59,37 @@ const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del ar
                     </div>
 
                     {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
-                    <div className="flex justify-center flex-col w-1/3 z-40 gap-6">
-                        <h7 className="text-8xl text-center text-naranja font-personalizada font-bold">Gracias por participar
-                        </h7>
+                    <div className="flex flex-col w-1/3 z-40 p-8">
 
-  {/* -----------------nuevo contenedor donde se almacena descarga, carpeta y enlace------------------- */}
-  <div className=" flex">
-                            <p className="text-4xl text-right text-bottom text-naranja font-personalizada font-bold">
-                                Descarga de resultados:
-                            </p>
-                            <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
-                                download="Preguntas-Trivial-BBDD.xlsx"
-                                className="text-white text-3xl font-semibold cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl">
-                                <img src="../assets/img/carpeta_descarga_naranja.png"
-                                    alt="Carpeta Descarga Profesores"
-                                    className="" />
-                                <p className="-mt-9 text-center font-personalizada">
-                                    aquí
+                        {/* -----------------AGRADECIMIENTO ------------------- */}
+                        <div className="h-1/2 flex justify-center items-center">
+                            <h7 className="text-[5vw] text-center text-naranja font-personalizada font-bold">Gracias por participar
+                            </h7>
+                        </div>
+
+                        {/* -----------------descarga, carpeta y enlace------------------- */}
+                        <div className="h-1/2 flex justify-end items-end">
+                            <div className="w-2/3">
+                                <p className="text-[3vw] text-naranja font-personalizada font-bold">
+                                    Descarga de resultados:
                                 </p>
-                            </a>
+                            </div>
+
+                            <div>
+                                <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
+                                    download="Preguntas-Trivial-BBDD.xlsx"
+                                    className="text-white text-3xl font-semibold cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl">
+                                    <img src="../assets/img/carpeta_descarga_naranja.png"
+                                        alt="Carpeta Descarga Profesores"
+                                        className=""
+                                    />
+                                    <p className="-mt-9 text-center font-personalizada">
+                                        aquí
+                                    </p>
+                                </a>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
