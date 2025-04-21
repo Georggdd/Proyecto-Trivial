@@ -1,14 +1,18 @@
-import Tablero from './components/Tablero';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Tablero from './pages/Tablero';
+// Importa otras páginas aquí en el futuro, como Login, Lobby, etc.
 
-
-//Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
-export default function App() {
+function App() {
   return (
-    <div className="w-screen h-screen">
-      <div className="bg-tablero w-full h-full">
-
-      <Tablero></Tablero>
-      </div>
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/tablero" element={<Tablero />} />
+        {/* Ejemplo de rutas adicionales */}
+        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/lobby" element={<Lobby />} /> */}
+      </Routes>
+    </Router>
+  );
 }
+
+export default App;

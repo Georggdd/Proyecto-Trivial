@@ -1,7 +1,7 @@
-import ZonaInferior from './ZonaInferior';
-import Ficha from './Ficha';
+import ZonaInferior from '../components/ZonaInferior';
+import Ficha from '../components/Ficha';
 import Mesa from '../assets/Mesa.svg';
-import Header from './Header';
+import Header from '../components/Header';
 import { useJuegoStore } from '../hooks/useJuegoStore';
 import { casillas } from '../components/Posiciones/tableroData'; // o la ruta correcta según tu estructura
 
