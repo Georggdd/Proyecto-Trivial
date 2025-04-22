@@ -17,7 +17,7 @@ function Tablero() {
 
     <div className="flex flex-col min-h-screen w-full pt-32"
       style={{
-        backgroundImage: `url(/Mesa.svg)`,
+        backgroundImage: `url(/assets/Mesa.svg)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}

@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 const carasDado = [
-  { valor: 1, imagen: "/Cara1.svg" },
-  { valor: 2, imagen: "/Cara2.svg" },
-  { valor: 3, imagen: "/Cara3.svg" },
-  { valor: 4, imagen: "/Cara4.svg" },
-  { valor: 5, imagen: "/Cara5.svg" },
-  { valor: 6, imagen: "/Cara6.svg" },
+  { valor: 1, imagen: "/assets/Cara1.svg" },
+  { valor: 2, imagen: "/assets/Cara2.svg" },
+  { valor: 3, imagen: "/assets/Cara3.svg" },
+  { valor: 4, imagen: "/assets/Cara4.svg" },
+  { valor: 5, imagen: "/assets/Cara5.svg" },
+  { valor: 6, imagen: "/assets/Cara6.svg" },
 ];
 
 const DadoModal = ({ children, onResultado }) => {
