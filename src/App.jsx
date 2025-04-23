@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import RankingPage from './pages/ranking'
+import PruebasElevenLabs from './pages/Pruebas-elevenlabs'
 
 //Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<RankingPage />} />
+        <Route path="/" element={<PruebasElevenLabs />} />
       </Routes>
     </Router>
   )
