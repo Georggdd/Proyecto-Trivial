@@ -6,6 +6,8 @@ import VistaCategorias from "./pages/VistaCategorias";
 import Login from "./pages/Login";
 import Equipos from './pages/TarjetaEquipo'; // Asegúrate de que la ruta sea correcta
 import axios from "axios"; // Importa axios para las peticiones al backend
+import VistaRanking from './pages/VistaRanking';
+import VistaCategorias from './pages/VistaCategorias';
 
 function App() {
   const [preguntas, setPreguntas] = useState([]);
@@ -49,6 +51,8 @@ function App() {
         <Route path="/tablero" element={<Tablero />} />
         <Route path="/login" element={<Login />} />
         <Route path="/TarjetaEquipo" element={<Equipos />} />
+        <Route path="/VistaRanking" element={<VistaRanking />} />
+        <Route path="/VistaCategorias" element={<VistaRanking />} />
         {/* Ejemplo de rutas adicionales */}
         {/* <Route path="/lobby" element={<Lobby />} /> */}
         {/* <Route path="/equipos" element={<EquiposView />} /> */}
