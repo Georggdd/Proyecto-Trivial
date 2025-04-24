@@ -47,7 +47,7 @@ const Header = () => {
           >
             <HamburgerIcon />
           </button>
-          
+          =
           {/* Menú desplegable */}
           {isMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg px-2 py-2">
