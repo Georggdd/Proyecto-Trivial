@@ -13,14 +13,10 @@ function App() {
     formData.append("archivo", file); // "archivo" debe coincidir con el nombre en multer (backend)
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      setPreguntas(response.data.preguntas); // Guarda las preguntas procesadas
+      const response = await axios.post("/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setPreguntas(response.data.preguntas);
       setError(null);
     } catch (err) {
       setError(err.response?.data?.error || "Error al procesar el archivo");

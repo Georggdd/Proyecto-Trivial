@@ -1,95 +1,92 @@
-import express from "express";
-import multer from "multer";
-import csv from "csv-parser";
-import fs from "fs";
-import cors from "cors";
-
-/*express: Framework de Node.js	para crear el servidor web y manejar rutas (endpoints).
-multer:	Middleware. Permite subir archivos desde formularios (como el .csv).
-csv-parser: Librería de lectura. Sirve para leer archivos .csv fila por fila.
-fs: File System. Accede al sistema de archivos: leer, borrar, escribir archivos.
-cors: Middleware. Permite peticiones desde otro dominio (frontend en React).
-*/
+import express from 'express'; //Framework para construir aplicaciones web en Node.js.
+import multer from 'multer';//Middleware para manejar la subida de archivos, en este caso, se usará para manejar los archivos CSV.
+import csv from 'csv-parser';//Biblioteca para leer y analizar archivos CSV.
+import fs from 'fs';//Módulo nativo de Node.js para trabajar con el sistema de archivos, se usará para leer y eliminar el archivo después de procesarlo.
+import cors from 'cors';//Middleware que permite que el servidor backend reciba peticiones de un dominio diferente (en este caso, de React, el frontend).
 
 const app = express();
-app.use(cors()); // Permite la comunicación entre el front y el back.
+app.use(cors()); // Permite peticiones desde React.
 
-// Configuración de Multer para guardar archivos en la carpeta 'uploads'.
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: 'uploads/' });
+//Configura un almacenamiento temporal para los archivos subidos. Los archivos se guardarán en la carpeta uploads/ del servidor. 
+//dest define el directorio donde Multer guardará los archivos temporalmente.
 
-// Endpoint para subir archivos CSV
-app.post("/upload", upload.single("archivo"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No se subió ningún archivo" });
+// Ruta para la subida de archivos
+app.post('/upload', upload.single('archivo'), (req, res) => {
+  /*app.post('/upload'): Define una ruta POST en el servidor para recibir las solicitudes de subida de archivos.
+    upload.single('archivo'): Multer se encarga de manejar la subida del archivo. archivo es el nombre del campo del formulario en el frontend que contiene el archivo. Solo se admite un archivo por solicitud.
+   (req, res): Los parámetros req y res son los objetos de solicitud y respuesta de Express.*/
+  const archivoCSV = req.file; //Multer coloca el archivo subido en el objeto req.file. Si no se ha subido ningún archivo, req.file será undefined.
+  if (!archivoCSV) { //Verifica si no se ha subido ningún archivo. Si es así, responde con un error 400 y un mensaje indicando que no se ha subido un archivo.
+    return res.status(400).json({ error: 'No se ha subido ningún archivo' });
   }
-  /*app.post('/upload', ...): Crea un endpoint accesible desde el frontend mediante POST a /upload.
-upload.single('archivo'): Usa Multer para aceptar un solo archivo (el input debe llamarse archivo).
-(req, res): La función que maneja la petición y la respuesta.
-En la última parte se verifica si realmente se subió un archiv, si no, responde con un error.*/
 
-  //Preparación de arrays
-  const preguntasPorDificultad = { facil: [], media: [], dificil: [] };
-  const resultados = [];//Almacenará todas las preguntas válidas del CSV.
-  const errores = []; //Guardará las filas que estén mal formateadas.
+  const resultados = [];//Un array para almacenar las preguntas que han sido validadas correctamente.
+  const errores = [];//Un array para almacenar las filas del archivo CSV que no sean válidas.
 
-  // Lectura y validación del archivo CSV
-  fs.createReadStream(req.file.path) //Lee el archivo .csv como flujo de datos.
-    .pipe(csv()) //Envía cada línea del CSV al lector csv-parser.
-    .on("data", (data) => { //	Se ejecuta para cada fila del archivo.
+  try {
+    fs.createReadStream(req.file.path)//Lee el archivo CSV desde el sistema de archivos utilizando la ruta temporal donde Multer lo guardó.
+      .pipe(csv()) //Pasa el archivo a través del csv-parser para convertir el contenido del archivo CSV en objetos JavaScript.
+      .on('data', (data) => {//Por cada fila del archivo CSV, el evento data es disparado, y data es un objeto que contiene los datos de esa fila.
+        const opciones = { //Crea un objeto con las opciones de respuesta (a, b, c, d) de cada fila.
+          a: data.opcion_a,
+          b: data.opcion_b,
+          c: data.opcion_c,
+          d: data.opcion_d,
+        };
 
-      // Validar cada fila
-      const isValid = //Comprueba si la fila tiene todas las columnas y que la respuesta correcta esté entre las opciones.
-        data.pregunta &&
-        data.opcion1 &&
-        data.opcion2 &&
-        data.opcion3 &&
-        data.opcion4 &&
-        data.respuesta_correcta &&
-        data.dificultad && 
-        [data.opcion1, data.opcion2, data.opcion3, data.opcion4].includes(
-          data.respuesta_correcta
-        );
+        const correcta = data.correcta?.toLowerCase();//Extrae la respuesta correcta de la fila, asegurándose de que esté en minúsculas (en caso de que la respuesta esté en mayúsculas).
+
+        // Validación de las filas
+        const isValid = //Valida si la fila tiene todos los campos necesarios y que la respuesta correcta esté en uno de los valores permitidos 
+          data.pregunta &&
+          opciones.a &&
+          opciones.b &&
+          opciones.c &&
+          opciones.d &&
+          ["a", "b", "c", "d"].includes(correcta);
 
         if (isValid) {
-          // Clasificamos las preguntas por dificultad
-          if (data.dificultad === "facil") {
-            preguntasPorDificultad.facil.push(data);
-          } else if (data.dificultad === "media") {
-            preguntasPorDificultad.media.push(data);
-          } else if (data.dificultad === "dificil") {
-            preguntasPorDificultad.dificil.push(data);
-          } else {
-            errores.push(`Fila con dificultad desconocida: ${JSON.stringify(data)}`);
-          }
-          resultados.push(data); // Guardamos las preguntas válidas
+          resultados.push({
+            pregunta: data.pregunta,
+            opcion1: opciones.a,
+            opcion2: opciones.b,
+            opcion3: opciones.c,
+            opcion4: opciones.d,
+            respuesta_correcta: opciones[correcta],
+            dificultad: data.dificultad,
+          });
         } else {
-          errores.push(`Fila inválida: ${JSON.stringify(data)}`); // Si la fila no es válida, la añadimos a errores
+          errores.push(`Fila inválida: ${JSON.stringify(data)}`);
         }
+        //Si la fila es válida, se guarda en el array resultados un objeto con los detalles de la pregunta.
+        //Si la fila no es válida, se agrega un mensaje de error al array errores.
       })
-    .on("end", () => { //Cuando termina de leer el archivo
-      fs.unlinkSync(req.file.path); //Elimina el archivo .csv subido (para no ocupar espacio innecesario en el servidor).
+      .on('end', () => {//Cuando se termina de leer el archivo, el evento end es disparado.
+        fs.unlinkSync(req.file.path); // Elimina el archivo después de procesarlo
 
-      if (errores.length > 0) {
-        return res.status(400).json({
-          error: "Algunas filas son inválidas",
-          detalles: errores,
-          preguntasValidas: resultados,
-        });
-      }
-
-      // Respondemos con las preguntas organizadas por dificultad
-      res.json({
-        mensaje: "Archivo procesado correctamente",
-        preguntas: preguntasPorDificultad,
+        if (errores.length > 0) {
+          res.status(400).json({
+            error: 'Algunas filas son inválidas',
+            detalles: errores,
+            preguntasValidas: resultados,
+          });
+        } else {
+          res.json({
+            mensaje: 'Archivo procesado correctamente',
+            preguntas: resultados,
+          });
+          //Si hay errores en el archivo, se responde con un error 400, los detalles de los errores y las preguntas válidas.
+          //Si no hay errores, se responde con un mensaje indicando que el archivo se procesó correctamente y se incluyen las preguntas válidas.
+        }
       });
-    })
-    .on("error", (error) => {
-      res.status(500).json({ error: "Error al procesar el archivo CSV" });
-    });
+  } catch (error) {
+    console.error("❌ Error interno del servidor:", error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }//Si ocurre un error durante el procesamiento, se captura en el bloque catch y se responde con un error 500 (error interno del servidor).
 });
 
-//Iniciar el servidor
-const PORT = 3000;
-app.listen(PORT, () => {
+const PORT = 3000;//Establece el puerto en el que el servidor escuchará las peticiones.
+app.listen(PORT, () => {//Inicia el servidor en el puerto especificado y muestra un mensaje en la consola indicando que el servidor está funcionando.
   console.log(`Servidor backend en http://localhost:${PORT}`);
 });

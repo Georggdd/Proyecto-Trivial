@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
 
-export default function VistaCategorias() {
+export default function VistaCategorias({ onUpload, preguntas, error }) {
   const [Menu, setMenu] = useState(false); //Controla si el menú de las subcategorías esta visible o no.
   const [selectedFile, setSelectedFile] = useState(null); //Almacena el archivo seleccionado en "customizar"si sube alguno.
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
@@ -21,6 +21,7 @@ export default function VistaCategorias() {
   const SubcategoriaSelect = (subcategoria) => {
     setCategoriaSeleccionada(subcategoria);
     setMenu(false); //Se ejecuta cuando el usuario selecciona una categoría y pone el Menu en falso.
+    setSelectedFile(null);
   };
 
   const FileChange = (event) => {
@@ -43,7 +44,7 @@ export default function VistaCategorias() {
 
   return (
     <div
-      className="h-full w-full relative flex flex-col min-h-screen bg-[url('/assets/img/Mesa.svg')] bg-cover border-4 border-double border-orange-600 bg-transparent"
+      className="h-full w-full relative flex flex-col min-h-screen bg-[url('/assets/img/Mesa.svg')] bg-cover border-4 border-double border-orange-600 bg-transparent overflow-hidden"
       onClick={ClickOutside} //Cerrar el menú si se hace click fuera de el.
     >
       {/* Contenedor del Header con efecto de oscurecimiento */}
@@ -76,13 +77,11 @@ export default function VistaCategorias() {
         {/*setMenu(!Menu) cambia el estado de Menu invirtiendo su valor actual. No se puede usar true o false porque con true siempre estaría bierto y con false nunca se abriría.
           La posición se calcula usando porcentajes y se posicionan tomando como referencia el contenedor padre que debe estar en "relative" y los hijos en "absolute".*/}
 
-        <Customizar setSelectedFile={setSelectedFile} />
-        {selectedFile && (
-          <p className="text-white text-lg mt-2 font-semibold">
-            Archivo seleccionado:{" "}
-            <span className="underline">{selectedFile.name}</span>
-          </p>
-        )}
+        <Customizar
+          setSelectedFile={setSelectedFile}
+          selectedFile={selectedFile}
+          onUpload={onUpload}
+        />
 
         <Feature_Categorias
           texto="Equipos"
@@ -113,7 +112,7 @@ export default function VistaCategorias() {
                 key={subcategoria}
                 texto={subcategoria}
                 onClick={() => SubcategoriaSelect(subcategoria)}
-                className="sm:w-[300px] h-[60px] text-2xl border-4 border-morado hover:border-black"
+                className="sm:w-[300px] h-[60px] text-2xl border-2 border-morado hover:border-black"
               />
             ))}
           </div>
