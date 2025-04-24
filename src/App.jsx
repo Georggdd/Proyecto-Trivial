@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Tablero from "./pages/Tablero";
 import VistaCategorias from "./pages/VistaCategorias";
 import Login from "./pages/Login";
+import Equipos from './pages/TarjetaEquipo'; // Asegúrate de que la ruta sea correcta
 import axios from "axios"; // Importa axios para las peticiones al backend
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         />
         <Route path="/tablero" element={<Tablero />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/TarjetaEquipo" element={<Equipos />} />
         {/* Ejemplo de rutas adicionales */}
         {/* <Route path="/lobby" element={<Lobby />} /> */}
         {/* <Route path="/equipos" element={<EquiposView />} /> */}
