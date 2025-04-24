@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // 👈 Importa el hook de navegación
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
 
 export default function VistaCategorias() {
-  const [Menu, setMenu] = useState(false); //Controla si el menú de las subcategorías esta visible o no.
-  const [selectedFile, setSelectedFile] = useState(null); //Almacena el archivo seleccionado en "customizar"si sube alguno.
+  const navigate = useNavigate(); // 👈 Inicializa el hook
+
+  const [Menu, setMenu] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [equiposHechos, setEquiposHechos] = useState(false);
 
@@ -58,50 +61,56 @@ export default function VistaCategorias() {
       z-10 hace referencia a la superposición de elementos. Cuanto mayor índice z, mayor prioridad.
        ${Menu ? "opacity-30" : "opacity-100"}`}:Cuando el menú está abierto crea un efecto de oscurecimiento sobre todos los elementos y cuando no, se ve normal.*/}
 
-      {/* Contenedor de los botones principales con efecto de oscurecimiento */}
-      <div
-        className={`absolute top-[28%] left-[35%] flex flex-col items-center justify-center flex-1 gap-6 mt-50 z-20 transition-all duration-300 ${Menu ? "opacity-30" : "opacity-100"}`}
-      >
-        <Feature_Categorias
-          texto={categoriaSeleccionada ? categoriaSeleccionada : "Categorías"} // Cambia el texto del botón según la subcategoría seleccionada
-          onClick={() => {
-            setMenu(!Menu);
-            if (categoriaSeleccionada) {
-              setCategoriaSeleccionada(null); // Si se ha seleccionado una subcategoría, la quita al pulsar el botón de nuevo
-            }
-            setSelectedFile(null); // Si selecciona categoría, se borra el archivo
-          }}
-          className="w-[400px] h-[100px] text-3xl"
-        />
-        {/*setMenu(!Menu) cambia el estado de Menu invirtiendo su valor actual. No se puede usar true o false porque con true siempre estaría bierto y con false nunca se abriría.
-          La posición se calcula usando porcentajes y se posicionan tomando como referencia el contenedor padre que debe estar en "relative" y los hijos en "absolute".*/}
+      {/* Contenedor centrado de profesor + botones */}
+      <div className={`flex flex-1 justify-center items-center z-20 transition-all duration-300 ${Menu ? "opacity-30" : "opacity-100"}`}>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-12">
 
-        <Customizar setSelectedFile={setSelectedFile} />
-        {selectedFile && (
-          <p className="text-white text-lg mt-2 font-semibold">
-            Archivo seleccionado:{" "}
-            <span className="underline">{selectedFile.name}</span>
-          </p>
-        )}
+          {/* Imagen del profesor */}
+          <img
+            src="/assets/img/profesor.jpg"
+            alt="Profesor"
+            className={`w-[300px] h-auto object-contain transition-opacity duration-300 ${Menu ? "opacity-40" : "opacity-70"}`}
+          />
 
-        <Feature_Categorias
-          texto="Equipos"
-          className="w-[400px] h-[100px] text-3xl"
-        />
+          {/* Botones */}
+          <div className="flex flex-col items-center justify-center gap-6">
+            <Feature_Categorias
+              texto={categoriaSeleccionada ? categoriaSeleccionada : "Categorías"} // Cambia el texto del botón según la subcategoría seleccionada
+              onClick={() => {
+                setMenu(!Menu);
+                if (categoriaSeleccionada) {
+                  setCategoriaSeleccionada(null); // Si se ha seleccionado una subcategoría, la quita al pulsar el botón de nuevo
+                }
+                setSelectedFile(null); // Si selecciona categoría, se borra el archivo
+              }}
+              className="w-[400px] h-[100px] text-3xl"
+            />
+            {/*setMenu(!Menu) cambia el estado de Menu invirtiendo su valor actual. No se puede usar true o false porque con true siempre estaría bierto y con false nunca se abriría.
+              La posición se calcula usando porcentajes y se posicionan tomando como referencia el contenedor padre que debe estar en "relative" y los hijos en "absolute".*/}
 
-        <Feature_Categorias
-          texto="START"
-          className={`w-[400px] h-[100px] text-3xl ${puedeIniciar ? "cursor-pointer" : "bg-orange-600 cursor-not-allowed"}`}
-        />
+            <Customizar setSelectedFile={setSelectedFile} />
+            {selectedFile && (
+              <p className="text-white text-lg mt-2 font-semibold">
+                Archivo seleccionado:{" "}
+                <span className="underline">{selectedFile.name}</span>
+              </p>
+            )}
 
-        {selectedFile && (
-          <p className="text-white mt-2">
-            Archivo seleccionado: {selectedFile.name}
-          </p>
-        )}
+            {/* 🔗 Botón "Equipos" que redirige */}
+            <Feature_Categorias
+              texto="Equipos"
+              className="w-[400px] h-[100px] text-3xl"
+              onClick={() => navigate("/TarjetaEquipo")}
+            />
+
+            {selectedFile && (
+              <p className="text-white mt-2">
+                Archivo seleccionado: {selectedFile.name}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
-      {/*Si selectedFile tiene un valor (el usuario sube un archivo, el <p> mostrará su nombre.{selectedFile.name} obtiene el nombre del archivo.
-        Si selectedFile es null no se muestra nada.*/}
 
       {/* Menú con subcategorías */}
       {/*Solo se muestra si Menu es true*/}
@@ -125,12 +134,6 @@ export default function VistaCategorias() {
        key={subcategoria}:clave única por cada elemento.
        texto={subcategoria}: texto del botón.
        onClick={() => SubcategoriaSelect(subcategoria)}: llama a SubcategoriaSelect() al hacer click y cierra el menú.*/}
-
-      {/* Contenedor adicional con foto del profesor y opacidad */}
-      <div
-        className={`absolute z-10 left-[4%] top-[32%] w-[500px] h-[400px] bg-[url('/assets/img/profesor.jpg')] bg-cover bg-center transition-opacity duration-300 ${Menu ? "opacity-40" : "opacity-70"}`}
-      ></div>
-      {/*absolute: permite colocar el elemento en una posición exacta sin afectar a otros elementos .Si fuese relative se comportaría como un bloque normal y empujaría otros elementos en la página.*/}
     </div>
   );
 }

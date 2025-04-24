@@ -2,8 +2,8 @@ import ZonaInferior from '../components/ZonaInferior';
 import Ficha from '../components/Ficha';
 import Header from '../components/Header';
 import { useJuegoStore } from '../hooks/useJuegoStore';
-import { casillas } from '../components/Posiciones/tableroData'; // o la ruta correcta según tu estructura
-
+import { casillas } from '../components/Posiciones/tableroData';
+import { useNavigate } from "react-router-dom"; 
 
 function Tablero() {
 
@@ -11,6 +11,7 @@ function Tablero() {
   const setValorDado = useJuegoStore((state) => state.setValorDado);
   const { casillasActivas, moverFicha } = useJuegoStore();
   const debug = true;
+  const navigate = useNavigate();
   return (
 
 
@@ -72,7 +73,12 @@ function Tablero() {
               onClick={() => moverFicha(id)}
             />
           ))}*/}
-
+          <button
+            onClick={() => navigate("/VistaRanking")}
+            className="absolute top-4 right-4 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 z-50"
+          >
+            Ver Ranking
+          </button>
           <Ficha position={fichaPos} />
         </div>
       </div>
