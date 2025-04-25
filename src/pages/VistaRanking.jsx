@@ -6,6 +6,7 @@ import Ranking from "../components/Ranking";
 // import PruebaFormulario from "../components/PruebaFormulario";
 
 
+//probando
 const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del archivo PadreRanking.jsx
     //recibe propiedades de padreRanking
     // Validamos que `equipo` es un array antes de hacer .map()
