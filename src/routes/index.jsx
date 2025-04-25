@@ -1,17 +1,35 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from '../pages/Login';
-// Importa aquí las demás páginas a medida que las vayas creando
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import PruebasElevenLabs from "../pages/Pruebas-elevenLabs";
+import VistaCategorias from "../pages/VistaCategorias";
+import Tablero from "../pages/Tablero";
+import Login from "../pages/Login";
+import Equipos from "../pages/Equipos";
+import VistaRanking from "../pages/VistaRanking";
+import { Navigate } from "react-router-dom";
 
-function AppRoutes() {
+const AppRoutes = ({ handleUpload, preguntas, error }) => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/Eleven" element={<PruebasElevenLabs />} />
+      <Route
+        path="/Categorias"
+        element={
+          <VistaCategorias
+            onUpload={handleUpload}
+            preguntas={preguntas}
+            error={error}
+          />
+        }
+      />
+      <Route path="/tablero" element={<Tablero />} />
       <Route path="/login" element={<Login />} />
-      {/* Ejemplo:
-      <Route path="/dashboard" element={<Dashboard />} />
-      */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/TarjetaEquipo" element={<Equipos />} />
+      <Route path="/VistaRanking" element={<VistaRanking />} />
+      <Route path="/VistaCategorias" element={<VistaCategorias />} />
     </Routes>
   );
-}
+};
 
 export default AppRoutes;
