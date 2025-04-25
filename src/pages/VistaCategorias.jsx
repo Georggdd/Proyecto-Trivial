@@ -81,6 +81,7 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
           setSelectedFile={setSelectedFile}
           selectedFile={selectedFile}
           onUpload={onUpload}
+          className="w-[400px] h-[100px] text-3xl"
         />
 
         <Feature_Categorias

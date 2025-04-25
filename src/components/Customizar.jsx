@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Feature_Categorias from "./Feature_Categorias";
 
-const Customizar = ({ setSelectedFile, onUpload, selectedFile }) => {
+const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
 // Estado para mostrar mensajes relacionados con el archivo
   const [mensaje, setMensaje] = useState("");
 // Estado para almacenar cualquier error que pueda ocurrir al procesar el archivo
@@ -37,7 +37,7 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile }) => {
         }
         //Este es el estado que guarda el archivo que el usuario ha seleccionado. Si selectedFile contiene un valor (es decir, si se ha seleccionado un archivo), se muestra el nombre del archivo con selectedFile.name.
         onClick={() => document.getElementById("archivo").click()}// Simula un click en el input de tipo file
-        className="w-[400px] h-[100px]"
+        className="w-[400px] h-[100px] text-3xl"
       />
       <input
         id="archivo"
@@ -46,7 +46,7 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile }) => {
         onChange={handleArchivoChange}
         className="hidden"
       />
-      {mensaje && <p className="text-white">{mensaje}</p>} {/* Muestra el mensaje de estado, si existe */}
+      {mensaje && <p className="text-black">{mensaje}</p>} {/* Muestra el mensaje de estado, si existe */}
       {errores.length > 0 && (
         <ul className="text-red-400 text-sm text-left mt-2"> {/* Muestra los errores si existen */}
           {errores.map((err, i) => (
