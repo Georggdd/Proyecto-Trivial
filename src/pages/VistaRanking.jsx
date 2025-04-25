@@ -1,13 +1,11 @@
 import React from "react";
 import Header from "../components/Header";
 import Ranking from "../components/Ranking";
-// import PruebaRanking from "../components/PruebaRanking";
-// cambié el nombre del componente a prueba con MAYUSCULA, PERO NO  lo reconoce
-// import PruebaFormulario from "../components/PruebaFormulario";
 
+const VistaRanking = ({ equipo }) => { 
+    
 
-//probando
-const VistaRanking = ({ equipo }) => { //accedo a los elementos de equipo del archivo PadreRanking.jsx
+        //accedo a los elementos de equipo del archivo PadreRanking.jsx
     //recibe propiedades de padreRanking
     // Validamos que `equipo` es un array antes de hacer .map()
     if (!Array.isArray(equipo)) {
