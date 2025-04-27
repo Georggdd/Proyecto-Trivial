@@ -2,77 +2,115 @@ import React from "react";
 import Ranking from "../components/Ranking";
 import Header from "../components/Header";
 
-const VistaRanking = ({ equipo = [] }) => {
-  // Datos por defecto (pruebas)
-  if (equipo.length === 0) {
-    equipo = [
-      { nombre: "Equipo A", puntos: 120 },
-      { nombre: "Equipo B", puntos: 90 },
-      { nombre: "Equipo C", puntos: 85 },
-    ];
-  }
+const VistaRanking = ({ equipo }) => { 
+    
 
-  return (
-    <div className="min-h-screen bg-[url('/assets/Mesa.svg')] bg-cover bg-center flex flex-col relative z-0">
-      {/* ✅ Header */}
-      <Header />
+        //accedo a los elementos de equipo del archivo PadreRanking.jsx
+    //recibe propiedades de padreRanking
+    // Validamos que `equipo` es un array antes de hacer .map()
+    if (!Array.isArray(equipo)) {
+        return <div>Cargando...</div>; // O algún otro mensaje mientras no se tenga el array
+    }
+    //según el número de equipos tendrá un gap u otro
+    const numequipo = equipo.length < 5 ? "gap-6" : "gap-1";
 
-      {/* 🎉 Banderines */}
-      <div className="w-full flex justify-center items-center py-12 sm:py-16 lg:py-20">
-        <img
-          src="/assets/img/banderines.png"
-          alt="Banderines"
-          className="w-full max-w-screen-xl h-auto object-cover"
-        />
-      </div>
+    //ordenación según la puntuación 
+    const ordenEquipo = [...equipo].sort((a, b) => b.puntos - a.puntos);
 
-      {/* 🏆 Bloque principal con ranking y mensaje */}
-      <div className="flex justify-center items-center gap-8 lg:gap-16 px-4 flex-wrap md:flex-nowrap">
-        {/* 🎯 Recuadro con fondo decorativo */}
-        <div className="relative w-full max-w-5xl min-h-[550px] flex flex-col justify-center items-center px-4">
-          {/* Fondo SVG como imagen completa */}
-          <img
-            src="/assets/img/FondoRank.svg"
-            alt="Fondo Ranking"
-            className="absolute inset-0 w-full h-full object-contain z-0"
-          />
+    //en caso de que se produzcan empates, le daremos efecto visual
 
-          {/* Contenido de los rankings */}
-          <div className="relative z-10 w-full px-6 sm:px-12 py-4 space-y-6">
-            {equipo
-              .sort((a, b) => b.puntos - a.puntos)
-              .map((eq, idx) => (
-                <Ranking
-                  key={idx}
-                  nombre={eq.nombre}
-                  puntos={eq.puntos}
-                  destacado={idx === 0}
-                />
-              ))}
-          </div>
-        </div>
+    const mismapuntuacion = equipo //para darle efecto cuando coincida la puntuación entre equipos
+        .map(e => e.puntos)
+        .filter((valor, i, arr) => arr.indexOf(valor) !== i);
 
-        {/* 💬 Mensaje + flecha */}
-        <div className="flex flex-col items-center text-[#c26884] space-y-6 mt-10 lg:mt-0">
-          <div className="text-center leading-tight">
-            <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold drop-shadow-md">
-              Hasta
-              <br />
-              pronto
-              <br />
-              equipos
-            </p>
-          </div>
 
-          <img
-            src="/assets/flecha.svg"
-            alt="Flecha"
-            className="w-10 h-10 lg:w-14 lg:h-14 animate-bounce"
-          />
-        </div>
-      </div>
-    </div>
-  );
+    return (
+
+      <div className="h-screen overflow-hidden flex flex-col">
+            <Header />
+
+            {/* {imagenes de fondo (banderines y pizarra)} */}
+            <div className="relative flex-grow">
+                <img
+                    src="../assets/img/banderines.png"
+                    alt="banderines de fondo"
+                    className="absolute w-screen top-0 left-0 z-20 object-cover"></img>
+                <img
+                    src="../assets/img/mesa_madera.jpg"
+                    alt="mesa de madera de fondo"
+                    className="absolute w-screen top-0 left-0 z-10 object-cover"></img>
+            </div>
+
+            <div className="w-screen">
+
+                {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
+                <div className="flex mt-[10vh] p-[2vh]">
+
+                    {/* -----------------TABLERO  2/3 ------------------- */}
+                    <div className="w-2/3 relative  ">
+                        {/* relative para posicionar el texto dentro */}
+                        <img src="../assets/img/tablero_base.png" className=" w-full h-auto z-30 relative" alt="Tablero mesa"></img>
+                        {/* <div className="flex flex-col justify-center items-center"> */}
+                        {/* inset-0 */}
+                        {/* <div className="absolute top-0 left-0 w-full z-40 grid place-items-center my-10">
+
+                            <Ranking className="h-[1-5 parte del espacio]"/>
+                            <Ranking />
+                            <Ranking />
+                            <Ranking />
+                            <Ranking /> */}
+
+                        <div className={`absolute top-0 left-0 w-full h-full z-40 flex flex-col alineacion pb-[11vw] pr-[5vw] pl-[3vw] pt-[10vw] ${numequipo}`}>
+                            {ordenEquipo.map((x, y) => { //mapeamos los datos de importados
+                                const destacar = mismapuntuacion.includes(x.puntos);
+                                return(
+                          <Ranking key={y} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
+                            );
+                            })}
+                        
+                        </div>
+                    </div>  
+                
+
+                    {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
+                    <div className="flex flex-col w-1/3 z-40 p-8">
+
+                        {/* -----------------AGRADECIMIENTO ------------------- */}
+                        <div className="h-1/2 flex justify-center items-center">
+                            <h7 className="text-[5vw] text-center text-naranja font-personalizada font-bold">Gracias por participar
+                            </h7>
+                        </div>
+
+                        {/* -----------------descarga, carpeta y enlace------------------- */}
+                        <div className="h-1/2 flex justify-end items-end">
+                            <div className="w-2/3">
+                                <p className="text-[3vw] text-naranja font-personalizada font-bold">
+                                    Descarga de resultados:
+                                </p>
+                            </div>
+
+                            <div>
+                                <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
+                                    download="Preguntas-Trivial-BBDD.xlsx"
+                                    className="text-white text-3xl font-semibold cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl">
+                                    <img src="../assets/img/carpeta_descarga_naranja.png"
+                                        alt="Carpeta Descarga Profesores"
+                                        className=""
+                                    />
+                                    <p className="-mt-9 text-center font-personalizada">
+                                        aquí
+                                    </p>
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div >
+        </div >
+    );
 };
 
 export default VistaRanking;

@@ -5,7 +5,7 @@ import VistaCategorias from "../pages/VistaCategorias";
 import Tablero from "../pages/Tablero";
 import Login from "../pages/Login";
 import Equipos from "../pages/Equipos";
-import VistaRanking from "../pages/VistaRanking";
+import PadreRanking from "../components/PadreRanking";
 import { Navigate } from "react-router-dom";
 
 const AppRoutes = ({ handleUpload, preguntas, error }) => {
@@ -26,7 +26,8 @@ const AppRoutes = ({ handleUpload, preguntas, error }) => {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/TarjetaEquipo" element={<Equipos />} />
-      <Route path="/VistaRanking" element={<VistaRanking />} />
+      <Route path="/VR" element={<Navigate to="/VistaRanking" />} />
+      <Route path="/VistaRanking" element={<PadreRanking />} />
       <Route path="/VistaCategorias" element={<VistaCategorias />} />
     </Routes>
   );
