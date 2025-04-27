@@ -31,16 +31,13 @@ const Header = () => {
   };
 
   return (
-    <header className="h-32 top-0 left-0 right-0 z-50 w-full bg-[url('/assets/img/pizarra.png')] shadow-lg bg-cover bg-center">
+    <header className="h-32 fixed top-0 left-0 right-0 z-50 w-full bg-[url('/assets/Fondo.svg')] shadow-lg bg-cover bg-center">
       <div className="container mx-auto h-full px-4 py-3 flex items-center justify-center">
          {/* Título */}
          <div className="text-center relative">
           <h1 className="text-white text-5xl font-pinyon tracking-wide mb-3">
-            Trivial Quiz
+          EduK
           </h1>
-          <span className="text-black bg-white text-xl font-secular px-10 mt-4 rounded">
-            CUSTOMIZED
-          </span>
         </div>
         {/* Botón de menú hamburguesa y menú desplegable */}
         <div className="absolute right-4">
@@ -50,7 +47,6 @@ const Header = () => {
           >
             <HamburgerIcon />
           </button>
-          
           {/* Menú desplegable */}
           {isMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg px-2 py-2">

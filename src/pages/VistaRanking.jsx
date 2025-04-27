@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../components/Header";
 import Ranking from "../components/Ranking";
 
 const VistaRanking = ({ equipo }) => { 
@@ -110,10 +109,7 @@ const VistaRanking = ({ equipo }) => {
 
             </div >
         </div >
-
     );
-
 };
-
 
 export default VistaRanking;
