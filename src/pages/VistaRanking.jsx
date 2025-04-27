@@ -1,5 +1,6 @@
 import React from "react";
 import Ranking from "../components/Ranking";
+import Header from "../components/Header";
 
 const VistaRanking = ({ equipo }) => { 
     
@@ -25,11 +26,11 @@ const VistaRanking = ({ equipo }) => {
 
     return (
 
-        <div>
+      <div className="h-screen overflow-hidden flex flex-col">
             <Header />
 
             {/* {imagenes de fondo (banderines y pizarra)} */}
-            <div className="relative">
+            <div className="relative flex-grow">
                 <img
                     src="../assets/img/banderines.png"
                     alt="banderines de fondo"
@@ -43,7 +44,7 @@ const VistaRanking = ({ equipo }) => {
             <div className="w-screen">
 
                 {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
-                <div className=" flex mt-[30vh] p-[6vh]" >
+                <div className="w-screen flex mt-[15vh] p-[3vh]">
 
                     {/* -----------------TABLERO  2/3 ------------------- */}
                     <div className="w-2/3 relative  ">
