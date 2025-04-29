@@ -61,6 +61,7 @@ model Partida {
   estado        partida_estado
   fechaCreacion DateTime       @default(now())
   profesorId    String
+  respuestas PartidaRespuestaPartida[]
 
   @@index([profesorId], map: "Partida_profesorId_fkey")
 }
@@ -78,7 +79,7 @@ model Pregunta {
   puntuacion     Int
   probabilidad   Float
   explicacion    String?
-  categoriaId    Int
+  categoriaId    String
   categoria      Categoria   @relation(fields: [categoriaId], references: [id])
   respuestas     Respuesta[]
 }
@@ -87,8 +88,9 @@ model Respuesta {
   id          String         @id @default(uuid())
   texto       String
   esCorrecta    Boolean
-  preguntaId  Int
+  preguntaId  String
   pregunta    Pregunta @relation(fields: [preguntaId], references: [id])
+  respuestasEnPartida PartidaRespuestaPartida[]
 
   @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
