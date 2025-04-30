@@ -29,6 +29,7 @@ coverage/      # Archivos de cobertura de tests
 .env.production
 .prisma/*      # Prisma migrations (opcional si quieres ignorarlas)
 !/prisma/schema.prisma  # Excepción para el schema de Prisma
+*.env
 
 # 🚀 Configuración de editores y sistema
 .vscode/

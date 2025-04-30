@@ -23,14 +23,13 @@ model casilla {
   posicion Int
 }
 
-model grupo {
-  id        String  @id @default(uuid())
-  nombre    String
-  foto      String?
-  activo    Boolean @default(true)
-  partidaId String
-
-  @@index([partidaId], map: "Grupo_partidaId_fkey")
+model Equipo {
+  id         Int      @id @default(autoincrement())
+  nombre     String
+  integrantes String 
+  puntos     Int      @default(0)
+  partidaId  Int
+  partida    Partida  @relation(fields: [partidaId], references: [id])
 }
 
 model integrante {
@@ -41,14 +40,11 @@ model integrante {
   @@index([grupoId], map: "Integrante_grupoId_fkey")
 }
 
-model partida {
-  id            String         @id @default(uuid())
-  codigo        String         @unique(map: "Partida_codigo_key")
-  estado        partida_estado
-  fechaCreacion DateTime       @default(now())
-  profesorId    String
-
-  @@index([profesorId], map: "Partida_profesorId_fkey")
+model Partida {
+  id        Int      @id @default(autoincrement())
+  codigo    String   @unique
+  equipos   Equipo[]
+  creadaEn  DateTime @default(now())
 }
 
 model pregunta {

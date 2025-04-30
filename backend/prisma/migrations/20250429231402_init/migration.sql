@@ -56,7 +56,7 @@ CREATE TABLE `partida` (
 CREATE TABLE `pregunta` (
     `id` VARCHAR(191) NOT NULL,
     `asignatura` ENUM('Matematicas', 'Historia', 'Ciencias', 'Lengua', 'Ingles') NOT NULL,
-    `dificultad` ENUM('baja', 'media', 'alta') NOT NULL,
+    `dificultad` ENUM('facil', 'intermedia', 'dificil') NOT NULL,
     `texto` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -119,11 +119,9 @@ CREATE TABLE `tirada` (
 -- CreateTable
 CREATE TABLE `usuario` (
     `id` VARCHAR(191) NOT NULL,
-    `nombre` VARCHAR(191) NOT NULL,
-    `email` VARCHAR(191) NOT NULL,
+    `usuario` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
-    `rol` ENUM('admin', 'profesor') NOT NULL,
 
-    UNIQUE INDEX `Usuario_email_key`(`email`),
+    UNIQUE INDEX `usuario_usuario_key`(`usuario`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

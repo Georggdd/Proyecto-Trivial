@@ -1,36 +1,39 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 👈 IMPORTANTE
 import Header from '../components/Header';
 
 const Login = () => {
+  const navigate = useNavigate(); // 👈 DEFINIR navigate
+
   const [usuario, setUsuario] = useState('');
-    const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        try {
-            const res = await fetch('http://localhost:4000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ usuario, password }),
-            });
+    try {
+      const res = await fetch('http://localhost:4000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usuario, password }),
+      });
 
-            const data = await res.json();
+      const data = await res.json();
 
-            if (res.ok) {
-                alert('Inicio de sesión exitoso');
-                // Aquí podrías guardar el token y redirigir
-                // localStorage.setItem('token', data.token);
-            } else {
-                alert(`Error: ${data.error}`);
-            }
-        } catch (error) {
-            console.error(error);
-            alert('Error al conectar con el servidor');
-        }
-    };
+      if (res.ok) {
+        navigate("/VistaCategorias"); // ✅ Redirigir correctamente
+        // Aquí podrías guardar el token si quieres:
+        // localStorage.setItem('token', data.token);
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error al conectar con el servidor');
+    }
+  };
 
   return (
     <div
@@ -51,7 +54,7 @@ const Login = () => {
 
         <form
           className="text-white font-secular z-10"
-          onSubmit={handleLoginSubmit} // 👈 aquí
+          onSubmit={handleSubmit}
         >
           <div className="w-32 space-y-4 text-sm">
             <img src="/img/Logo_educación.png" alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />

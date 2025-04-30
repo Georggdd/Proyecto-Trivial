@@ -1,13 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import TarjetaEquipo from "../components/TarjetaEquipo";
+import { usePartidaStore } from "../hooks/usePartidaStore";
 
 function Equipos() {
   const navigate = useNavigate();
+  const setPartidaId = usePartidaStore((state) => state.setPartidaId);
 
-  const handleStart = () => {
-    navigate("/tablero"); 
+  const [equipos, setEquipos] = useState(
+    [...Array(5)].map((_, index) => ({
+      nombre: `Equipo ${index + 1}`,
+      integrantes: [],
+      enabled: false, // 👈 ahora empiezan desactivados
+    }))
+  );
+
+  const actualizarEquipo = (index, datos) => {
+    const nuevos = [...equipos];
+    nuevos[index] = { ...nuevos[index], ...datos };
+    setEquipos(nuevos);
+  };
+
+  const handleStart = async () => {
+    try {
+      // Crear partida
+      const resPartida = await fetch("http://localhost:4000/api/partidas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ codigo: crypto.randomUUID().slice(0, 6) }),
+      });
+
+      const partida = await resPartida.json();
+      setPartidaId(partida.id);
+
+      // Filtrar equipos activos
+      const equiposActivos = equipos.filter((e) => e.enabled);
+      console.log("Equipos activos:", equiposActivos);
+
+      // Enviar solo los activos
+      await fetch("http://localhost:4000/api/equipos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          partidaId: partida.id,
+          equipos: equiposActivos.map((e) => ({
+            nombre: e.nombre,
+            integrantes: e.integrantes,
+          })),
+        }),
+      });
+
+      navigate("/tablero");
+    } catch (err) {
+      console.error("Error al crear partida o equipos:", err);
+      alert("Error al iniciar la partida");
+    }
   };
 
   return (
@@ -21,8 +69,13 @@ function Equipos() {
         <h2 className="text-3xl mb-6">EQUIPOS</h2>
 
         <div className="flex flex-wrap justify-center items-center gap-6 max-w-7xl">
-          {[...Array(5)].map((_, index) => (
-            <TarjetaEquipo key={index} nombreInicial={`Equipo ${index + 1}`} />
+          {equipos.map((equipo, index) => (
+            <TarjetaEquipo
+              key={index}
+              nombreInicial={equipo.nombre}
+              jugadoresIniciales={equipo.integrantes}
+              onUpdate={(datos) => actualizarEquipo(index, datos)}
+            />
           ))}
         </div>
 
