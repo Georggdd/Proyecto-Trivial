@@ -3,8 +3,14 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import TarjetaEquipo from "../components/TarjetaEquipo";
 import { usePartidaStore } from "../hooks/usePartidaStore";
+import { useLocation } from "react-router-dom";
+import { useTurnoStore } from "../hooks/useTurnoStore";
+
 
 function Equipos() {
+  const location = useLocation();
+  const categoriaSeleccionada = location.state?.categoriaSeleccionada || null;
+  const selectedFile = location.state?.selectedFile || null;
   const navigate = useNavigate();
   const setPartidaId = usePartidaStore((state) => state.setPartidaId);
 
@@ -34,9 +40,8 @@ function Equipos() {
       const partida = await resPartida.json();
       setPartidaId(partida.id);
 
-      // Filtrar equipos activos
       const equiposActivos = equipos.filter((e) => e.enabled);
-      console.log("Equipos activos:", equiposActivos);
+      useTurnoStore.getState().setEquipos(equiposActivos);
 
       // Enviar solo los activos
       await fetch("http://localhost:4000/api/equipos", {
@@ -51,7 +56,13 @@ function Equipos() {
         }),
       });
 
-      navigate("/tablero");
+      navigate("/categorias", {
+        state: {
+          equiposConfigurados: true,
+          categoriaSeleccionada,
+          selectedFile,
+        },
+      });
     } catch (err) {
       console.error("Error al crear partida o equipos:", err);
       alert("Error al iniciar la partida");
@@ -83,7 +94,7 @@ function Equipos() {
           onClick={handleStart}
           className="mt-8 bg-black hover:bg-gray-800 text-white text-xl px-6 py-2 rounded-full flex items-center gap-2 transition"
         >
-          START
+          Guardar Equipos
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-current" viewBox="0 0 24 24">
             <path d="M8 5v14l11-7z" />
           </svg>

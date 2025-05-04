@@ -7,13 +7,26 @@ import { useJuegoStore } from '../hooks/useJuegoStore';
 import { usePartidaStore } from '../hooks/usePartidaStore';
 import { casillas } from '../components/Posiciones/tableroData';
 import Ranking from '../components/Ranking'; // Asegúrate de tener este componente
+import GuiaPanel from '../components/GuiaPanel';
+import { useTurnoStore } from "../hooks/useTurnoStore";
 
 function Tablero() {
+
+  const equipos = useTurnoStore((state) => state.equipos);
+  const turnoActual = useTurnoStore((state) => state.turnoActual);
+  const equipoActual = equipos[turnoActual];
   const fichaPos = useJuegoStore((state) => state.fichaPos);
   const setValorDado = useJuegoStore((state) => state.setValorDado);
   const { casillasActivas, moverFicha } = useJuegoStore();
+  const siguienteTurno = useTurnoStore.getState().siguienteTurno;
+
+  const manejarMovimiento = (numero) => {
+    moverFicha(numero);           // mueve la ficha
+    setTimeout(() => {
+      siguienteTurno();           // cambia de turno después de un pequeño delay opcional
+    }, 500); // tiempo opcional para dejar ver el movimiento antes de pasar turno
+  };
   const partidaId = usePartidaStore((state) => state.partidaId);
-  const [equipos, setEquipos] = useState([]);
 
   const navigate = useNavigate();
 
@@ -61,12 +74,13 @@ function Tablero() {
                   left: `${pos.left}%`,
                   transform: 'translate(-50%, -50%)',
                 }}
-                onClick={() => moverFicha(numero)}
+                onClick={() => manejarMovimiento(numero)}
               >
                 <div className="w-[50%] h-[50%] rounded-full bg-white bg-opacity-80 border-4 border-white shadow-[0_0_15px_4px_#7e22ce] animate-pulse pointer-events-none" />
               </div>
             );
           })}
+
           <Ficha position={fichaPos} />
           <button
             onClick={() => navigate("/VistaRanking")}
@@ -84,6 +98,7 @@ function Tablero() {
                 key={eq.id}
                 nombre={eq.nombre}
                 puntos={eq.puntos}
+                imagen={eq.imagen}
                 destacado={index === 0}
               />
             ))}
@@ -92,6 +107,7 @@ function Tablero() {
       </div>
 
       <ZonaInferior onDadoResultado={setValorDado} />
+      <GuiaPanel />
     </div>
   );
 }

@@ -12,7 +12,7 @@ async function main() {
     },
   });
 
-  console.log('Usuario creado: admin / admin123');
+  console.log('Usuario creado: ');
 }
 
 main()

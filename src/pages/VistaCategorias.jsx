@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom"; // 👈 Importa el hook de naveg
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
+import { useLocation } from "react-router-dom";
 
 export default function VistaCategorias() {
   const navigate = useNavigate(); // 👈 Inicializa el hook
 
+  const location = useLocation();
   const [Menu, setMenu] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
-  const [equiposHechos, setEquiposHechos] = useState(false);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(location.state?.categoriaSeleccionada || null);
+  const [selectedFile, setSelectedFile] = useState(location.state?.selectedFile || null);
+  const equiposHechosInicial = location.state?.equiposConfigurados || false;
+  const [equiposHechos, setEquiposHechos] = useState(equiposHechosInicial);
 
   const subcategorias = [
     "Idiomas",
@@ -100,7 +103,21 @@ export default function VistaCategorias() {
             <Feature_Categorias
               texto="Equipos"
               className="w-[400px] h-[100px] text-3xl"
-              onClick={() => navigate("/TarjetaEquipo")}
+              onClick={() =>
+                navigate("/TarjetaEquipo", {
+                  state: {
+                    categoriaSeleccionada,
+                    selectedFile,
+                  },
+                })
+              }
+            />
+
+            <Feature_Categorias
+              texto="Empezar juego"
+              onClick={() => navigate("/tablero")}
+              className={`w-[400px] h-[100px] text-3xl ${puedeIniciar ? "" : "pointer-events-none opacity-40 cursor-not-allowed"
+                }`}
             />
 
             {selectedFile && (

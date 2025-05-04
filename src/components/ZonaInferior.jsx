@@ -1,15 +1,20 @@
 import React from 'react';
 import DadoModal from './DadoModal';
 import { useJuegoStore } from '../hooks/useJuegoStore';
+import useGuiaStore from '../hooks/useGuiaStore';
 
-const carasDado = [
-  "/assets/Cara1.svg",
-  "/assets/Cara2.svg",
-  "/assets/Cara3.svg",
-  "/assets/Cara4.svg",
-  "/assets/Cara5.svg",
-  "/assets/Cara6.svg",
-];
+import TiradaIcon from "../assets/Tirada.svg";
+import DadoIcon from "../assets/Dado.svg";
+import ComodinIcon from "../assets/Comodin.svg";
+
+import Cara1 from "../assets/Cara1.svg";
+import Cara2 from "../assets/Cara2.svg";
+import Cara3 from "../assets/Cara3.svg";
+import Cara4 from "../assets/Cara4.svg";
+import Cara5 from "../assets/Cara5.svg";
+import Cara6 from "../assets/Cara6.svg";
+
+const carasDado = [Cara1, Cara2, Cara3, Cara4, Cara5, Cara6];
 
 const BotonSimple = ({ icono, onClick, extraClass = '', children }) => (
   <button
@@ -23,6 +28,7 @@ const BotonSimple = ({ icono, onClick, extraClass = '', children }) => (
 
 const ZonaInferior = ({ onDadoResultado }) => {
   const valorDado = useJuegoStore((state) => state.valorDado);
+  const toggleGuia = useGuiaStore((state) => state.toggleGuia); // <-- esto es nuevo
 
   return (
     <div className="relative w-full min-h-[10rem] h-fit">
@@ -31,17 +37,23 @@ const ZonaInferior = ({ onDadoResultado }) => {
 
       {/* Botones muy juntos y laterales más bajos */}
       <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-24">
-        {/* Izquierda: Tirada doble */}
-        <BotonSimple icono="/assets/Tirada.svg" onClick={() => alert('Tirada doble')} extraClass="top-8" />
+        {/* Izquierda: abre Guía */}
+        <BotonSimple
+          icono={TiradaIcon}
+          onClick={toggleGuia}
+          extraClass="top-8"
+        />
 
-        {/* Centro: Dado */}
+        {/* Botón centro: dado */}
         <DadoModal onResultado={onDadoResultado}>
           <img
-            src="/assets/Dado.svg"
+            src={DadoIcon}
             alt="Tirar dado"
             className="w-36 h-36 hover:scale-105 transition-transform"
           />
         </DadoModal>
+
+        {/* Resultado del dado */}
         {valorDado && (
           <img
             src={carasDado[valorDado - 1]}
@@ -50,8 +62,12 @@ const ZonaInferior = ({ onDadoResultado }) => {
           />
         )}
 
-        {/* Derecha: Comodín */}
-        <BotonSimple icono="/assets/Comodin.svg" onClick={() => alert('Usar comodín')} extraClass="top-8" />
+        {/* Botón derecha */}
+        <BotonSimple
+          icono={ComodinIcon}
+          onClick={() => alert('Usar comodín')}
+          extraClass="top-8"
+        />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Switch } from "@headlessui/react";
+import { useTurnoStore } from "../hooks/useTurnoStore";
 
 function TarjetaEquipo({
   nombreInicial = "Equipo 1",
@@ -15,6 +16,12 @@ function TarjetaEquipo({
       : ["JUGADOR 1", "JUGADOR 2", "JUGADOR 3", "JUGADOR 4", "JUGADOR 5"]
   );
   const fileInputRef = useRef(null);
+  const turnoActual = useTurnoStore((state) => state.turnoActual);
+  const equipos = useTurnoStore((state) => state.equipos);
+  const esTurno =
+  equipos.length > 0 &&
+  equipos[turnoActual]?.nombre === nombre &&
+  window.location.pathname === "/tablero";
 
   // Actualizar estado del padre cada vez que cambia algo importante
   useEffect(() => {
@@ -47,28 +54,24 @@ function TarjetaEquipo({
   };
 
   return (
-    <div className="w-48 bg-[#f6eddc] rounded-xl shadow-xl p-4 flex flex-col items-center border border-black">
+    <div className={`w-48 rounded-xl shadow-xl p-4 flex flex-col items-center border border-black
+      ${esTurno ? "bg-yellow-300 border-4 border-yellow-500 scale-105" : "bg-[#f6eddc]"}`}>
       {/* Imagen o icono */}
       <div className="relative w-24 h-24 mb-2">
-        {imagenPerfil ? (
-          <img src={imagenPerfil} alt="Perfil" className="w-full h-full object-cover rounded-full border-2 border-black" />
-        ) : (
-          <>
-            <div className="absolute inset-0 flex items-center justify-center rounded-full border-2 border-black z-10">
-              <div className="w-16 h-16 opacity-30">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                </svg>
-              </div>
-            </div>
-            <button
-              onClick={handleImageUploadClick}
-              className="absolute bottom-0 right-0 w-5 h-5 bg-black text-white text-xl rounded-full flex items-center justify-center z-20"
-            >
-              +
-            </button>
-          </>
-        )}
+        <img
+          src={imagenPerfil || "/assets/img/ninio.png"}
+          alt="Avatar"
+          className="w-full h-full object-cover rounded-full border-2 border-black"
+        />
+
+        {/* Botón para subir imagen */}
+        <button
+          onClick={handleImageUploadClick}
+          className="absolute bottom-0 right-0 w-5 h-5 bg-black text-white text-xl rounded-full flex items-center justify-center z-20"
+        >
+          +
+        </button>
+
         <input
           type="file"
           accept="image/*"
