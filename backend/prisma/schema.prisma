@@ -74,7 +74,7 @@ model Categoria {
 
 model Pregunta {
   id             String         @id @default(uuid())
-  enunciado      String
+  texto          String
   dificultad     preguntaDificultad
   puntuacion     Int
   probabilidad   Float
@@ -87,7 +87,7 @@ model Pregunta {
 model Respuesta {
   id          String         @id @default(uuid())
   texto       String
-  esCorrecta    Boolean
+  esCorrecta  Boolean
   preguntaId  String
   pregunta    Pregunta @relation(fields: [preguntaId], references: [id])
   respuestasEnPartida PartidaRespuestaPartida[]

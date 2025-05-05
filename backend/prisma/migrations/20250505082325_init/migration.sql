@@ -66,7 +66,7 @@ CREATE TABLE `Categoria` (
 -- CreateTable
 CREATE TABLE `Pregunta` (
     `id` VARCHAR(191) NOT NULL,
-    `enunciado` VARCHAR(191) NOT NULL,
+    `texto` VARCHAR(191) NOT NULL,
     `dificultad` ENUM('facil', 'intermedia', 'dificil') NOT NULL,
     `puntuacion` INTEGER NOT NULL,
     `probabilidad` DOUBLE NOT NULL,
