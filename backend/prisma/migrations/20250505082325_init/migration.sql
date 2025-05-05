@@ -69,7 +69,6 @@ CREATE TABLE `Pregunta` (
     `texto` VARCHAR(191) NOT NULL,
     `dificultad` ENUM('facil', 'intermedia', 'dificil') NOT NULL,
     `puntuacion` INTEGER NOT NULL,
-    `probabilidad` DOUBLE NOT NULL,
     `explicacion` VARCHAR(191) NULL,
     `categoriaId` VARCHAR(191) NOT NULL,
 

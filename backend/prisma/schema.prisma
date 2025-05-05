@@ -77,8 +77,6 @@ model Pregunta {
   texto          String
   dificultad     preguntaDificultad
   puntuacion     Int
-  probabilidad   Float
-  explicacion    String?
   categoriaId    String
   categoria      Categoria   @relation(fields: [categoriaId], references: [id])
   respuestas     Respuesta[]
@@ -88,6 +86,7 @@ model Respuesta {
   id          String         @id @default(uuid())
   texto       String
   esCorrecta  Boolean
+  explicacion String?
   preguntaId  String
   pregunta    Pregunta @relation(fields: [preguntaId], references: [id])
   respuestasEnPartida PartidaRespuestaPartida[]
@@ -161,7 +160,7 @@ enum partida_estado {
 
 enum preguntaDificultad {
   facil
-  intermedia
+  media
   dificil
 }
 
