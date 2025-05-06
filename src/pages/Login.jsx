@@ -1,7 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
+    const [usuario, setUsuario] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // Crear el elemento de audio
+        const audio = new Audio('/assets/audio/por-favor-inicie-sesion.mp3');
+        
+        // Función para reproducir el audio
+        const playAudio = () => {
+            audio.play().catch(error => {
+                console.error('Error al reproducir el audio:', error);
+            });
+        };
+
+        // Reproducir el audio inmediatamente
+        playAudio();
+
+        // Configurar el intervalo para reproducir cada 15 segundos
+        const intervalId = setInterval(playAudio, 15000);
+
+        // Limpiar el intervalo cuando el componente se desmonte
+        return () => {
+            clearInterval(intervalId);
+            audio.pause();
+            audio.currentTime = 0;
+        };
+    }, []); // El array vacío significa que esto solo se ejecutará una vez al montar el componente
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        // Aquí deberías implementar la lógica real de autenticación
+        // Por ahora, usaremos una validación simple para demostración
+        if (usuario && password) {
+            try {
+                // Simular una llamada a la API
+                // En producción, aquí iría tu llamada real a la API
+                if (usuario === 'admin' && password === 'admin') {
+                    onLoginSuccess();
+                    navigate('/categorias');
+                } else {
+                    setError('Usuario o contraseña incorrectos');
+                }
+            } catch (err) {
+                setError('Error al iniciar sesión');
+            }
+        } else {
+            setError('Por favor, completa todos los campos');
+        }
+    };
+
     return (
         <div
             className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center"
@@ -22,15 +77,23 @@ const Login = () => {
                 />
 
                 {/* Formulario completamente centrado en la pizarra */}
-                <form className="text-white font-secular z-10">
+                <form onSubmit={handleSubmit} className="text-white font-secular z-10">
                     <div className="w-32 space-y-4 text-sm">
                         <img src="/img/Logo_educación.png" alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />
+
+                        {error && (
+                            <div className="text-red-500 text-center mb-2">
+                                {error}
+                            </div>
+                        )}
 
                         <div className="flex flex-col">
                             <label htmlFor="usuario" className="mb-1 text-black font-itim">Usuario:</label>
                             <input
                                 id="usuario"
                                 type="text"
+                                value={usuario}
+                                onChange={(e) => setUsuario(e.target.value)}
                                 className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
                             />
                         </div>
@@ -40,6 +103,8 @@ const Login = () => {
                             <input
                                 id="password"
                                 type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
                             />
                         </div>

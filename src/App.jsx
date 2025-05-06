@@ -1,6 +1,6 @@
 import PruebasElevenLabs from './pages/Pruebas-elevenlabs'
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Tablero from "./pages/Tablero";
 import VistaCategorias from "./pages/VistaCategorias";
 import Login from "./pages/Login";
@@ -9,6 +9,7 @@ import axios from "axios"; // Importa axios para las peticiones al backend
 function App() {
   const [preguntas, setPreguntas] = useState([]);
   const [error, setError] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Función para manejar la subida del CSV
   const handleUpload = async (file) => {
@@ -31,22 +32,41 @@ function App() {
     }
   };
 
+  // Función para manejar el login exitoso
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
   return (
     <Router>
       <Routes>
-        <Route path="/Eleven" element={<PruebasElevenLabs />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
         <Route
-          path="/Categorias"
+          path="/categorias"
           element={
-            <VistaCategorias
-              onUpload={handleUpload}
-              preguntas={preguntas}
-              error={error}
-            />
+            isAuthenticated ? (
+              <VistaCategorias
+                onUpload={handleUpload}
+                preguntas={preguntas}
+                error={error}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
-        <Route path="/tablero" element={<Tablero />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/tablero"
+          element={
+            isAuthenticated ? (
+              <Tablero />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route path="/eleven" element={<PruebasElevenLabs />} />
         {/* Ejemplo de rutas adicionales */}
         {/* <Route path="/lobby" element={<Lobby />} /> */}
         {/* <Route path="/equipos" element={<EquiposView />} /> */}

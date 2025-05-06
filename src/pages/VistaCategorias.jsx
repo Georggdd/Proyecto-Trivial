@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
@@ -8,6 +9,32 @@ export default function VistaCategorias() {
   const [selectedFile, setSelectedFile] = useState(null); //Almacena el archivo seleccionado en "customizar"si sube alguno.
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [equiposHechos, setEquiposHechos] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Crear el elemento de audio
+    const audio = new Audio('/assets/audio/por-favor-elije.mp3');
+    
+    // Función para reproducir el audio
+    const playAudio = () => {
+      audio.play().catch(error => {
+        console.error('Error al reproducir el audio:', error);
+      });
+    };
+
+    // Reproducir el audio inmediatamente
+    playAudio();
+
+    // Configurar el intervalo para reproducir cada 15 segundos
+    const intervalId = setInterval(playAudio, 15000);
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => {
+      clearInterval(intervalId);
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, []); // El array vacío significa que esto solo se ejecutará una vez al montar el componente
 
   const subcategorias = [
     "Idiomas",
@@ -37,6 +64,12 @@ export default function VistaCategorias() {
       setMenu(false); //Detecta si el usuario hace click fuera del área del menú subcategorías y lo cierra.
     } //event.target.closest(".subcategorias-menu") verifica si el click se hizo dentro del menú de subcategorías.
   }; // Si el click es fuera del menú, cierra el menú (setMenu(false)).
+
+  const handleStart = () => {
+    if (puedeIniciar) {
+      navigate('/tablero');
+    }
+  };
 
   // Reglas para activar el botón START
   const puedeIniciar = equiposHechos && (selectedFile || categoriaSeleccionada);
@@ -86,11 +119,13 @@ export default function VistaCategorias() {
 
         <Feature_Categorias
           texto="Equipos"
+          onClick={() => setEquiposHechos(true)}
           className="w-[400px] h-[100px] text-3xl"
         />
 
         <Feature_Categorias
           texto="START"
+          onClick={handleStart}
           className={`w-[400px] h-[100px] text-3xl ${puedeIniciar ? "cursor-pointer" : "bg-orange-600 cursor-not-allowed"}`}
         />
 
