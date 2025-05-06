@@ -20,6 +20,7 @@ coverage/      # Archivos de cobertura de tests
 .parcel-cache
 .next/
 /backend/.env
+.env
 
 # 🚀 Archivos sensibles
 .env           # Variables de entorno (API keys, DB, etc.)
