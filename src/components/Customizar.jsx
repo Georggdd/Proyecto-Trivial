@@ -31,13 +31,13 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
     <div className="flex flex-col items-center gap-2">
       <Feature_Categorias
         texto={
-          <span className="block w-full truncate text-center text-[clamp(1rem,2.5vw,1.5rem)]">
+          <span className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl">
             {selectedFile ? selectedFile.name : "Customizar"}
           </span>
         }
         //Este es el estado que guarda el archivo que el usuario ha seleccionado. Si selectedFile contiene un valor (es decir, si se ha seleccionado un archivo), se muestra el nombre del archivo con selectedFile.name.
         onClick={() => document.getElementById("archivo").click()}// Simula un click en el input de tipo file
-        className="w-[400px] h-[100px] text-3xl"
+        className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
       />
       <input
         id="archivo"

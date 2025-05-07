@@ -61,52 +61,62 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
 
       {/* Contenedor de los botones principales con efecto de oscurecimiento */}
       <div
-        className={`absolute top-[28%] left-[35%] flex flex-col items-center justify-center flex-1 gap-6 mt-50 z-20 transition-all duration-300 ${Menu ? "opacity-30" : "opacity-100"}`}
+        className={`relative z-20 flex flex-row flex-nowrap items-center justify-center gap-8 w-full max-w-[90%] mx-auto py-8 mt-12 transform -translate-x-32 sm:-translate-x-32 md:-translate-x-44 lg:-translate-x-52 transition-all duration-300 ${Menu ? "opacity-30" : "opacity-100"}`}
       >
-        <Feature_Categorias
-          texto={categoriaSeleccionada ? categoriaSeleccionada : "Categorías"} // Cambia el texto del botón según la subcategoría seleccionada
-          onClick={() => {
-            setMenu(!Menu);
-            if (categoriaSeleccionada) {
-              setCategoriaSeleccionada(null); // Si se ha seleccionado una subcategoría, la quita al pulsar el botón de nuevo
-            }
-            setSelectedFile(null); // Si selecciona categoría, se borra el archivo
-          }}
-          className="w-[400px] h-[100px] text-3xl"
-        />
-        {/*setMenu(!Menu) cambia el estado de Menu invirtiendo su valor actual. No se puede usar true o false porque con true siempre estaría bierto y con false nunca se abriría.
-          La posición se calcula usando porcentajes y se posicionan tomando como referencia el contenedor padre que debe estar en "relative" y los hijos en "absolute".*/}
+        {/* Imagen del profesor */}
+        <div
+          className={`flex-shrink-0
+    w-[200px] h-[250px]
+    sm:w-[250px] sm:h-[320px]
+    md:w-[300px] md:h-[380px]
+    lg:w-[370px] lg:h-[470px] bg-[url('/assets/img/profesor.jpg')] bg-cover bg-center rounded-lg shadow-xl transition-opacity duration-300 ${Menu ? "opacity-40" : "opacity-70"} `}
+        ></div>
 
-        <Customizar
-          setSelectedFile={setSelectedFile}
-          selectedFile={selectedFile}
-          onUpload={onUpload}
-          className="w-[400px] h-[100px] text-3xl"
-        />
+        {/* Contenedor de los 4 botones */}
+        <div className="flex flex-col items-center gap-6 w-full max-w-[500px]">
+          <Feature_Categorias
+            texto={categoriaSeleccionada ? categoriaSeleccionada : "Categorías"} // Cambia el texto del botón según la subcategoría seleccionada
+            onClick={() => {
+              setMenu(!Menu);
+              if (categoriaSeleccionada) {
+                setCategoriaSeleccionada(null); // Si se ha seleccionado una subcategoría, la quita al pulsar el botón de nuevo
+              }
+              setSelectedFile(null); // Si selecciona categoría, se borra el archivo
+            }}
+            className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
+          />
 
-        <Feature_Categorias
-          texto="Equipos"
-          className="w-[400px] h-[100px] text-3xl"
-        />
+          <Customizar
+            setSelectedFile={setSelectedFile}
+            selectedFile={selectedFile}
+            onUpload={onUpload}
+            className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
+          />
 
-        <Feature_Categorias
-          texto="START"
-          className={`w-[400px] h-[100px] text-3xl ${puedeIniciar ? "cursor-pointer" : "bg-orange-600 cursor-not-allowed"}`}
-        />
+          <Feature_Categorias
+            texto="Equipos"
+            className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
+          />
 
-        {selectedFile && (
-          <p className="text-white mt-2">
-            Archivo seleccionado: {selectedFile.name}
-          </p>
-        )}
+          <Feature_Categorias
+            texto="START"
+            className={`w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl ${
+              puedeIniciar ? "cursor-pointer" : "bg-orange-600 cursor-not-allowed"
+            }`}
+          />
+
+          {selectedFile && (
+            <p className="text-white mt-2">
+              Archivo seleccionado: {selectedFile.name}
+            </p>
+          )}
+        </div>
       </div>
-      {/*Si selectedFile tiene un valor (el usuario sube un archivo, el <p> mostrará su nombre.{selectedFile.name} obtiene el nombre del archivo.
-        Si selectedFile es null no se muestra nada.*/}
 
       {/* Menú con subcategorías */}
       {/*Solo se muestra si Menu es true*/}
       {Menu && (
-        <div className="absolute z-20 flex flex-col right-[30%] top-[20%] subcategorias-menu">
+        <div className="absolute z-20 flex flex-col top-[20%] right-1/2 translate-x-1/2 sm:right-[30%] sm:translate-x-0 subcategorias-menu">
           <div className="p-6 rounded-lg shadow-lg flex flex-col gap-2 bg-transparent">
             {subcategorias.map((subcategoria) => (
               <Feature_Categorias
@@ -126,11 +136,6 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
        texto={subcategoria}: texto del botón.
        onClick={() => SubcategoriaSelect(subcategoria)}: llama a SubcategoriaSelect() al hacer click y cierra el menú.*/}
 
-      {/* Contenedor adicional con foto del profesor y opacidad */}
-      <div
-        className={`absolute z-10 left-[4%] top-[32%] w-[500px] h-[400px] bg-[url('/assets/img/profesor.jpg')] bg-cover bg-center transition-opacity duration-300 ${Menu ? "opacity-40" : "opacity-70"}`}
-      ></div>
-      {/*absolute: permite colocar el elemento en una posición exacta sin afectar a otros elementos .Si fuese relative se comportaría como un bloque normal y empujaría otros elementos en la página.*/}
     </div>
   );
 }
