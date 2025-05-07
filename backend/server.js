@@ -55,6 +55,7 @@ app.post('/upload', upload.single('archivo'), (req, res) => {
             opcion4: opciones.d,
             respuesta_correcta: opciones[correcta],
             dificultad: data.dificultad,
+            explicacion: data.explicacion,
           });
         } else {
           errores.push(`Fila inválida: ${JSON.stringify(data)}`);

@@ -65,11 +65,7 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
       >
         {/* Imagen del profesor */}
         <div
-          className={`flex-shrink-0
-    w-[200px] h-[250px]
-    sm:w-[250px] sm:h-[320px]
-    md:w-[300px] md:h-[380px]
-    lg:w-[370px] lg:h-[470px] bg-[url('/assets/img/profesor.jpg')] bg-cover bg-center rounded-lg shadow-xl transition-opacity duration-300 ${Menu ? "opacity-40" : "opacity-70"} `}
+          className={`flex-shrink-0 w-[200px] h-[250px] sm:w-[250px] sm:h-[320px] md:w-[300px] md:h-[380px] lg:w-[370px] lg:h-[470px] bg-[url('/assets/img/profesor.jpg')] bg-cover bg-center rounded-lg shadow-xl transition-opacity duration-300 ${Menu ? "opacity-40" : "opacity-70"} `}
         ></div>
 
         {/* Contenedor de los 4 botones */}
