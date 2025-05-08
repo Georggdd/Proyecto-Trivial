@@ -5,7 +5,7 @@ const preguntasMusica = require('./preguntas_musica');
 const preguntasGeografia = require('./preguntas_geografia');
 const preguntasLengua = require('./preguntas_lengua');
 
-//Array combinado con todas las preguntas de los archivos individuales
+// Array combinado con todas las preguntas de los archivos individuales
 module.exports = [
     ...preguntasIdiomas,
     ...preguntasMatematicas,
