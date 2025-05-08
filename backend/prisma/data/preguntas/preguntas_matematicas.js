@@ -1,6 +1,6 @@
 // Preguntas Matemáticas 1ESO
 
-module.exports = [
+const preguntasMatematicas = [
   {
     texto: "Cuánto es cinco más tres",
     dificultad: "facil",
@@ -723,3 +723,5 @@ module.exports = [
     ],
   },
 ];
+
+export default preguntasMatematicas

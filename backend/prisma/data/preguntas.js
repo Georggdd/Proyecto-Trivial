@@ -1,12 +1,13 @@
-const preguntasIdiomas = require('./preguntas_idiomas');
-const preguntasMatematicas = require('./preguntas_matematicas');
-const preguntasBiologia = require('./preguntas_biologia');
-const preguntasMusica = require('./preguntas_musica');
-const preguntasGeografia = require('./preguntas_geografia');
-const preguntasLengua = require('./preguntas_lengua');
+
+import preguntasBiologia from './preguntas/preguntas_biologia.js';
+import preguntasGeografia from './preguntas/preguntas_geografia.js';
+import preguntasIdiomas from './preguntas/preguntas_idiomas.js';
+import preguntasLengua from './preguntas/preguntas_lengua.js';
+import preguntasMatematicas from './preguntas/preguntas_matematicas.js';
+import preguntasMusica from './preguntas/preguntas_musica.js';
 
 // Array combinado con todas las preguntas de los archivos individuales
-module.exports = [
+const preguntas = [
     ...preguntasIdiomas,
     ...preguntasMatematicas,
     ...preguntasBiologia,
@@ -14,3 +15,5 @@ module.exports = [
     ...preguntasGeografia,
     ...preguntasLengua,
 ];
+
+export default preguntas;

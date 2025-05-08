@@ -1,6 +1,6 @@
 // Preguntas Lengua Castellana 1ESO
 
-module.exports = [
+const preguntasLengua = [
   {
     texto: "Cuál es el sustantivo en la frase El perro corre",
     dificultad: "facil",
@@ -722,3 +722,5 @@ module.exports = [
     ],
   },
 ];
+
+export default preguntasLengua

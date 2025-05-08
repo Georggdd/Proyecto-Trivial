@@ -1,6 +1,6 @@
 // Preguntas Geografía 1ESO
 
-module.exports = [
+const preguntasGeografia = [
   {
     texto: "Cuál es el planeta donde vivimos",
     dificultad: "facil",
@@ -722,3 +722,5 @@ module.exports = [
     ],
   },
 ];
+
+export default preguntasGeografia

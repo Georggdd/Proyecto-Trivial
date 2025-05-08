@@ -1,6 +1,6 @@
 // Preguntas Música 1ESO
 
-module.exports = [
+const preguntasMusica = [
   {
     texto: "Cuántas notas tiene la escala musical",
     dificultad: "facil",
@@ -722,3 +722,5 @@ module.exports = [
     ],
   },
 ];
+
+export default preguntasMusica

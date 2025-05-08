@@ -1,6 +1,6 @@
 // Preguntas Idiomas 1ESO
 
-module.exports = [
+const preguntasIdiomas = [
   {
     texto: '¿Cómo se dice hola en inglés?',
     dificultad: 'facil',
@@ -430,7 +430,7 @@ module.exports = [
       { texto: 'Viejo', esCorrecta: false },
       { texto: 'Pequeño', esCorrecta: false },
       { texto: 'Joven', esCorrecta: true, explicacion: 'Young significa joven en inglés.' },
-      { texto: 'Grande', esCorrecta: fals },
+      { texto: 'Grande', esCorrecta: false },
     ],
   },
   {
@@ -722,3 +722,4 @@ module.exports = [
     ],
   },
 ];
+export default preguntasIdiomas

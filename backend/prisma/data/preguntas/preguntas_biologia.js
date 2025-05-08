@@ -1,7 +1,7 @@
 // Preguntas Biología 1ESO
 
 
-module.exports = [
+const preguntasBiologia = [
   {
     texto: "Cuál es la unidad básica de la vida",
     dificultad: "facil",
@@ -723,3 +723,5 @@ module.exports = [
     ],
   },
 ];
+
+export default preguntasBiologia
