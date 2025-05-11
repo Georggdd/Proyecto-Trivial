@@ -4,6 +4,8 @@ import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function VistaCategorias() {
   const navigate = useNavigate(); // 👈 Inicializa el hook
@@ -47,6 +49,32 @@ export default function VistaCategorias() {
   // Reglas para activar el botón START
   const puedeIniciar = equiposHechos && (selectedFile || categoriaSeleccionada);
 
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const uploadFile = async () => {
+      if (!selectedFile) return;
+
+      const formData = new FormData();
+      formData.append("archivo", selectedFile);
+
+      try {
+        const res = await axios.post("http://localhost:4000/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        console.log("Preguntas subidas correctamente:", res.data);
+        setError(null);
+      } catch (err) {
+        const mensaje = err.response?.data?.error || "Error al subir el archivo";
+        console.error("Error al subir CSV:", mensaje);
+        setError(mensaje);
+      }
+    };
+
+    uploadFile();
+  }, [selectedFile]);
+  console.log("🧪 VistaCategorias recibió partidaId:", location.state?.partidaId);
   return (
     <div
       className="h-full w-full relative flex flex-col min-h-screen bg-[url('/assets/img/Mesa.svg')] bg-cover border-4 border-double border-orange-600 bg-transparent"
@@ -91,7 +119,10 @@ export default function VistaCategorias() {
             {/*setMenu(!Menu) cambia el estado de Menu invirtiendo su valor actual. No se puede usar true o false porque con true siempre estaría bierto y con false nunca se abriría.
               La posición se calcula usando porcentajes y se posicionan tomando como referencia el contenedor padre que debe estar en "relative" y los hijos en "absolute".*/}
 
-            <Customizar setSelectedFile={setSelectedFile} />
+            <Customizar
+              setSelectedFile={setSelectedFile}
+              partidaId={location.state?.partidaId}
+            />
             {selectedFile && (
               <p className="text-white text-lg mt-2 font-semibold">
                 Archivo seleccionado:{" "}

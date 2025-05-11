@@ -3,6 +3,10 @@ import prisma from '../config/db.js';
 export const crearEquipos = async (req, res) => {
   const { equipos, partidaId } = req.body;
 
+  if (!partidaId) {
+    return res.status(400).json({ error: "partidaId es obligatorio" });
+  }
+
   try {
     const nuevosEquipos = await Promise.all(
       equipos.map(eq =>

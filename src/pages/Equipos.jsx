@@ -31,10 +31,15 @@ function Equipos() {
   const handleStart = async () => {
     try {
       // Crear partida
-      const resPartida = await fetch("http://localhost:4000/api/partidas", {
+      const resPartida = await fetch("http://localhost:4000/api/equipos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ codigo: crypto.randomUUID().slice(0, 6) }),
+        body: JSON.stringify({
+          equipos: equiposActivos.map((equipo) => ({
+            nombre: equipo.nombre,
+            integrantes: equipo.integrantes?.join(";") ?? "",
+          })),
+          partidaId: partidaId, // ✅ pasa el ID real
+        }),
       });
 
       const partida = await resPartida.json();
@@ -61,6 +66,7 @@ function Equipos() {
           equiposConfigurados: true,
           categoriaSeleccionada,
           selectedFile,
+          partidaId: partida.id,
         },
       });
     } catch (err) {
