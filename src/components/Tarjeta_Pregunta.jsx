@@ -12,13 +12,17 @@ import React, { useEffect, useState } from 'react';
     };
 
     useEffect(() => {
-        setShow(true);
-    }, []);
+        if (!loading && pregunta) {
+            const timeout = setTimeout(() => {
+            setShow(true);
+          }, 50); // delay mínimo para permitir un render previo
+        
+            return () => clearTimeout(timeout);
+        }
+        }, [loading, pregunta]);
 
     useEffect(() => {
-        setShow(true);
-        
-        fetch(`http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`)
+            fetch(`http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`)
             .then((res) => {
             if (!res.ok) throw new Error('Error al cargar preguntas');
             return res.json();
@@ -58,11 +62,10 @@ import React, { useEffect, useState } from 'react';
     // Diseño responsive para laptop y proyector 1920px x 1080px (2xl)
     // Tablero Madera - Ocupa el 88% de la screen height = 950px
     <div className='h-[85%] w-full flex items-center justify-center perspective' >
-        {/* Fondo Verde */}
         <div className='h-full w-full flex items-center justify-center ' >
             {/* DELANTERO - TARJETA */}
-            <section id="tarjeta" className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[5000ms] ease-out transform ${show ? 'opacity-100 scale-100' : 'opacity-0 scale-30'}`}>
-                <div id='titulo' className='w-full h-[19%] relative mt-6 bg-verdeOscuro flex items-center 2xl:gap-[30%]'>
+            <section id="tarjeta" className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1000ms] ease-out transform transform-style-preserve-3d ${seleccion ? 'rotate-y-180' : '' } ${show ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
+                <div id='titulo' className='w-full h-[19%] relative mt-6 bg-verdeOscuro flex items-center 2xl:gap-[30%] transform'>
                     <h1 className='text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
                     <img src="/assets/img/queso-color-blanco.png" className='w-[15%] pt-6 absolute right-[15%]' alt="" />
                 </div>
@@ -73,7 +76,7 @@ import React, { useEffect, useState } from 'react';
                     {/*Pregunta*/}
                     <div id='pregunta' className='w-1/2 h-[105%] flex flex-col items-center justify-center pl-2 ml-4'>
                         <div id='marco-pregunta' className='p-7 h-[80%] w-[90%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
-                            <h1 className="font-bold md:text-[35px] 2xl:text-7xl text-black px-4">
+                            <h1 className="font-bold md:text-4xl 2xl:text-7xl text-black px-4">
                             {pregunta.pregunta}
                             </h1>
                         </div>
@@ -95,9 +98,9 @@ import React, { useEffect, useState } from 'react';
                 </div>
                 )}
                 
-                 {/* Si se ha seleccionado ninguna pregunta */}
+                 {/* Si se ha seleccionado alguna pregunta */}
                 {seleccion && (
-                <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center font-lemon p-6 gap-4'>
+                <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center backface-hidden rotate-y-180 transform-style-preserve-3d font-lemon p-6 gap-4'>
                     <div id='respuestas' className='w-full flex flex-col items-center justify-center gap-4 pt-4'>
                     {pregunta.respuestas.map((r, i) => {
                         const esSeleccionada = seleccion === r;
@@ -155,5 +158,5 @@ import React, { useEffect, useState } from 'react';
         </div>
     </div>
     )
- }
+    }
 
