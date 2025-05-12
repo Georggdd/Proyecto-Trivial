@@ -77,7 +77,7 @@ model respuesta {
 }
 
 model respuestapartida {
-  id              String  @id  @default(uuid())
+  id              String  @id @default(uuid())
   grupoId         String
   preguntaId      String
   respuestaId     String
@@ -133,9 +133,4 @@ enum pregunta_dificultad {
   facil
   intermedia
   dificil
-}
-
-enum usuario_rol {
-  admin
-  profesor
 }
