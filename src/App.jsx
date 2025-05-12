@@ -1,10 +1,10 @@
-import PruebasElevenLabs from './pages/Pruebas-elevenlabs'
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Tablero from "./pages/Tablero";
 import VistaCategorias from "./pages/VistaCategorias";
 import Login from "./pages/Login";
 import axios from "axios"; // Importa axios para las peticiones al backend
+import AppRoutes from "./routes/index"; // Importa tus rutas
 
 function App() {
   const [preguntas, setPreguntas] = useState([]);
@@ -71,6 +71,7 @@ function App() {
         {/* <Route path="/lobby" element={<Lobby />} /> */}
         {/* <Route path="/equipos" element={<EquiposView />} /> */}
       </Routes>
+      <AppRoutes />
     </Router>
   );
 }

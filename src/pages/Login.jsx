@@ -62,7 +62,8 @@ const Login = ({ onLoginSuccess }) => {
             className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center"
             style={{ backgroundImage: `url(/assets/Fondo.svg)` }}
         >
-            <Header />
+          <div className="w-32 space-y-4 text-sm">
+            <img src="/img/Logo_educación.png" alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />
 
             {/* Pizarra con fondo */}
             <div
@@ -118,8 +119,29 @@ const Login = ({ onLoginSuccess }) => {
                     </div>
                 </form>
             </div>
-        </div>
-    );
+
+            <div className="flex flex-col">
+              <label htmlFor="password" className="mb-1 text-black font-itim">Contraseña:</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-24 px-2 py-1 text-base bg-[#446CD1] text-white rounded-xl hover:bg-[#365bb0] mx-auto block font-itim"
+            >
+              Entrar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default Login;
