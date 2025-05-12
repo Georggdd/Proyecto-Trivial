@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 
-    export default function Tarjeta_Pregunta({pregunta}) {
+    export default function Tarjeta_Pregunta({categoria}) {
     const [count, setCount] = useState(0)
     const [show, setShow] = useState(false);
+    const [pregunta, setPregunta] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [seleccion, setSeleccion] = useState(null);
     const responder = (respuesta) => {
         setSeleccion(respuesta);
@@ -13,6 +15,44 @@ import React, { useEffect, useState } from 'react';
         setShow(true);
     }, []);
 
+    useEffect(() => {
+        setShow(true);
+        
+        fetch(`http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`)
+            .then((res) => {
+            if (!res.ok) throw new Error('Error al cargar preguntas');
+            return res.json();
+            })
+            .then((data) => {
+            const preguntaRandom = data[Math.floor(Math.random() * data.length)];
+            
+            const preguntaFormato = {
+                categoria: preguntaRandom.categoria.nombre,
+                pregunta: preguntaRandom.texto,
+                respuestas: preguntaRandom.respuestas.map((r) => ({
+                texto: r.texto,
+                correcta: r.esCorrecta,
+                explicacion: r.explicacion,
+                })),
+            };
+            
+            setPregunta(preguntaFormato);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            });
+        }, [categoria]);
+
+    if (loading) {
+        return <p className='text-center mt-10 text-xl'>Cargando pregunta...</p>;
+    }
+        
+    if (!pregunta) {
+        return <p className='text-center mt-10 text-xl'>No hay preguntas disponibles para esta categoría.</p>;
+    }
+        
 
     return (
     // Diseño responsive para laptop y proyector 1920px x 1080px (2xl)
@@ -22,9 +62,9 @@ import React, { useEffect, useState } from 'react';
         <div className='h-full w-full flex items-center justify-center ' >
             {/* Tarjeta */}
             <section id='tarjeta' className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1500ms] ease-out transform ${ show ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
-                <div id='titulo' className='w-full h-[19%] mt-6 bg-verdeOscuro flex items-center gap-[27%] 2xl:gap-[30%]'>
-                    <h1 className='text-white text-7xl pt-6 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
-                    <img src="/public/assets/img/queso-color-blanco.png" className='w-[15%] pt-6' alt="" />
+                <div id='titulo' className='w-full h-[19%] relative mt-6 bg-verdeOscuro flex items-center 2xl:gap-[30%]'>
+                    <h1 className='text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
+                    <img src="/assets/img/queso-color-blanco.png" className='w-[15%] pt-6 absolute right-[15%]' alt="" />
                 </div>
 
                 {/* Si no se ha seleccionado ninguna pregunta */}
@@ -32,7 +72,7 @@ import React, { useEffect, useState } from 'react';
                 <div id='contenido-tarjeta' className='flex-1 w-full h-full flex items-center justify-between font-lemon'>
                     {/*Pregunta*/}
                     <div id='pregunta' className='w-1/2 h-[105%] flex flex-col items-center justify-center pl-2 ml-4'>
-                        <div id='marco-pregunta' className='p-7 h-[85%] w-[85%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
+                        <div id='marco-pregunta' className='p-7 h-[85%] w-[90%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
                             <h1 className="font-bold md:text-5xl 2xl:text-7xl text-black px-4">
                             {pregunta.pregunta}
                             </h1>
@@ -74,8 +114,8 @@ import React, { useEffect, useState } from 'react';
                         if (esCorrecta) {
                             fondo = 'bg-white';
                             texto = 'text-black';
-                            extra = 'flex-col gap-3'; // Para incluir explicación debajo
-                            borde = 'border-black border-2';
+                            extra = 'flex-col gap-3'; 
+                            borde = 'border-black border-green-600 border-2';
                         } else if (esSeleccionada) {
                             fondo = 'bg-white';
                             texto = 'text-black';
