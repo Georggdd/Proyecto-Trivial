@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import VistaCategorias from "./pages/VistaCategorias";
@@ -39,8 +40,10 @@ function App() {
         />
         {/* <Route path="/equipos" element={<EquiposView />} /> */}
       </Routes>
+
     </Router>
   );
 }
 
 export default App;
+

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .text-shadow-light {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -27,3 +28,4 @@ La 1ª línea hace que el borde se mueva hacía arriba e izquierda (por el negat
 La 2ª línea es para el desplazamiento en la dirección opuesta (abajo derecha).
 
 Lo pongo en css y no en tailwind.config porque no lo he conseguido*/
+
