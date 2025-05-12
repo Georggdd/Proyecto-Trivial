@@ -1,3 +1,12 @@
+// SE RECOMIENDA PASCAL CASE EsDecirEmpezarLaPrimeraEnMayúscula 
+// ¿cambio todo o se van a ver otros datos implicados?
+// @map y poner el nombre de la tabla el plural (es decir "partidatorespuestapasrtidas" serían buenas prácticas?)
+
+// relación 1:1 sería dentro del {de la selección de la materia}
+// profesor Profesor @relation(fields:[profesorId], refernces:[id])
+// profesorId Int @unique
+
+
 generator client {
   provider = "prisma-client-js"
 }
