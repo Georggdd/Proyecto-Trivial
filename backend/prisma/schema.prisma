@@ -24,11 +24,12 @@ model casilla {
 }
 
 model Equipo {
-  id        Int      @id @default(autoincrement())
-  nombre    String
-  imagen    String?
-  partidaId Int
-  partida   Partida  @relation(fields: [partidaId], references: [id])
+  id         Int      @id @default(autoincrement())
+  nombre     String
+  integrantes String 
+  puntos     Int      @default(0)
+  partidaId  Int
+  partida    Partida  @relation(fields: [partidaId], references: [id])
 }
 
 model integrante {
@@ -40,20 +41,17 @@ model integrante {
 }
 
 model Partida {
-  id        Int        @id @default(autoincrement())
-  nombre    String
-  preguntas Pregunta[]
-  equipos   Equipo[]  
+  id        Int      @id @default(autoincrement())
+  codigo    String   @unique
+  equipos   Equipo[]
+  creadaEn  DateTime @default(now())
 }
 
-model Pregunta {
-  id          Int         @id @default(autoincrement())
-  texto       String
-  asignatura  String
-  dificultad  String
-  partidaId   Int
-  partida     Partida     @relation(fields: [partidaId], references: [id])
-  respuestas  Respuesta[]
+model pregunta {
+  id         String              @id @default(uuid())
+  asignatura pregunta_asignatura
+  dificultad pregunta_dificultad
+  texto      String
 }
 
 model puntuaciongrupo {
@@ -65,12 +63,13 @@ model puntuaciongrupo {
   @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
 }
 
-model Respuesta {
-  id         Int      @id @default(autoincrement())
+model respuesta {
+  id         String  @id @default(uuid())
+  preguntaId String
   texto      String
   esCorrecta Boolean
-  preguntaId Int
-  pregunta   Pregunta @relation(fields: [preguntaId], references: [id])
+
+  @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
 
 model respuestapartida {
@@ -107,12 +106,11 @@ model usuario {
 }
 
 enum pregunta_asignatura {
-  idioma
-  musica
-  matematicas
-  biologia
-  geografia
-  lengua
+  Matematicas
+  Historia
+  Ciencias
+  Lengua
+  Ingles
 }
 
 enum casilla_tipo {

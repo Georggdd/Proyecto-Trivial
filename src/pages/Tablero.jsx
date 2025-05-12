@@ -6,54 +6,29 @@ import Ficha from '../components/Ficha';
 import { useJuegoStore } from '../hooks/useJuegoStore';
 import { usePartidaStore } from '../hooks/usePartidaStore';
 import { casillas } from '../components/Posiciones/tableroData';
-import Ranking from '../components/Ranking';
+import Ranking from '../components/Ranking'; // Asegúrate de tener este componente
 import GuiaPanel from '../components/GuiaPanel';
 import { useTurnoStore } from "../hooks/useTurnoStore";
-import Tarjeta_Pregunta from '../components/Tarjeta_Pregunta';
-import { preguntas } from '../data/preguntas';
 
 function Tablero() {
+
   const equipos = useTurnoStore((state) => state.equipos);
   const turnoActual = useTurnoStore((state) => state.turnoActual);
+  const equipoActual = equipos[turnoActual];
   const fichaPos = useJuegoStore((state) => state.fichaPos);
   const setValorDado = useJuegoStore((state) => state.setValorDado);
   const { casillasActivas, moverFicha } = useJuegoStore();
   const siguienteTurno = useTurnoStore.getState().siguienteTurno;
+
+  const manejarMovimiento = (numero) => {
+    moverFicha(numero);           // mueve la ficha
+    setTimeout(() => {
+      siguienteTurno();           // cambia de turno después de un pequeño delay opcional
+    }, 500); // tiempo opcional para dejar ver el movimiento antes de pasar turno
+  };
   const partidaId = usePartidaStore((state) => state.partidaId);
 
-  const [mostrarTarjeta, setMostrarTarjeta] = useState(false);
-  const [preguntaSeleccionada, setPreguntaSeleccionada] = useState(null);
-
   const navigate = useNavigate();
-
-  const manejarMovimiento = async (numero) => {
-    moverFicha(numero);
-
-    try {
-      const res = await fetch(`http://localhost:4000/api/preguntas/aleatoria?partidaId=${partidaId}`);
-      const pregunta = await res.json();
-
-      if (!res.ok || pregunta.error) {
-        console.error("Error al obtener pregunta:", pregunta.error);
-        return;
-      }
-
-      const preguntaFormateada = {
-        categoria: pregunta.asignatura,
-        pregunta: pregunta.texto,
-        respuestas: pregunta.respuestas.map(r => ({
-          texto: r.texto,
-          correcta: r.esCorrecta,
-          explicacion: r.explicacion || '',
-        })),
-      };
-
-      setPreguntaSeleccionada(preguntaFormateada);
-      setMostrarTarjeta(true);
-    } catch (err) {
-      console.error("Error al obtener pregunta dinámica:", err);
-    }
-  };
 
   useEffect(() => {
     if (!partidaId) return;
@@ -61,7 +36,7 @@ function Tablero() {
       try {
         const res = await fetch(`http://localhost:4000/api/equipos?partidaId=${partidaId}`);
         const data = await res.json();
-        useTurnoStore.getState().setEquipos(data);
+        setEquipos(data);
       } catch (err) {
         console.error("Error al obtener equipos:", err);
       }
@@ -70,8 +45,7 @@ function Tablero() {
   }, [partidaId]);
 
   return (
-    <div
-      className="relative flex flex-col min-h-screen w-full pt-32"
+    <div className="flex flex-col min-h-screen w-full pt-32"
       style={{
         backgroundImage: `url(/assets/Mesa.svg)`,
         backgroundSize: 'cover',
@@ -80,6 +54,7 @@ function Tablero() {
     >
       <Header />
 
+      {/* Contenedor Tablero + Ranking */}
       <div className="flex-grow flex items-center justify-center gap-10 relative pb-10 px-8">
         <div className="relative aspect-square w-[90%] max-w-[700px]">
           <img
@@ -87,7 +62,6 @@ function Tablero() {
             alt="Tablero"
             className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-contain z-0"
           />
-
           {casillasActivas.map((numero) => {
             const pos = casillas.find(c => c.id === numero);
             if (!pos) return null;
@@ -116,6 +90,7 @@ function Tablero() {
           </button>
         </div>
 
+        {/* Ranking a la derecha */}
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[360px] w-[300px] z-40">
           <div className="space-y-4">
             {equipos.map((eq, index) => (
@@ -133,21 +108,6 @@ function Tablero() {
 
       <ZonaInferior onDadoResultado={setValorDado} />
       <GuiaPanel />
-
-      {mostrarTarjeta && preguntaSeleccionada && (
-        <div className="absolute inset-0 z-50">
-          <div className="absolute inset-0 bg-black bg-opacity-50" />
-          <div className="relative w-full h-full flex items-center justify-center">
-            <Tarjeta_Pregunta
-              pregunta={preguntaSeleccionada}
-              onClose={() => {
-                setMostrarTarjeta(false);
-                setTimeout(() => siguienteTurno(), 200);
-              }}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

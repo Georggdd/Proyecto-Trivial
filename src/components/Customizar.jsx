@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Feature_Categorias from "../components/Feature_Categorias";
 
-const Customizar = ({ setSelectedFile, partidaId }) => {
+const Customizar = ({ setSelectedFile }) => {
   const [mensaje, setMensaje] = useState("");
   const [errores, setErrores] = useState([]);
 
@@ -9,18 +9,11 @@ const Customizar = ({ setSelectedFile, partidaId }) => {
     const archivo = e.target.files[0];
     if (!archivo) return;
 
-    if (!partidaId) {
-      console.error("❌ partidaId no está definido");
-      setMensaje("Error interno: partidaId no válido");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("archivo", archivo);
-    formData.append("partidaId", partidaId.toString()); // ✅ forzamos string
 
     try {
-      const res = await fetch("http://localhost:4000/upload", {
+      const res = await fetch("http://localhost:3000/upload", {
         method: "POST",
         body: formData,
       });
@@ -28,18 +21,16 @@ const Customizar = ({ setSelectedFile, partidaId }) => {
       const data = await res.json();
 
       if (res.ok) {
-        console.log("✅ CSV subido con éxito");
         setMensaje("Archivo subido correctamente");
         setErrores([]);
         setSelectedFile(archivo);
       } else {
-        console.error("❌ Error al subir CSV:", data.error);
         setMensaje("Error al procesar el archivo");
         setErrores(data.detalles || []);
         setSelectedFile(null);
       }
     } catch (err) {
-      console.error("❌ Error de red al subir CSV:", err);
+      console.error(err);
       setMensaje("No se pudo conectar al servidor");
     }
   };
