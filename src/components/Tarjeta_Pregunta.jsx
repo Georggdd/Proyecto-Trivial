@@ -57,11 +57,11 @@ import React, { useEffect, useState } from 'react';
     return (
     // Diseño responsive para laptop y proyector 1920px x 1080px (2xl)
     // Tablero Madera - Ocupa el 88% de la screen height = 950px
-    <div className='h-[85%] w-full flex items-center justify-center' >
+    <div className='h-[85%] w-full flex items-center justify-center perspective' >
         {/* Fondo Verde */}
         <div className='h-full w-full flex items-center justify-center ' >
-            {/* Tarjeta */}
-            <section id='tarjeta' className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1500ms] ease-out transform ${ show ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
+            {/* DELANTERO - TARJETA */}
+            <section id="tarjeta" className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[5000ms] ease-out transform ${show ? 'opacity-100 scale-100' : 'opacity-0 scale-30'}`}>
                 <div id='titulo' className='w-full h-[19%] relative mt-6 bg-verdeOscuro flex items-center 2xl:gap-[30%]'>
                     <h1 className='text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
                     <img src="/assets/img/queso-color-blanco.png" className='w-[15%] pt-6 absolute right-[15%]' alt="" />
@@ -72,8 +72,8 @@ import React, { useEffect, useState } from 'react';
                 <div id='contenido-tarjeta' className='flex-1 w-full h-full flex items-center justify-between font-lemon'>
                     {/*Pregunta*/}
                     <div id='pregunta' className='w-1/2 h-[105%] flex flex-col items-center justify-center pl-2 ml-4'>
-                        <div id='marco-pregunta' className='p-7 h-[85%] w-[90%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
-                            <h1 className="font-bold md:text-5xl 2xl:text-7xl text-black px-4">
+                        <div id='marco-pregunta' className='p-7 h-[80%] w-[90%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
+                            <h1 className="font-bold md:text-[35px] 2xl:text-7xl text-black px-4">
                             {pregunta.pregunta}
                             </h1>
                         </div>
@@ -84,9 +84,9 @@ import React, { useEffect, useState } from 'react';
                     <button
                         key={i}
                         onClick={() => responder(r)} // esto es si vas a manejar lógica
-                        className="w-[70%] h-[40%] rounded-xl flex items-center gap-4 text-nowrap border-gray-900 border-2 bg-white pl-5 text-black text-xl font-bold 2xl:text-3xl hover:bg-black hover:text-white transition-all"
+                        className="w-[70%] h-[40%] rounded-xl flex items-center gap-2 border-gray-900 border-2 bg-white pl-5 text-black text-lg text-wrap text-left font-bold 2xl:text-3xl hover:bg-black hover:text-white transition-all"
                         >
-                        <img className='w-[24.46px] h-[28.45px] ml-2 2xl:w-[34.46px] 2xl:h-[37.45px] 2xl:ml-5' src="/assets/img/icono-queso.png" alt="" />
+                        <img className='w-[24.46px] h-[28.45px] ml-1 2xl:w-[34.46px] 2xl:h-[37.45px] 2xl:ml-5' src="/assets/img/icono-queso.png" alt="" />
                         {r.texto}
                     </button>
                     ))}
@@ -98,7 +98,7 @@ import React, { useEffect, useState } from 'react';
                  {/* Si se ha seleccionado ninguna pregunta */}
                 {seleccion && (
                 <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center font-lemon p-6 gap-4'>
-                    <div id='respuestas' className='w-full flex flex-col items-center justify-center gap-2'>
+                    <div id='respuestas' className='w-full flex flex-col items-center justify-center gap-4 pt-4'>
                     {pregunta.respuestas.map((r, i) => {
                         const esSeleccionada = seleccion === r;
                         const esCorrecta = r.correcta;
@@ -148,7 +148,7 @@ import React, { useEffect, useState } from 'react';
                         </div>
                         );
                     })}
-                    <button className='w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white' >SIGUIENTE RONDA</button>
+                            <button className='w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white' >SIGUIENTE RONDA</button>
                 </div>
                 </div>
                 )}</section>
