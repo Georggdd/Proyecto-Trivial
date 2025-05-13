@@ -1,12 +1,3 @@
-// SE RECOMIENDA PASCAL CASE EsDecirEmpezarLaPrimeraEnMayúscula 
-// ¿cambio todo o se van a ver otros datos implicados?
-// @map y poner el nombre de la tabla el plural (es decir "partidatorespuestapasrtidas" serían buenas prácticas?)
-
-// relación 1:1 sería dentro del {de la selección de la materia}
-// profesor Profesor @relation(fields:[profesorId], refernces:[id])
-// profesorId Int @unique
-
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -33,11 +24,14 @@ model casilla {
 }
 
 model grupo {
-  id        String  @id @default(uuid())
+  id        Int     @id @default(autoincrement())
   nombre    String
   foto      String?
   activo    Boolean @default(true)
   partidaId String
+
+puntuaciones PuntuacionGrupo[]
+//puedes acceder a las puntuaciones de la otra tabla
 
   @@index([partidaId], map: "Grupo_partidaId_fkey")
 }
@@ -68,19 +62,22 @@ model pregunta {
 }
 
 model puntuaciongrupo {
-  id            String @id
-  grupoId       String @unique(map: "PuntuacionGrupo_grupoId_key")
+  id            String            @id
+  grupoId       String 
   partidaId     String
   puntosTotales Int
+
+  grupo         Grupo             @relation(fields: [grupoId], references: [id])
+  //relación explicita entre grupoId(aqui) e id(grupo)
 
   @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
 }
 
 model respuesta {
-  id         String  @id @default(uuid())
-  preguntaId String
-  texto      String
-  esCorrecta Boolean
+  id            String            @id @default(uuid())
+  preguntaId    String
+  texto         String
+  esCorrecta    Boolean
 
   @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
@@ -118,14 +115,6 @@ model usuario {
   password String
 }
 
-enum pregunta_asignatura {
-  Matematicas
-  Historia
-  Ciencias
-  Lengua
-  Ingles
-}
-
 enum casilla_tipo {
   normal
   suerte
@@ -142,4 +131,12 @@ enum pregunta_dificultad {
   facil
   intermedia
   dificil
+}
+
+enum pregunta_asignatura {
+  Matematicas
+  Historia
+  Ciencias
+  Lengua
+  Ingles
 }

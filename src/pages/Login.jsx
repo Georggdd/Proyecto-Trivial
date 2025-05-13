@@ -45,7 +45,7 @@ const Login = ({ onLoginSuccess }) => {
                 // En producción, aquí iría tu llamada real a la API
                 if (usuario === 'admin' && password === 'admin') {
                     onLoginSuccess();
-                    navigate('/categorias');
+                    navigate('/Vistacategorias');
                 } else {
                     setError('Usuario o contraseña incorrectos');
                 }

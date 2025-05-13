@@ -1,4 +1,4 @@
-//estructura para crear datos desde la base de datos
+//estructura para almacenar datos en la base de datos
 
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';

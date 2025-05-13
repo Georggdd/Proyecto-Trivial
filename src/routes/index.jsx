@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/Login';
+import VistaCategorias from '../pages/VistaCategorias';
+import VistaRanking from '../pages/VistaRanking';
 // Importa aquí las demás páginas a medida que las vayas creando
 
 function AppRoutes() {
@@ -7,6 +9,9 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/VistaCategorias" element={<VistaCategorias />} />
+      <Route path="/VistaRanking" element={<VistaRanking />} />
+      
       {/* Ejemplo:
       <Route path="/dashboard" element={<Dashboard />} />
       */}
