@@ -7,15 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model partidatorespuestapartida {
-  A String
-  B String
-
-  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
-  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
-  @@map("_partidatorespuestapartida")
-}
-
 model casilla {
   id       String       @id @default(uuid())
   tipo     casilla_tipo
@@ -40,39 +31,68 @@ model integrante {
   @@index([grupoId], map: "Integrante_grupoId_fkey")
 }
 
-model Partida {
-  id        Int      @id @default(autoincrement())
-  codigo    String   @unique
-  equipos   Equipo[]
-  creadaEn  DateTime @default(now())
-}
+/* model partidatorespuestapartida {
+  A String
+  B String
 
-model pregunta {
-  id         String              @id @default(uuid())
-  asignatura pregunta_asignatura
-  dificultad pregunta_dificultad
-  texto      String
-}
+  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
+  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
+  @@map("_partidatorespuestapartida")
+} */
 
-model puntuaciongrupo {
-  id            String @id
-  grupoId       String @unique(map: "PuntuacionGrupo_grupoId_key")
+model PartidaRespuestaPartida {
+  id            String    @id @default(uuid())
   partidaId     String
-  puntosTotales Int
+  respuestaId   String
+  correcta      Boolean
 
-  @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
+  partida       Partida   @relation(fields: [partidaId], references: [id])
+  respuesta     Respuesta @relation(fields: [respuestaId], references: [id])
+
+  @@index([partidaId])
+  @@index([respuestaId])
 }
 
-model respuesta {
-  id         String  @id @default(uuid())
-  preguntaId String
-  texto      String
-  esCorrecta Boolean
+model Partida {
+  id            String         @id @default(uuid())
+  codigo        String         @unique(map: "Partida_codigo_key")
+  estado        partida_estado
+  fechaCreacion DateTime       @default(now())
+  profesorId    String
+  respuestas PartidaRespuestaPartida[]
+
+  @@index([profesorId], map: "Partida_profesorId_fkey")
+}
+
+model Categoria {
+  id          String             @id @default(uuid())
+  nombre      String
+  preguntas   Pregunta[]
+}
+
+model Pregunta {
+  id             String         @id @default(uuid())
+  texto          String
+  dificultad     preguntaDificultad
+  puntuacion     Int
+  categoriaId    String
+  categoria      Categoria   @relation(fields: [categoriaId], references: [id])
+  respuestas     Respuesta[]
+}
+
+model Respuesta {
+  id          String         @id @default(uuid())
+  texto       String
+  esCorrecta  Boolean
+  explicacion String?
+  preguntaId  String
+  pregunta    Pregunta @relation(fields: [preguntaId], references: [id])
+  respuestasEnPartida PartidaRespuestaPartida[]
 
   @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
 
-model respuestapartida {
+model RespuestaPartida {
   id              String  @id  @default(uuid())
   grupoId         String
   preguntaId      String
@@ -84,6 +104,15 @@ model respuestapartida {
   @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
   @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
   @@index([respuestaId], map: "RespuestaPartida_respuestaId_fkey")
+}
+
+model puntuaciongrupo {
+  id            String @id
+  grupoId       String @unique(map: "PuntuacionGrupo_grupoId_key")
+  partidaId     String
+  puntosTotales Int
+
+  @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
 }
 
 model tirada {
@@ -125,9 +154,11 @@ enum partida_estado {
   finalizada
 }
 
-enum pregunta_dificultad {
+// Revisado
+
+enum preguntaDificultad {
   facil
-  intermedia
+  media
   dificil
 }
 
