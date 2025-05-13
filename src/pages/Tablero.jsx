@@ -9,9 +9,12 @@ import { casillas } from '../components/Posiciones/tableroData';
 import Ranking from '../components/Ranking'; // Asegúrate de tener este componente
 import GuiaPanel from '../components/GuiaPanel';
 import { useTurnoStore } from "../hooks/useTurnoStore";
+import ModalPregunta from '../components/ModalPregunta'; // ← nuevo
+import Tarjeta_Pregunta from '../components/Tarjeta_Pregunta'; // ← solo si lo usas directo
+import { useCategoriaStore } from '../hooks/useCategoriaStore';
 
 function Tablero() {
-
+  const categoriaSeleccionada = useCategoriaStore(state => state.categoriaSeleccionada);
   const equipos = useTurnoStore((state) => state.equipos);
   const turnoActual = useTurnoStore((state) => state.turnoActual);
   const equipoActual = equipos[turnoActual];
@@ -19,16 +22,25 @@ function Tablero() {
   const setValorDado = useJuegoStore((state) => state.setValorDado);
   const { casillasActivas, moverFicha } = useJuegoStore();
   const siguienteTurno = useTurnoStore.getState().siguienteTurno;
+  const partidaId = usePartidaStore((state) => state.partidaId);
+  const navigate = useNavigate();
+
+  // 🔥 NUEVO: control del modal de pregunta
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [categoriaActual, setCategoriaActual] = useState('Matemáticas'); // por ahora fija
+
+  const mostrarPregunta = (categoria = 'Matemáticas') => {
+    setCategoriaActual(categoria);
+    setMostrarModal(true);
+  };
 
   const manejarMovimiento = (numero) => {
-    moverFicha(numero);           // mueve la ficha
+    moverFicha(numero);
     setTimeout(() => {
-      siguienteTurno();           // cambia de turno después de un pequeño delay opcional
-    }, 500); // tiempo opcional para dejar ver el movimiento antes de pasar turno
+      mostrarPregunta();         // 🔥 MOSTRAR MODAL al caer en casilla
+      siguienteTurno();
+    }, 500);
   };
-  const partidaId = usePartidaStore((state) => state.partidaId);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!partidaId) return;
@@ -108,6 +120,11 @@ function Tablero() {
 
       <ZonaInferior onDadoResultado={setValorDado} />
       <GuiaPanel />
+      <ModalPregunta
+        visible={mostrarModal}
+        onClose={() => setMostrarModal(false)}
+        categoria={categoriaSeleccionada}
+      />
     </div>
   );
 }

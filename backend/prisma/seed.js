@@ -10,7 +10,7 @@ async function main() {
   const categoriasMap = {}; // Guardamos {nombre: id} para después vincular
 
   for (const cat of categorias) {
-    const categoria = await prisma.categoria.create({
+    const categoria = await prisma.Categoria.create({
       data: {
         nombre: cat.nombre,
       },
@@ -28,7 +28,7 @@ async function main() {
       continue; // Opcional: saltar si la categoría no existe
     }
 
-    const createdPregunta = await prisma.pregunta.create({
+    const createdPregunta = await prisma.Pregunta.create({
       data: {
         texto: pregunta.texto,
         dificultad: pregunta.dificultad, // asegúrate de que coincida con tu ENUM

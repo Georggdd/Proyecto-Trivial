@@ -4,16 +4,22 @@ import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
 import { useLocation } from "react-router-dom";
+import { useCategoriaStore } from '../hooks/useCategoriaStore';
 
 export default function VistaCategorias() {
   const navigate = useNavigate(); // 👈 Inicializa el hook
-
+  const categoriaSeleccionada = useCategoriaStore(state => state.categoriaSeleccionada);
+  const setCategoriaSeleccionada = useCategoriaStore(state => state.setCategoriaSeleccionada);
   const location = useLocation();
   const [Menu, setMenu] = useState(false);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(location.state?.categoriaSeleccionada || null);
   const [selectedFile, setSelectedFile] = useState(location.state?.selectedFile || null);
   const equiposHechosInicial = location.state?.equiposConfigurados || false;
   const [equiposHechos, setEquiposHechos] = useState(equiposHechosInicial);
+
+  const seleccionarCategoria = (categoria) => {
+    setCategoriaSeleccionada(categoria);
+    navigate("/tablero");
+  };
 
   const subcategorias = [
     "Idiomas",

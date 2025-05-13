@@ -3,18 +3,8 @@ import DadoModal from './DadoModal';
 import { useJuegoStore } from '../hooks/useJuegoStore';
 import useGuiaStore from '../hooks/useGuiaStore';
 
-import TiradaIcon from "../assets/Tirada.svg";
-import DadoIcon from "../assets/Dado.svg";
-import ComodinIcon from "../assets/Comodin.svg";
 
-import Cara1 from "../assets/Cara1.svg";
-import Cara2 from "../assets/Cara2.svg";
-import Cara3 from "../assets/Cara3.svg";
-import Cara4 from "../assets/Cara4.svg";
-import Cara5 from "../assets/Cara5.svg";
-import Cara6 from "../assets/Cara6.svg";
-
-const carasDado = [Cara1, Cara2, Cara3, Cara4, Cara5, Cara6];
+const carasDado = ["../assets/Cara1.svg", "../assets/Cara2.svg", "../assets/Cara3.svg", "../assets/Cara4.svg", "../assets/Cara5.svg", "../assets/Cara6.svg"];
 
 const BotonSimple = ({ icono, onClick, extraClass = '', children }) => (
   <button
@@ -39,7 +29,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
       <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-24">
         {/* Izquierda: abre Guía */}
         <BotonSimple
-          icono={TiradaIcon}
+          icono={"../assets/Tirada.svg"}
           onClick={toggleGuia}
           extraClass="top-8"
         />
@@ -47,7 +37,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
         {/* Botón centro: dado */}
         <DadoModal onResultado={onDadoResultado}>
           <img
-            src={DadoIcon}
+            src={"../assets/Dado.svg"}
             alt="Tirar dado"
             className="w-36 h-36 hover:scale-105 transition-transform"
           />
@@ -64,7 +54,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
 
         {/* Botón derecha */}
         <BotonSimple
-          icono={ComodinIcon}
+          icono={"../assets/Comodin.svg"}
           onClick={() => alert('Usar comodín')}
           extraClass="top-8"
         />

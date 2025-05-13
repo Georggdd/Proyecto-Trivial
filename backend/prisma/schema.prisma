@@ -42,7 +42,7 @@ model integrante {
 
 model PartidaRespuestaPartida {
   id            String    @id @default(uuid())
-  partidaId     String
+  partidaId     Int
   respuestaId   String
   correcta      Boolean
 
@@ -54,7 +54,7 @@ model PartidaRespuestaPartida {
 }
 
 model Partida {
-  id            String         @id @default(uuid())
+  id            Int         @id @default(autoincrement())
   codigo        String         @unique(map: "Partida_codigo_key")
   estado        partida_estado
   fechaCreacion DateTime       @default(now())
@@ -62,6 +62,7 @@ model Partida {
   respuestas PartidaRespuestaPartida[]
 
   @@index([profesorId], map: "Partida_profesorId_fkey")
+  Equipo Equipo[]
 }
 
 model Categoria {
