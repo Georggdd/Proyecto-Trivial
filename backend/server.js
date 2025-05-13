@@ -4,6 +4,9 @@ import csv from 'csv-parser';//Biblioteca para leer y analizar archivos CSV.
 import fs from 'fs';//Módulo nativo de Node.js para trabajar con el sistema de archivos, se usará para leer y eliminar el archivo después de procesarlo.
 import cors from 'cors';//Middleware que permite que el servidor backend reciba peticiones de un dominio diferente (en este caso, de React, el frontend).
 
+import { guardarPreguntas } from './controllers/Controller_Customizable.js';
+console.log('Controlador “guardarPreguntas” importado:', typeof guardarPreguntas);
+
 const app = express();
 app.use(cors()); // Permite peticiones desde React.
 
@@ -12,7 +15,7 @@ const upload = multer({ dest: 'uploads/' });
 //dest define el directorio donde Multer guardará los archivos temporalmente.
 
 // Ruta para la subida de archivos
-app.post('/upload', upload.single('archivo'), (req, res) => {
+app.post('/upload', upload.single('archivo'), async (req, res) => {
   /*app.post('/upload'): Define una ruta POST en el servidor para recibir las solicitudes de subida de archivos.
     upload.single('archivo'): Multer se encarga de manejar la subida del archivo. archivo es el nombre del campo del formulario en el frontend que contiene el archivo. Solo se admite un archivo por solicitud.
    (req, res): Los parámetros req y res son los objetos de solicitud y respuesta de Express.*/
@@ -23,9 +26,10 @@ app.post('/upload', upload.single('archivo'), (req, res) => {
 
   const resultados = [];//Un array para almacenar las preguntas que han sido validadas correctamente.
   const errores = [];//Un array para almacenar las filas del archivo CSV que no sean válidas.
+  let respuestaEnviada = false;
 
   try {
-    fs.createReadStream(req.file.path)//Lee el archivo CSV desde el sistema de archivos utilizando la ruta temporal donde Multer lo guardó.
+    fs.createReadStream(archivoCSV.path)//Lee el archivo CSV desde el sistema de archivos utilizando la ruta temporal donde Multer lo guardó.
       .pipe(csv()) //Pasa el archivo a través del csv-parser para convertir el contenido del archivo CSV en objetos JavaScript.
       .on('data', (data) => {//Por cada fila del archivo CSV, el evento data es disparado, y data es un objeto que contiene los datos de esa fila.
         const opciones = { //Crea un objeto con las opciones de respuesta (a, b, c, d) de cada fila.
@@ -63,31 +67,53 @@ app.post('/upload', upload.single('archivo'), (req, res) => {
         //Si la fila es válida, se guarda en el array resultados un objeto con los detalles de la pregunta.
         //Si la fila no es válida, se agrega un mensaje de error al array errores.
       })
-      .on('end', () => {//Cuando se termina de leer el archivo, el evento end es disparado.
-        fs.unlinkSync(req.file.path); // Elimina el archivo después de procesarlo
 
-        if (errores.length > 0) {
-          res.status(400).json({
+            .on('end', async () => {
+        fs.unlinkSync(archivoCSV.path);
+
+        if (errores.length > 0 && !respuestaEnviada) {
+          respuestaEnviada = true;
+          return res.status(400).json({
             error: 'Algunas filas son inválidas',
             detalles: errores,
             preguntasValidas: resultados,
           });
-        } else {
-          res.json({
-            mensaje: 'Archivo procesado correctamente',
-            preguntas: resultados,
-          });
-          //Si hay errores en el archivo, se responde con un error 400, los detalles de los errores y las preguntas válidas.
-          //Si no hay errores, se responde con un mensaje indicando que el archivo se procesó correctamente y se incluyen las preguntas válidas.
+        }
+
+        try {
+          await guardarPreguntas(resultados);
+          if (!respuestaEnviada) {
+            res.json({
+              mensaje: 'Archivo procesado y preguntas guardadas en la base de datos',
+              preguntas: resultados,
+            });
+            respuestaEnviada = true;
+          }
+        } catch (dbError) {
+          if (!respuestaEnviada) {
+            console.error('❌ Error al guardar en la base de datos:', dbError);
+            res.status(500).json({ error: 'Error al guardar en la base de datos' });
+            respuestaEnviada = true;
+          }
+        }
+      })
+      .on('error', (err) => {
+        console.error('❌ Error al parsear CSV:', err);
+        if (!respuestaEnviada) {
+          res.status(500).json({ error: 'Error al parsear CSV' });
+          respuestaEnviada = true;
         }
       });
   } catch (error) {
-    console.error("❌ Error interno del servidor:", error);
-    res.status(500).json({ error: 'Error interno del servidor' });
-  }//Si ocurre un error durante el procesamiento, se captura en el bloque catch y se responde con un error 500 (error interno del servidor).
+    console.error('❌ Error interno del servidor:', error);
+    if (!respuestaEnviada) {
+      res.status(500).json({ error: 'Error interno del servidor' });
+      respuestaEnviada = true;
+    }
+  }
 });
 
-const PORT = 3000;//Establece el puerto en el que el servidor escuchará las peticiones.
-app.listen(PORT, () => {//Inicia el servidor en el puerto especificado y muestra un mensaje en la consola indicando que el servidor está funcionando.
+const PORT = 3000;
+app.listen(PORT, () => {
   console.log(`Servidor backend en http://localhost:${PORT}`);
 });

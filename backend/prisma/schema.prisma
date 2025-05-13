@@ -115,6 +115,7 @@ enum pregunta_asignatura {
   Ciencias
   Lengua
   Ingles
+  Música
 }
 
 enum casilla_tipo {
@@ -138,4 +139,17 @@ enum pregunta_dificultad {
 enum usuario_rol {
   admin
   profesor
+}
+
+model customizable {
+  id                Int     @id @default(autoincrement())
+  pregunta          String
+  opcion1           String
+  opcion2           String
+  opcion3           String
+  opcion4           String
+  respuesta_correcta String
+  dificultad        String
+  explicacion       String
+  //npm puntuacion        Int
 }
