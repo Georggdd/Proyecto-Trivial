@@ -2,7 +2,7 @@
 
 const preguntasMatematicas = [
   {
-    texto: "Cuánto es cinco más tres",
+    texto: "¿Cuánto es cinco más tres?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -15,7 +15,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el doble de cuatro",
+    texto: "¿Cuál es el doble de cuatro?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -27,7 +27,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es diez menos seis",
+    texto: "¿Cuánto es diez menos seis?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -39,7 +39,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la mitad de ocho",
+    texto: "¿Cuál es la mitad de ocho?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -51,7 +51,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es tres por tres",
+    texto: "¿Cuánto es tres por tres?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -63,7 +63,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es doce entre tres",
+    texto: "¿Cuánto es doce entre tres?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -75,7 +75,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es siete más cinco",
+    texto: "¿Cuánto es siete más cinco?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -87,7 +87,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el triple de dos",
+    texto: "¿Cuál es el triple de dos?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -99,7 +99,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es cinco por dos",
+    texto: "¿Cuánto es cinco por dos?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -111,7 +111,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es quince menos siete",
+    texto: "¿Cuánto es quince menos siete?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -123,7 +123,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el número siguiente a nueve",
+    texto: "¿Cuál es el número siguiente a nueve?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -135,7 +135,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el número anterior a doce",
+    texto: "¿Cuál es el número anterior a doce?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -147,7 +147,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es ocho más seis",
+    texto: "¿Cuánto es ocho más seis?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -159,7 +159,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la mitad de diez",
+    texto: "¿Cuál es la mitad de diez?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -171,7 +171,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es tres por cuatro",
+    texto: "¿Cuánto es tres por cuatro?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -183,7 +183,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es dieciséis entre cuatro",
+    texto: "¿Cuánto es dieciséis entre cuatro?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -195,7 +195,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el doble de cinco",
+    texto: "¿Cuál es el doble de cinco?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -207,7 +207,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es nueve menos cuatro",
+    texto: "¿Cuánto es nueve menos cuatro?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -219,7 +219,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es seis más siete",
+    texto: "¿Cuánto es seis más siete?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -231,7 +231,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el triple de tres",
+    texto: "¿Cuál es el triple de tres?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Matemáticas",
@@ -243,7 +243,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la raíz cuadrada de 81",
+    texto: "¿Cuál es la raíz cuadrada de 81?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -255,7 +255,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es siete al cuadrado",
+    texto: "¿Cuánto es siete al cuadrado?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -267,7 +267,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de 5 por 6",
+    texto: "¿Cuál es el resultado de 5 por 6?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -279,7 +279,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 144 dividido entre 12",
+    texto: "¿Cuánto es 144 dividido entre 12?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -291,7 +291,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de 2 elevado a 4",
+    texto: "¿Cuál es el resultado de 2 elevado a 4?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -303,7 +303,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 15 por 3",
+    texto: "¿Cuánto es 15 por 3?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -315,7 +315,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el mínimo común múltiplo de 4 y 6",
+    texto: "¿Cuál es el mínimo común múltiplo de 4 y 6?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -327,7 +327,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el máximo común divisor de 12 y 18",
+    texto: "¿Cuál es el máximo común divisor de 12 y 18?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -339,7 +339,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es el perímetro de un cuadrado de lado 5",
+    texto: "¿Cuánto es el perímetro de un cuadrado de lado 5?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -351,7 +351,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es el área de un cuadrado de lado 6",
+    texto: "¿Cuánto es el área de un cuadrado de lado 6?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -363,7 +363,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de 100 dividido entre 4",
+    texto: "¿Cuál es el resultado de 100 dividido entre 4?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -375,7 +375,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 11 al cuadrado",
+    texto: "¿Cuánto es 11 al cuadrado?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -387,7 +387,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de restar 45 menos 18",
+    texto: "¿Cuál es el resultado de restar 45 menos 18?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -399,7 +399,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es la suma de los ángulos interiores de un triángulo",
+    texto: "¿Cuánto es la suma de los ángulos interiores de un triángulo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -411,7 +411,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la fórmula del área del rectángulo",
+    texto: "¿Cuál es la fórmula del área del rectángulo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -423,7 +423,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la fórmula del perímetro del rectángulo",
+    texto: "¿Cuál es la fórmula del perímetro del rectángulo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -435,7 +435,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es la mitad de cincuenta",
+    texto: "¿Cuánto es la mitad de cincuenta?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -447,7 +447,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es tres quintos de cien",
+    texto: "¿Cuánto es tres quintos de cien?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -459,7 +459,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la fracción equivalente a 1/2",
+    texto: "¿Cuál es la fracción equivalente a 1/2?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -471,7 +471,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de multiplicar 0,5 por 0,2",
+    texto: "¿Cuál es el resultado de multiplicar 0,5 por 0,2?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Matemáticas",
@@ -483,7 +483,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de elevar 3 al cubo",
+    texto: "¿Cuál es el resultado de elevar 3 al cubo?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -495,7 +495,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el logaritmo en base 10 de 1000",
+    texto: "¿Cuál es el logaritmo en base 10 de 1000?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -507,7 +507,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 2 elevado a 5",
+    texto: "¿Cuánto es 2 elevado a 5?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -519,7 +519,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es la raíz cuadrada de 225",
+    texto: "¿Cuánto es la raíz cuadrada de 225?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -531,7 +531,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el área de un círculo de radio 7",
+    texto: "¿Cuál es el área de un círculo de radio 7?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -543,7 +543,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el volumen de un cubo de lado 4",
+    texto: "¿Cuál es el volumen de un cubo de lado 4?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -555,7 +555,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la fórmula del área del triángulo",
+    texto: "¿Cuál es la fórmula del área del triángulo?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -567,7 +567,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es el perímetro de un triángulo equilátero de lado 9",
+    texto: "¿Cuánto es el perímetro de un triángulo equilátero de lado 9?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -579,7 +579,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es la suma de los ángulos interiores de un cuadrilátero",
+    texto: "¿Cuánto es la suma de los ángulos interiores de un cuadrilátero?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -591,7 +591,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es el 20 por ciento de 150",
+    texto: "¿Cuánto es el 20 por ciento de 150?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -603,7 +603,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el área de un rectángulo de 8 por 5",
+    texto: "¿Cuál es el área de un rectángulo de 8 por 5?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -615,7 +615,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el resultado de la raíz cúbica de 64",
+    texto: "¿Cuál es el resultado de la raíz cúbica de 64?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -627,7 +627,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 0,25 por 0,4",
+    texto: "¿Cuánto es 0,25 por 0,4?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -639,7 +639,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es el mínimo común múltiplo de 8 y 12",
+    texto: "¿Cuánto es el mínimo común múltiplo de 8 y 12?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -651,7 +651,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el máximo común divisor de 36 y 48",
+    texto: "¿Cuál es el máximo común divisor de 36 y 48?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -663,7 +663,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 75 dividido entre 0,5",
+    texto: "¿Cuánto es 75 dividido entre 0,5?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -675,7 +675,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es la fórmula del volumen del cilindro",
+    texto: "¿Cuál es la fórmula del volumen del cilindro?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -687,7 +687,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuál es el área de un triángulo equilátero de lado 6",
+    texto: "¿Cuál es el área de un triángulo equilátero de lado 6?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -699,7 +699,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es el factorial de 4",
+    texto: "¿Cuánto es el factorial de 4?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",
@@ -711,7 +711,7 @@ const preguntasMatematicas = [
     ],
   },
   {
-    texto: "Cuánto es 10 elevado a 3",
+    texto: "¿Cuánto es 10 elevado a 3?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Matemáticas",

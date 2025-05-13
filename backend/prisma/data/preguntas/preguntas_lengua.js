@@ -2,7 +2,7 @@
 
 const preguntasLengua = [
   {
-    texto: "Cuál es el sustantivo en la frase El perro corre",
+    texto: "¿Cuál es el sustantivo en la frase El perro corre?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -14,7 +14,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un verbo",
+    texto: "¿Qué es un verbo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -26,7 +26,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el plural de lápiz",
+    texto: "¿Cuál es el plural de lápiz?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -38,7 +38,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un adjetivo",
+    texto: "¿Qué es un adjetivo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -50,7 +50,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el antónimo de alto",
+    texto: "¿Cuál es el antónimo de alto?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -62,7 +62,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el sinónimo de bonito",
+    texto: "¿Cuál es el sinónimo de bonito?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -74,7 +74,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué tipo de palabra es rápido",
+    texto: "¿Qué tipo de palabra es rápido?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -86,7 +86,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué signo lleva una pregunta",
+    texto: "¿Qué signo lleva una pregunta?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -98,7 +98,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es una palabra aguda",
+    texto: "¿Cuál es una palabra aguda?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -110,7 +110,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es una palabra grave",
+    texto: "¿Cuál es una palabra grave?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -122,7 +122,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un sustantivo común",
+    texto: "¿Qué es un sustantivo común?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -134,7 +134,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es un ejemplo de verbo en infinitivo",
+    texto: "¿Cuál es un ejemplo de verbo en infinitivo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -146,7 +146,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una sílaba",
+    texto: "¿Qué es una sílaba?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -158,7 +158,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es una palabra monosílaba",
+    texto: "¿Cuál es una palabra monosílaba?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -170,7 +170,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un diptongo",
+    texto: "¿Qué es un diptongo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -182,7 +182,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es una palabra esdrújula",
+    texto: "¿Cuál es una palabra esdrújula?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -194,7 +194,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una oración",
+    texto: "¿Qué es una oración?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -206,7 +206,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el género del sustantivo mesa",
+    texto: "¿Cuál es el género del sustantivo mesa?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -218,7 +218,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el número del sustantivo perros",
+    texto: "¿Cuál es el número del sustantivo perros?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -230,7 +230,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué tipo de palabra es lentamente",
+    texto: "¿Qué tipo de palabra es lentamente?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Lengua Castellana",
@@ -242,7 +242,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un pronombre",
+    texto: "¿Qué es un pronombre?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -254,7 +254,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el pretérito perfecto del verbo comer",
+    texto: "¿Cuál es el pretérito perfecto del verbo comer?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -266,7 +266,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una conjunción",
+    texto: "¿Qué es una conjunción?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -278,7 +278,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un sustantivo abstracto",
+    texto: "¿Qué es un sustantivo abstracto?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -290,7 +290,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es un ejemplo de adverbio de lugar",
+    texto: "¿Cuál es un ejemplo de adverbio de lugar?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -302,7 +302,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el sujeto en la oración María canta una canción",
+    texto: "¿Cuál es el sujeto en la oración María canta una canción?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -314,7 +314,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un complemento directo",
+    texto: "¿Qué es un complemento directo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -326,7 +326,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es el plural de rubí",
+    texto: "¿Cuál es el plural de rubí?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -338,7 +338,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una oración compuesta",
+    texto: "¿Qué es una oración compuesta?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -350,7 +350,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un campo semántico",
+    texto: "¿Qué es un campo semántico?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -362,7 +362,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una metáfora",
+    texto: "¿Qué es una metáfora?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -374,7 +374,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una hipérbole",
+    texto: "¿Qué es una hipérbole?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -386,7 +386,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una onomatopeya",
+    texto: "¿Qué es una onomatopeya?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -398,7 +398,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un antónimo",
+    texto: "¿Qué es un antónimo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -410,7 +410,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un sinónimo",
+    texto: "¿Qué es un sinónimo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -422,7 +422,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es el modo subjuntivo",
+    texto: "¿Qué es el modo subjuntivo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -434,7 +434,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es el modo imperativo",
+    texto: "¿Qué es el modo imperativo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -446,7 +446,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Cuál es un ejemplo de oración exclamativa",
+    texto: "¿Cuál es un ejemplo de oración exclamativa?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -458,7 +458,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una oración interrogativa",
+    texto: "¿Qué es una oración interrogativa?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -470,7 +470,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una oración enunciativa",
+    texto: "¿Qué es una oración enunciativa?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Lengua Castellana",
@@ -482,7 +482,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un hiato",
+    texto: "¿Qué es un hiato?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -494,7 +494,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un triptongo",
+    texto: "¿Qué es un triptongo?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -506,7 +506,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un epíteto",
+    texto: "¿Qué es un epíteto?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -518,7 +518,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una anáfora",
+    texto: "¿Qué es una anáfora?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -530,7 +530,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una elipsis",
+    texto: "¿Qué es una elipsis?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -542,7 +542,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una personificación",
+    texto: "¿Qué es una personificación?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -554,7 +554,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un polisíndeton",
+    texto: "¿Qué es un polisíndeton?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -566,7 +566,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un asíndeton",
+    texto: "¿Qué es un asíndeton?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -578,7 +578,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un calambur",
+    texto: "¿Qué es un calambur?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -590,7 +590,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un oxímoron",
+    texto: "¿Qué es un oxímoron?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -602,7 +602,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un pleonasmo",
+    texto: "¿Qué es un pleonasmo?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -614,7 +614,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una perífrasis verbal",
+    texto: "¿Qué es una perífrasis verbal?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -626,7 +626,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un verso alejandrino",
+    texto: "¿Qué es un verso alejandrino?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -638,7 +638,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un soneto",
+    texto: "¿Qué es un soneto?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -650,7 +650,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una rima consonante",
+    texto: "¿Qué es una rima consonante?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -662,7 +662,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una rima asonante",
+    texto: "¿Qué es una rima asonante?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -674,7 +674,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es un romance",
+    texto: "¿Qué es un romance?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -686,7 +686,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una silva",
+    texto: "¿Qué es una silva?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -698,7 +698,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una jarcha",
+    texto: "¿Qué es una jarcha?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
@@ -710,7 +710,7 @@ const preguntasLengua = [
     ],
   },
   {
-    texto: "Qué es una glosa",
+    texto: "¿Qué es una glosa?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Lengua Castellana",
