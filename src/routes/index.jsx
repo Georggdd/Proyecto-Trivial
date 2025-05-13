@@ -8,6 +8,7 @@ import Equipos from "../pages/Equipos";
 import PadreRanking from "../components/PadreRanking";
 import { Navigate } from "react-router-dom";
 
+
 const AppRoutes = ({ handleUpload, preguntas, error }) => {
   return (
     <Routes>
@@ -29,6 +30,7 @@ const AppRoutes = ({ handleUpload, preguntas, error }) => {
       <Route path="/VR" element={<Navigate to="/VistaRanking" />} />
       <Route path="/VistaRanking" element={<PadreRanking />} />
       <Route path="/VistaCategorias" element={<VistaCategorias />} />
+      <Route path="/eleven" element={<PruebasElevenLabs />} />
     </Routes>
   );
 };

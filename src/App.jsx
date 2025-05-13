@@ -39,38 +39,7 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-        <Route
-          path="/categorias"
-          element={
-            isAuthenticated ? (
-              <VistaCategorias
-                onUpload={handleUpload}
-                preguntas={preguntas}
-                error={error}
-              />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route
-          path="/tablero"
-          element={
-            isAuthenticated ? (
-              <Tablero />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route path="/eleven" element={<PruebasElevenLabs />} />
-        {/* Ejemplo de rutas adicionales */}
-        {/* <Route path="/lobby" element={<Lobby />} /> */}
-        {/* <Route path="/equipos" element={<EquiposView />} /> */}
-      </Routes>
+      
       <AppRoutes />
     </Router>
   );
