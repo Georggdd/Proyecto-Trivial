@@ -1,6 +1,6 @@
 //RECIBE LA PETICIÓN HTTP Y EL CONTROLADOR ESPERA UN RESULTADO Y LO MUESTRA
 import { NextFunction, Request, Response } from 'express'
-import { grupoService } from './ranking.service'
+import { grupoService } from '../models/ranking/ranking.service'
 
 //DEVUELVE EL ARRAY DE TODO
 export const index = async (req: Request, res: Response, next: NextFunction) => {
