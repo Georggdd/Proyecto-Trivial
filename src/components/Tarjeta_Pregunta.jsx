@@ -49,7 +49,7 @@ export default function Tarjeta_Pregunta({ categoria }) {
     return (
         <div className="h-[85%] w-full flex items-center justify-center perspective">
             <div
-                className={`relative w-full h-full transform-style-preserve-3d transition-all duration-[1000ms] ease-out max-w-[1400px] aspect-[3/2] ${seleccion ? 'rotate-y-180' : ''
+                className={`relative w-full h-full transform-style-preserve-3d transition-all duration-[1000ms] ease-out max-w-[1900px] aspect-[2/1] ${seleccion ? 'rotate-y-180' : ''
                     } ${show ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
             >
                 {/* Frente */}

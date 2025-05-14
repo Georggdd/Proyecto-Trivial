@@ -116,19 +116,6 @@ model puntuaciongrupo {
   @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
 }
 
-model tirada {
-  id          String   @id @default(uuid())
-  grupoId     String
-  partidaId   String
-  valorDado   Int
-  casillaId   String
-  fechaTirada DateTime @default(now())
-
-  @@index([casillaId], map: "Tirada_casillaId_fkey")
-  @@index([grupoId], map: "Tirada_grupoId_fkey")
-  @@index([partidaId], map: "Tirada_partidaId_fkey")
-}
-
 model usuario {
   id       String @id @default(uuid())
   usuario  String @unique
