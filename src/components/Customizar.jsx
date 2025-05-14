@@ -42,7 +42,7 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
       <input
         id="archivo"
         type="file"
-        accept=".csv"
+        accept=".csv,.xlsx,.xls"
         onChange={handleArchivoChange}
         className="hidden"
       />
