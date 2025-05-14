@@ -64,8 +64,8 @@ export default function Tarjeta_Pregunta({ categoria }) {
   }
 
   return (
-    <div className='h-[85%] w-full flex items-center justify-center perspective'>
-      <div className='h-full w-full flex items-center justify-center'>
+    <div className='h-full w-full flex items-center justify-center perspective'>
+      <div className='h-[70%] w-full flex items-center justify-center'>
         <section
           id="tarjeta"
           className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1000ms] ease-out transform transform-style-preserve-3d ${respuestasCompletadas ? 'rotate-y-180' : ''}`}
