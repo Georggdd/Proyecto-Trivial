@@ -1,7 +1,7 @@
 
 //Estos son ejemplos de componentes de React cuando desarrolleis otros elimiinad estos
 import Header from './components/Header';
-import Tarjeta_Pregunta from './components/Tarjeta_Pregunta';
+import Tarjeta_Pregunta_Turnos from './components/Tarjeta_Pregunta_Turnos';
 
 export default function App() {
   return (
@@ -11,7 +11,7 @@ export default function App() {
       </header>
       
       <main className='flex-1 h-[88%] flex items-center justify-center bg-tablero bg-cover bg-center bg-no-repeat overflow-auto'>
-        <Tarjeta_Pregunta categoria="Biología" />
+        <Tarjeta_Pregunta_Turnos categoria="Biología" />
       </main>
       
       
