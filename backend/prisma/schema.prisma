@@ -30,8 +30,8 @@ model grupo {
   activo    Boolean @default(true)
   partidaId String
 
-puntuaciones PuntuacionGrupo[]
-//puedes acceder a las puntuaciones de la otra tabla
+  puntuaciones puntuaciongrupo[]
+  //puedes acceder a las puntuaciones de la otra tabla
 
   @@index([partidaId], map: "Grupo_partidaId_fkey")
 }
@@ -62,22 +62,22 @@ model pregunta {
 }
 
 model puntuaciongrupo {
-  id            String            @id
-  grupoId       String 
+  id            Int    @id
+  grupoId       Int
   partidaId     String
   puntosTotales Int
 
-  grupo         Grupo             @relation(fields: [grupoId], references: [id])
+  grupo grupo @relation(fields: [grupoId], references: [id])
   //relación explicita entre grupoId(aqui) e id(grupo)
 
   @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
 }
 
 model respuesta {
-  id            String            @id @default(uuid())
-  preguntaId    String
-  texto         String
-  esCorrecta    Boolean
+  id         String  @id @default(uuid())
+  preguntaId String
+  texto      String
+  esCorrecta Boolean
 
   @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
