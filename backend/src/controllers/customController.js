@@ -1,12 +1,11 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
-/**
- * Inserta un array de preguntas en la base de datos.
- * @param {Array} resultados — Cada elemento debe tener las propiedades:
- *   pregunta, opcion1, opcion2, opcion3, opcion4, respuesta_correcta, dificultad, explicacion
+ /* Inserta un array de preguntas en la base de datos.
+    @param {Array} resultados — Cada elemento debe tener las propiedades:
+    pregunta, opcion1, opcion2, opcion3, opcion4, respuesta_correcta, dificultad, explicacion
  */
+
 export async function guardarPreguntas(resultados) {//En resultados se almacenan las preguntas válidas procesadas del archivo.
   try { 
 
@@ -22,6 +21,7 @@ await prisma.customizable.createMany({
     respuesta_correcta: p.respuesta_correcta,
     dificultad:        p.dificultad,
     explicacion:       p.explicacion,
+    customizable:      true, // Marcamos como personalizada
    // puntuacion:        parseInt(p.puntuacion || '1'), 
   })),
   skipDuplicates: true,    //Le dice a Prisma que ignore las filas que ya existan con los mismos valores (según los campos únicos definidos).

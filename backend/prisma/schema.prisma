@@ -105,6 +105,18 @@ enum pregunta_asignatura {
   Música
 }
 
+/*Aquí pasaríamos a esto:
+//Solo es recomendable o usar enum o model Categoria para evitar confusiones.
+enum Categoria {
+  Idiomas
+  Musica
+  Matematicas
+  Biologia
+  Geografia
+  Lengua
+  Customizable  // <- añadido aquí
+}*/
+
 enum casilla_tipo {
   normal
   suerte
@@ -128,6 +140,8 @@ enum usuario_rol {
   profesor
 }
 
+
+//Esto solo si customizable no se trata como una categoria mas, sino en una tabla aparte
 model customizable {
   id                Int     @id @default(autoincrement())
   pregunta          String
@@ -138,6 +152,21 @@ model customizable {
   respuesta_correcta String
   dificultad        String
   explicacion       String
-  //npm puntuacion        Int
+  customizable      Boolean @default(false)
 }
+
+
+/* Si cambiamos la dificultad por puntuación
+model Customizable {
+  id                 Int     @id @default(autoincrement())
+  pregunta           String
+  opcion1            String
+  opcion2            String
+  opcion3            String
+  opcion4            String
+  respuesta_correcta String
+  puntuacion         Int     // ← nuevo campo numérico
+  explicacion        String
+  customizable       Boolean @default(false)
+}*/
 
