@@ -1,37 +1,33 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-import categorias from './data/categorias.js'; // importamos categorias.js
-import preguntas from './data/preguntas.js'; // importamos preguntas.js
+import preguntas from './data/preguntas.js'; // Solo importamos las preguntas nuevas
 
 async function main() {
+  // Borra todas las respuestas y preguntas existentes
+  await prisma.respuesta.deleteMany();
+  await prisma.pregunta.deleteMany();
+  console.log('Preguntas y respuestas eliminadas');
 
-  // Insertar las categorías
-  const categoriasMap = {}; // Guardamos {nombre: id} para después vincular
+  //  Carga las categorías existentes desde la base de datos
+  const categoriasDB = await prisma.categoria.findMany();
+  const categoriasMap = Object.fromEntries(
+    categoriasDB.map((cat) => [cat.nombre, cat.id])
+  );
 
-  for (const cat of categorias) {
-    const categoria = await prisma.categoria.create({
-      data: {
-        nombre: cat.nombre,
-      },
-    });
-    categoriasMap[categoria.nombre] = categoria.id;
-    console.log(`✅ Categoria creada: ${cat.nombre}`);
-  }
-
-  // Insertar las preguntas con sus respuestas
+  // Insertar las nuevas preguntas
   for (const pregunta of preguntas) {
     const categoriaId = categoriasMap[pregunta.categoriaNombre];
 
     if (!categoriaId) {
-      console.warn(`⚠️ Categoria no encontrada para la pregunta: ${pregunta.texto}`);
-      continue; // Opcional: saltar si la categoría no existe
+      console.warn(`Categoria no encontrada para: ${pregunta.texto}`);
+      continue;
     }
 
     const createdPregunta = await prisma.pregunta.create({
       data: {
         texto: pregunta.texto,
-        dificultad: pregunta.dificultad, // asegúrate de que coincida con tu ENUM
+        dificultad: pregunta.dificultad,
         puntuacion: pregunta.puntuacion,
         categoriaId: categoriaId,
         respuestas: {
@@ -50,7 +46,7 @@ async function main() {
 
 main()
   .then(async () => {
-    console.log('🌱 Seed completo');
+    console.log('Seed completo');
     await prisma.$disconnect();
   })
   .catch(async (e) => {

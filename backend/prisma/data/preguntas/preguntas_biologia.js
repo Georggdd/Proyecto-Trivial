@@ -8,10 +8,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Tejido?", esCorrecta: false },
-      { texto: "¿Órgano?", esCorrecta: false },
-      { texto: "¿Célula?", esCorrecta: true, explicacion: "La célula es la unidad básica de la vida." },
-      { texto: "¿Sistema?", esCorrecta: false },
+      { texto: "Tejido", esCorrecta: false },
+      { texto: "Órgano", esCorrecta: false },
+      { texto: "Célula", esCorrecta: true, explicacion: "La célula es la unidad básica de la vida." },
+      { texto: "Sistema", esCorrecta: false },
     ],
   },
   {
@@ -20,10 +20,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Oxígeno?", esCorrecta: false },
-      { texto: "¿Dióxido de carbono?", esCorrecta: true, explicacion: "Las plantas necesitan dióxido de carbono para hacer fotosíntesis." },
-      { texto: "¿Nitrógeno?", esCorrecta: false },
-      { texto: "¿Helio?", esCorrecta: false },
+      { texto: "Oxígeno", esCorrecta: false },
+      { texto: "Dióxido de carbono", esCorrecta: true, explicacion: "Las plantas necesitan dióxido de carbono para hacer fotosíntesis." },
+      { texto: "Nitrógeno", esCorrecta: false },
+      { texto: "Helio", esCorrecta: false },
     ],
   },
   {
@@ -32,10 +32,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Oxígeno?", esCorrecta: false },
-      { texto: "¿Dióxido de carbono?", esCorrecta: true, explicacion: "Exhalamos dióxido de carbono al respirar." },
-      { texto: "¿Nitrógeno?", esCorrecta: false },
-      { texto: "¿Hidrógeno?", esCorrecta: false },
+      { texto: "Oxígeno", esCorrecta: false },
+      { texto: "Dióxido de carbono", esCorrecta: true, explicacion: "Exhalamos dióxido de carbono al respirar." },
+      { texto: "Nitrógeno", esCorrecta: false },
+      { texto: "Hidrógeno", esCorrecta: false },
     ],
   },
   {
@@ -44,10 +44,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Pulmón?", esCorrecta: false },
-      { texto: "¿Estómago?", esCorrecta: false },
-      { texto: "¿Corazón?", esCorrecta: true, explicacion: "El corazón bombea la sangre." },
-      { texto: "¿Riñón?", esCorrecta: false },
+      { texto: "Pulmón", esCorrecta: false },
+      { texto: "Estómago", esCorrecta: false },
+      { texto: "Corazón", esCorrecta: true, explicacion: "El corazón bombea la sangre." },
+      { texto: "Riñón", esCorrecta: false },
     ],
   },
   {
@@ -56,10 +56,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Nutrientes y oxígeno?", esCorrecta: true, explicacion: "La sangre transporta nutrientes y oxígeno." },
-      { texto: "¿Luz?", esCorrecta: false },
-      { texto: "¿Calor?", esCorrecta: false },
-      { texto: "¿Sonido?", esCorrecta: false },
+      { texto: "Nutrientes y oxígeno", esCorrecta: true, explicacion: "La sangre transporta nutrientes y oxígeno." },
+      { texto: "Luz", esCorrecta: false },
+      { texto: "Calor", esCorrecta: false },
+      { texto: "Sonido", esCorrecta: false },
     ],
   },
   {
@@ -68,10 +68,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Metamorfosis?", esCorrecta: true, explicacion: "Se llama metamorfosis." },
-      { texto: "¿Crecimiento?", esCorrecta: false },
-      { texto: "¿Reproducción?", esCorrecta: false },
-      { texto: "¿Digestión?", esCorrecta: false },
+      { texto: "Metamorfosis", esCorrecta: true, explicacion: "Se llama metamorfosis." },
+      { texto: "Crecimiento", esCorrecta: false },
+      { texto: "Reproducción", esCorrecta: false },
+      { texto: "Digestión", esCorrecta: false },
     ],
   },
   {
@@ -80,10 +80,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Corazón?", esCorrecta: false },
-      { texto: "¿Hígado?", esCorrecta: false },
-      { texto: "¿Piel?", esCorrecta: true, explicacion: "La piel es el mayor órgano del cuerpo humano." },
-      { texto: "¿Pulmón?", esCorrecta: false },
+      { texto: "Corazón", esCorrecta: false },
+      { texto: "Hígado", esCorrecta: false },
+      { texto: "Piel", esCorrecta: true, explicacion: "La piel es el mayor órgano del cuerpo humano." },
+      { texto: "Pulmón", esCorrecta: false },
     ],
   },
   {
@@ -92,10 +92,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Marte?", esCorrecta: false },
-      { texto: "¿Venus?", esCorrecta: false },
-      { texto: "¿Tierra?", esCorrecta: true, explicacion: "La Tierra es el planeta donde existe vida." },
-      { texto: "¿Júpiter?", esCorrecta: false },
+      { texto: "Marte", esCorrecta: false },
+      { texto: "Venus", esCorrecta: false },
+      { texto: "Tierra", esCorrecta: true, explicacion: "La Tierra es el planeta donde existe vida." },
+      { texto: "Júpiter", esCorrecta: false },
     ],
   },
   {
@@ -104,10 +104,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Exoesqueleto?", esCorrecta: false },
-      { texto: "¿Endoesqueleto?", esCorrecta: true, explicacion: "Los vertebrados tienen endoesqueleto." },
-      { texto: "¿Ninguno?", esCorrecta: false },
-      { texto: "¿Mixto?", esCorrecta: false },
+      { texto: "Exoesqueleto", esCorrecta: false },
+      { texto: "Endoesqueleto", esCorrecta: true, explicacion: "Los vertebrados tienen endoesqueleto." },
+      { texto: "Ninguno", esCorrecta: false },
+      { texto: "Mixto", esCorrecta: false },
     ],
   },
   {
@@ -116,10 +116,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Absorber agua y nutrientes?", esCorrecta: true, explicacion: "Las raíces absorben agua y nutrientes." },
-      { texto: "¿Hacer fotosíntesis?", esCorrecta: false },
-      { texto: "¿Reproducirse?", esCorrecta: false },
-      { texto: "¿Respirar?", esCorrecta: false },
+      { texto: "Absorber agua y nutrientes", esCorrecta: true, explicacion: "Las raíces absorben agua y nutrientes." },
+      { texto: "Hacer fotosíntesis", esCorrecta: false },
+      { texto: "Reproducirse", esCorrecta: false },
+      { texto: "Respirar", esCorrecta: false },
     ],
   },
   {
@@ -128,10 +128,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Corazón?", esCorrecta: false },
-      { texto: "¿Pulmones?", esCorrecta: true, explicacion: "Los pulmones son los encargados de la respiración." },
-      { texto: "¿Hígado?", esCorrecta: false },
-      { texto: "¿Riñón?", esCorrecta: false },
+      { texto: "Corazón", esCorrecta: false },
+      { texto: "Pulmones", esCorrecta: true, explicacion: "Los pulmones son los encargados de la respiración." },
+      { texto: "Hígado", esCorrecta: false },
+      { texto: "Riñón", esCorrecta: false },
     ],
   },
   {
@@ -140,10 +140,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Absorber agua?", esCorrecta: false },
-      { texto: "¿Transportar nutrientes?", esCorrecta: false },
-      { texto: "¿Hacer fotosíntesis?", esCorrecta: true, explicacion: "Las hojas hacen fotosíntesis." },
-      { texto: "¿Proteger la planta?", esCorrecta: false },
+      { texto: "Absorber agua", esCorrecta: false },
+      { texto: "Transportar nutrientes", esCorrecta: false },
+      { texto: "Hacer fotosíntesis", esCorrecta: true, explicacion: "Las hojas hacen fotosíntesis." },
+      { texto: "Proteger la planta", esCorrecta: false },
     ],
   },
   {
@@ -152,10 +152,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Clorofila?", esCorrecta: true, explicacion: "La clorofila es el pigmento verde de las plantas." },
-      { texto: "¿Hemoglobina?", esCorrecta: false },
-      { texto: "¿Melanina?", esCorrecta: false },
-      { texto: "¿Caroteno?", esCorrecta: false },
+      { texto: "Clorofila", esCorrecta: true, explicacion: "La clorofila es el pigmento verde de las plantas." },
+      { texto: "Hemoglobina", esCorrecta: false },
+      { texto: "Melanina", esCorrecta: false },
+      { texto: "Caroteno", esCorrecta: false },
     ],
   },
   {
@@ -164,10 +164,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Hielo?", esCorrecta: false },
-      { texto: "¿Vapor?", esCorrecta: false },
-      { texto: "¿Agua?", esCorrecta: true, explicacion: "El agua líquida es simplemente agua." },
-      { texto: "¿Nieve?", esCorrecta: false },
+      { texto: "Hielo", esCorrecta: false },
+      { texto: "Vapor", esCorrecta: false },
+      { texto: "Agua", esCorrecta: true, explicacion: "El agua líquida es simplemente agua." },
+      { texto: "Nieve", esCorrecta: false },
     ],
   },
   {
@@ -176,10 +176,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Fusión?", esCorrecta: true, explicacion: "El cambio de sólido a líquido es fusión." },
-      { texto: "¿Solidificación?", esCorrecta: false },
-      { texto: "¿Evaporación?", esCorrecta: false },
-      { texto: "¿Sublimación?", esCorrecta: false },
+      { texto: "Fusión", esCorrecta: true, explicacion: "El cambio de sólido a líquido es fusión." },
+      { texto: "Solidificación", esCorrecta: false },
+      { texto: "Evaporación", esCorrecta: false },
+      { texto: "Sublimación", esCorrecta: false },
     ],
   },
   {
@@ -188,10 +188,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Estómago?", esCorrecta: true, explicacion: "El estómago es el principal órgano de la digestión." },
-      { texto: "¿Hígado?", esCorrecta: false },
-      { texto: "¿Intestino?", esCorrecta: false },
-      { texto: "¿Riñón?", esCorrecta: false },
+      { texto: "Estómago", esCorrecta: true, explicacion: "El estómago es el principal órgano de la digestión." },
+      { texto: "Hígado", esCorrecta: false },
+      { texto: "Intestino", esCorrecta: false },
+      { texto: "Riñón", esCorrecta: false },
     ],
   },
   {
@@ -200,10 +200,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Perro?", esCorrecta: false },
-      { texto: "¿Gato?", esCorrecta: false },
-      { texto: "¿Gallina?", esCorrecta: true, explicacion: "La gallina pone huevos." },
-      { texto: "¿Ballena?", esCorrecta: false },
+      { texto: "Perro", esCorrecta: false },
+      { texto: "Gato", esCorrecta: false },
+      { texto: "Gallina", esCorrecta: true, explicacion: "La gallina pone huevos." },
+      { texto: "Ballena", esCorrecta: false },
     ],
   },
   {
@@ -212,10 +212,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Dióxido de carbono?", esCorrecta: false },
-      { texto: "¿Nitrógeno?", esCorrecta: false },
-      { texto: "¿Oxígeno?", esCorrecta: true, explicacion: "Respiramos principalmente oxígeno." },
-      { texto: "¿Hidrógeno?", esCorrecta: false },
+      { texto: "Dióxido de carbono", esCorrecta: false },
+      { texto: "Nitrógeno", esCorrecta: false },
+      { texto: "Oxígeno", esCorrecta: true, explicacion: "Respiramos principalmente oxígeno." },
+      { texto: "Hidrógeno", esCorrecta: false },
     ],
   },
   {
@@ -224,10 +224,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Mover el cuerpo?", esCorrecta: false },
-      { texto: "¿Proteger órganos?", esCorrecta: true, explicacion: "El esqueleto protege órganos y da soporte." },
-      { texto: "¿Transportar sangre?", esCorrecta: false },
-      { texto: "¿Hacer fotosíntesis?", esCorrecta: false },
+      { texto: "Mover el cuerpo", esCorrecta: false },
+      { texto: "Proteger órganos", esCorrecta: true, explicacion: "El esqueleto protege órganos y da soporte." },
+      { texto: "Transportar sangre", esCorrecta: false },
+      { texto: "Hacer fotosíntesis", esCorrecta: false },
     ],
   },
   {
@@ -236,10 +236,10 @@ const preguntasBiologia = [
     puntuacion: 10,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Mamífero?", esCorrecta: false },
-      { texto: "¿Ave?", esCorrecta: false },
-      { texto: "¿Reptil?", esCorrecta: false },
-      { texto: "¿Vertebrado?", esCorrecta: true, explicacion: "El pez es un vertebrado." },
+      { texto: "Mamífero", esCorrecta: false },
+      { texto: "Ave", esCorrecta: false },
+      { texto: "Reptil", esCorrecta: false },
+      { texto: "Vertebrado", esCorrecta: true, explicacion: "El pez es un vertebrado." },
     ],
   },
   {
@@ -248,10 +248,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Física?", esCorrecta: false },
-      { texto: "¿Biología?", esCorrecta: true, explicacion: "La biología estudia los seres vivos." },
-      { texto: "¿Química?", esCorrecta: false },
-      { texto: "¿Matemáticas?", esCorrecta: false },
+      { texto: "Física", esCorrecta: false },
+      { texto: "Biología", esCorrecta: true, explicacion: "La biología estudia los seres vivos." },
+      { texto: "Química", esCorrecta: false },
+      { texto: "Matemáticas", esCorrecta: false },
     ],
   },
   {
@@ -260,10 +260,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Respiración?", esCorrecta: false },
-      { texto: "¿Fotosíntesis?", esCorrecta: true, explicacion: "Las plantas liberan oxígeno mediante la fotosíntesis." },
-      { texto: "¿Fermentación?", esCorrecta: false },
-      { texto: "¿Digestión?", esCorrecta: false },
+      { texto: "Respiración", esCorrecta: false },
+      { texto: "Fotosíntesis", esCorrecta: true, explicacion: "Las plantas liberan oxígeno mediante la fotosíntesis." },
+      { texto: "Fermentación", esCorrecta: false },
+      { texto: "Digestión", esCorrecta: false },
     ],
   },
   {
@@ -272,10 +272,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Citoplasma?", esCorrecta: false },
-      { texto: "¿Membrana?", esCorrecta: false },
-      { texto: "¿Núcleo?", esCorrecta: true, explicacion: "El núcleo contiene el material genético." },
-      { texto: "¿Pared celular?", esCorrecta: false },
+      { texto: "Citoplasma", esCorrecta: false },
+      { texto: "Membrana", esCorrecta: false },
+      { texto: "Núcleo", esCorrecta: true, explicacion: "El núcleo contiene el material genético." },
+      { texto: "Pared celular", esCorrecta: false },
     ],
   },
   {
@@ -284,10 +284,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Conjunto de seres vivos?", esCorrecta: false },
-      { texto: "¿Conjunto de seres vivos y su entorno?", esCorrecta: true, explicacion: "Un ecosistema es el conjunto de seres vivos y su entorno." },
-      { texto: "¿Sólo el ambiente?", esCorrecta: false },
-      { texto: "¿Sólo animales?", esCorrecta: false },
+      { texto: "Conjunto de seres vivos", esCorrecta: false },
+      { texto: "Conjunto de seres vivos y su entorno", esCorrecta: true, explicacion: "Un ecosistema es el conjunto de seres vivos y su entorno." },
+      { texto: "Sólo el ambiente", esCorrecta: false },
+      { texto: "Sólo animales", esCorrecta: false },
     ],
   },
   {
@@ -296,10 +296,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Carnívoros?", esCorrecta: false },
-      { texto: "¿Herbívoros?", esCorrecta: true, explicacion: "Los herbívoros se alimentan de plantas." },
-      { texto: "¿Omnívoros?", esCorrecta: false },
-      { texto: "¿Insectívoros?", esCorrecta: false },
+      { texto: "Carnívoros", esCorrecta: false },
+      { texto: "Herbívoros", esCorrecta: true, explicacion: "Los herbívoros se alimentan de plantas." },
+      { texto: "Omnívoros", esCorrecta: false },
+      { texto: "Insectívoros", esCorrecta: false },
     ],
   },
   {
@@ -308,10 +308,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Digestivo?", esCorrecta: false },
-      { texto: "¿Respiratorio?", esCorrecta: false },
-      { texto: "¿Endocrino?", esCorrecta: true, explicacion: "El sistema endocrino produce hormonas." },
-      { texto: "¿Excretor?", esCorrecta: false },
+      { texto: "Digestivo", esCorrecta: false },
+      { texto: "Respiratorio", esCorrecta: false },
+      { texto: "Endocrino", esCorrecta: true, explicacion: "El sistema endocrino produce hormonas." },
+      { texto: "Excretor", esCorrecta: false },
     ],
   },
   {
@@ -320,10 +320,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Tiroides?", esCorrecta: true, explicacion: "La glándula tiroides regula el metabolismo." },
-      { texto: "¿Páncreas?", esCorrecta: false },
-      { texto: "¿Hígado?", esCorrecta: false },
-      { texto: "¿Riñón?", esCorrecta: false },
+      { texto: "Tiroides", esCorrecta: true, explicacion: "La glándula tiroides regula el metabolismo." },
+      { texto: "Páncreas", esCorrecta: false },
+      { texto: "Hígado", esCorrecta: false },
+      { texto: "Riñón", esCorrecta: false },
     ],
   },
   {
@@ -332,10 +332,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Respiración?", esCorrecta: false },
-      { texto: "¿Reproducción?", esCorrecta: true, explicacion: "La reproducción es el proceso para producir descendencia." },
-      { texto: "¿Crecimiento?", esCorrecta: false },
-      { texto: "¿Digestión?", esCorrecta: false },
+      { texto: "Respiración", esCorrecta: false },
+      { texto: "Reproducción", esCorrecta: true, explicacion: "La reproducción es el proceso para producir descendencia." },
+      { texto: "Crecimiento", esCorrecta: false },
+      { texto: "Digestión", esCorrecta: false },
     ],
   },
   {
@@ -344,10 +344,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Procariotas?", esCorrecta: true, explicacion: "Las células procariotas no tienen núcleo definido." },
-      { texto: "¿Eucariotas?", esCorrecta: false },
-      { texto: "¿Animales?", esCorrecta: false },
-      { texto: "¿Vegetales?", esCorrecta: false },
+      { texto: "Procariotas", esCorrecta: true, explicacion: "Las células procariotas no tienen núcleo definido." },
+      { texto: "Eucariotas", esCorrecta: false },
+      { texto: "Animales", esCorrecta: false },
+      { texto: "Vegetales", esCorrecta: false },
     ],
   },
   {
@@ -356,10 +356,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Vitaminas?", esCorrecta: false },
-      { texto: "¿Minerales?", esCorrecta: false },
-      { texto: "¿Carbohidratos?", esCorrecta: true, explicacion: "Los carbohidratos aportan energía rápida." },
-      { texto: "¿Proteínas?", esCorrecta: false },
+      { texto: "Vitaminas", esCorrecta: false },
+      { texto: "Minerales", esCorrecta: false },
+      { texto: "Carbohidratos", esCorrecta: true, explicacion: "Los carbohidratos aportan energía rápida." },
+      { texto: "Proteínas", esCorrecta: false },
     ],
   },
   {
@@ -368,10 +368,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Energía?", esCorrecta: false },
-      { texto: "¿Construcción y reparación?", esCorrecta: true, explicacion: "Las proteínas ayudan a construir y reparar tejidos." },
-      { texto: "¿Almacenamiento?", esCorrecta: false },
-      { texto: "¿Hidratación?", esCorrecta: false },
+      { texto: "Energía", esCorrecta: false },
+      { texto: "Construcción y reparación", esCorrecta: true, explicacion: "Las proteínas ayudan a construir y reparar tejidos." },
+      { texto: "Almacenamiento", esCorrecta: false },
+      { texto: "Hidratación", esCorrecta: false },
     ],
   },
   {
@@ -380,10 +380,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Estomas?", esCorrecta: true, explicacion: "Los estomas permiten el intercambio de gases en las plantas." },
-      { texto: "¿Raíces?", esCorrecta: false },
-      { texto: "¿Flores?", esCorrecta: false },
-      { texto: "¿Semillas?", esCorrecta: false },
+      { texto: "Estomas", esCorrecta: true, explicacion: "Los estomas permiten el intercambio de gases en las plantas." },
+      { texto: "Raíces", esCorrecta: false },
+      { texto: "Flores", esCorrecta: false },
+      { texto: "Semillas", esCorrecta: false },
     ],
   },
   {
@@ -392,10 +392,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Botánica?", esCorrecta: false },
-      { texto: "¿Zoología?", esCorrecta: true, explicacion: "La zoología estudia los animales." },
-      { texto: "¿Ecología?", esCorrecta: false },
-      { texto: "¿Anatomía?", esCorrecta: false },
+      { texto: "Botánica", esCorrecta: false },
+      { texto: "Zoología", esCorrecta: true, explicacion: "La zoología estudia los animales." },
+      { texto: "Ecología", esCorrecta: false },
+      { texto: "Anatomía", esCorrecta: false },
     ],
   },
   {
@@ -404,10 +404,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Asexual?", esCorrecta: false },
-      { texto: "¿Sexual?", esCorrecta: true, explicacion: "La reproducción sexual necesita dos progenitores." },
-      { texto: "¿Vegetativa?", esCorrecta: false },
-      { texto: "¿Esporulación?", esCorrecta: false },
+      { texto: "Asexual", esCorrecta: false },
+      { texto: "Sexual", esCorrecta: true, explicacion: "La reproducción sexual necesita dos progenitores." },
+      { texto: "Vegetativa", esCorrecta: false },
+      { texto: "Esporulación", esCorrecta: false },
     ],
   },
   {
@@ -416,10 +416,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Digestivo?", esCorrecta: false },
-      { texto: "¿Excretor?", esCorrecta: false },
-      { texto: "¿Circulatorio?", esCorrecta: true, explicacion: "El aparato circulatorio transporta la sangre." },
-      { texto: "¿Respiratorio?", esCorrecta: false },
+      { texto: "Digestivo", esCorrecta: false },
+      { texto: "Excretor", esCorrecta: false },
+      { texto: "Circulatorio", esCorrecta: true, explicacion: "El aparato circulatorio transporta la sangre." },
+      { texto: "Respiratorio", esCorrecta: false },
     ],
   },
   {
@@ -428,10 +428,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Glóbulos rojos?", esCorrecta: false },
-      { texto: "¿Glóbulos blancos?", esCorrecta: true, explicacion: "Los glóbulos blancos defienden el cuerpo." },
-      { texto: "¿Plaquetas?", esCorrecta: false },
-      { texto: "¿Neuronas?", esCorrecta: false },
+      { texto: "Glóbulos rojos", esCorrecta: false },
+      { texto: "Glóbulos blancos", esCorrecta: true, explicacion: "Los glóbulos blancos defienden el cuerpo." },
+      { texto: "Plaquetas", esCorrecta: false },
+      { texto: "Neuronas", esCorrecta: false },
     ],
   },
   {
@@ -440,10 +440,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Animal?", esCorrecta: false },
-      { texto: "¿Vegetal?", esCorrecta: false },
-      { texto: "¿Fungi?", esCorrecta: true, explicacion: "Los hongos pertenecen al reino fungi." },
-      { texto: "¿Protista?", esCorrecta: false },
+      { texto: "Animal", esCorrecta: false },
+      { texto: "Vegetal", esCorrecta: false },
+      { texto: "Fungi", esCorrecta: true, explicacion: "Los hongos pertenecen al reino fungi." },
+      { texto: "Protista", esCorrecta: false },
     ],
   },
   {
@@ -452,10 +452,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Un azúcar?", esCorrecta: false },
-      { texto: "¿Un pigmento?", esCorrecta: true, explicacion: "La clorofila es un pigmento que capta luz solar." },
-      { texto: "¿Una proteína?", esCorrecta: false },
-      { texto: "¿Una hormona?", esCorrecta: false },
+      { texto: "Un azúcar", esCorrecta: false },
+      { texto: "Un pigmento", esCorrecta: true, explicacion: "La clorofila es un pigmento que capta luz solar." },
+      { texto: "Una proteína", esCorrecta: false },
+      { texto: "Una hormona", esCorrecta: false },
     ],
   },
   {
@@ -464,10 +464,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Anaerobia?", esCorrecta: false },
-      { texto: "¿Aerobia?", esCorrecta: true, explicacion: "La respiración aerobia usa oxígeno." },
-      { texto: "¿Fermentación?", esCorrecta: false },
-      { texto: "¿Fotosíntesis?", esCorrecta: false },
+      { texto: "Anaerobia", esCorrecta: false },
+      { texto: "Aerobia", esCorrecta: true, explicacion: "La respiración aerobia usa oxígeno." },
+      { texto: "Fermentación", esCorrecta: false },
+      { texto: "Fotosíntesis", esCorrecta: false },
     ],
   },
   {
@@ -476,10 +476,10 @@ const preguntasBiologia = [
     puntuacion: 20,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Serpiente?", esCorrecta: false },
-      { texto: "¿Sapo?", esCorrecta: true, explicacion: "El sapo es un anfibio." },
-      { texto: "¿Águila?", esCorrecta: false },
-      { texto: "¿Ratón?", esCorrecta: false },
+      { texto: "Serpiente", esCorrecta: false },
+      { texto: "Sapo", esCorrecta: true, explicacion: "El sapo es un anfibio." },
+      { texto: "Águila", esCorrecta: false },
+      { texto: "Ratón", esCorrecta: false },
     ],
   },
   {
@@ -488,10 +488,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Cloroplasto?", esCorrecta: false },
-      { texto: "¿Núcleo?", esCorrecta: false },
-      { texto: "¿Mitocondria?", esCorrecta: true, explicacion: "La mitocondria produce energía en la célula." },
-      { texto: "¿Ribosoma?", esCorrecta: false },
+      { texto: "Cloroplasto", esCorrecta: false },
+      { texto: "Núcleo", esCorrecta: false },
+      { texto: "Mitocondria", esCorrecta: true, explicacion: "La mitocondria produce energía en la célula." },
+      { texto: "Ribosoma", esCorrecta: false },
     ],
   },
   {
@@ -500,10 +500,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Meiosis?", esCorrecta: false },
-      { texto: "¿Mitosis?", esCorrecta: true, explicacion: "La mitosis es la división celular en células somáticas." },
-      { texto: "¿Fisión?", esCorrecta: false },
-      { texto: "¿Gemación?", esCorrecta: false },
+      { texto: "Meiosis", esCorrecta: false },
+      { texto: "Mitosis", esCorrecta: true, explicacion: "La mitosis es la división celular en células somáticas." },
+      { texto: "Fisión", esCorrecta: false },
+      { texto: "Gemación", esCorrecta: false },
     ],
   },
   {
@@ -512,10 +512,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Fenotipo?", esCorrecta: false },
-      { texto: "¿Genotipo?", esCorrecta: true, explicacion: "El genotipo es el conjunto de genes de un individuo." },
-      { texto: "¿Alelos?", esCorrecta: false },
-      { texto: "¿Cromosomas?", esCorrecta: false },
+      { texto: "Fenotipo", esCorrecta: false },
+      { texto: "Genotipo", esCorrecta: true, explicacion: "El genotipo es el conjunto de genes de un individuo." },
+      { texto: "Alelos", esCorrecta: false },
+      { texto: "Cromosomas", esCorrecta: false },
     ],
   },
   {
@@ -524,10 +524,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Caroteno?", esCorrecta: false },
-      { texto: "¿Melanina?", esCorrecta: false },
-      { texto: "¿Clorofila?", esCorrecta: true, explicacion: "La clorofila capta la luz para la fotosíntesis." },
-      { texto: "¿Xantofila?", esCorrecta: false },
+      { texto: "Caroteno", esCorrecta: false },
+      { texto: "Melanina", esCorrecta: false },
+      { texto: "Clorofila", esCorrecta: true, explicacion: "La clorofila capta la luz para la fotosíntesis." },
+      { texto: "Xantofila", esCorrecta: false },
     ],
   },
   {
@@ -536,10 +536,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Un orgánulo?", esCorrecta: false },
-      { texto: "¿Un conjunto de proteínas?", esCorrecta: false },
-      { texto: "¿Un conjunto de ADN?", esCorrecta: true, explicacion: "Un cromosoma es un conjunto de ADN." },
-      { texto: "¿Un pigmento?", esCorrecta: false },
+      { texto: "Un orgánulo", esCorrecta: false },
+      { texto: "Un conjunto de proteínas", esCorrecta: false },
+      { texto: "Un conjunto de ADN", esCorrecta: true, explicacion: "Un cromosoma es un conjunto de ADN." },
+      { texto: "Un pigmento", esCorrecta: false },
     ],
   },
   {
@@ -548,10 +548,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Proteína?", esCorrecta: false },
-      { texto: "¿Lípido?", esCorrecta: false },
-      { texto: "¿Ácido nucleico?", esCorrecta: true, explicacion: "El ADN es un ácido nucleico." },
-      { texto: "¿Carbohidrato?", esCorrecta: false },
+      { texto: "Proteína", esCorrecta: false },
+      { texto: "Lípido", esCorrecta: false },
+      { texto: "Ácido nucleico", esCorrecta: true, explicacion: "El ADN es un ácido nucleico." },
+      { texto: "Carbohidrato", esCorrecta: false },
     ],
   },
   {
@@ -560,10 +560,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Genética?", esCorrecta: false },
-      { texto: "¿Ecología?", esCorrecta: true, explicacion: "La ecología estudia estas relaciones." },
-      { texto: "¿Anatomía?", esCorrecta: false },
-      { texto: "¿Botánica?", esCorrecta: false },
+      { texto: "Genética", esCorrecta: false },
+      { texto: "Ecología", esCorrecta: true, explicacion: "La ecología estudia estas relaciones." },
+      { texto: "Anatomía", esCorrecta: false },
+      { texto: "Botánica", esCorrecta: false },
     ],
   },
   {
@@ -572,10 +572,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿M?", esCorrecta: false },
-      { texto: "¿G1?", esCorrecta: true, explicacion: "La fase G1 es la de crecimiento celular." },
-      { texto: "¿S?", esCorrecta: false },
-      { texto: "¿G2?", esCorrecta: false },
+      { texto: "M", esCorrecta: false },
+      { texto: "G1", esCorrecta: true, explicacion: "La fase G1 es la de crecimiento celular." },
+      { texto: "S", esCorrecta: false },
+      { texto: "G2", esCorrecta: false },
     ],
   },
   {
@@ -584,10 +584,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Moléculas que aceleran reacciones?", esCorrecta: true, explicacion: "Las enzimas son moléculas que aceleran reacciones químicas." },
-      { texto: "¿Moléculas de ADN?", esCorrecta: false },
-      { texto: "¿Células?", esCorrecta: false },
-      { texto: "¿Hormonas?", esCorrecta: false },
+      { texto: "Moléculas que aceleran reacciones", esCorrecta: true, explicacion: "Las enzimas son moléculas que aceleran reacciones químicas." },
+      { texto: "Moléculas de ADN", esCorrecta: false },
+      { texto: "Células", esCorrecta: false },
+      { texto: "Hormonas", esCorrecta: false },
     ],
   },
   {
@@ -596,10 +596,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Flagelos?", esCorrecta: true, explicacion: "Los flagelos permiten el movimiento celular." },
-      { texto: "¿Ribosomas?", esCorrecta: false },
-      { texto: "¿Cloroplastos?", esCorrecta: false },
-      { texto: "¿Retículo?", esCorrecta: false },
+      { texto: "Flagelos", esCorrecta: true, explicacion: "Los flagelos permiten el movimiento celular." },
+      { texto: "Ribosomas", esCorrecta: false },
+      { texto: "Cloroplastos", esCorrecta: false },
+      { texto: "Retículo", esCorrecta: false },
     ],
   },
   {
@@ -608,10 +608,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Sexual?", esCorrecta: false },
-      { texto: "¿Asexual?", esCorrecta: true, explicacion: "La reproducción asexual origina clones." },
-      { texto: "¿Meiosis?", esCorrecta: false },
-      { texto: "¿Mitosis?", esCorrecta: false },
+      { texto: "Sexual", esCorrecta: false },
+      { texto: "Asexual", esCorrecta: true, explicacion: "La reproducción asexual origina clones." },
+      { texto: "Meiosis", esCorrecta: false },
+      { texto: "Mitosis", esCorrecta: false },
     ],
   },
   {
@@ -620,10 +620,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Variante de un gen?", esCorrecta: true, explicacion: "Un alelo es una variante de un gen." },
-      { texto: "¿Una proteína?", esCorrecta: false },
-      { texto: "¿Un ácido nucleico?", esCorrecta: false },
-      { texto: "¿Un orgánulo?", esCorrecta: false },
+      { texto: "Variante de un gen", esCorrecta: true, explicacion: "Un alelo es una variante de un gen." },
+      { texto: "Una proteína", esCorrecta: false },
+      { texto: "Un ácido nucleico", esCorrecta: false },
+      { texto: "Un orgánulo", esCorrecta: false },
     ],
   },
   {
@@ -632,10 +632,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Genómica?", esCorrecta: true, explicacion: "La genómica estudia el ADN." },
-      { texto: "¿Transcriptómica?", esCorrecta: false },
-      { texto: "¿Proteómica?", esCorrecta: false },
-      { texto: "¿Metabolómica?", esCorrecta: false },
+      { texto: "Genómica", esCorrecta: true, explicacion: "La genómica estudia el ADN." },
+      { texto: "Transcriptómica", esCorrecta: false },
+      { texto: "Proteómica", esCorrecta: false },
+      { texto: "Metabolómica", esCorrecta: false },
     ],
   },
   {
@@ -644,10 +644,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿El equilibrio interno del organismo?", esCorrecta: true, explicacion: "La homeostasis es el equilibrio interno del organismo." },
-      { texto: "¿El crecimiento celular?", esCorrecta: false },
-      { texto: "¿La digestión?", esCorrecta: false },
-      { texto: "¿La fotosíntesis?", esCorrecta: false },
+      { texto: "El equilibrio interno del organismo", esCorrecta: true, explicacion: "La homeostasis es el equilibrio interno del organismo." },
+      { texto: "El crecimiento celular", esCorrecta: false },
+      { texto: "La digestión", esCorrecta: false },
+      { texto: "La fotosíntesis", esCorrecta: false },
     ],
   },
   {
@@ -656,10 +656,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Proveer energía a largo plazo?", esCorrecta: true, explicacion: "Los lípidos proveen energía a largo plazo." },
-      { texto: "¿Formar proteínas?", esCorrecta: false },
-      { texto: "¿Transportar oxígeno?", esCorrecta: false },
-      { texto: "¿Formar ADN?", esCorrecta: false },
+      { texto: "Proveer energía a largo plazo", esCorrecta: true, explicacion: "Los lípidos proveen energía a largo plazo." },
+      { texto: "Formar proteínas", esCorrecta: false },
+      { texto: "Transportar oxígeno", esCorrecta: false },
+      { texto: "Formar ADN", esCorrecta: false },
     ],
   },
   {
@@ -668,10 +668,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Azúcares?", esCorrecta: false },
-      { texto: "¿Ácidos grasos?", esCorrecta: false },
-      { texto: "¿Aminoácidos?", esCorrecta: true, explicacion: "Las proteínas están formadas por aminoácidos." },
-      { texto: "¿Nucleótidos?", esCorrecta: false },
+      { texto: "Azúcares", esCorrecta: false },
+      { texto: "Ácidos grasos", esCorrecta: false },
+      { texto: "Aminoácidos", esCorrecta: true, explicacion: "Las proteínas están formadas por aminoácidos." },
+      { texto: "Nucleótidos", esCorrecta: false },
     ],
   },
   {
@@ -680,10 +680,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Óvulo?", esCorrecta: false },
-      { texto: "¿Espermatozoide?", esCorrecta: true, explicacion: "El espermatozoide es la célula reproductora masculina." },
-      { texto: "¿Cigoto?", esCorrecta: false },
-      { texto: "¿Embrión?", esCorrecta: false },
+      { texto: "Óvulo", esCorrecta: false },
+      { texto: "Espermatozoide", esCorrecta: true, explicacion: "El espermatozoide es la célula reproductora masculina." },
+      { texto: "Cigoto", esCorrecta: false },
+      { texto: "Embrión", esCorrecta: false },
     ],
   },
   {
@@ -692,10 +692,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Floema?", esCorrecta: false },
-      { texto: "¿Xilema?", esCorrecta: true, explicacion: "El xilema transporta agua y sales." },
-      { texto: "¿Estomas?", esCorrecta: false },
-      { texto: "¿Cloroplastos?", esCorrecta: false },
+      { texto: "Floema", esCorrecta: false },
+      { texto: "Xilema", esCorrecta: true, explicacion: "El xilema transporta agua y sales." },
+      { texto: "Estomas", esCorrecta: false },
+      { texto: "Cloroplastos", esCorrecta: false },
     ],
   },
   {
@@ -704,10 +704,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Mitocondria?", esCorrecta: false },
-      { texto: "¿Núcleo?", esCorrecta: false },
-      { texto: "¿Ribosoma?", esCorrecta: true, explicacion: "El ribosoma sintetiza proteínas." },
-      { texto: "¿Lisosoma?", esCorrecta: false },
+      { texto: "Mitocondria", esCorrecta: false },
+      { texto: "Núcleo", esCorrecta: false },
+      { texto: "Ribosoma", esCorrecta: true, explicacion: "El ribosoma sintetiza proteínas." },
+      { texto: "Lisosoma", esCorrecta: false },
     ],
   },
   {
@@ -716,10 +716,10 @@ const preguntasBiologia = [
     puntuacion: 30,
     categoriaNombre: "Biología",
     respuestas: [
-      { texto: "¿Arqueología?", esCorrecta: false },
-      { texto: "¿Paleontología?", esCorrecta: true, explicacion: "La paleontología estudia los fósiles." },
-      { texto: "¿Antropología?", esCorrecta: false },
-      { texto: "¿Ecología?", esCorrecta: false },
+      { texto: "Arqueología", esCorrecta: false },
+      { texto: "Paleontología", esCorrecta: true, explicacion: "La paleontología estudia los fósiles." },
+      { texto: "Antropología", esCorrecta: false },
+      { texto: "Ecología", esCorrecta: false },
     ],
   },
 ];

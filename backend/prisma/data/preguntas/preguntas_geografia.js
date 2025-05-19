@@ -2,7 +2,7 @@
 
 const preguntasGeografia = [
   {
-    texto: "Cuál es el planeta donde vivimos",
+    texto: "¿Cuál es el planeta donde vivimos?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -14,7 +14,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama el continente donde está España",
+    texto: "¿Cómo se llama el continente donde está España?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -26,7 +26,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el océano más grande del mundo",
+    texto: "¿Cuál es el océano más grande del mundo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -38,7 +38,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el río más largo del mundo",
+    texto: "¿Cuál es el río más largo del mundo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -50,7 +50,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué instrumento se usa para orientarse",
+    texto: "¿Qué instrumento se usa para orientarse?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -62,7 +62,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es la capital de España",
+    texto: "¿Cuál es la capital de España?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -74,7 +74,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuántos continentes hay en el mundo",
+    texto: "¿Cuántos continentes hay en el mundo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -86,7 +86,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama el polo donde hace más frío",
+    texto: "¿Cómo se llama el polo donde hace más frío?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -98,7 +98,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el desierto más grande del mundo",
+    texto: "¿Cuál es el desierto más grande del mundo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -110,7 +110,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué nombre recibe el conjunto de mapas",
+    texto: "¿Qué nombre recibe el conjunto de mapas?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -122,7 +122,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué línea divide la Tierra en hemisferios norte y sur",
+    texto: "¿Qué línea divide la Tierra en hemisferios norte y sur?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -134,7 +134,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué nombre recibe un mapa que muestra montañas y ríos",
+    texto: "¿Qué nombre recibe un mapa que muestra montañas y ríos?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -146,7 +146,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el continente más poblado",
+    texto: "¿Cuál es el continente más poblado?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -158,7 +158,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama la capa gaseosa que rodea la Tierra",
+    texto: "¿Cómo se llama la capa gaseosa que rodea la Tierra?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -170,7 +170,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué océano separa Europa de América",
+    texto: "¿Qué océano separa Europa de América?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -182,7 +182,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama la parte sólida de la Tierra",
+    texto: "¿Cómo se llama la parte sólida de la Tierra?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -194,7 +194,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué continente está al sur de Europa",
+    texto: "¿Qué continente está al sur de Europa?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -206,7 +206,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama la ciencia que estudia los mapas",
+    texto: "¿Cómo se llama la ciencia que estudia los mapas?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -218,7 +218,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué forma tiene la Tierra",
+    texto: "¿Qué forma tiene la Tierra?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -230,7 +230,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país tiene mayor población",
+    texto: "¿Qué país tiene mayor población?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Geografía",
@@ -242,7 +242,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el país más grande del mundo",
+    texto: "¿Cuál es el país más grande del mundo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -254,7 +254,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué cordillera es la más larga del mundo",
+    texto: "¿Qué cordillera es la más larga del mundo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -266,7 +266,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama la capital de Francia",
+    texto: "¿Cómo se llama la capital de Francia?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -278,7 +278,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué continente tiene el desierto del Sahara",
+    texto: "¿Qué continente tiene el desierto del Sahara?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -290,7 +290,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país europeo tiene forma de bota",
+    texto: "¿Qué país europeo tiene forma de bota?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -302,7 +302,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué es un archipiélago",
+    texto: "¿Qué es un archipiélago?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -314,7 +314,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el país más pequeño del mundo",
+    texto: "¿Cuál es el país más pequeño del mundo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -326,7 +326,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama la línea que divide los hemisferios este y oeste",
+    texto: "¿Cómo se llama la línea que divide los hemisferios este y oeste?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -338,7 +338,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es la capital de Alemania",
+    texto: "¿Cuál es la capital de Alemania?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -350,7 +350,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país tiene forma alargada en Sudamérica",
+    texto: "¿Qué país tiene forma alargada en Sudamérica?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -362,7 +362,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama el continente helado",
+    texto: "¿Cómo se llama el continente helado?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -374,7 +374,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué río pasa por Egipto",
+    texto: "¿Qué río pasa por Egipto?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -386,7 +386,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué nombre recibe la capa externa de la Tierra",
+    texto: "¿Qué nombre recibe la capa externa de la Tierra?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -398,7 +398,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué fenómeno causa los días y las noches",
+    texto: "¿Qué fenómeno causa los días y las noches?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -410,7 +410,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es la capital de Japón",
+    texto: "¿Cuál es la capital de Japón?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -422,7 +422,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país limita con Canadá al sur",
+    texto: "¿Qué país limita con Canadá al sur?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -434,7 +434,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país tiene la mayor cantidad de volcanes activos",
+    texto: "¿Qué país tiene la mayor cantidad de volcanes activos?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -446,7 +446,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llaman los movimientos de las placas tectónicas",
+    texto: "¿Cómo se llaman los movimientos de las placas tectónicas?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -458,7 +458,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el desierto más árido del mundo",
+    texto: "¿Cuál es el desierto más árido del mundo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -470,7 +470,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué es un delta",
+    texto: "¿Qué es un delta?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Geografía",
@@ -482,7 +482,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país tiene más husos horarios",
+    texto: "¿Qué país tiene más husos horarios?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -494,7 +494,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué cordillera contiene el monte Everest",
+    texto: "¿Qué cordillera contiene el monte Everest?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -506,7 +506,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué nombre recibe el proceso de formación de montañas",
+    texto: "¿Qué nombre recibe el proceso de formación de montañas?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -518,7 +518,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué es la isóbata",
+    texto: "¿Qué es la isóbata?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -530,7 +530,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país africano tiene mayor población",
+    texto: "¿Qué país africano tiene mayor población?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -542,7 +542,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama el mar que baña las costas de Jordania e Israel",
+    texto: "¿Cómo se llama el mar que baña las costas de Jordania e Israel?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -554,7 +554,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué nombre recibe el punto más profundo del océano",
+    texto: "¿Qué nombre recibe el punto más profundo del océano?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -566,7 +566,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el único continente sin población permanente",
+    texto: "¿Cuál es el único continente sin población permanente?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -578,7 +578,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país tiene el mayor número de islas",
+    texto: "¿Qué país tiene el mayor número de islas?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -590,7 +590,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué es un fiordo",
+    texto: "¿Qué es un fiordo?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -602,7 +602,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país alberga el lago Baikal",
+    texto: "¿Qué país alberga el lago Baikal?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -614,7 +614,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué continente tiene la mayor extensión desértica",
+    texto: "¿Qué continente tiene la mayor extensión desértica?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -626,7 +626,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué nombre recibe el estudio de los climas",
+    texto: "¿Qué nombre recibe el estudio de los climas?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -638,7 +638,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué tipo de mapa muestra distribución de población",
+    texto: "¿Qué tipo de mapa muestra distribución de población?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -650,7 +650,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país limita con Portugal al este",
+    texto: "¿Qué país limita con Portugal al este?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -662,7 +662,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama la cadena montañosa más importante de Europa",
+    texto: "¿Cómo se llama la cadena montañosa más importante de Europa?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -674,7 +674,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cuál es el país más austral del continente americano",
+    texto: "¿Cuál es el país más austral del continente americano?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -686,7 +686,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué océano baña las costas orientales de África",
+    texto: "¿Qué océano baña las costas orientales de África?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -698,7 +698,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Cómo se llama el mar entre Europa y África",
+    texto: "¿Cómo se llama el mar entre Europa y África?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",
@@ -710,7 +710,7 @@ const preguntasGeografia = [
     ],
   },
   {
-    texto: "Qué país europeo tiene más volcanes activos",
+    texto: "¿Qué país europeo tiene más volcanes activos?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Geografía",

@@ -2,7 +2,7 @@
 
 const preguntasMusica = [
   {
-    texto: "Cuántas notas tiene la escala musical",
+    texto: "¿Cuántas notas tiene la escala musical?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -14,7 +14,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cómo se llama la primera nota de la escala",
+    texto: "¿Cómo se llama la primera nota de la escala?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -26,7 +26,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué figura dura un tiempo",
+    texto: "¿Qué figura dura un tiempo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -38,7 +38,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cuál es el símbolo que indica silencio de un tiempo",
+    texto: "¿Cuál es el símbolo que indica silencio de un tiempo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -50,7 +50,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cómo se llama el pentagrama usado para escribir música",
+    texto: "¿Cómo se llama el pentagrama usado para escribir música?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -62,7 +62,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué instrumento pertenece a la familia de cuerda",
+    texto: "¿Qué instrumento pertenece a la familia de cuerda?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -74,7 +74,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué instrumento pertenece a la familia de viento madera",
+    texto: "¿Qué instrumento pertenece a la familia de viento madera?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -86,7 +86,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un compás",
+    texto: "¿Qué es un compás?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -98,7 +98,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cómo se llama el símbolo que sube medio tono",
+    texto: "¿Cómo se llama el símbolo que sube medio tono?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -110,7 +110,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cómo se llama el símbolo que baja medio tono",
+    texto: "¿Cómo se llama el símbolo que baja medio tono?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -122,7 +122,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué indica el tempo",
+    texto: "¿Qué indica el tempo?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -134,7 +134,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un acorde",
+    texto: "¿Qué es un acorde?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -146,7 +146,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una melodía",
+    texto: "¿Qué es una melodía?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -158,7 +158,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cómo se llama el signo que marca el inicio del pentagrama",
+    texto: "¿Cómo se llama el signo que marca el inicio del pentagrama?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -170,7 +170,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cuál de estos es un instrumento de percusión",
+    texto: "¿Cuál de estos es un instrumento de percusión?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -182,7 +182,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué indica el compás cuatro por cuatro",
+    texto: "¿Qué indica el compás cuatro por cuatro?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -194,7 +194,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cuál es la nota más grave",
+    texto: "¿Cuál es la nota más grave?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -206,7 +206,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cuál es la nota más aguda",
+    texto: "¿Cuál es la nota más aguda?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -218,7 +218,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa piano en dinámica musical",
+    texto: "¿Qué significa piano en dinámica musical?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -230,7 +230,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa forte en dinámica musical",
+    texto: "¿Qué significa forte en dinámica musical?",
     dificultad: "facil",
     puntuacion: 10,
     categoriaNombre: "Música",
@@ -242,7 +242,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un arpegio",
+    texto: "¿Qué es un arpegio?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -254,7 +254,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa allegro",
+    texto: "¿Qué significa allegro?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -266,7 +266,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué familia de instrumentos usa lengüeta",
+    texto: "¿Qué familia de instrumentos usa lengüeta?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -278,7 +278,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un calderón",
+    texto: "¿Qué es un calderón?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -290,7 +290,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa andante",
+    texto: "¿Qué significa andante?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -302,7 +302,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es la armadura de clave",
+    texto: "¿Qué es la armadura de clave?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -314,7 +314,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una semifusa",
+    texto: "¿Qué es una semifusa?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -326,7 +326,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cuál es la forma binaria",
+    texto: "¿Cuál es la forma binaria?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -338,7 +338,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Cuál es la forma ternaria",
+    texto: "¿Cuál es la forma ternaria?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -350,7 +350,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa crescendo",
+    texto: "¿Qué significa crescendo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -362,7 +362,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa diminuendo",
+    texto: "¿Qué significa diminuendo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -374,7 +374,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una síncopa",
+    texto: "¿Qué es una síncopa?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -386,7 +386,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa fermata",
+    texto: "¿Qué significa fermata?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -398,7 +398,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es el timbre",
+    texto: "¿Qué es el timbre?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -410,7 +410,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa presto",
+    texto: "¿Qué significa presto?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -422,7 +422,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un canon",
+    texto: "¿Qué es un canon?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -434,7 +434,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa moderato",
+    texto: "¿Qué significa moderato?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -446,7 +446,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una tonalidad",
+    texto: "¿Qué es una tonalidad?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -458,7 +458,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una escala cromática",
+    texto: "¿Qué es una escala cromática?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -470,7 +470,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un intervalo",
+    texto: "¿Qué es un intervalo?",
     dificultad: "media",
     puntuacion: 20,
     categoriaNombre: "Música",
@@ -482,7 +482,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un acorde disminuido",
+    texto: "¿Qué es un acorde disminuido?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -494,7 +494,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa rubato",
+    texto: "¿Qué significa rubato?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -506,7 +506,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un glissando",
+    texto: "¿Qué es un glissando?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -518,7 +518,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una modulación",
+    texto: "¿Qué es una modulación?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -530,7 +530,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un acorde de séptima",
+    texto: "¿Qué es un acorde de séptima?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -542,7 +542,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa staccato",
+    texto: "¿Qué significa staccato?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -554,7 +554,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa legato",
+    texto: "¿Qué significa legato?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -566,7 +566,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es el contrapunto",
+    texto: "¿Qué es el contrapunto?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -578,7 +578,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un acorde suspendido",
+    texto: "¿Qué es un acorde suspendido?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -590,7 +590,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa cadenza",
+    texto: "¿Qué significa cadenza?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -602,7 +602,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un trino",
+    texto: "¿Qué es un trino?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -614,7 +614,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa pizzicato",
+    texto: "¿Qué significa pizzicato?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -626,7 +626,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es un ostinato",
+    texto: "¿Qué es un ostinato?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -638,7 +638,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una fusa",
+    texto: "¿Qué es una fusa?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -650,7 +650,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa accelerando",
+    texto: "¿Qué significa accelerando?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -662,7 +662,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una semicorchea",
+    texto: "¿Qué es una semicorchea?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -674,7 +674,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa da capo",
+    texto: "¿Qué significa da capo?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -686,7 +686,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una nota pedal",
+    texto: "¿Qué es una nota pedal?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -698,7 +698,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué es una suite",
+    texto: "¿Qué es una suite?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
@@ -710,7 +710,7 @@ const preguntasMusica = [
     ],
   },
   {
-    texto: "Qué significa sforzando",
+    texto: "¿Qué significa sforzando?",
     dificultad: "dificil",
     puntuacion: 30,
     categoriaNombre: "Música",
