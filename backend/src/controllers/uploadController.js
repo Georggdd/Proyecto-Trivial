@@ -1,20 +1,23 @@
+//Controlador para subir y porcesar un archivo externo
+
 import fs from 'fs';
 import csv from 'csv-parser';
 import xlsx from 'xlsx';
 import { guardarPreguntas } from './customController.js';
 
-export const procesarArchivo = async (req, res) => {
-  const archivo = req.file;
+export const procesarArchivo = async (req, res) => { //Para manejar un POST que sube un archivo.
+  const archivo = req.file; //Extrae el archivo subido en la porpiedad file del objeto req.
   if (!archivo) {
     return res.status(400).json({ error: 'No se ha subido ningún archivo' });
   }
 
-  const resultados = [];
-  const errores = [];
-  let respuestaEnviada = false;
+  const resultados = []; //Almacena las preguntas válidas.
+  const errores = []; //Almacena errores encontrados.
+  let respuestaEnviada = false;// Evita enviar múltiples respuestas HTTP.
 
-  const procesarFila = (data) => {
-    const opciones = {
+//Función para procesar el archivo
+  const procesarFila = (data) => {//Toma cada fila del archivo y la valida. 
+    const opciones = { //Extrae las respuestas a,b,c y d del archivo.
       a: data.opcion_a,
       b: data.opcion_b,
       c: data.opcion_c,
@@ -22,7 +25,7 @@ export const procesarArchivo = async (req, res) => {
     };
     const correcta = data.correcta?.toLowerCase();
 
-    const isValid =
+    const isValid = //Verifica que todos los campos necesarios estén presentes y que la opción correcta sea válida.
       data.pregunta &&
       opciones.a &&
       opciones.b &&
@@ -32,7 +35,7 @@ export const procesarArchivo = async (req, res) => {
       data.dificultad &&
       data.explicacion;
 
-    if (isValid) {
+    if (isValid) { //Si la fila es válida, se formatea y se guarda en resultados. Si no, se añade un error a errores.
       resultados.push({
         pregunta: data.pregunta,
         opcion1: opciones.a,
@@ -48,23 +51,27 @@ export const procesarArchivo = async (req, res) => {
     }
   };
 
-  try {
-    const ext = archivo.originalname.split('.').pop().toLowerCase();
 
+  //Lógica de lectura del archivo
+  try {
+    const ext = archivo.originalname.split('.').pop().toLowerCase();//Obtiene la extensión del archivo.
+    //Caso CSV
     if (ext === 'csv') {
       fs.createReadStream(archivo.path)
-        .pipe(csv())
-        .on('data', procesarFila)
+        .pipe(csv())  //Se parsea el archivo CSV en streaming.
+        .on('data', procesarFila) //Por cada fila encontrada, se llama a `procesarFila`.
         .on('end', async () => {
-          fs.unlinkSync(archivo.path);
-          await manejarResultado(res, resultados, errores);
+          fs.unlinkSync(archivo.path); //Borra el archivo temporal.
+          await manejarResultado(res, resultados, errores);//Procesa el resultado.
         })
-        .on('error', (err) => manejarError(res, err, archivo.path));
-    } else if (ext === 'xlsx' || ext === 'xls') {
+        .on('error', (err) => manejarError(res, err, archivo.path));//Manejo de errores.
+    
+      //Caso excel  
+      } else if (ext === 'xlsx' || ext === 'xls') {
       const workbook = xlsx.readFile(archivo.path);
-      const sheetName = workbook.SheetNames[0];
+      const sheetName = workbook.SheetNames[0];//Solo se lee la primera hoja.
       const sheet = workbook.Sheets[sheetName];
-      const jsonData = xlsx.utils.sheet_to_json(sheet, { defval: "" });
+      const jsonData = xlsx.utils.sheet_to_json(sheet, { defval: "" });//Convierte la hoja a JSON.
 
       jsonData.forEach(procesarFila);
       fs.unlinkSync(archivo.path);
@@ -73,6 +80,8 @@ export const procesarArchivo = async (req, res) => {
       fs.unlinkSync(archivo.path);
       return res.status(400).json({ error: 'Formato de archivo no soportado' });
     }
+
+    //Manejo de errores generales
   } catch (error) {
     console.error('❌ Error interno:', error);
     if (!respuestaEnviada) {
@@ -82,7 +91,9 @@ export const procesarArchivo = async (req, res) => {
   }
 };
 
+//Función auxiliar para procesar resultados
 async function manejarResultado(res, resultados, errores) {
+  //Si hay errores en la fila se ejecuta esto:
   if (errores.length > 0) {
     return res.status(400).json({
       error: 'Algunas filas son inválidas',
@@ -91,8 +102,9 @@ async function manejarResultado(res, resultados, errores) {
     });
   }
 
+  //Si todo está correcto de ejectura esto otro:
   try {
-    await guardarPreguntas(resultados);
+    await guardarPreguntas(resultados);//Llama a función que guarda en la BD.
     return res.json({
       mensaje: 'Archivo procesado y preguntas guardadas',
       preguntas: resultados,
@@ -103,6 +115,7 @@ async function manejarResultado(res, resultados, errores) {
   }
 }
 
+//Manejo de errores al leer archivo
 function manejarError(res, err, path) {
   fs.unlinkSync(path);
   console.error('❌ Error al parsear archivo:', err);

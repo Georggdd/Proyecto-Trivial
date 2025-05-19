@@ -1,3 +1,5 @@
+//Controlador para el botón de customizar
+
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
