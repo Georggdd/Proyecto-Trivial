@@ -12,9 +12,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/preguntas', preguntasRoutes);
-
-
-
 app.get('/', (req, res) => {
   res.send('Servidor funcionando 🚀');
 });
