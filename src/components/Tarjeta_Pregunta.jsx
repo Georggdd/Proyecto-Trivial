@@ -1,30 +1,73 @@
 import React, { useEffect, useState } from 'react';
 
 
-    export default function Tarjeta_Pregunta({pregunta}) {
+    export default function Tarjeta_Pregunta({categoria}) {
     const [count, setCount] = useState(0)
     const [show, setShow] = useState(false);
+    const [pregunta, setPregunta] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [seleccion, setSeleccion] = useState(null);
     const responder = (respuesta) => {
         setSeleccion(respuesta);
     };
 
     useEffect(() => {
-        setShow(true);
-    }, []);
+        if (!loading && pregunta) {
+            const timeout = setTimeout(() => {
+            setShow(true);
+          }, 50); // delay mínimo para permitir un render previo
+        
+            return () => clearTimeout(timeout);
+        }
+        }, [loading, pregunta]);
 
+    useEffect(() => {
+            fetch(`http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`)
+            .then((res) => {
+            if (!res.ok) throw new Error('Error al cargar preguntas');
+            return res.json();
+            })
+            .then((data) => {
+            const preguntaRandom = data[Math.floor(Math.random() * data.length)];
+            
+            const preguntaFormato = {
+                categoria: preguntaRandom.categoria.nombre,
+                pregunta: preguntaRandom.texto,
+                respuestas: preguntaRandom.respuestas.map((r) => ({
+                texto: r.texto,
+                correcta: r.esCorrecta,
+                explicacion: r.explicacion,
+                })),
+            };
+            
+            setPregunta(preguntaFormato);
+            setLoading(false);
+            })
+            .catch((err) => {
+            console.error(err);
+            setLoading(false);
+            });
+        }, [categoria]);
+
+    if (loading) {
+        return <p className='text-center mt-10 text-xl'>Cargando pregunta...</p>;
+    }
+        
+    if (!pregunta) {
+        return <p className='text-center mt-10 text-xl'>No hay preguntas disponibles para esta categoría.</p>;
+    }
+        
 
     return (
     // Diseño responsive para laptop y proyector 1920px x 1080px (2xl)
     // Tablero Madera - Ocupa el 88% de la screen height = 950px
-    <div className='h-[85%] w-full flex items-center justify-center' >
-        {/* Fondo Verde */}
+    <div className='h-[85%] w-full flex items-center justify-center perspective' >
         <div className='h-full w-full flex items-center justify-center ' >
-            {/* Tarjeta */}
-            <section id='tarjeta' className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1500ms] ease-out transform ${ show ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}>
-                <div id='titulo' className='w-full h-[19%] mt-6 bg-verdeOscuro flex items-center gap-[27%] 2xl:gap-[30%]'>
-                    <h1 className='text-white text-7xl pt-6 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
-                    <img src="/public/assets/img/queso-color-blanco.png" className='w-[15%] pt-6' alt="" />
+            {/* DELANTERO - TARJETA */}
+            <section id="tarjeta" className={`bg-white flex flex-col h-full w-[65%] rounded-lg border-black border-[4px] 2xl:w-[70%] transition-all duration-[1000ms] ease-out transform transform-style-preserve-3d ${seleccion ? 'rotate-y-180' : '' } ${show ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
+                <div id='titulo' className='w-full h-[19%] relative mt-6 bg-verdeOscuro flex items-center 2xl:gap-[30%] transform'>
+                    <h1 className='text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]'>{pregunta.categoria}</h1>
+                    <img src="/assets/img/queso-color-blanco.png" className='w-[15%] pt-6 absolute right-[15%]' alt="" />
                 </div>
 
                 {/* Si no se ha seleccionado ninguna pregunta */}
@@ -32,8 +75,8 @@ import React, { useEffect, useState } from 'react';
                 <div id='contenido-tarjeta' className='flex-1 w-full h-full flex items-center justify-between font-lemon'>
                     {/*Pregunta*/}
                     <div id='pregunta' className='w-1/2 h-[105%] flex flex-col items-center justify-center pl-2 ml-4'>
-                        <div id='marco-pregunta' className='p-7 h-[85%] w-[85%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
-                            <h1 className="font-bold md:text-5xl 2xl:text-7xl text-black px-4">
+                        <div id='marco-pregunta' className='p-7 h-[80%] w-[90%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center'>
+                            <h1 className="font-bold md:text-4xl 2xl:text-7xl text-black px-4">
                             {pregunta.pregunta}
                             </h1>
                         </div>
@@ -44,9 +87,9 @@ import React, { useEffect, useState } from 'react';
                     <button
                         key={i}
                         onClick={() => responder(r)} // esto es si vas a manejar lógica
-                        className="w-[70%] h-[40%] rounded-xl flex items-center gap-4 text-nowrap border-gray-900 border-2 bg-white pl-5 text-black text-xl font-bold 2xl:text-3xl hover:bg-black hover:text-white transition-all"
+                        className="w-[70%] h-[40%] rounded-xl flex items-center gap-2 border-gray-900 border-2 bg-white pl-5 text-black text-lg text-wrap text-left font-bold 2xl:text-3xl hover:bg-black hover:text-white transition-all"
                         >
-                        <img className='w-[24.46px] h-[28.45px] ml-2 2xl:w-[34.46px] 2xl:h-[37.45px] 2xl:ml-5' src="/assets/img/icono-queso.png" alt="" />
+                        <img className='w-[24.46px] h-[28.45px] ml-1 2xl:w-[34.46px] 2xl:h-[37.45px] 2xl:ml-5' src="/assets/img/icono-queso.png" alt="" />
                         {r.texto}
                     </button>
                     ))}
@@ -55,10 +98,10 @@ import React, { useEffect, useState } from 'react';
                 </div>
                 )}
                 
-                 {/* Si se ha seleccionado ninguna pregunta */}
+                 {/* Si se ha seleccionado alguna pregunta */}
                 {seleccion && (
-                <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center font-lemon p-6 gap-4'>
-                    <div id='respuestas' className='w-full flex flex-col items-center justify-center gap-2'>
+                <div id='contenido-tarjeta' className='flex-1 flex-col w-full flex items-center backface-hidden rotate-y-180 transform-style-preserve-3d font-lemon p-6 gap-4'>
+                    <div id='respuestas' className='w-full flex flex-col items-center justify-center gap-4 pt-4'>
                     {pregunta.respuestas.map((r, i) => {
                         const esSeleccionada = seleccion === r;
                         const esCorrecta = r.correcta;
@@ -74,8 +117,8 @@ import React, { useEffect, useState } from 'react';
                         if (esCorrecta) {
                             fondo = 'bg-white';
                             texto = 'text-black';
-                            extra = 'flex-col gap-3'; // Para incluir explicación debajo
-                            borde = 'border-black border-2';
+                            extra = 'flex-col gap-3'; 
+                            borde = 'border-black border-green-600 border-2';
                         } else if (esSeleccionada) {
                             fondo = 'bg-white';
                             texto = 'text-black';
@@ -108,12 +151,12 @@ import React, { useEffect, useState } from 'react';
                         </div>
                         );
                     })}
-                    <button className='w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white' >SIGUIENTE RONDA</button>
+                            <button className='w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white' >SIGUIENTE RONDA</button>
                 </div>
                 </div>
                 )}</section>
         </div>
     </div>
     )
- }
+    }
 

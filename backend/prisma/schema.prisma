@@ -7,15 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/* ──────────────────────────────────────────────
+   Esquema corregido (sección Controller-Ranking)
+   ────────────────────────────────────────────── */
+
+/* 1️⃣  Tabla pivot M-N Partida ↔ RespuestaPartida */
 model partidatorespuestapartida {
   A String
   B String
 
-  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
-  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
+  @@unique([A, B], map: "PartidaResp_AB_uq")   //  ≤64 chars
+  @@index([B],      map: "PartidaResp_B_idx")
   @@map("_partidatorespuestapartida")
 }
 
+/* 2️⃣  Casillas del tablero */
 model casilla {
   id       String       @id @default(uuid())
   tipo     casilla_tipo
@@ -23,84 +29,103 @@ model casilla {
   posicion Int
 }
 
+/* 3️⃣  Grupo que compite en la partida */
 model grupo {
-  id        Int     @id @default(autoincrement())
-  nombre    String
-  foto      String?
-  activo    Boolean @default(true)
-  partidaId String
-
-  puntuaciones puntuaciongrupo[]
-  //puedes acceder a las puntuaciones de la otra tabla
-
-  @@index([partidaId], map: "Grupo_partidaId_fkey")
-}
-
-model integrante {
-  id      String @id @default(uuid())
-  nombre  String
-  grupoId String
-
-  @@index([grupoId], map: "Integrante_grupoId_fkey")
-}
-
-model partida {
-  id            String         @id @default(uuid())
-  codigo        String         @unique(map: "Partida_codigo_key")
-  estado        partida_estado
-  fechaCreacion DateTime       @default(now())
-  profesorId    String
-
-  @@index([profesorId], map: "Partida_profesorId_fkey")
-}
-
-model pregunta {
-  id         String              @id @default(uuid())
-  asignatura pregunta_asignatura
-  dificultad pregunta_dificultad
-  texto      String
-}
-
-model puntuaciongrupo {
-  id            Int    @id
-  grupoId       Int
+  id            String            @id @default(uuid())
+  nombre        String
+  foto          String?
+  activo        Boolean           @default(true)
   partidaId     String
-  puntosTotales Int
+  partida       partida           @relation(fields: [partidaId], references: [id])
+  integrantes   integrante[]
+  puntuaciones  puntuaciongrupo[]
+  respuestas    respuestapartida[]
 
-  grupo grupo @relation(fields: [grupoId], references: [id])
-  //relación explicita entre grupoId(aqui) e id(grupo)
+  @@index([partidaId], map: "Grupo_partidaId_idx")
+}
 
-  @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
+/* 4️⃣  Miembros del grupo */
+model integrante {
+  id       String  @id @default(uuid())
+  nombre   String
+  grupoId  String
+  grupo    grupo   @relation(fields: [grupoId], references: [id])
+
+  @@index([grupoId], map: "Integrante_grupoId_idx")
+}
+
+/* 5️⃣  Partida */
+model partida {
+  id            String          @id @default(uuid())
+  codigo        String          @unique(map: "Partida_codigo_uq")
+  estado        partida_estado
+  fechaCreacion DateTime        @default(now())
+  profesorId    String
+  grupos        grupo[]
+  puntuaciones  puntuaciongrupo[]
+}
+
+/* 6️⃣  Preguntas y respuestas */
+model pregunta {
+  id          String              @id @default(uuid())
+  asignatura  pregunta_asignatura
+  dificultad  pregunta_dificultad
+  texto       String
+  respuestas  respuesta[]
+  respuestasDadas respuestapartida[]
 }
 
 model respuesta {
-  id         String  @id @default(uuid())
-  preguntaId String
-  texto      String
-  esCorrecta Boolean
+  id          String    @id @default(uuid())
+  preguntaId  String
+  texto       String
+  esCorrecta  Boolean
+  pregunta    pregunta  @relation(fields: [preguntaId], references: [id])
+  respuestasDadas respuestapartida[]
 
-  @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
+  @@index([preguntaId], map: "Respuesta_preguntaId_idx")
 }
 
+/* 7️⃣  Respuesta que un grupo da durante la partida */
 model respuestapartida {
-  id              String  @id @default(uuid())
+  id              String    @id @default(uuid())
   grupoId         String
   preguntaId      String
   respuestaId     String
   esCorrecta      Boolean
   puntosObtenidos Int
-  comodinActivado Boolean @default(false)
+  comodinActivado Boolean   @default(false)
 
-  @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
-  @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
-  @@index([respuestaId], map: "RespuestaPartida_respuestaId_fkey")
+  grupo       grupo     @relation(fields: [grupoId],     references: [id])
+  pregunta    pregunta  @relation(fields: [preguntaId],  references: [id])
+  respuesta   respuesta @relation(fields: [respuestaId], references: [id])
+
+  @@index([grupoId],    map: "RespPart_grupoId_idx")
+  @@index([preguntaId], map: "RespPart_preguntaId_idx")
+  @@index([respuestaId],map: "RespPart_respuestaId_idx")
 }
 
+/* 8️⃣  Puntuación acumulada de cada grupo */
+model puntuaciongrupo {
+  id            String   @id @default(uuid())
+  grupoId       String   @unique(map: "Puntuacion_grupoId_uq")
+  partidaId     String
+  puntosTotales Int
+
+  grupo   grupo   @relation(fields: [grupoId],   references: [id])
+  partida partida @relation(fields: [partidaId], references: [id])
+
+  @@index([partidaId], map: "Puntuacion_partidaId_idx")
+}
+
+/* 9️⃣  Usuarios de la plataforma */
 model usuario {
   id       String @id @default(uuid())
   usuario  String @unique
   password String
 }
+
+/* ─── Enumeraciones ─────────────────────────── */
 
 enum casilla_tipo {
   normal
