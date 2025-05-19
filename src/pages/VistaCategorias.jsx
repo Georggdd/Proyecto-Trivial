@@ -5,7 +5,6 @@ import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
 
 export default function VistaCategorias() {
-  const navigate = useNavigate(); // 👈 Inicializa el hook
 
   const [Menu, setMenu] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
