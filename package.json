@@ -6,13 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-
+    "lint": "eslint . --fix",
     "preview": "vite preview",
-    "lint": "eslint . --fix"
-
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.2",
     "@prisma/client": "^6.5.0",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
