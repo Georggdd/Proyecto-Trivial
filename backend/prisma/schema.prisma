@@ -1,191 +1,114 @@
+// ──────────────────────────────────────────────
+//  GENERATOR & DATASOURCE
+// ──────────────────────────────────────────────
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL")   // ← define la URL en .env
 }
 
-/* ──────────────────────────────────────────────
-   Esquema corregido (sección Controller-Ranking)
-   ────────────────────────────────────────────── */
-
-/* 1️⃣  Tabla pivot M-N Partida ↔ RespuestaPartida */
-model partidatorespuestapartida {
-  A String
-  B String
-
-  @@unique([A, B], map: "PartidaResp_AB_uq")   //  ≤64 chars
-  @@index([B],      map: "PartidaResp_B_idx")
-  @@map("_partidatorespuestapartida")
-}
-
-/* 2️⃣  Casillas del tablero */
-model casilla {
-  id       String       @id @default(uuid())
-  tipo     casilla_tipo
-  efecto   String
-  posicion Int
-}
-
-/* 3️⃣  Grupo que compite en la partida */
-model grupo {
-  id            String            @id @default(uuid())
-  nombre        String
-  foto          String?
-  activo        Boolean           @default(true)
-  partidaId     String
-  partida       partida           @relation(fields: [partidaId], references: [id])
-  integrantes   integrante[]
-  puntuaciones  puntuaciongrupo[]
-  respuestas    respuestapartida[]
-
-  @@index([partidaId], map: "Grupo_partidaId_idx")
-}
-
-/* 4️⃣  Miembros del grupo */
-model integrante {
-  id       String  @id @default(uuid())
-  nombre   String
-  grupoId  String
-  grupo    grupo   @relation(fields: [grupoId], references: [id])
-
-  @@index([grupoId], map: "Integrante_grupoId_idx")
-}
-
-/* 5️⃣  Partida */
-model partida {
-  id            String          @id @default(uuid())
-  codigo        String          @unique(map: "Partida_codigo_uq")
-  estado        partida_estado
-  fechaCreacion DateTime        @default(now())
-  profesorId    String
-  grupos        grupo[]
-  puntuaciones  puntuaciongrupo[]
-}
-
-/* 6️⃣  Preguntas y respuestas */
-model pregunta {
-  id          String              @id @default(uuid())
-  asignatura  pregunta_asignatura
-  dificultad  pregunta_dificultad
-  texto       String
-  respuestas  respuesta[]
-  respuestasDadas respuestapartida[]
-}
-
-model respuesta {
-  id          String    @id @default(uuid())
-  preguntaId  String
-  texto       String
-  esCorrecta  Boolean
-  pregunta    pregunta  @relation(fields: [preguntaId], references: [id])
-  respuestasDadas respuestapartida[]
-
-  @@index([preguntaId], map: "Respuesta_preguntaId_idx")
-}
-
-/* 7️⃣  Respuesta que un grupo da durante la partida */
-model respuestapartida {
-  id              String    @id @default(uuid())
-  grupoId         String
-  preguntaId      String
-  respuestaId     String
-  esCorrecta      Boolean
-  puntosObtenidos Int
-  comodinActivado Boolean   @default(false)
-
-  grupo       grupo     @relation(fields: [grupoId],     references: [id])
-  pregunta    pregunta  @relation(fields: [preguntaId],  references: [id])
-  respuesta   respuesta @relation(fields: [respuestaId], references: [id])
-
-  @@index([grupoId],    map: "RespPart_grupoId_idx")
-  @@index([preguntaId], map: "RespPart_preguntaId_idx")
-  @@index([respuestaId],map: "RespPart_respuestaId_idx")
-}
-
-/* 8️⃣  Puntuación acumulada de cada grupo */
-model puntuaciongrupo {
-  id            String   @id @default(uuid())
-  grupoId       String   @unique(map: "Puntuacion_grupoId_uq")
-  partidaId     String
-  puntosTotales Int
-
-  grupo   grupo   @relation(fields: [grupoId],   references: [id])
-  partida partida @relation(fields: [partidaId], references: [id])
-
-  @@index([partidaId], map: "Puntuacion_partidaId_idx")
-}
-
-/* 9️⃣  Usuarios de la plataforma */
-model usuario {
-  id       String @id @default(uuid())
-  usuario  String @unique
-  password String
-}
-
-enum pregunta_asignatura {
-  Matematicas
-  Historia
-  Ciencias
-  Lengua
-  Ingles
-  Música
-}
-
-/*Aquí pasaríamos a esto:
-//Solo es recomendable o usar enum o model Categoria para evitar confusiones.
-enum Categoria {
-  Idiomas
-  Musica
-  Matematicas
-  Biologia
-  Geografia
-  Lengua
-  Customizable  // <- añadido aquí
-}*/
-
-enum casilla_tipo {
-  normal
-  suerte
-  mala_suerte
-}
-
-enum partida_estado {
-  esperando
-  en_curso
-  finalizada
-}
-
-enum pregunta_dificultad {
+// ──────────────────────────────────────────────
+//  ENUMS
+// ──────────────────────────────────────────────
+enum Dificultad {
   facil
-  intermedia
+  media
   dificil
 }
 
-enum usuario_rol {
-  admin
-  profesor
+enum EstadoPartida {
+  EN_CURSO
+  TERMINADA
 }
 
+// ──────────────────────────────────────────────
+//  MODELOS
+// ──────────────────────────────────────────────
+model Categoria {
+  id         Int        @id @default(autoincrement())
+  nombre     String     @unique
+  preguntas  Pregunta[]
 
-//Esto solo si customizable no se trata como una categoria mas, sino en una tabla aparte
-model customizable {
-  id                Int     @id @default(autoincrement())
-  pregunta          String
-  opcion1           String
-  opcion2           String
-  opcion3           String
-  opcion4           String
-  respuesta_correcta String
-  dificultad        String
-  explicacion       String
-  customizable      Boolean @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
 
+model Pregunta {
+  id          Int          @id @default(autoincrement())
+  texto        String
+  dificultad   Dificultad
+  puntuacion   Int          @default(10)
 
-/* Si cambiamos la dificultad por puntuación
+  // FK → Categoria
+  categoriaId  Int
+  categoria    Categoria    @relation(fields: [categoriaId], references: [id])
+
+  respuestas   Respuesta[]
+
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Respuesta {
+  id          Int       @id @default(autoincrement())
+  texto        String
+  esCorrecta   Boolean
+  explicacion  String?
+
+  // FK → Pregunta
+  preguntaId   Int
+  pregunta     Pregunta  @relation(fields: [preguntaId], references: [id])
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Partida {
+  id         Int            @id @default(autoincrement())
+  codigo     String         @unique
+  estado     EstadoPartida  @default(EN_CURSO)
+
+  equipos    Equipo[]
+
+  profesorId Int?           // opcional
+  profesor   Usuario? @relation(fields: [profesorId], references: [id])
+
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+model Equipo {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  integrantes String
+  puntos      Int       @default(0)
+
+  // FK → Partida
+  partidaId   Int
+  partida     Partida   @relation(fields: [partidaId], references: [id])
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([partidaId])
+}
+
+model Usuario {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  rol      String @default("ADMIN")
+
+  Partida  Partida[]
+}
+
+/* ──────────────────────────────────────────────
+   PREGUNTAS PERSONALIZADAS (tabla aparte)
+   ────────────────────────────────────────────── */
+
 model Customizable {
   id                 Int     @id @default(autoincrement())
   pregunta           String
@@ -194,8 +117,10 @@ model Customizable {
   opcion3            String
   opcion4            String
   respuesta_correcta String
-  puntuacion         Int     // ← nuevo campo numérico
-  explicacion        String
-  customizable       Boolean @default(false)
-}*/
+  puntuacion         Int     @default(10)      // usa mismo rango que Pregunta
+  dificultad         Dificultad
+  explicacion        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
 

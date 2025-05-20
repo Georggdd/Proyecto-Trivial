@@ -15,12 +15,21 @@ app.use(cors());
 app.use(express.json());
 
 // Rutas
-app.use('/upload', uploadRoutes);       // Ruta para subir archivos
-app.use('/api/auth', authRoutes);       // Autenticación de usuarios
+app.use('/api/upload', uploadRoutes); // Changed from /upload to /api/upload
+app.use('/api/auth', authRoutes);
 
-configurarEventosDeCierre(); // Configura eventos SIGINT, SIGTERM, exit
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    return res.status(400).json({ 
+      error: 'Error al subir archivo',
+      details: err.message 
+    });
+  }
+  next(err);
+});
 
-// Iniciar servidor
+configurarEventosDeCierre();
+
 app.listen(PORT, () => {
   console.log(`🚀 Servidor backend en http://localhost:${PORT}`);
 });
