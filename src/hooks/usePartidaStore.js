@@ -1,6 +1,8 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 export const usePartidaStore = create((set) => ({
   partidaId: null,
-  setPartidaId: (id) => set({ partidaId: id }),
+  codigoPartida: null,
+  setPartida: ({ id, codigo }) =>
+    set({ partidaId: id, codigoPartida: codigo }),
 }));

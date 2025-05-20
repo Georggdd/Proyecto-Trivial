@@ -8,6 +8,7 @@ import authRoutes from './routes/authRoutes.js';
 import partidaRoutes from './routes/partidaRoutes.js';
 import equipoRoutes from './routes/equipoRoutes.js';
 import preguntasRoutes from './routes/preguntas.routes.js'; // ✅ añadir
+import categoriaRoutes from './routes/categoriaRoutes.js'; // ✅ añadir
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/partidas', partidaRoutes);
 app.use('/api/equipos', equipoRoutes);
 app.use('/api/preguntas', preguntasRoutes); // ✅ importante
+app.use('/api/categorias', categoriaRoutes);
 
 app.get('/', (req, res) => {
   res.send('Servidor funcionando 🚀');

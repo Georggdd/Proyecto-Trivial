@@ -1,15 +1,12 @@
 import prisma from '../config/db.js';
 
 export const crearPartida = async (req, res) => {
-  const { codigo } = req.body;
+  const { codigo, estado = 'EN_CURSO' } = req.body;           // ← valor opcional
 
   try {
     const nueva = await prisma.partida.create({
-      data: {
-        codigo,
-      },
+      data: { codigo, estado },                               // ← OK con el nuevo campo
     });
-
     res.status(201).json(nueva);
   } catch (error) {
     console.error('Error al crear partida:', error);

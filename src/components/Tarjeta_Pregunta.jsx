@@ -1,49 +1,97 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTurnoStore } from '../hooks/useTurnoStore';
 
-export default function Tarjeta_Pregunta({ categoria }) {
+export default function Tarjeta_Pregunta({ categoria, onClose }) {
     const [pregunta, setPregunta] = useState(null);
     const [loading, setLoading] = useState(true);
     const [seleccion, setSeleccion] = useState(null);
     const [show, setShow] = useState(false);
 
-    const responder = (respuesta) => {
-        setSeleccion(respuesta);
-    };
+    // Obtener las funciones del store
+    const {
+        equipos,
+        turnoActual,
+        addPuntos,
+        syncPuntos,
+        actualizarEquipos
+    } = useTurnoStore();
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`)
-            .then((res) => {
-                if (!res.ok) throw new Error('Error al cargar preguntas');
-                return res.json();
-            })
-            .then((data) => {
-                const preguntaRandom = data[Math.floor(Math.random() * data.length)];
-                const preguntaFormato = {
-                    categoria: preguntaRandom.categoria.nombre,
-                    pregunta: preguntaRandom.texto,
-                    respuestas: preguntaRandom.respuestas.map((r) => ({
-                        texto: r.texto,
-                        correcta: r.esCorrecta,
-                        explicacion: r.explicacion,
-                    })),
-                };
-                setPregunta(preguntaFormato);
+        const fetchPregunta = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/api/preguntas/${categoria}`);
+                const preguntas = await response.json();
+                const preguntaAleatoria = preguntas[Math.floor(Math.random() * preguntas.length)];
+                setPregunta(preguntaAleatoria);
+                setShow(true);
                 setLoading(false);
-            })
-            .catch((err) => {
-                console.error(err);
-                setLoading(false);
-            });
+            } catch (error) {
+                console.error('Error al cargar pregunta:', error);
+            }
+        };
+        fetchPregunta();
     }, [categoria]);
 
-    useEffect(() => {
-        if (!loading && pregunta) {
-            const timeout = setTimeout(() => setShow(true), 50);
-            return () => clearTimeout(timeout);
-        }
-    }, [loading, pregunta]);
+    const responder = async (respuesta) => {
+        console.log('Respuesta seleccionada:', respuesta);
+        setSeleccion(respuesta);
 
-    if (loading) return <p className="text-center mt-10 text-xl">Cargando pregunta...</p>;
+        if (!respuesta.esCorrecta) {
+            console.log('❌ Respuesta incorrecta');
+            return;
+        }
+
+        console.log('✅ Respuesta correcta!');
+        
+        const equipo = equipos[turnoActual];
+        if (!equipo?.id) {
+            console.error('Equipo no válido:', equipo);
+            return;
+        }
+
+        const incremento = Number(pregunta?.puntuacion || 10);
+
+        try {
+            console.log('🎯 Actualizando puntos:', {
+                equipoId: equipo.id,
+                puntosActuales: equipo.puntos,
+                incremento,
+                respuesta
+            });
+
+            // 1. Actualizar en la BD
+            const equipoActualizado = await syncPuntos(equipo.id, incremento);
+            console.log('✅ Puntos actualizados en BD:', equipoActualizado);
+
+            // 2. Actualizar estado local
+            addPuntos(equipo.id, incremento);
+            console.log('💾 Estado local actualizado');
+
+            // 3. Recargar equipos para asegurar sincronización
+            const response = await fetch(
+                `http://localhost:3000/api/equipos?partidaId=${equipo.partidaId}`
+            );
+
+            if (!response.ok) throw new Error('Error al recargar equipos');
+            
+            const equiposActualizados = await response.json();
+            console.log('📊 Equipos actualizados:', equiposActualizados);
+            
+            actualizarEquipos(equiposActualizados);
+
+        } catch (error) {
+            console.error('❌ Error al actualizar puntos:', error);
+        }
+    };
+
+    const handleSiguienteRonda = () => {
+        console.log('🔄 Cambiando al siguiente turno');
+        useTurnoStore.getState().siguienteTurno();
+        console.log('🚪 Cerrando modal');
+        onClose?.();
+    };
+
+    if (loading) return <div>Cargando...</div>;
     if (!pregunta) return <p className="text-center mt-10 text-xl">No hay preguntas disponibles.</p>;
 
     return (
@@ -56,14 +104,16 @@ export default function Tarjeta_Pregunta({ categoria }) {
                 <div className="absolute w-full h-full backface-hidden bg-white flex flex-col rounded-lg border-black border-[4px]">
                     <div className="w-full h-[19%] relative mt-6 bg-verdeOscuro flex items-center 2xl:gap-[30%] transform">
                         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]">
-                            {pregunta.categoria}
+                            {pregunta.categoria?.nombre}
                         </h1>
                         <img src="/assets/img/queso-color-blanco.png" className="w-[15%] pt-6 absolute right-[15%]" alt="" />
                     </div>
                     <div className="flex-1 w-full h-full flex items-center justify-between font-lemon">
                         <div className="w-1/2 h-[105%] flex flex-col items-center justify-center pl-2 ml-4">
                             <div className="p-7 h-[80%] w-[90%] border-gray-900 border-2 rounded-2xl flex items-center justify-center text-center">
-                                <h1 className="font-bold md:text-4xl 2xl:text-7xl text-black px-4">{pregunta.pregunta}</h1>
+                                <h1 className="font-bold md:text-4xl 2xl:text-7xl text-black px-4">
+                                    {pregunta.texto}
+                                </h1>
                             </div>
                         </div>
                         <div className="w-1/2 h-[75%] flex flex-col items-center justify-center gap-4">
@@ -85,14 +135,14 @@ export default function Tarjeta_Pregunta({ categoria }) {
                 <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-white flex flex-col rounded-lg border-black border-[4px] font-lemon p-6 gap-4">
                     <div className="w-full h-[19%] relative bg-verdeOscuro flex items-center 2xl:gap-[30%] transform">
                         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24 [text-shadow:_2px_2px_4px_rgba(0,0,0,0.5)]">
-                            {pregunta.categoria}
+                            {pregunta.categoria?.nombre}
                         </h1>
                         <img src="/assets/img/queso-color-blanco.png" className="w-[15%] pt-6 absolute right-[15%]" alt="" />
                     </div>
                     <div className="flex-1 flex-col w-full flex items-center justify-center gap-4 pt-4">
                         {pregunta.respuestas.map((r, i) => {
-                            const esSeleccionada = seleccion === r;
-                            const esCorrecta = r.correcta;
+                            const esSeleccionada = seleccion?.id === r.id;
+                            const esCorrecta = r.esCorrecta;
                             let fondo = 'bg-white';
                             let borde = '';
                             let texto = 'text-black';
@@ -126,7 +176,10 @@ export default function Tarjeta_Pregunta({ categoria }) {
                                 </div>
                             );
                         })}
-                        <button className="w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white">
+                        <button
+                            onClick={handleSiguienteRonda}
+                            className="w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white"
+                        >
                             SIGUIENTE RONDA
                         </button>
                     </div>

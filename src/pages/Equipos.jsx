@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import TarjetaEquipo from "../components/TarjetaEquipo";
 import { usePartidaStore } from "../hooks/usePartidaStore";
-import { useLocation } from "react-router-dom";
 import { useTurnoStore } from "../hooks/useTurnoStore";
 
-
 function Equipos() {
+  /* ---------- Navegación y state que viene de VistaCategorias ---------- */
+  const navigate = useNavigate();
   const location = useLocation();
   const categoriaSeleccionada = location.state?.categoriaSeleccionada || null;
-  const selectedFile = location.state?.selectedFile || null;
-  const navigate = useNavigate();
-  const setPartidaId = usePartidaStore((state) => state.setPartidaId);
+  const selectedFile          = location.state?.selectedFile || null;
 
+  /* ---------- Stores ---------- */
+  const setPartida = usePartidaStore((s) => s.setPartida);   // setter correcto
+  const setEquiposStore = useTurnoStore((s) => s.setEquipos);
+
+  /* ---------- Estado local: 5 tarjetas de equipo ---------- */
   const [equipos, setEquipos] = useState(
-    [...Array(5)].map((_, index) => ({
-      nombre: `Equipo ${index + 1}`,
-      integrantes: [],
-      enabled: false, // 👈 ahora empiezan desactivados
+    [...Array(5)].map((_, idx) => ({
+      nombre      : `Equipo ${idx + 1}`,
+      integrantes : [],
+      enabled     : false,          // empiezan desactivados
     }))
   );
 
@@ -28,34 +31,44 @@ function Equipos() {
     setEquipos(nuevos);
   };
 
+  /* ---------- Guardar partida + equipos ---------- */
   const handleStart = async () => {
     try {
-      // Crear partida
+      /* 1· Crear la partida */
+      const profesorId = localStorage.getItem("userId");        // viene del login
       const resPartida = await fetch("http://localhost:3000/api/partidas", {
-        method: "POST",
+        method : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ codigo: crypto.randomUUID().slice(0, 6) }),
+        body   : JSON.stringify({
+          codigo    : crypto.randomUUID().slice(0, 6),
+          profesorId: profesorId ? Number(profesorId) : undefined,
+        }),
       });
 
-      const partida = await resPartida.json();
-      setPartidaId(partida.id);
+      if (!resPartida.ok) throw new Error("No se pudo crear la partida");
+      const partida = await resPartida.json();                  // { id, codigo }
 
+      /* 2· Guarda la partida en el store */
+      setPartida(partida);
+
+      /* 3· Filtra los equipos habilitados y súbelos al store */
       const equiposActivos = equipos.filter((e) => e.enabled);
-      useTurnoStore.getState().setEquipos(equiposActivos);
+      setEquiposStore(equiposActivos);
 
-      // Enviar solo los activos
+      /* 4· Envía los equipos al backend */
       await fetch("http://localhost:3000/api/equipos", {
-        method: "POST",
+        method : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+        body   : JSON.stringify({
           partidaId: partida.id,
-          equipos: equiposActivos.map((e) => ({
-            nombre: e.nombre,
-            integrantes: e.integrantes,
+          equipos  : equiposActivos.map((e) => ({
+            nombre      : e.nombre,
+            integrantes : e.integrantes,
           })),
         }),
       });
 
+      /* 5· Vuelve a VistaCategorias con flag de éxito */
       navigate("/categorias", {
         state: {
           equiposConfigurados: true,
@@ -65,18 +78,19 @@ function Equipos() {
       });
     } catch (err) {
       console.error("Error al crear partida o equipos:", err);
-      alert("Error al iniciar la partida");
+      alert("No se pudo iniciar la partida. Revisa la consola.");
     }
   };
 
+  /* ---------- Render ---------- */
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col relative"
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col"
       style={{ backgroundImage: "url('/assets/Mesa.svg')" }}
     >
       <Header />
 
-      <div className="flex-grow flex flex-col justify-center items-center text-white translate-y-[-40px] z-10">
+      <div className="flex-grow flex flex-col justify-center items-center text-white -translate-y-10">
         <h2 className="text-3xl mb-6">EQUIPOS</h2>
 
         <div className="flex flex-wrap justify-center items-center gap-6 max-w-7xl">
@@ -95,7 +109,11 @@ function Equipos() {
           className="mt-8 bg-black hover:bg-gray-800 text-white text-xl px-6 py-2 rounded-full flex items-center gap-2 transition"
         >
           Guardar Equipos
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 fill-current"
+            viewBox="0 0 24 24"
+          >
             <path d="M8 5v14l11-7z" />
           </svg>
         </button>
