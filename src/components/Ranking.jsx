@@ -1,26 +1,47 @@
 import React from "react";
 
 const Ranking = ({ nombre, puntos, destacado }) => {
+
   return (
-    <div className="w-full flex items-center gap-4">
-      {/* Imagen */}
-      <div className="basis-[15%] flex-shrink-0 min-w-[60px]">
-        <img src="/assets/img/ninio.png" alt="Avatar" className="w-full h-auto" />
-      </div>
+    <>
+      {/* //  <-----------inicio CONTENEDOR individual----------------> */}
 
-      {/* Nombre */}
-      <div className="flex-grow bg-white text-naranja rounded-full border-2 border-naranja px-4 py-2 text-center font-bold overflow-hidden">
-        <p className="truncate text-[1.1rem] sm:text-[1.4rem]">{nombre}</p>
-      </div>
+      <div className="flex items-center justify-center w-full gap-5 
+ rounded-full relative">
 
-      {/* Puntos */}
-      <div className="basis-[20%] flex-shrink-0 bg-white text-naranja rounded-full border-2 border-naranja px-4 py-2 text-center font-bold">
-        <p className={`${destacado ? "animate-pulse scale-110" : ""} text-[1.1rem] sm:text-[1.4rem]`}>
-          {puntos}
-        </p>
+        {/* //  <-----------IMAGEN---------------> */}
+        <div className=" bg-transparent"> {/* bg: sin fondo, ml para dejar margen a la izquierda */}
+          <img src='/assets/img/ninio.png' className="w-[7vw]" alt="Imagen del equipo" />
+          {/* w: establece el ancho de la imagen
+          mt: margen superior negativo, para que sobresalga del espacio
+          -ml margen izquierdo negativo,  */}
+        </div>
+
+        {/* //  <-----------NOMBRE DE EQUIPO----------------> */}
+        <div className="w-2/4  bg-white  rounded-full border-naranja border-2 text-naranja items-center justify-center">
+
+          <h3 className="text-center font-personalizada text-[4vw]">
+            {nombre}
+          </h3>
+        </div>
+
+
+        {/* //  <-----------PUNTUACIÓN----------------> */}
+
+        <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja font-bold items-center justify-center">
+          <h3 className={`text-center font-personalizada text-[4vw] ${destacado ? "animate-pulse text-naranja scale-110" : ""}`}>
+            {puntos}
+          </h3>
+        </div>
+
       </div>
-    </div>
+      {/* //  <-----------fin CONTENEDOR individual----------------> */}
+
+
+
+
+</>
+    
   );
-};
-
+}
 export default Ranking;

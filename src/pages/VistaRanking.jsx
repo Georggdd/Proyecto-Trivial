@@ -41,7 +41,7 @@ const VistaRanking = ({ equipo }) => {
                     className="absolute w-screen top-0 left-0 z-10 object-cover"></img>
             </div>
 
-            <div className="w-screen">
+            <div className="w-screen pb-[2vw] px-[2vw] pt-[10vw]">
 
                 {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
                 <div className="w-screen flex mt-[15vh] p-[3vh]">
@@ -50,15 +50,7 @@ const VistaRanking = ({ equipo }) => {
                     <div className="w-2/3 relative  ">
                         {/* relative para posicionar el texto dentro */}
                         <img src="../assets/img/tablero_base.png" className=" w-full h-auto z-30 relative" alt="Tablero mesa"></img>
-                        {/* <div className="flex flex-col justify-center items-center"> */}
-                        {/* inset-0 */}
-                        {/* <div className="absolute top-0 left-0 w-full z-40 grid place-items-center my-10">
 
-                            <Ranking className="h-[1-5 parte del espacio]"/>
-                            <Ranking />
-                            <Ranking />
-                            <Ranking />
-                            <Ranking /> */}
 
                         <div className={`absolute top-0 left-0 w-full h-full z-40 flex flex-col alineacion pb-[11vw] pr-[5vw] pl-[3vw] pt-[10vw] ${numequipo}`}>
                             {ordenEquipo.map((x, y) => { //mapeamos los datos de importados
