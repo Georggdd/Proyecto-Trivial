@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")      // ← define la URL en .env
+  url      = env("DATABASE_URL")   // ← define la URL en .env
 }
 
 // ──────────────────────────────────────────────
@@ -69,11 +69,11 @@ model Respuesta {
 model Partida {
   id         Int            @id @default(autoincrement())
   codigo     String         @unique
-  estado     EstadoPartida  @default(EN_CURSO) // ← evita el error “Argument estado is missing”
+  estado     EstadoPartida  @default(EN_CURSO)
 
   equipos    Equipo[]
 
-  profesorId Int?           //  ← opcional
+  profesorId Int?           // opcional
   profesor   Usuario? @relation(fields: [profesorId], references: [id])
 
   createdAt  DateTime       @default(now())
@@ -84,7 +84,7 @@ model Equipo {
   id          Int       @id @default(autoincrement())
   nombre      String
   integrantes String
-  puntos      Int       @default(0)            // ← los sumas desde Tarjeta_Pregunta
+  puntos      Int       @default(0)
 
   // FK → Partida
   partidaId   Int
@@ -102,5 +102,24 @@ model Usuario {
   password String
   rol      String @default("ADMIN")
 
-  Partida Partida[]
+  Partida  Partida[]
+}
+
+/* ──────────────────────────────────────────────
+   PREGUNTAS PERSONALIZADAS (tabla aparte)
+   ────────────────────────────────────────────── */
+
+model Customizable {
+  id                 Int     @id @default(autoincrement())
+  pregunta           String
+  opcion1            String
+  opcion2            String
+  opcion3            String
+  opcion4            String
+  respuesta_correcta String
+  puntuacion         Int     @default(10)      // usa mismo rango que Pregunta
+  dificultad         Dificultad
+  explicacion        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
