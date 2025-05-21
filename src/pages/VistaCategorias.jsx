@@ -110,7 +110,7 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
           <Feature_Categorias
             texto="Equipos"
             className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
-            onClick={() => navigate("/TarjetaEquipo")}
+            onClick={() => navigate("/equipos")}
           />
 
           {/* 4. START */}
