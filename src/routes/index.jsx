@@ -14,7 +14,7 @@ import Tablero from "../pages/Tablero";
 import Equipos from "../pages/Equipos";
 import PadreRanking from "../components/PadreRanking";
 
-export default function AppRoutes() {
+export default function AppRoutes({ onUpload, preguntas, error }) {
   return (
     <Routes>
       {/* Redirección por defecto a /login */}
@@ -25,7 +25,16 @@ export default function AppRoutes() {
 
       {/* Rutas de controller‑ranking */}
       <Route path="/conversion" element={<ExcelDescarga />} />
-      <Route path="/VistaCategorias" element={<VistaCategorias />} />
+      <Route 
+        path="/VistaCategorias" 
+        element={
+          <VistaCategorias 
+            onUpload={onUpload} 
+            preguntas={preguntas} 
+            error={error}
+          />
+        } 
+      />
       <Route path="/VistaRanking" element={<VistaRanking />} />
 
       {/* Rutas importadas desde Back‑end */}
