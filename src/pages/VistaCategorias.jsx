@@ -119,11 +119,7 @@ export default function VistaCategorias() {
             {/*setMenu(!Menu) cambia el estado de Menu invirtiendo su valor actual. No se puede usar true o false porque con true siempre estaría bierto y con false nunca se abriría.
               La posición se calcula usando porcentajes y se posicionan tomando como referencia el contenedor padre que debe estar en "relative" y los hijos en "absolute".*/}
 
-        <Feature_Categorias
-          texto="Equipos"
-          onClick={() => setEquiposHechos(true)}
-          className="w-[400px] h-[100px] text-3xl"
-        />
+        
 
         <Feature_Categorias
           texto="START"
@@ -142,7 +138,7 @@ export default function VistaCategorias() {
             <Feature_Categorias
               texto="Equipos"
               className="w-[400px] h-[100px] text-3xl"
-              onClick={() => navigate("/TarjetaEquipo")}
+              onClick={() => navigate("/Equipos")}
             />
 
             {selectedFile && (
