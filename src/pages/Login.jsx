@@ -4,18 +4,20 @@ import pizarra from '../assets/pizarra.svg';
 import logo from '../assets/logo.svg';
 import profesor from '../assets/profesor.svg';
 import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
 
     const [usuario, setUsuario] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const res = await fetch('http://localhost:4000/api/auth/login', {
+            const res = await fetch('http://localhost:3000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,6 +29,8 @@ const Login = () => {
 
             if (res.ok) {
                 alert('Inicio de sesión exitoso');
+                localStorage.setItem('token', data.token);
+                 navigate('/categorias');
                 // Aquí podrías guardar el token y redirigir
                 // localStorage.setItem('token', data.token);
             } else {

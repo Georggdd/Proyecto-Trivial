@@ -21,10 +21,9 @@ await prisma.customizable.createMany({
     opcion3:           p.opcion3,
     opcion4:           p.opcion4,
     respuesta_correcta: p.respuesta_correcta,
-    dificultad:        p.dificultad,
-    explicacion:       p.explicacion,
+    puntuación:         parseInt(p.puntuación, 10), 
+    explicación:        p.explicación, 
     customizable:      true, // Marcamos como personalizada
-   // puntuacion:        parseInt(p.puntuacion || '1'), 
   })),
   skipDuplicates: true,    //Le dice a Prisma que ignore las filas que ya existan con los mismos valores (según los campos únicos definidos).
 });                        //Evita errores si alguien sube dos veces el mismo archivo o preguntas duplicadas.

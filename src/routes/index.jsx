@@ -1,15 +1,22 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/Login';
-// Importa aquí las demás páginas a medida que las vayas creando
+import VistaCategorias from '../pages/VistaCategorias';
 
-function AppRoutes() {
+function AppRoutes({ onUpload, preguntas, error }) {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/login" element={<Login />} />
-      {/* Ejemplo:
-      <Route path="/dashboard" element={<Dashboard />} />
-      */}
+      <Route
+        path="/categorias"
+        element={
+          <VistaCategorias
+            onUpload={onUpload}
+            preguntas={preguntas}
+            error={error}
+          />
+        }
+      />
     </Routes>
   );
 }

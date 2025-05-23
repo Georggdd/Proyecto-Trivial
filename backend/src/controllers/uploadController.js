@@ -32,8 +32,8 @@ export const procesarArchivo = async (req, res) => { //Para manejar un POST que 
       opciones.c &&
       opciones.d &&
       ["a", "b", "c", "d"].includes(correcta) &&
-      data.dificultad &&
-      data.explicacion;
+      data["explicación"] &&
+      data["puntuación"];
 
     if (isValid) { //Si la fila es válida, se formatea y se guarda en resultados. Si no, se añade un error a errores.
       resultados.push({
@@ -43,8 +43,8 @@ export const procesarArchivo = async (req, res) => { //Para manejar un POST que 
         opcion3: opciones.c,
         opcion4: opciones.d,
         respuesta_correcta: opciones[correcta],
-        dificultad: data.dificultad,
-        explicacion: data.explicacion,
+        puntuación: parseInt(data["puntuación"], 10),
+        explicación: data["explicación"],
       });
     } else {
       errores.push(`Fila inválida: ${JSON.stringify(data)}`);

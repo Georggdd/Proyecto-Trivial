@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import VistaCategorias from "./pages/VistaCategorias";
+import { BrowserRouter as Router } from "react-router-dom";
+//import VistaCategorias from "./pages/VistaCategorias";
+import AppRoutes from "./routes/index";
 import axios from "axios"; // Importa axios para las peticiones al backend
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
   const [error, setError] = useState(null);
 
   // Función para manejar la subida del CSV
-  const handleUpload = async (file) => {
+    const handleUpload = async (file) => {
     const formData = new FormData();
     formData.append("archivo", file); // "archivo" debe coincidir con el nombre en multer (backend)
 
@@ -27,20 +28,11 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <VistaCategorias
-              onUpload={handleUpload}
-              preguntas={preguntas}
-              error={error}
-            />
-          }
-        />
-        {/* <Route path="/equipos" element={<EquiposView />} /> */}
-      </Routes>
-
+      <AppRoutes 
+        onUpload={handleUpload} 
+        preguntas={preguntas} 
+        error={error} 
+      />
     </Router>
   );
 }

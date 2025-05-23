@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function VistaCategorias({ onUpload, preguntas, error }) {
   const [Menu, setMenu] = useState(false); //Controla si el menú de las subcategorías esta visible o no.
   const [selectedFile, setSelectedFile] = useState(null); //Almacena el archivo seleccionado en "customizar"si sube alguno.
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [equiposHechos, setEquiposHechos] = useState(false);
+  const navigate = useNavigate()
+
+   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/'); // redirige al login si no hay token
+    }
+  }, [navigate]);
 
   const subcategorias = [
     "Idiomas",
