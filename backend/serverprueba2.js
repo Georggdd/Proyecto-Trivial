@@ -1,3 +1,10 @@
+// 1º abrir vista ranking
+//2º desde backend (cd backend) node serverprueba2.js
+
+// 
+//  ENDPOINT central que uso conectar la vista del front con base de datos
+// CÓDIGO CONECTADO CON Padre Ranking.jsx para sacar información de la base de datos
+
 import express from "express";
 import cors from "cors";
 import { PrismaClient } from '@prisma/client';
@@ -16,9 +23,23 @@ app.get("/api/grupos", async (req, res) => {
         id: true,
         nombre: true,
         foto: true,
+        puntosTotales: { //la relación que hemos creado con la base de datos de Puntuacion Grupo
+            select:{
+                puntosTotales: true,
+            }
+        }
       }
     });
-    res.json(grupos);
+
+      // Formatear para mandar sólo lo necesario
+    const gruposFormateados = grupos.map(g => ({
+      id: g.id,
+      nombre: g.nombre,
+      foto: g.foto,
+      puntos: g.puntosTotales?.puntosTotales ?? 0,
+    }));
+
+    res.json(gruposFormateados);
   } catch (error) {
     console.error("Error al obtener grupos:", error.message);
     res.status(500).json({ error: "Error al obtener grupos" });
