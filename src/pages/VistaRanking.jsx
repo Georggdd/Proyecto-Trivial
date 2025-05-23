@@ -26,161 +26,85 @@ const VistaRanking = ({ equipo }) => {
 
     return (
 
-        //      <div className="min-h-screen flex flex-col">
-        //             <Header />
+        <div className="h-screen w-screen relative flex flex-col bg-[url('../assets/img/Mesa.svg')] bg-cover border-4 border-double border-orange-600 overflow-hidden">
+            <div className="border-b-4 border-double border-orange-600">
+                <Header />
+            </div>
+            <div className="relative w-full flex-grow">
 
-        //             {/* {imagenes de fondo (banderines y pizarra)} */}
-        //             <div className="relative flex-grow">
-        //                 <img
-        //                     src="../assets/img/banderines.png"
-        //                     alt="banderines de fondo"
-        //                     className="absolute w-screen top-0 left-0 z-20 object-cover"></img>
-        //                 <img
-        //                     src="../assets/img/mesa_madera.jpg"
-        //                     alt="mesa de madera de fondo"
-        //                     className="absolute w-screen top-0 left-0 z-10 object-cover"></img>
-        //             </div>
+                {/* Imágenes de fondo (banderines y pizarra) */}
+                <img
+                    src="../assets/img/banderines.png"
+                    alt="banderines de fondo"
+                    className="absolute w-full h-full object-cover z-20"
+                />
+                 {/* <img
+                    src="../assets/img/mesa_madera.jpg"
+                    alt="mesa de madera de fondo"
+                    className="absolute w-full h-full object-cover z-10"
+                /> */}
 
-        //             <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 pb-8 pt-12">
+                {/* Contenido central */}
+                <div className="relative z-30 flex w-full px-[3%] pb-[3%] box-border min-h-[calc(100vh)] items-center justify-between">
 
-        //                 {/* -----------------FONDO DIVIDIDO 2/3 + 1/3------------------- */}
-        //                <div className="w-full flex flex-wrap md:flex-nowrap mt-[15vh] gap-8">
+                    {/* Tablero 2/3 */}
 
-        //                     {/* -----------------TABLERO  2/3 ------------------- */}
-        //                     <div className="w-2/3 relative  ">
-        //                         {/* relative para posicionar el texto dentro */}
-        //                         <img src="../assets/img/tablero_base.png" className=" w-full h-auto z-30 relative" alt="Tablero mesa"></img>
+                    <div className="w-2/3 translate-y-[1vw] h-full relative flex items-center justify-center">
+                        <img
+                            src="../assets/img/tablero_base.png"
+                            className="w-full h-full object-contain" 
+                            style={{transform: "scale(0.8)" }}
+                            alt="Tablero mesa"
+                        />
+                        <div className="absolute w-full h-full z-40 flex flex-col justify-center items-center pl-[3%] pr-[6%]">
+                            {ordenEquipo.map((x, y) => {
+                                const destacar = mismapuntuacion.includes(x.puntos);
+                                return (
+                                    <Ranking key={y} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
+                                );
+                            })}
+                        </div>
+                    </div>
 
-
-        //                         <div className={`absolute top-0 left-0 w-full h-full z-40 flex flex-col alineacion pb-[11vw] pr-[5vw] pl-[3vw] pt-[10vw] ${numequipo}`}>
-        //                             {ordenEquipo.map((x, y) => { //mapeamos los datos de importados
-        //                                 const destacar = mismapuntuacion.includes(x.puntos);
-        //                                 return(
-        //                           <Ranking key={y} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
-        //                             );
-        //                             })}
-
-        //                         </div>
-        //                     </div>  
-
-
-        //                     {/* -----------------AGRADECIMIENTO + DESCARGA  1/3------------------- */}
-        //                     <div className="flex flex-col w-1/3 z-40 p-8">
-
-        //                         {/* -----------------AGRADECIMIENTO ------------------- */}
-        //                         <div className="h-1/2 flex justify-center items-center">
-        //                             <h7 className="text-[5vw] text-center text-naranja font-personalizada font-bold">Gracias por participar
-        //                             </h7>
-        //                         </div>
-
-        //                         {/* -----------------descarga, carpeta y enlace------------------- */}
-        //                         <div className="h-1/2 flex justify-end items-end">
-        //                             <div className="w-2/3">
-        //                                 <p className="text-[3vw] text-naranja font-personalizada font-bold">
-        //                                     Descarga de resultados:
-        //                                 </p>
-        //                             </div>
-
-        //                             <div>
-        //                                 <a href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
-        //                                     download="Preguntas-Trivial-BBDD.xlsx"
-        //                                     className="text-white text-3xl font-semibold cursor-pointer transition-transform duration-200 hover:scale-110 hover:text-4xl">
-        //                                     <img src="../assets/img/carpeta_descarga_naranja.png"
-        //                                         alt="Carpeta Descarga Profesores"
-        //                                         className=""
-        //                                     />
-        //                                     <p className="-mt-9 text-center font-personalizada">
-        //                                         aquí
-        //                                     </p>
-        //                                 </a>
-
-        //                             </div>
-
-        //                         </div>
-        //                     </div>
-        //                 </div>
-
-        //             </div >
-        //         </div >
-        //
-
-        <div className="w-full h-screen overflow-hidden flex flex-col">
-            <div className="h-full flex flex-col overflow-hidden">
-                <Header className="shrink-0" />
-                <div className="relative w-full min-h-[100vh]">
-
-                    {/* Imágenes de fondo (banderines y pizarra) */}
-                    <img
-                        src="../assets/img/banderines.png"
-                        alt="banderines de fondo"
-                        className="absolute w-full h-full object-cover z-20"
-                    />
-                    <img
-                        src="../assets/img/mesa_madera.jpg"
-                        alt="mesa de madera de fondo"
-                        className="absolute w-full h-full object-cover z-10"
-                    />
-
-                    {/* Contenido central */}
-                    <div className="relative z-30 flex w-full px-[3%] pb-[3%] box-border min-h-[calc(100vh)] items-center justify-between">
-
-                        {/* Tablero 2/3 */}
-
-                        <div className="w-2/3 translate-y-[2vw] h-full relative flex items-center justify-center">
-                            <img
-                                src="../assets/img/tablero_base.png"
-                                className="w-full h-full object-contain scale-90"
-                                alt="Tablero mesa"
-                            />
-                            <div className="absolute w-full h-full z-40 flex flex-col justify-center items-center px-[3%]">
-                                {ordenEquipo.map((x, y) => {
-                                    const destacar = mismapuntuacion.includes(x.puntos);
-                                    return (
-                                        <Ranking key={y} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
-                                    );
-                                })}
-                            </div>
+                    {/* Panel derecho 1/3 */}
+                    <div className="w-1/3 h-full flex flex-col p-[2%] box-border text-center translate-y-[4vw]">
+                        <div className="w-full flex justify-center items-center">
+                            <h2 className="text-[4vw] text-naranja font-personalizada font-bold leading-snug w-[80%]">
+                                Gracias por participar
+                            </h2>
                         </div>
 
-                        {/* Panel derecho 1/3 */}
-                        <div className="w-1/3 h-full flex flex-col p-[2%] box-border text-center translate-y-[4vw]">
-                            <div className="w-full flex justify-center items-center">
-                                <h2 className="text-[4vw] text-naranja font-personalizada font-bold leading-snug w-[80%]">
-                                    Gracias por participar
-                                </h2>
-                            </div>
-
-                            <div className="mt-52 flex justify-end items-end w-full">
-                                <div className="w-[80%] flex justify-end items-end gap-4 text-right">
-                                    <div className="leading-tight">
-                                        <p className="text-[1.5vw] text-naranja font-personalizada font-bold">Descarga de</p>
-                                        <p className="text-[1.5vw] text-naranja font-personalizada font-bold">resultados:</p>
-                                    </div>
-                                    <div className="relative w-[4vw]">
-                                        <a
-                                            href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
-                                            download="Preguntas-Trivial-BBDD.xlsx"
-                                            className="block w-full h-full"
-                                        >
-                                            <img
-                                                src="../assets/img/carpeta_descarga_naranja.png"
-                                                alt="Descarga"
-                                                className="w-full"
-                                            />
-                                            <p className="absolute inset-0 flex items-center justify-center text-white font-personalizada text-[1.2vw] translate-y-[1vw]">
-                                                aquí
-                                            </p>
-                                        </a>
-                                    </div>
+                        <div className="mt-52 flex justify-end items-end w-full">
+                            <div className="w-[80%] flex justify-end items-end gap-4 text-right">
+                                <div className="leading-tight">
+                                    <p className="text-[1.5vw] text-naranja font-personalizada font-bold">Descarga de</p>
+                                    <p className="text-[1.5vw] text-naranja font-personalizada font-bold">resultados:</p>
+                                </div>
+                                <div className="relative w-[4vw]">
+                                    <a
+                                        href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
+                                        download="Preguntas-Trivial-BBDD.xlsx"
+                                        className="block w-full h-full"
+                                    >
+                                        <img
+                                            src="../assets/img/carpeta_descarga_naranja.png"
+                                            alt="Descarga"
+                                            className="w-full"
+                                        />
+                                        <p className="absolute inset-0 flex items-center justify-center text-white font-personalizada text-[1.2vw] translate-y-[1vw]">
+                                            aquí
+                                        </p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
-            </div>
-        </div>
+
+            </div >
+        </div >
+      
 
 
 
