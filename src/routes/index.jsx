@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 // Páginas principales (controller‑ranking)
 import Login from "../pages/Login";
-import ExcelDescarga from "../pages/conversion";
+import ExcelDescarga from "../pages/ExcelDescarga";
 import VistaCategorias from "../pages/VistaCategorias";
 import VistaRanking from "../pages/VistaRanking";
 
@@ -24,7 +24,7 @@ export default function AppRoutes({ onUpload, preguntas, error }) {
       <Route path="/login" element={<Login />} />
 
       {/* Rutas de controller‑ranking */}
-      <Route path="/conversion" element={<ExcelDescarga />} />
+      <Route path="/ExcelDescarga" element={<ExcelDescarga />} />
       <Route 
         path="/VistaCategorias" 
         element={

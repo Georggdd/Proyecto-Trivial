@@ -1,9 +1,9 @@
 
 
-// -- documento para intentar sacar los datos de la base de datos creada por JM--
+// -- DOCUMENTO LETICIA- FORMA DE DESCARGAR DATOS A UN JSON. NO NECESARIO--
+//descargarlos haciendo node prisma/descargarGrupo.js
 
 
-// descarga_datos.js
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs'; // 
 
