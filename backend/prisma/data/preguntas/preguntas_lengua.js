@@ -4,11 +4,10 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es el sustantivo en la frase El perro corre?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "El", esCorrecta: false },
-      { texto: "Perro", esCorrecta: true, explicacion: "Perro es el sustantivo porque nombra al animal." },
+      { texto: "Perro", esCorrecta: true },
       { texto: "Corre", esCorrecta: false },
       { texto: "La", esCorrecta: false },
     ],
@@ -16,10 +15,9 @@ const preguntasLengua = [
   {
     texto: "¿Qué es un verbo?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
-      { texto: "Una acción", esCorrecta: true, explicacion: "El verbo indica una acción o estado." },
+      { texto: "Una acción", esCorrecta: true },
       { texto: "Un objeto", esCorrecta: false },
       { texto: "Un color", esCorrecta: false },
       { texto: "Un número", esCorrecta: false },
@@ -28,8 +26,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es el plural de lápiz?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Lápizs", esCorrecta: false },
       { texto: "Lápices", esCorrecta: true, explicacion: "El plural correcto es lápices." },
@@ -40,8 +37,7 @@ const preguntasLengua = [
   {
     texto: "¿Qué es un adjetivo?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Describe a un sustantivo", esCorrecta: true, explicacion: "El adjetivo describe al sustantivo." },
       { texto: "Nombra una acción", esCorrecta: false },
@@ -52,8 +48,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es el antónimo de alto?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Grande", esCorrecta: false },
       { texto: "Pequeño", esCorrecta: false },
@@ -64,8 +59,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es el sinónimo de bonito?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Feo", esCorrecta: false },
       { texto: "Hermoso", esCorrecta: true, explicacion: "Hermoso es sinónimo de bonito." },
@@ -76,8 +70,7 @@ const preguntasLengua = [
   {
     texto: "¿Qué tipo de palabra es rápido?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Sustantivo", esCorrecta: false },
       { texto: "Verbo", esCorrecta: false },
@@ -88,8 +81,7 @@ const preguntasLengua = [
   {
     texto: "¿Qué signo lleva una pregunta?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Punto", esCorrecta: false },
       { texto: "Coma", esCorrecta: false },
@@ -100,8 +92,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es una palabra aguda?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Mesa", esCorrecta: false },
       { texto: "Camión", esCorrecta: true, explicacion: "Camión es aguda porque se acentúa en la última sílaba." },
@@ -112,8 +103,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es una palabra grave?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Perro", esCorrecta: true, explicacion: "Perro es grave porque se acentúa en la penúltima sílaba y no lleva tilde." },
       { texto: "Café", esCorrecta: false },
@@ -124,8 +114,7 @@ const preguntasLengua = [
   {
     texto: "¿Qué es un sustantivo común?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Nombre propio", esCorrecta: false },
       { texto: "Nombre general", esCorrecta: true, explicacion: "Es un nombre general, como perro, casa." },
@@ -136,8 +125,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es un ejemplo de verbo en infinitivo?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Correr", esCorrecta: true, explicacion: "Correr es infinitivo." },
       { texto: "Corro", esCorrecta: false },
@@ -148,8 +136,7 @@ const preguntasLengua = [
   {
     texto: "¿Qué es una sílaba?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Lengua Castellana",
+    asignatura: "Lengua",
     respuestas: [
       { texto: "Un sonido", esCorrecta: false },
       { texto: "Un conjunto de sonidos pronunciados juntos", esCorrecta: true, explicacion: "La sílaba es un conjunto de sonidos pronunciados juntos." },

@@ -66,13 +66,22 @@ model partida {
 }
 
 /* 6️⃣  Preguntas y respuestas */
+model categoria {
+  id        String     @id @default(uuid())
+  nombre    String     @unique
+  preguntas pregunta[]
+}
+
 model pregunta {
   id          String              @id @default(uuid())
-  asignatura  pregunta_asignatura
-  dificultad  pregunta_dificultad
   texto       String
+  dificultad  pregunta_dificultad
+  categoriaId String
+  categoria   categoria           @relation(fields: [categoriaId], references: [id])
   respuestas  respuesta[]
   respuestasDadas respuestapartida[]
+
+  @@index([categoriaId], map: "Pregunta_categoriaId_idx")
 }
 
 model respuesta {
@@ -141,14 +150,6 @@ enum partida_estado {
 
 enum pregunta_dificultad {
   facil
-  intermedia
+  media
   dificil
-}
-
-enum pregunta_asignatura {
-  Matematicas
-  Historia
-  Ciencias
-  Lengua
-  Ingles
 }

@@ -4,24 +4,22 @@ const preguntasGeografia = [
   {
     texto: "¿Cuál es el planeta donde vivimos?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Geografía",
+    asignatura: "Ciencias",
     respuestas: [
       { texto: "Marte", esCorrecta: false },
       { texto: "Venus", esCorrecta: false },
-      { texto: "Tierra", esCorrecta: true, explicacion: "Vivimos en el planeta Tierra." },
+      { texto: "Tierra", esCorrecta: true },
       { texto: "Júpiter", esCorrecta: false },
     ],
   },
   {
     texto: "¿Cómo se llama el continente donde está España?",
     dificultad: "facil",
-    puntuacion: 10,
-    categoriaNombre: "Geografía",
+    asignatura: "Ciencias",
     respuestas: [
       { texto: "Asia", esCorrecta: false },
       { texto: "África", esCorrecta: false },
-      { texto: "Europa", esCorrecta: true, explicacion: "España está en Europa." },
+      { texto: "Europa", esCorrecta: true },
       { texto: "América", esCorrecta: false },
     ],
   },
