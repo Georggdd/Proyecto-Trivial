@@ -6,7 +6,7 @@ export const PadreRanking = () => {
         // {/* creo una constante equipo que recoge valores */}
         { nombre: "Saltamontes", puntos: 1500 },
         { nombre: "Mariposa", puntos: 2000 },
-        { nombre: "Libélula", puntos: 500 },
+       { nombre: "Libélula", puntos: 500 },
         { nombre: "Mariquita", puntos: 1000 },
         { nombre: "Escarabajo", puntos: 1000 },
     ]);
