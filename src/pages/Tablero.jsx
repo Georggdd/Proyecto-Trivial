@@ -13,36 +13,34 @@ import ModalPregunta from "../components/ModalPregunta";
 import { useCategoriaStore } from "../hooks/useCategoriaStore";
 
 function Tablero() {
-  /* ---------- Stores ---------- */
-  const navigate              = useNavigate();
-  const { partidaId }         = usePartidaStore();
-  const categoriaSeleccionada = useCategoriaStore((s) => s.categoriaSeleccionada);
+  const navigate = useNavigate();
+  const { partidaId } = usePartidaStore();
+  const categoriaSeleccionada = useCategoriaStore(
+    (s) => s.categoriaSeleccionada
+  );
 
-  const {
-    fichaPos,
-    casillasActivas,
-    moverFicha,
-    setValorDado,
-  } = useJuegoStore();
+  const { fichaPos, casillasActivas, moverFicha, setValorDado } =
+    useJuegoStore();
 
-  const equipos        = useTurnoStore((s) => s.equipos);
-  const turnoActual    = useTurnoStore((s) => s.turnoActual);
-  const setEquipos     = useTurnoStore((s) => s.setEquipos);
-  const siguienteTurno = useTurnoStore.getState().siguienteTurno;
+  const equipos = useTurnoStore((s) => s.equipos);
+  const setEquipos = useTurnoStore((s) => s.setEquipos);
+  const avanzarTurno = useTurnoStore((s) => s.avanzarTurno);
 
-  /* ---------- Estado local ---------- */
   const [mostrarModal, setMostrarModal] = useState(false);
 
-  /* ---------- Recuperar equipos de la partida ---------- */
+  useEffect(() => {
+    console.log("[tablero] equipos actualizados:", equipos);
+  }, [equipos]);
+
   useEffect(() => {
     if (!partidaId) return;
-
     (async () => {
       try {
-        const res  = await fetch(
+        const res = await fetch(
           `http://localhost:3000/api/equipos?partidaId=${partidaId}`
         );
         const data = await res.json();
+        console.log("[tablero] equipos cargados al iniciar:", data);
         setEquipos(data);
       } catch (err) {
         console.error("Error al obtener equipos:", err);
@@ -50,19 +48,11 @@ function Tablero() {
     })();
   }, [partidaId, setEquipos]);
 
-  /* ---------- Movimiento y pregunta ---------- */
-  const lanzarPregunta = () => setMostrarModal(true);
-
   const manejarMovimiento = (numero) => {
     moverFicha(numero);
-
-    setTimeout(() => {
-      lanzarPregunta();   // abre el modal con la pregunta
-      siguienteTurno();   // cambia de turno
-    }, 500);
+    setTimeout(() => setMostrarModal(true), 500);
   };
 
-  /* ---------- Render ---------- */
   return (
     <div
       className="flex flex-col min-h-screen w-full pt-32"
@@ -74,9 +64,8 @@ function Tablero() {
     >
       <Header />
 
-      {/* ---------- Contenedor Tablero + Ranking ---------- */}
       <div className="flex-grow flex items-center justify-center gap-10 relative pb-10 px-8">
-        {/* ----- Tablero ----- */}
+        {/* Tablero */}
         <div className="relative aspect-square w-[90%] max-w-[700px]">
           <img
             src="/assets/img/Tablero-Trivial.jpeg"
@@ -84,14 +73,12 @@ function Tablero() {
             className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-contain z-0"
           />
 
-          {/* Casillas activas (se iluminan) */}
           {casillasActivas.map((numero) => {
             const pos = casillas.find((c) => c.id === numero);
             if (!pos) return null;
-
             return (
               <div
-                key={`casilla-${numero}`}  // Añadir esta key única
+                key={`casilla-${numero}`}
                 className="absolute z-30 w-[8%] h-[8%] flex items-center justify-center cursor-pointer"
                 style={{
                   top: `${pos.top}%`,
@@ -107,7 +94,6 @@ function Tablero() {
 
           <Ficha position={fichaPos} />
 
-          {/* Botón para ver ranking a pantalla completa */}
           <button
             onClick={() => navigate("/VistaRanking")}
             className="absolute top-4 right-4 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 z-50"
@@ -116,23 +102,20 @@ function Tablero() {
           </button>
         </div>
 
-        {/* ----- Ranking ----- */}
+        {/* Mini-ranking */}
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[360px] w-[300px] z-40">
           <div className="space-y-4">
             {(() => {
-              // 1) Ordenamos por puntos (desc) para que el líder quede arriba
+              // ← Corrección aquí: spread correcto [...equipos]
               const equiposOrdenados = [...equipos].sort(
                 (a, b) => b.puntos - a.puntos
               );
-
-              // 2) Pintamos la lista
               return equiposOrdenados.map((eq, idx) => (
                 <Ranking
                   key={eq.id}
                   nombre={eq.nombre}
                   puntos={eq.puntos}
                   imagen={eq.imagen}
-                  /* líder → late en naranja */
                   destacado={idx === 0}
                 />
               ));
@@ -141,15 +124,17 @@ function Tablero() {
         </div>
       </div>
 
-      {/* ----- Zona inferior (dado) & panel de guía ----- */}
       <ZonaInferior onDadoResultado={setValorDado} />
       <GuiaPanel />
 
-      {/* ----- Modal con la pregunta ----- */}
       <ModalPregunta
         visible={mostrarModal}
-        onClose={() => setMostrarModal(false)}
         categoria={categoriaSeleccionada}
+        onClose={() => {
+          console.log("[tablero] onClose modal → ocultar y avanzarTurno");
+          setMostrarModal(false);
+          avanzarTurno();
+        }}
       />
     </div>
   );
