@@ -11,7 +11,8 @@ export const PadreRanking = () => {
         // Puedes mapear si quieres transformar los datos
         const equiposFormateados = data.map(g => ({
           nombre: g.nombre,
-          puntos: g.puntos // o cualquier campo si ya existe
+          puntos: g.puntos, // o cualquier campo si ya existe
+        foto: g.foto
         }));
         setEquipo(equiposFormateados);
       })

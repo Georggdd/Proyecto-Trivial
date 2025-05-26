@@ -1,16 +1,16 @@
 import React from "react";
 
-const Ranking = ({ nombre, puntos, destacado }) => { //recibe los nombres del padre 
+const Ranking = ({ nombre, puntos, foto, destacado }) => { //recibe los nombres del padre 
   return (
     <div className="flex items-center justify-center w-full gap-[1vw] pb-[1vh] px-[12vh]">
-      {/* Imagen */}
-      <div className="bg-transparent">
-        <img
-          src="/assets/img/ninio.png"
-          className="w-[5vw] h-auto"
-          alt="Imagen del equipo"
-        />
-      </div>
+      {/* Imagen de la BBDD*/}
+   <div className="w-[5vw] h-[5vw] overflow-hidden flex items-center justify-center rounded-full bg-white border-2 border-naranja">
+  <img
+    src={`http://localhost:3000/uploads/${foto}`}
+    className="w-full h-full object-cover"
+    alt={`Imagen del equipo ${nombre}`}
+  />
+</div>
 
       {/* Nombre del equipo */}
 

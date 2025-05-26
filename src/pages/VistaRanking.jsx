@@ -38,12 +38,6 @@ const VistaRanking = ({ equipo }) => {
                     alt="banderines de fondo"
                     className="absolute w-full h-full object-cover z-20"
                 />
-                 {/* <img
-                    src="../assets/img/mesa_madera.jpg"
-                    alt="mesa de madera de fondo"
-                    className="absolute w-full h-full object-cover z-10"
-                /> */}
-
                 {/* Contenido central */}
                 <div className="relative z-30 flex w-full px-[3%] pb-[3%] box-border min-h-[calc(100vh)] items-center justify-between">
 
@@ -60,7 +54,7 @@ const VistaRanking = ({ equipo }) => {
                             {ordenEquipo.map((x, y) => {
                                 const destacar = mismapuntuacion.includes(x.puntos);
                                 return (
-                                    <Ranking key={y} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
+                                    <Ranking key={y} foto={x.foto} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
                                 );
                             })}
                         </div>
