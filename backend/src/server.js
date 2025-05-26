@@ -23,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 //Acceder a la imagen desde http://localhost:3000/uploads/nombre.jpg
+//provisional hasta tener el código de Paulino
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Rutas
