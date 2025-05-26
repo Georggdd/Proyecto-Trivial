@@ -35,13 +35,13 @@ export default function AppRoutes({ onUpload, preguntas, error }) {
           />
         } 
       />
-      <Route path="/VistaRanking" element={<VistaRanking />} />
+     
 
       {/* Rutas importadas desde Back‑end */}
       <Route path="/pruebas-elevenlabs" element={<PruebasElevenLabs />} />
       <Route path="/tablero" element={<Tablero />} />
       <Route path="/equipos" element={<Equipos />} />
-      <Route path="/ranking" element={<PadreRanking />} />
+      <Route path="/VistaRanking" element={<PadreRanking />} />
     </Routes>
   );
 }

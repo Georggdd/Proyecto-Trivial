@@ -5,7 +5,7 @@ export const PadreRanking = () => {
     const [equipo, setEquipo] = useState([]);
 
     useEffect(() => {
-    fetch("http://localhost:3000/api/grupos") // Aquí llamas al backend
+    fetch("http://localhost:3000/api/ranking/grupos") // Aquí llamas al backend //cambiar la ruta si fuese necesario
       .then((res) => res.json())
       .then((data) => {
         // Puedes mapear si quieres transformar los datos
