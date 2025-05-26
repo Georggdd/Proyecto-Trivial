@@ -1,115 +1,139 @@
-// ──────────────────────────────────────────────
-//  GENERATOR & DATASOURCE
-// ──────────────────────────────────────────────
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")   // ← define la URL en .env
+  url      = env("DATABASE_URL")
 }
 
-// ──────────────────────────────────────────────
-//  ENUMS
-// ──────────────────────────────────────────────
-enum Dificultad {
+model partidatorespuestapartida {
+  A String
+  B String
+
+  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
+  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
+  @@map("_partidatorespuestapartida")
+}
+
+model casilla {
+  id       String       @id @default(uuid())
+  tipo     casilla_tipo
+  efecto   String
+  posicion Int
+}
+
+model grupo {
+  id            Int              @id @default(autoincrement())
+  nombre        String
+  foto          String?
+  activo        Boolean          @default(true)
+  partidaId     String
+  //relación con puntuación
+  puntosTotales puntuaciongrupo?
+
+  @@index([partidaId], map: "Grupo_partidaId_fkey")
+}
+
+model integrante {
+  id      String @id @default(uuid())
+  nombre  String
+  grupoId String
+
+  @@index([grupoId], map: "Integrante_grupoId_fkey")
+}
+
+model partida {
+  id            String         @id @default(uuid())
+  codigo        String         @unique(map: "Partida_codigo_key")
+  estado        partida_estado
+  fechaCreacion DateTime       @default(now())
+  profesorId    String
+
+  @@index([profesorId], map: "Partida_profesorId_fkey")
+}
+
+model pregunta {
+  id         String              @id @default(uuid())
+  asignatura pregunta_asignatura
+  dificultad pregunta_dificultad
+  texto      String
+}
+
+model puntuaciongrupo {
+  id            Int @id @default(autoincrement())
+  grupoId       Int @unique(map: "PuntuacionGrupo_grupoId_key")
+  partidaId     String
+  puntosTotales Int
+
+  grupo grupo @relation(fields: [grupoId], references: [id])
+
+  @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
+}
+
+model respuesta {
+  id         String  @id @default(uuid())
+  preguntaId String
+  texto      String
+  esCorrecta Boolean
+
+  @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
+}
+
+model respuestapartida {
+  id              String  @id @default(uuid())
+  grupoId         String
+  preguntaId      String
+  respuestaId     String
+  esCorrecta      Boolean
+  puntosObtenidos Int
+  comodinActivado Boolean @default(false)
+
+  @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
+  @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
+  @@index([respuestaId], map: "RespuestaPartida_respuestaId_fkey")
+}
+
+model usuario {
+  id       String @id @default(uuid())
+  usuario  String @unique
+  password String
+}
+
+enum pregunta_asignatura {
+  Matematicas
+  Historia
+  Ciencias
+  Lengua
+  Ingles
+  Música
+}
+
+enum casilla_tipo {
+  normal
+  suerte
+  mala_suerte
+}
+
+enum partida_estado {
+  esperando
+  en_curso
+  finalizada
+}
+
+enum pregunta_dificultad {
   facil
-  media
+  intermedia
   dificil
 }
 
-enum EstadoPartida {
-  EN_CURSO
-  TERMINADA
+enum usuario_rol {
+  admin
+  profesor
 }
 
-// ──────────────────────────────────────────────
-//  MODELOS
-// ──────────────────────────────────────────────
-model Categoria {
-  id         Int        @id @default(autoincrement())
-  nombre     String     @unique
-  preguntas  Pregunta[]
-
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-}
-
-model Pregunta {
-  id          Int          @id @default(autoincrement())
-  texto        String
-  dificultad   Dificultad
-  puntuacion   Int          @default(10)
-
-  // FK → Categoria
-  categoriaId  Int
-  categoria    Categoria    @relation(fields: [categoriaId], references: [id])
-
-  respuestas   Respuesta[]
-
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-}
-
-model Respuesta {
-  id          Int       @id @default(autoincrement())
-  texto        String
-  esCorrecta   Boolean
-  explicacion  String?
-
-  // FK → Pregunta
-  preguntaId   Int
-  pregunta     Pregunta  @relation(fields: [preguntaId], references: [id])
-
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-}
-
-model Partida {
-  id         Int            @id @default(autoincrement())
-  codigo     String         @unique
-  estado     EstadoPartida  @default(EN_CURSO)
-
-  equipos    Equipo[]
-
-  profesorId Int?           // opcional
-  profesor   Usuario? @relation(fields: [profesorId], references: [id])
-
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-}
-
-model Equipo {
-  id          Int       @id @default(autoincrement())
-  nombre      String
-  integrantes String
-  puntos      Int       @default(0)
-
-  // FK → Partida
-  partidaId   Int
-  partida     Partida   @relation(fields: [partidaId], references: [id])
-
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@index([partidaId])
-}
-
-model Usuario {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
-  rol      String @default("ADMIN")
-
-  Partida  Partida[]
-}
-
-/* ──────────────────────────────────────────────
-   PREGUNTAS PERSONALIZADAS (tabla aparte)
-   ────────────────────────────────────────────── */
-
-model Customizable {
+//Esto solo si customizable no se trata como una categoria mas, sino en una tabla aparte
+model customizable {
   id                 Int     @id @default(autoincrement())
   pregunta           String
   opcion1            String
@@ -117,10 +141,7 @@ model Customizable {
   opcion3            String
   opcion4            String
   respuesta_correcta String
-  puntuacion         Int     @default(10)      // usa mismo rango que Pregunta
-  dificultad         Dificultad
-  explicacion        String?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  dificultad         Int
+  explicacion        String
+  customizable       Boolean @default(false)
 }
-
