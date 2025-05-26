@@ -3,10 +3,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path'; // para acceder a las imágenes subidas en uploads
 
+
 //Importar rutas
 import uploadRoutes from './routes/uploadRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import rankingRoutes from './routes/rankingRoutes.js';
+import downloadRoutes from './routes/downloadRoutes.js';
 
 //importar utilidades
 import { configurarEventosDeCierre } from './utils/shutdownHandler.js';
@@ -27,6 +29,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use('/api/upload', uploadRoutes); // Changed from /upload to /api/upload
 app.use('/api/auth', authRoutes);
 app.use("/api/ranking", rankingRoutes);
+app.use('/api', downloadRoutes); //descarga resultados
 
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
