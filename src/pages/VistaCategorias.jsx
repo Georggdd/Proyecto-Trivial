@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
@@ -11,31 +11,41 @@ export default function VistaCategorias() {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [equiposHechos, setEquiposHechos] = useState(false);
   const navigate = useNavigate();
+  const [audioHabilitado, setAudioHabilitado] = useState(false);
+  const audioRef = useRef(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    // Crear el elemento de audio
-    const audio = new Audio('/assets/audio/por-favor-elije.mp3');
-    
-    // Función para reproducir el audio
-    const playAudio = () => {
-      audio.play().catch(error => {
-        console.error('Error al reproducir el audio:', error);
-      });
+    audioRef.current = new Audio('/assets/audio/por-favor-elije.mp3');
+
+    const handleFirstClick = () => {
+      setAudioHabilitado(true);
     };
 
-    // Reproducir el audio inmediatamente
-    playAudio();
+    document.addEventListener('click', handleFirstClick);
 
-    // Configurar el intervalo para reproducir cada 15 segundos
-    const intervalId = setInterval(playAudio, 15000);
-
-    // Limpiar el intervalo cuando el componente se desmonte
     return () => {
-      clearInterval(intervalId);
-      audio.pause();
-      audio.currentTime = 0;
+      document.removeEventListener('click', handleFirstClick);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     };
-  }, []); // El array vacío significa que esto solo se ejecutará una vez al montar el componente
+  }, []);
+
+  useEffect(() => {
+    if (audioHabilitado) {
+      const playAudio = () => {
+        audioRef.current.play().catch(() => {});
+      };
+      playAudio();
+      intervalRef.current = setInterval(playAudio, 15000);
+    }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [audioHabilitado]);
 
   const subcategorias = [
     "Idiomas",
