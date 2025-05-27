@@ -3,19 +3,23 @@ import ExcelJS from 'exceljs';
 
 const prisma = new PrismaClient();
 
-export const downloadGruposExcel = async (req, res) => {
+export const downloadResultadoExcel = async (req, res) => {
   try {
-    const grupos = await prisma.grupo.findMany({
-      select: { id: true, nombre: true }
+    const resultados = await prisma.respuestapartida.findMany({
+      select: { id: true, grupoId: true, preguntaId: true, respuestaId: true, esCorrecta: true, puntosObtenidos: true }
     });
 
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Grupos');
+    const worksheet = workbook.addWorksheet('Resultados');
 
     // Define columnas con estilo
     worksheet.columns = [
       { header: 'ID', key: 'id', width: 10 },
-      { header: 'Nombre', key: 'nombre', width: 30 }
+      { header: 'GrupoId', key: 'grupoId', width: 10 },
+      { header: 'Pregunta', key: 'preguntaId', width: 30 },
+      { header: 'Respuesta', key: 'respuestaId', width: 30 },
+      { header: 'Corrección', key: 'esCorrecta', width: 20 },
+      { header: 'puntos', key: 'puntosObtenidos', width: 10 }
     ];
 
     // Estilo del encabezado
@@ -28,8 +32,8 @@ export const downloadGruposExcel = async (req, res) => {
     };
 
     // Agregar datos
-    grupos.forEach((grupo) => {
-      worksheet.addRow(grupo);
+    resultados.forEach((respuestapartida) => {
+      worksheet.addRow(respuestapartida);
     });
 
     // Bordes y alineación para todas las celdas
@@ -50,7 +54,7 @@ export const downloadGruposExcel = async (req, res) => {
       'Content-Type',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     );
-    res.setHeader('Content-Disposition', 'attachment; filename="grupos.xlsx"');
+    res.setHeader('Content-Disposition', 'attachment; filename="resultados.xlsx"');
 
     await workbook.xlsx.write(res);
     res.end();

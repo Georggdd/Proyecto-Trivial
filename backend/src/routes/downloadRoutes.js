@@ -1,8 +1,8 @@
 import express from 'express';
-import { downloadGruposExcel } from '../controllers/downloadController.js';
+import { downloadResultadoExcel } from '../controllers/downloadController.js';
 
 const router = express.Router();
 
-router.get('/download-grupos', downloadGruposExcel);
+router.get('/download-grupos', downloadResultadoExcel);
 
 export default router;
