@@ -24,13 +24,13 @@ model casilla {
 }
 
 model grupo {
-  id            Int              @id @default(autoincrement())
-  nombre        String
-  foto          String?
-  activo        Boolean          @default(true)
-  partidaId     String
-  //relación con puntuación
-  puntosTotales puntuaciongrupo?
+  id                Int                @id @default(autoincrement())
+  nombre            String
+  foto              String?
+  activo            Boolean            @default(true)
+  partidaId         String
+  puntosTotales     puntuaciongrupo?
+  respuestapartidas respuestapartida[]
 
   @@index([partidaId], map: "Grupo_partidaId_fkey")
 }
@@ -47,47 +47,54 @@ model partida {
   id            String         @id @default(uuid())
   codigo        String         @unique(map: "Partida_codigo_key")
   estado        partida_estado
-  fechaCreacion DateTime       @default(now())
   profesorId    String
+  fechaCreacion DateTime       @default(now())
 
   @@index([profesorId], map: "Partida_profesorId_fkey")
 }
 
 model pregunta {
-  id         String              @id @default(uuid())
-  asignatura pregunta_asignatura
-  dificultad pregunta_dificultad
-  texto      String
+  id                String              @id @default(uuid())
+  texto             String
+  dificultad        pregunta_dificultad
+  asignatura        pregunta_asignatura
+  respuestapartidas respuestapartida[]
+  respuesta         respuesta[]
 }
 
 model puntuaciongrupo {
-  id            Int @id @default(autoincrement())
-  grupoId       Int @unique(map: "PuntuacionGrupo_grupoId_key")
+  id            Int    @id @default(autoincrement())
+  grupoId       Int    @unique(map: "PuntuacionGrupo_grupoId_key")
   partidaId     String
   puntosTotales Int
-
-  grupo grupo @relation(fields: [grupoId], references: [id])
+  grupo         grupo  @relation(fields: [grupoId], references: [id])
 
   @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
 }
 
 model respuesta {
-  id         String  @id @default(uuid())
-  preguntaId String
-  texto      String
-  esCorrecta Boolean
+  id                String             @id @default(uuid())
+  texto             String
+  esCorrecta        Boolean
+  preguntaId        String
+  respuestapartidas respuestapartida[]
+  pregunta          pregunta           @relation(fields: [preguntaId], references: [id])
 
   @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
 
 model respuestapartida {
   id              String  @id @default(uuid())
-  grupoId         String
+  grupoId         Int
   preguntaId      String
   respuestaId     String
   esCorrecta      Boolean
   puntosObtenidos Int
   comodinActivado Boolean @default(false)
+
+  grupo     grupo     @relation(fields: [grupoId], references: [id])
+  pregunta  pregunta  @relation(fields: [preguntaId], references: [id])
+  respuesta respuesta @relation(fields: [respuestaId], references: [id])
 
   @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
   @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
@@ -96,8 +103,21 @@ model respuestapartida {
 
 model usuario {
   id       String @id @default(uuid())
-  usuario  String @unique
   password String
+  usuario  String @unique
+}
+
+model customizable {
+  id                 Int     @id @default(autoincrement())
+  pregunta           String
+  opcion1            String
+  opcion2            String
+  opcion3            String
+  opcion4            String
+  respuesta_correcta String
+  dificultad         Int
+  explicacion        String
+  customizable       Boolean @default(false)
 }
 
 enum pregunta_asignatura {
@@ -106,7 +126,7 @@ enum pregunta_asignatura {
   Ciencias
   Lengua
   Ingles
-  Música
+  // Música
 }
 
 enum casilla_tipo {
@@ -125,23 +145,4 @@ enum pregunta_dificultad {
   facil
   intermedia
   dificil
-}
-
-enum usuario_rol {
-  admin
-  profesor
-}
-
-//Esto solo si customizable no se trata como una categoria mas, sino en una tabla aparte
-model customizable {
-  id                 Int     @id @default(autoincrement())
-  pregunta           String
-  opcion1            String
-  opcion2            String
-  opcion3            String
-  opcion4            String
-  respuesta_correcta String
-  dificultad         Int
-  explicacion        String
-  customizable       Boolean @default(false)
 }
