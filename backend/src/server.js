@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-//Acceder a la imagen desde http://localhost:3000/uploads/nombre.jpg
+//almacen forzoso en src/uploads--llamadas desde mySQl--desde http://localhost:3000/uploads/nombre.jpg
 //provisional hasta tener el código de Paulino
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
