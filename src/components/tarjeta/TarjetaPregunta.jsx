@@ -8,6 +8,9 @@ export default function TarjetaPregunta({ categoria }) {
         const [equipoActual, setEquipoActual] = useState(0);
         const [respuestasEquipos, setRespuestasEquipos] = useState(Array(6).fill(null));
         const [respuestasCompletadas, setRespuestasCompletadas] = useState(false);
+        const [estadisticasEquipos, setEstadisticasEquipos] = useState(
+            Array(6).fill({ aciertos: 0, fallos: 0 })
+        );
 
         const [show, setShow] = useState(false);
         useEffect(() => {
@@ -63,6 +66,63 @@ export default function TarjetaPregunta({ categoria }) {
             setLoading(false);
             });
         }, [categoria]);
+
+        useEffect(() => {
+            if (respuestasCompletadas && pregunta) {
+                const nuevasEstadisticas = estadisticasEquipos.map((equipo, idx) => {
+                    const respuesta = respuestasEquipos[idx];
+                    const esCorrecta = pregunta.respuestas.find(
+                        (r) => r.texto === respuesta?.texto
+                    )?.correcta;
+                    return {
+                        aciertos: equipo.aciertos + (esCorrecta ? 1 : 0),
+                        fallos: equipo.fallos + (!esCorrecta ? 1 : 0),
+                    };
+                });
+                setEstadisticasEquipos(nuevasEstadisticas);
+
+                // Calcular porcentaje de aciertos global
+                const totalEquipos = respuestasEquipos.filter(r => r !== null).length;
+                const totalAciertos = respuestasEquipos.filter((respuesta, idx) => {
+                    if (!respuesta) return false;
+                    const esCorrecta = pregunta.respuestas.find(r => r.texto === respuesta.texto)?.correcta;
+                    return esCorrecta;
+                }).length;
+                const porcentajeAciertos = totalEquipos > 0 ? (totalAciertos / totalEquipos) * 100 : 0;
+
+                // Batería de audios para cada caso
+                const audios75 = [
+                    '/assets/audio/Impresionante.mp3',
+                    '/assets/audio/desempeño.mp3',
+                    '/assets/audio/mayoria.mp3',
+                ];
+                const audios50 = [
+                    '/assets/audio/esfuerzo.mp3',
+                    '/assets/audio/interesante.mp3',
+                    '/assets/audio/intento.mp3',
+                ];
+                const audios0 = [
+                    '/assets/audio/Buen.mp3',
+                    '/assets/audio/felicito.mp3',
+                    '/assets/audio/intencion.mp3',
+                ];
+
+                // Función para elegir un audio aleatorio
+                function audioAleatorio(arr) {
+                    return arr[Math.floor(Math.random() * arr.length)];
+                }
+
+                // Reproducir audio según el porcentaje de aciertos
+                if (porcentajeAciertos > 75) {
+                    new Audio(audioAleatorio(audios75)).play();
+                } else if (porcentajeAciertos > 50) {
+                    new Audio(audioAleatorio(audios50)).play();
+                } else if (porcentajeAciertos === 0) {
+                    new Audio(audioAleatorio(audios0)).play();
+                }
+            }
+            // eslint-disable-next-line
+        }, [respuestasCompletadas]);
 
         if (loading) return <p className="text-center mt-10 text-xl">Cargando pregunta...</p>;
         if (!pregunta) return <p className="text-center mt-10 text-xl">No hay preguntas disponibles.</p>;
