@@ -1,37 +1,34 @@
 import React from "react";
 
-/**
- * Muestra un equipo con estilo uniforme en naranja.
- */
-const Ranking = ({ nombre, puntos = 0, imagen }) => {
-  const puntosNormalizados = Number(puntos) || 0;
-
+const Ranking = ({ nombre, puntos, foto, destacado }) => { //recibe los nombres del padre 
   return (
-    <div className="
-      w-full flex items-center gap-4 rounded-xl p-2
-      bg-naranja-50 border-2 border-orange-500
-    ">
-      {/* Avatar */}
-      <div className="basis-[15%] flex-shrink-0 min-w-[60px]">
-        <img
-          src={imagen || "/assets/img/ninio.png"}
-          alt={nombre}
-          className="w-full h-auto rounded-full"
-        />
-      </div>
+    <div className="flex items-center justify-center w-full gap-[1vw] pb-[1vh] px-[12vh]">
+      {/* Imagen de la BBDD*/}
+   <div className="w-[5vw] h-[5vw] overflow-hidden flex items-center justify-center rounded-full bg-white border-2 border-naranja">
+  <img
+    src={`http://localhost:3000/uploads/${foto}`}
+    className="w-full h-full object-cover"
+    alt={`Imagen del equipo ${nombre}`}
+  />
+</div>
 
-      {/* Nombre */}
-      <div className="flex-grow text-center font-bold text-naranja">
-        <p className="truncate text-[1.1rem] sm:text-[1.4rem]">
+      {/* Nombre del equipo */}
+
+      <div className="w-2/4 bg-white rounded-full border-naranja border-2 text-naranja flex items-center justify-center min-h-[4vw] px-4 py-1 text-center">
+        <h3
+          className="font-personalizada text-[1.8vw] leading-tight"  >
           {nombre}
-        </p>
+        </h3>
       </div>
 
       {/* Puntos */}
-      <div className="basis-[20%] flex-shrink-0 text-center font-bold text-naranja">
-        <p className="text-[1.1rem] sm:text-[1.4rem]">
-          {puntosNormalizados}
-        </p>
+      <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja font-bold flex items-center justify-center min-h-full">
+        <h3
+          className={`font-personalizada text-[1.8vw] text-center ${destacado ? "animate-pulse scale-110" : ""
+            }`}
+        >
+          {puntos}
+        </h3>
       </div>
     </div>
   );
