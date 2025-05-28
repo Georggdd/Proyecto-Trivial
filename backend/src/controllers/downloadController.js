@@ -8,7 +8,7 @@ export const downloadResultadoExcel = async (req, res) => {
 
     // -----------------------CONSTANTES----------------------------------
     //--------------------------------------------------------------------
-    const grupo = await prisma.grupo.findMany({
+    const equipo = await prisma.equipo.findMany({
       select: { nombre: true }
     });
 
@@ -16,15 +16,15 @@ export const downloadResultadoExcel = async (req, res) => {
       select: { puntosTotales: true }
     });
 
-    // Grupos completos para mapear id → nombre
-    const grupos = await prisma.grupo.findMany({
-      select: { id: true, nombre: true }
-    });
+    // // Grupos completos para mapear id → nombre
+    // const grupos = await prisma.grupo.findMany({
+    //   select: { id: true, nombre: true }
+    // });
 
-    const grupoIdToNombre = {};
-    grupos.forEach(g => {
-      grupoIdToNombre[g.id.toString()] = g.nombre;
-    });
+    // const grupoIdToNombre = {};
+    // grupos.forEach(g => {
+    //   grupoIdToNombre[g.id.toString()] = g.nombre;
+    // });
 
     // Integrantes
     const integrantes = await prisma.integrante.findMany({
