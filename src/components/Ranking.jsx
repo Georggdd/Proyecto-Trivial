@@ -1,23 +1,34 @@
 import React from "react";
 
-const Ranking = ({ nombre, puntos, destacado }) => {
+const Ranking = ({ nombre, puntos, foto, destacado }) => { //recibe los nombres del padre 
   return (
-    <div className="w-full flex items-center gap-4">
-      {/* Imagen */}
-      <div className="basis-[15%] flex-shrink-0 min-w-[60px]">
-        <img src="/assets/img/ninio.png" alt="Avatar" className="w-full h-auto" />
-      </div>
+    <div className="flex items-center justify-center w-full gap-[1vw] pb-[1vh] px-[12vh]">
+      {/* Imagen de la BBDD*/}
+   <div className="w-[5vw] h-[5vw] overflow-hidden flex items-center justify-center rounded-full bg-white border-2 border-naranja">
+  <img
+    src={`http://localhost:3000/uploads/${foto}`}
+    className="w-full h-full object-cover"
+    alt={`Imagen del equipo ${nombre}`}
+  />
+</div>
 
-      {/* Nombre */}
-      <div className="flex-grow bg-white text-naranja rounded-full border-2 border-naranja px-4 py-2 text-center font-bold overflow-hidden">
-        <p className="truncate text-[1.1rem] sm:text-[1.4rem]">{nombre}</p>
+      {/* Nombre del equipo */}
+
+      <div className="w-2/4 bg-white rounded-full border-naranja border-2 text-naranja flex items-center justify-center min-h-[4vw] px-4 py-1 text-center">
+        <h3
+          className="font-personalizada text-[1.8vw] leading-tight"  >
+          {nombre}
+        </h3>
       </div>
 
       {/* Puntos */}
-      <div className="basis-[20%] flex-shrink-0 bg-white text-naranja rounded-full border-2 border-naranja px-4 py-2 text-center font-bold">
-        <p className={`${destacado ? "animate-pulse scale-110" : ""} text-[1.1rem] sm:text-[1.4rem]`}>
+      <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja font-bold flex items-center justify-center min-h-full">
+        <h3
+          className={`font-personalizada text-[1.8vw] text-center ${destacado ? "animate-pulse scale-110" : ""
+            }`}
+        >
           {puntos}
-        </p>
+        </h3>
       </div>
     </div>
   );

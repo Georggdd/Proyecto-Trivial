@@ -1,84 +1,56 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-import preguntas from './data/preguntas.js';
-import categorias from './data/categorias.js';
+import categorias from './data/categorias.js'; // importamos categorias.js
+import preguntas from './data/preguntas.js'; // importamos preguntas.js
 
 async function main() {
-  try {
-    // Borra todas las respuestas, preguntas y categorías existentes
-    await prisma.respuesta.deleteMany();
-    await prisma.pregunta.deleteMany();
-    await prisma.categoria.deleteMany();
-    console.log('Datos existentes eliminados');
 
-    // Crear las categorías
-    const categoriasCreadas = {};
-    for (const categoria of categorias) {
-      const createdCategoria = await prisma.categoria.create({
-        data: {
-          nombre: categoria.nombre
-        }
-      });
-      categoriasCreadas[categoria.nombre] = createdCategoria.id;
-      console.log(`✅ Categoría creada: ${categoria.nombre}`);
+  // Insertar las categorías
+  const categoriasMap = {}; // Guardamos {nombre: id} para después vincular
+
+  for (const cat of categorias) {
+    const categoria = await prisma.Categoria.create({
+      data: {
+        nombre: cat.nombre,
+      },
+    });
+    categoriasMap[categoria.nombre] = categoria.id;
+    console.log(`✅ Categoria creada: ${cat.nombre}`);
+  }
+
+  // Insertar las preguntas con sus respuestas
+  for (const pregunta of preguntas) {
+    const categoriaId = categoriasMap[pregunta.categoriaNombre];
+
+    if (!categoriaId) {
+      console.warn(`⚠️ Categoria no encontrada para la pregunta: ${pregunta.texto}`);
+      continue; // Opcional: saltar si la categoría no existe
     }
 
-    // Mapeo de asignaturas a categorías
-    const mapeoAsignaturas = {
-      'Ingles': 'Idiomas',
-      'Matematicas': 'Matemáticas',
-      'Biologia': 'Biología',
-      'Geografia': 'Geografía',
-      'Lengua': 'Lengua Castellana',
-      'Musica': 'Música'
-    };
+    const createdPregunta = await prisma.Pregunta.create({
+      data: {
+        texto: pregunta.texto,
+        dificultad: pregunta.dificultad, // asegúrate de que coincida con tu ENUM
+        puntuacion: pregunta.puntuacion,
+        categoriaId: categoriaId,
+        respuestas: {
+          create: pregunta.respuestas.map((respuesta) => ({
+            texto: respuesta.texto,
+            esCorrecta: respuesta.esCorrecta,
+            explicacion: respuesta.explicacion || null,
+          })),
+        },
+      },
+    });
 
-    // Insertar las nuevas preguntas
-    for (const pregunta of preguntas) {
-      // Determinar la categoría basada en categoriaNombre o asignatura
-      let nombreCategoria = pregunta.categoriaNombre;
-      if (!nombreCategoria && pregunta.asignatura) {
-        nombreCategoria = mapeoAsignaturas[pregunta.asignatura] || pregunta.asignatura;
-      }
-
-      const categoriaId = categoriasCreadas[nombreCategoria];
-
-      if (!categoriaId) {
-        console.error(`❌ No se encontró categoría para: ${nombreCategoria}`);
-        continue;
-      }
-
-      try {
-        const createdPregunta = await prisma.pregunta.create({
-          data: {
-            texto: pregunta.texto,
-            dificultad: pregunta.dificultad,
-            categoriaId: categoriaId,
-            respuestas: {
-              create: pregunta.respuestas.map((respuesta) => ({
-                texto: respuesta.texto,
-                esCorrecta: respuesta.esCorrecta,
-              })),
-            },
-          },
-        });
-
-        console.log(`✅ Pregunta creada: ${createdPregunta.texto}`);
-      } catch (error) {
-        console.error(`❌ Error al crear pregunta: ${pregunta.texto}`);
-        console.error(error);
-      }
-    }
-  } catch (error) {
-    console.error('Error en el proceso de seed:', error);
-    throw error;
+    console.log(`✅ Pregunta creada: ${createdPregunta.texto}`);
   }
 }
 
 main()
   .then(async () => {
-    console.log('Seed completo');
+    console.log('🌱 Seed completo');
     await prisma.$disconnect();
   })
   .catch(async (e) => {

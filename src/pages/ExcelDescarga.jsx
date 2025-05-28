@@ -1,4 +1,5 @@
 //componente para subir excel y convertirlo a json
+//conexión con serverprueba.js en carpeta backend fuera de prisma
 
 import React, { useState } from "react"; //exporto función usada para guardar datos
 import * as XLSX from "xlsx"; //biblioteca para poder leer excel

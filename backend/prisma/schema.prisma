@@ -7,21 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/* ──────────────────────────────────────────────
-   Esquema corregido (sección Controller-Ranking)
-   ────────────────────────────────────────────── */
-
-/* 1️⃣  Tabla pivot M-N Partida ↔ RespuestaPartida */
 model partidatorespuestapartida {
   A String
   B String
 
-  @@unique([A, B], map: "PartidaResp_AB_uq")   //  ≤64 chars
-  @@index([B],      map: "PartidaResp_B_idx")
+  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
+  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
   @@map("_partidatorespuestapartida")
 }
 
-/* 2️⃣  Casillas del tablero */
 model casilla {
   id       String       @id @default(uuid())
   tipo     casilla_tipo
@@ -29,40 +23,34 @@ model casilla {
   posicion Int
 }
 
-/* 3️⃣  Grupo que compite en la partida */
 model grupo {
-  id            String            @id @default(uuid())
+  id            Int              @id @default(autoincrement())
   nombre        String
   foto          String?
-  activo        Boolean           @default(true)
+  activo        Boolean          @default(true)
   partidaId     String
-  partida       partida           @relation(fields: [partidaId], references: [id])
-  integrantes   integrante[]
-  puntuaciones  puntuaciongrupo[]
-  respuestas    respuestapartida[]
+  //relación con puntuación
+  puntosTotales puntuaciongrupo?
 
-  @@index([partidaId], map: "Grupo_partidaId_idx")
+  @@index([partidaId], map: "Grupo_partidaId_fkey")
 }
 
-/* 4️⃣  Miembros del grupo */
 model integrante {
-  id       String  @id @default(uuid())
-  nombre   String
-  grupoId  String
-  grupo    grupo   @relation(fields: [grupoId], references: [id])
+  id      String @id @default(uuid())
+  nombre  String
+  grupoId String
 
-  @@index([grupoId], map: "Integrante_grupoId_idx")
+  @@index([grupoId], map: "Integrante_grupoId_fkey")
 }
 
-/* 5️⃣  Partida */
 model partida {
-  id            String          @id @default(uuid())
-  codigo        String          @unique(map: "Partida_codigo_uq")
+  id            String         @id @default(uuid())
+  codigo        String         @unique(map: "Partida_codigo_key")
   estado        partida_estado
-  fechaCreacion DateTime        @default(now())
+  fechaCreacion DateTime       @default(now())
   profesorId    String
-  grupos        grupo[]
-  puntuaciones  puntuaciongrupo[]
+
+  @@index([profesorId], map: "Partida_profesorId_fkey")
 }
 
 /* 6️⃣  Preguntas y respuestas */
@@ -85,56 +73,42 @@ model pregunta {
 }
 
 model respuesta {
-  id          String    @id @default(uuid())
-  preguntaId  String
-  texto       String
-  esCorrecta  Boolean
-  pregunta    pregunta  @relation(fields: [preguntaId], references: [id])
-  respuestasDadas respuestapartida[]
+  id         String  @id @default(uuid())
+  preguntaId String
+  texto      String
+  esCorrecta Boolean
 
-  @@index([preguntaId], map: "Respuesta_preguntaId_idx")
+  @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
 }
 
-/* 7️⃣  Respuesta que un grupo da durante la partida */
 model respuestapartida {
-  id              String    @id @default(uuid())
+  id              String  @id @default(uuid())
   grupoId         String
   preguntaId      String
   respuestaId     String
   esCorrecta      Boolean
   puntosObtenidos Int
-  comodinActivado Boolean   @default(false)
+  comodinActivado Boolean @default(false)
 
-  grupo       grupo     @relation(fields: [grupoId],     references: [id])
-  pregunta    pregunta  @relation(fields: [preguntaId],  references: [id])
-  respuesta   respuesta @relation(fields: [respuestaId], references: [id])
-
-  @@index([grupoId],    map: "RespPart_grupoId_idx")
-  @@index([preguntaId], map: "RespPart_preguntaId_idx")
-  @@index([respuestaId],map: "RespPart_respuestaId_idx")
+  @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
+  @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
+  @@index([respuestaId], map: "RespuestaPartida_respuestaId_fkey")
 }
 
-/* 8️⃣  Puntuación acumulada de cada grupo */
-model puntuaciongrupo {
-  id            String   @id @default(uuid())
-  grupoId       String   @unique(map: "Puntuacion_grupoId_uq")
-  partidaId     String
-  puntosTotales Int
-
-  grupo   grupo   @relation(fields: [grupoId],   references: [id])
-  partida partida @relation(fields: [partidaId], references: [id])
-
-  @@index([partidaId], map: "Puntuacion_partidaId_idx")
-}
-
-/* 9️⃣  Usuarios de la plataforma */
 model usuario {
   id       String @id @default(uuid())
   usuario  String @unique
   password String
 }
 
-/* ─── Enumeraciones ─────────────────────────── */
+enum pregunta_asignatura {
+  Matematicas
+  Historia
+  Ciencias
+  Lengua
+  Ingles
+  Música
+}
 
 enum casilla_tipo {
   normal
@@ -152,4 +126,23 @@ enum pregunta_dificultad {
   facil
   media
   dificil
+}
+
+enum usuario_rol {
+  admin
+  profesor
+}
+
+//Esto solo si customizable no se trata como una categoria mas, sino en una tabla aparte
+model customizable {
+  id                 Int     @id @default(autoincrement())
+  pregunta           String
+  opcion1            String
+  opcion2            String
+  opcion3            String
+  opcion4            String
+  respuesta_correcta String
+  dificultad         Int
+  explicacion        String
+  customizable       Boolean @default(false)
 }

@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 // Páginas principales (controller‑ranking)
 import Login from "../pages/Login";
-import ExcelDescarga from "../pages/conversion";
+import ExcelDescarga from "../pages/ExcelDescarga";
 import VistaCategorias from "../pages/VistaCategorias";
 import VistaRanking from "../pages/VistaRanking";
 
@@ -14,7 +14,7 @@ import Tablero from "../pages/Tablero";
 import Equipos from "../pages/Equipos";
 import PadreRanking from "../components/PadreRanking";
 
-export default function AppRoutes() {
+export default function AppRoutes({ onUpload, preguntas, error }) {
   return (
     <Routes>
       {/* Redirección por defecto a /login */}
@@ -24,15 +24,24 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
 
       {/* Rutas de controller‑ranking */}
-      <Route path="/conversion" element={<ExcelDescarga />} />
-      <Route path="/VistaCategorias" element={<VistaCategorias />} />
-      <Route path="/VistaRanking" element={<VistaRanking />} />
+      <Route path="/ExcelDescarga" element={<ExcelDescarga />} />
+      <Route 
+        path="/VistaCategorias" 
+        element={
+          <VistaCategorias 
+            onUpload={onUpload} 
+            preguntas={preguntas} 
+            error={error}
+          />
+        } 
+      />
+     
 
       {/* Rutas importadas desde Back‑end */}
       <Route path="/pruebas-elevenlabs" element={<PruebasElevenLabs />} />
       <Route path="/tablero" element={<Tablero />} />
       <Route path="/equipos" element={<Equipos />} />
-      <Route path="/ranking" element={<PadreRanking />} />
+      <Route path="/VistaRanking" element={<PadreRanking />} />
     </Routes>
   );
 }

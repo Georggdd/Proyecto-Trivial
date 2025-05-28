@@ -8,9 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix"
+    "preview": "vite preview",
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.2",
+    "@headlessui/react": "^2.2.4",
     "@prisma/client": "^6.5.0",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",

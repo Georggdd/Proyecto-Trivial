@@ -20,6 +20,9 @@
     3px 3px 3px rgba(0, 0, 0, 0.8);
 }
 
+body { /*elimina scroll*/
+  overflow: hidden;
+}
 /*Se pone . delante para indicar que lo que sigue es una clase y no una etiqueta html
 
 En el borde son 2 línea porque se simula un borde alrededor de las letras con sombras.
