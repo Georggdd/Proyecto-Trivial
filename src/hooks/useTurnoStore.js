@@ -4,57 +4,48 @@ export const useTurnoStore = create((set, get) => ({
   equipos: [],
   turnoActual: 0,
 
-  setEquipos: (equipos) => set({
-    equipos: equipos.map(eq => ({
-      ...eq,
-      puntos: Number(eq.puntos || 0)
-    }))
-  }),
-
-  actualizarEquipos: (equipos) => {
-    console.log('Actualizando equipos:', equipos);
-    set({
-      equipos: equipos.map(eq => ({
-        ...eq,
-        puntos: Number(eq.puntos || 0)
-      }))
-    });
+  setEquipos: (eqs) => {
+    console.log("[store] setEquipos:", eqs);
+    set(() => ({ equipos: eqs, turnoActual: 0 }));
   },
 
-  addPuntos: (equipoId, delta) => {
+  actualizarEquipos: (eqs) => {
+    console.log("[store] actualizarEquipos:", eqs);
+    set(() => ({ equipos: eqs }));
+  },
+
+  addPuntos: (id, delta) => {
+    console.log(`[store] addPuntos → id=${id}, delta=${delta}`);
     set((state) => {
-      const nuevosEquipos = state.equipos.map((eq) =>
-        eq.id === equipoId
-          ? { ...eq, puntos: Number(eq.puntos || 0) + Number(delta || 0) }
-          : eq
+      const nuevos = state.equipos.map((e) =>
+        e.id === id ? { ...e, puntos: e.puntos + delta } : e
       );
-      console.log('Nuevo estado equipos:', nuevosEquipos);
-      return { equipos: nuevosEquipos };
+      console.log("[store] equipos tras addPuntos:", nuevos);
+      return { equipos: nuevos };
     });
   },
 
-  syncPuntos: async (equipoId, delta) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/api/equipos/${equipoId}/puntos`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ delta }),
-        }
-      );
-
-      if (!response.ok) throw new Error('Error al sincronizar puntos');
-      const resultado = await response.json();
-      console.log('Respuesta sync puntos:', resultado);
-      return resultado;
-    } catch (error) {
-      console.error('Error al sincronizar puntos:', error);
-      throw error;
-    }
+  syncPuntos: async (id, delta) => {
+    console.log(`[store] syncPuntos → id=${id}, delta=${delta}`);
+    const res = await fetch(
+      `http://localhost:3000/api/equipos/${id}/puntos`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ delta }),
+      }
+    );
+    if (!res.ok) throw new Error("Error al sincronizar puntos");
+    const json = await res.json();
+    console.log("[store] syncPuntos response:", json);
+    return json;
   },
 
-  siguienteTurno: () => set((state) => ({
-    turnoActual: (state.turnoActual + 1) % state.equipos.length
-  })),
+  avanzarTurno: () => {
+    set((state) => {
+      const next = (state.turnoActual + 1) % state.equipos.length;
+      console.log("[store] avanzarTurno → turnoActual =", next);
+      return { turnoActual: next };
+    });
+  },
 }));

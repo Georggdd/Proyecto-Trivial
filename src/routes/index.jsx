@@ -1,19 +1,18 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// Páginas de autenticación y subida de preguntas
+// Páginas de autenticación y selección/subida de preguntas
 import Login from "../pages/Login";
 import VistaCategorias from "../pages/VistaCategorias";
 
 // Páginas de descarga y ranking (controller-ranking)
 import ExcelDescarga from "../pages/ExcelDescarga";
-import VistaRanking from "../pages/VistaRanking";  // si lo usas
-import PadreRanking from "../components/PadreRanking"; // si lo prefieres
+import VistaRanking from "../pages/VistaRanking";   // si la usas
+import PadreRanking from "../components/PadreRanking";
 
 // Nuevas vistas de la rama Back-end
-import PruebasElevenLabs from "../pages/Pruebas-elevenLabs";
-import Tablero from "../pages/Tablero";
 import Equipos from "../pages/Equipos";
+import Tablero from "../pages/Tablero";
 
 export default function AppRoutes({ onUpload, preguntas, error }) {
   return (
@@ -41,11 +40,10 @@ export default function AppRoutes({ onUpload, preguntas, error }) {
 
       {/* Ranking histórico/controller-ranking */}
       <Route path="/vista-ranking" element={<VistaRanking />} />
-      {/* o si utilizas PadreRanking */}
+      {/* Alternativa con PadreRanking */}
       <Route path="/padre-ranking" element={<PadreRanking />} />
 
       {/* Rutas rama Back-end */}
-      <Route path="/pruebas-elevenlabs" element={<PruebasElevenLabs />} />
       <Route path="/equipos" element={<Equipos />} />
       <Route path="/tablero" element={<Tablero />} />
 

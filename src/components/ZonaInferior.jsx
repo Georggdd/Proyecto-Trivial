@@ -1,15 +1,10 @@
 import React from 'react';
 import DadoModal from './DadoModal';
 import { useJuegoStore } from '../hooks/useJuegoStore';
+import useGuiaStore from '../hooks/useGuiaStore';
 
-const carasDado = [
-  "/assets/Cara1.svg",
-  "/assets/Cara2.svg",
-  "/assets/Cara3.svg",
-  "/assets/Cara4.svg",
-  "/assets/Cara5.svg",
-  "/assets/Cara6.svg",
-];
+
+const carasDado = ["../assets/Cara1.svg", "../assets/Cara2.svg", "../assets/Cara3.svg", "../assets/Cara4.svg", "../assets/Cara5.svg", "../assets/Cara6.svg"];
 
 const BotonSimple = ({ icono, onClick, extraClass = '', children }) => (
   <button
@@ -23,6 +18,7 @@ const BotonSimple = ({ icono, onClick, extraClass = '', children }) => (
 
 const ZonaInferior = ({ onDadoResultado }) => {
   const valorDado = useJuegoStore((state) => state.valorDado);
+  const toggleGuia = useGuiaStore((state) => state.toggleGuia); // <-- esto es nuevo
 
   return (
     <div className="relative w-full min-h-[10rem] h-fit">
@@ -31,17 +27,23 @@ const ZonaInferior = ({ onDadoResultado }) => {
 
       {/* Botones muy juntos y laterales más bajos */}
       <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-24">
-        {/* Izquierda: Tirada doble */}
-        <BotonSimple icono="/assets/Tirada.svg" onClick={() => alert('Tirada doble')} extraClass="top-8" />
+        {/* Izquierda: abre Guía */}
+        <BotonSimple
+          icono={"../assets/Tirada.svg"}
+          onClick={toggleGuia}
+          extraClass="top-8"
+        />
 
-        {/* Centro: Dado */}
+        {/* Botón centro: dado */}
         <DadoModal onResultado={onDadoResultado}>
           <img
-            src="/assets/Dado.svg"
+            src={"../assets/Dado.svg"}
             alt="Tirar dado"
             className="w-36 h-36 hover:scale-105 transition-transform"
           />
         </DadoModal>
+
+        {/* Resultado del dado */}
         {valorDado && (
           <img
             src={carasDado[valorDado - 1]}
@@ -50,8 +52,12 @@ const ZonaInferior = ({ onDadoResultado }) => {
           />
         )}
 
-        {/* Derecha: Comodín */}
-        <BotonSimple icono="/assets/Comodin.svg" onClick={() => alert('Usar comodín')} extraClass="top-8" />
+        {/* Botón derecha */}
+        <BotonSimple
+          icono={"../assets/Comodin.svg"}
+          onClick={() => alert('Usar comodín')}
+          extraClass="top-8"
+        />
       </div>
     </div>
   );

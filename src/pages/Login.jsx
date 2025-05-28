@@ -6,6 +6,7 @@ export default function Login({ onLoginSuccess }) {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
   const navigate = useNavigate();
 
   // Audio “Por favor, inicie sesión…”
@@ -61,9 +62,10 @@ export default function Login({ onLoginSuccess }) {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem('token', data.token);
-        onLoginSuccess();
-        navigate('/categorias');
+        // Si necesitas guardar token:
+        // localStorage.setItem('token', data.token);
+        onLoginSuccess?.();          // opcional, si te hacía falta
+        navigate('/categorias');     // redirige al selector de categorías
       } else {
         setError(data.error || 'Credenciales incorrectas');
       }
@@ -140,5 +142,3 @@ export default function Login({ onLoginSuccess }) {
     </div>
   );
 }
-
-

@@ -136,7 +136,7 @@ export const useJuegoStore = create((set, get) => ({
   },
 
   // Pasa al siguiente turno de juego
-  siguienteTurno: () => {
+  avanzarTurno: () => {
     set((state) => ({
       turnoActual: (state.turnoActual + 1) % state.equipos.length,
       valorDado: null,

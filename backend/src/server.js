@@ -2,22 +2,27 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
-import multer from 'multer'; // si lo usas en algún error handler
-
-// Importar rutas
-import uploadRoutes   from './routes/uploadRoutes.js';
-import authRoutes     from './routes/authRoutes.js';
-import rankingRoutes  from './routes/rankingRoutes.js';
+import multer from 'multer';              // para el handler de errores
+import { fileURLToPath } from 'url';      // para reconstruir __dirname
+import authRoutes from './routes/authRoutes.js';
+import partidaRoutes from './routes/partidaRoutes.js';
+import equipoRoutes from './routes/equipoRoutes.js';
+import preguntasRoutes from './routes/preguntas.routes.js';
+import categoriaRoutes from './routes/categoriaRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
+import rankingRoutes from './routes/rankingRoutes.js';
 import downloadRoutes from './routes/downloadRoutes.js';
-import resetRoutes    from './routes/resetRoutes.js';    // si aún lo necesitas
-
-// Importar utilidades
+import resetRoutes from './routes/resetRoutes.js';    // si aún lo necesitas
 import { configurarEventosDeCierre } from './utils/shutdownHandler.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Reconstruir __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
 
 // CORS: permite tu frontend de Vite y credenciales
 app.use(cors({
@@ -28,18 +33,25 @@ app.use(cors({
 // JSON body parser
 app.use(express.json());
 
-// Servir archivos estáticos
-// → Publica tu carpeta de uploads en /uploads
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+// Servir estáticos:
+//  - /public → para tu carpeta public (assets, audio, etc.)
+//  - /uploads → para imágenes subidas
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Rutas de API
-app.use('/api/upload',    uploadRoutes);    // subida de preguntas
+// Montar rutas API
 app.use('/api/auth',      authRoutes);
+app.use('/api/partidas',  partidaRoutes);
+app.use('/api/equipos',   equipoRoutes);
+app.use('/api/preguntas', preguntasRoutes);
+app.use('/api/categorias',categoriaRoutes);
+
+app.use('/api/upload',    uploadRoutes);    // subida de CSV/XLSX
 app.use('/api/ranking',   rankingRoutes);
 app.use('/api/download',  downloadRoutes);
-app.use('/api/reset',     resetRoutes);     // si lo usas
+app.use('/api/reset',     resetRoutes);     // si lo sigues usando
 
-// Manejo de errores de multer (subidas)
+// Handler de errores de multer (subida de archivos)
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     return res.status(400).json({
@@ -50,13 +62,14 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-// Cierre limpio
+// Ruta raíz de prueba
+app.get('/', (req, res) => {
+  res.send('Servidor backend funcionando 🚀');
+});
+
+// Configurar cierre limpio
 configurarEventosDeCierre();
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor backend escuchando en http://localhost:${PORT}`);
 });
-
-
-
-

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Switch } from "@headlessui/react";
 import { useTurnoStore } from "../hooks/useTurnoStore";
+import ninioAvatar from "../assets/img/ninio.png";
 
 /**
  * Tarjeta editable para configurar un equipo.
@@ -22,6 +23,7 @@ function TarjetaEquipo({
   /* ---------- Estado local ---------- */
   const [enabled, setEnabled]       = useState(false);
   const [imagenPerfil, setImagen]   = useState(null);
+  const [imagenFile, setImagenFile] = useState(null);
   const [nombre, setNombre]         = useState(nombreInicial);
   const [jugadores, setJugadores]   = useState(
     jugadoresIniciales?.length
@@ -41,7 +43,7 @@ function TarjetaEquipo({
 
   /* ---------- Avisar al padre cuando algo cambia ---------- */
   useEffect(() => {
-    onUpdate?.({ nombre, integrantes: jugadores, imagen: imagenPerfil, enabled });
+    onUpdate?.({ nombre, integrantes: jugadores, imagen: imagenPerfil, imagenFile: imagenFile, enabled });
   }, [nombre, jugadores, imagenPerfil, enabled]);
 
   /* ---------- Handlers ---------- */
@@ -50,6 +52,7 @@ function TarjetaEquipo({
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) setImagen(URL.createObjectURL(file));
+    setImagenFile(file);
   };
 
   const handleJugadorInput = (e, index) => {
@@ -71,7 +74,7 @@ function TarjetaEquipo({
       {/* Avatar */}
       <div className="relative w-24 h-24 mb-2">
         <img
-          src={imagenPerfil || "/assets/img/ninio.png"}
+          src={imagenPerfil || ninioAvatar}
           alt="Avatar"
           className="w-full h-full object-cover rounded-full border-2 border-black"
         />

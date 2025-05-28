@@ -10,7 +10,7 @@ function Equipos() {
   const navigate = useNavigate();
   const location = useLocation();
   const categoriaSeleccionada = location.state?.categoriaSeleccionada || null;
-  const selectedFile          = location.state?.selectedFile || null;
+  const selectedFile = location.state?.selectedFile || null;
 
   /* ---------- Stores ---------- */
   const setPartida = usePartidaStore((s) => s.setPartida);   // setter correcto
@@ -19,9 +19,9 @@ function Equipos() {
   /* ---------- Estado local: 5 tarjetas de equipo ---------- */
   const [equipos, setEquipos] = useState(
     [...Array(5)].map((_, idx) => ({
-      nombre      : `Equipo ${idx + 1}`,
-      integrantes : [],
-      enabled     : false,          // empiezan desactivados
+      nombre: `Equipo ${idx + 1}`,
+      integrantes: [],
+      enabled: false,          // empiezan desactivados
     }))
   );
 
@@ -37,10 +37,10 @@ function Equipos() {
       /* 1· Crear la partida */
       const profesorId = localStorage.getItem("userId");        // viene del login
       const resPartida = await fetch("http://localhost:3000/api/partidas", {
-        method : "POST",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body   : JSON.stringify({
-          codigo    : crypto.randomUUID().slice(0, 6),
+        body: JSON.stringify({
+          codigo: crypto.randomUUID().slice(0, 6),
           profesorId: profesorId ? Number(profesorId) : undefined,
         }),
       });
@@ -55,18 +55,21 @@ function Equipos() {
       const equiposActivos = equipos.filter((e) => e.enabled);
       setEquiposStore(equiposActivos);
 
-      /* 4· Envía los equipos al backend */
-      await fetch("http://localhost:3000/api/equipos", {
-        method : "POST",
-        headers: { "Content-Type": "application/json" },
-        body   : JSON.stringify({
-          partidaId: partida.id,
-          equipos  : equiposActivos.map((e) => ({
-            nombre      : e.nombre,
-            integrantes : e.integrantes,
-          })),
-        }),
-      });
+      /* 4· Envía uno a uno cada equipo con imagen */
+      for (const e of equiposActivos) {
+        const fd = new FormData();
+        fd.append('partidaId', partida.id);
+        fd.append('nombre', e.nombre);
+        fd.append('integrantes', e.integrantes.join(';'));
+        if (e.imagenFile) {
+          fd.append('avatar', e.imagenFile);
+        }
+        const res = await fetch('http://localhost:3000/api/equipos', {
+          method: 'POST',
+          body: fd,
+        });
+        // maneja res.ok / res.json() si lo necesitas…
+      }
 
       /* 5· Vuelve a VistaCategorias con flag de éxito */
       navigate("/categorias", {
