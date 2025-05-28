@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function VistaCategorias({ onUpload, preguntas, error }) {
   /* ─── Estado general ─── */
@@ -10,7 +12,14 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [equiposHechos, setEquiposHechos] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
+   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/'); // redirige al login si no hay token
+    }
+  }, [navigate]);
 
   /* ─── Audio “Por favor elige…” ─── */
   const [audioHabilitado, setAudioHabilitado] = useState(false);

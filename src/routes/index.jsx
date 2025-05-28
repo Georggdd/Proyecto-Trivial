@@ -1,47 +1,56 @@
-// src/routes/AppRoutes.jsx
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-// Páginas principales (controller‑ranking)
+// Páginas de autenticación y subida de preguntas
 import Login from "../pages/Login";
-import ExcelDescarga from "../pages/ExcelDescarga";
 import VistaCategorias from "../pages/VistaCategorias";
-import VistaRanking from "../pages/VistaRanking";
 
-// Vistas añadidas desde la rama Back‑end
+// Páginas de descarga y ranking (controller-ranking)
+import ExcelDescarga from "../pages/ExcelDescarga";
+import VistaRanking from "../pages/VistaRanking";  // si lo usas
+import PadreRanking from "../components/PadreRanking"; // si lo prefieres
+
+// Nuevas vistas de la rama Back-end
 import PruebasElevenLabs from "../pages/Pruebas-elevenLabs";
 import Tablero from "../pages/Tablero";
 import Equipos from "../pages/Equipos";
-import PadreRanking from "../components/PadreRanking";
 
 export default function AppRoutes({ onUpload, preguntas, error }) {
   return (
     <Routes>
-      {/* Redirección por defecto a /login */}
+      {/* Redirección inicial */}
       <Route path="/" element={<Navigate to="/login" replace />} />
 
-      {/* Página de autenticación */}
-      <Route path="/login" element={<Login />} />
+      {/* Autenticación */}
+      <Route path="/login" element={<Login onLoginSuccess={() => {}} />} />
 
-      {/* Rutas de controller‑ranking */}
-      <Route path="/ExcelDescarga" element={<ExcelDescarga />} />
-      <Route 
-        path="/VistaCategorias" 
+      {/* Subida / selección de categorías */}
+      <Route
+        path="/categorias"
         element={
-          <VistaCategorias 
-            onUpload={onUpload} 
-            preguntas={preguntas} 
+          <VistaCategorias
+            onUpload={onUpload}
+            preguntas={preguntas}
             error={error}
           />
-        } 
+        }
       />
-     
 
-      {/* Rutas importadas desde Back‑end */}
+      {/* Descarga de Excel */}
+      <Route path="/excel-descarga" element={<ExcelDescarga />} />
+
+      {/* Ranking histórico/controller-ranking */}
+      <Route path="/vista-ranking" element={<VistaRanking />} />
+      {/* o si utilizas PadreRanking */}
+      <Route path="/padre-ranking" element={<PadreRanking />} />
+
+      {/* Rutas rama Back-end */}
       <Route path="/pruebas-elevenlabs" element={<PruebasElevenLabs />} />
-      <Route path="/tablero" element={<Tablero />} />
       <Route path="/equipos" element={<Equipos />} />
-      <Route path="/VistaRanking" element={<PadreRanking />} />
+      <Route path="/tablero" element={<Tablero />} />
+
+      {/* Catch-all: redirige a /login */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 }

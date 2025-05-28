@@ -1,131 +1,126 @@
+// src/controllers/uploadController.js
+
 import fs from 'fs';
+import path from 'path';
 import csv from 'csv-parser';
 import xlsx from 'xlsx';
-import path from 'path';
-import { guardarPreguntas } from './customController.js';
+import { guardarPreguntas } from './customizableController.js';
 
-// Asegurarse de que el directorio uploads existe
+// Asegúrate de que exista la carpeta uploads
 const uploadsDir = path.join(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
 export const procesarArchivo = async (req, res) => {
-  console.log('📝 Procesando archivo...');
-  
+  console.log('📝 Procesando archivo de preguntas customizadas…');
+
   if (!req.file) {
-    console.error('❌ No se recibió ningún archivo');
+    console.error('❌ No se ha subido ningún archivo');
     return res.status(400).json({ error: 'No se ha subido ningún archivo' });
   }
 
+  const filePath = req.file.path;
   console.log('📁 Archivo recibido:', req.file.originalname);
 
   const resultados = [];
   const errores = [];
-  let respuestaEnviada = false;
 
+  // Valida y transforma cada fila
   const procesarFila = (data) => {
-    console.log('🔄 Procesando fila:', data);
-    
-    const isValid = 
-      data.pregunta &&
-      data.categoria &&
-      data.dificultad &&
-      data.opcion_a &&
-      data.opcion_b &&
-      data.opcion_c &&
-      data.opcion_d &&
-      ["a", "b", "c", "d"].includes(data.correcta?.toLowerCase()) &&
-      data.puntuacion;
+    // Extrae campos y normaliza
+    const texto      = data.pregunta?.trim();
+    const categoria  = data.categoria?.trim();
+    const dificultad = data.dificultad?.trim().toLowerCase();
+    const puntuacion = parseInt(data.puntuacion, 10);
+    const opcionA    = data.opcion_a?.trim();
+    const opcionB    = data.opcion_b?.trim();
+    const opcionC    = data.opcion_c?.trim();
+    const opcionD    = data.opcion_d?.trim();
+    const correcta   = data.correcta?.trim().toLowerCase();
+    const explicacion= data.explicacion?.trim() || '';
 
-    if (isValid) {
-      const respuestaCorrecta = {
-        a: data.opcion_a,
-        b: data.opcion_b,
-        c: data.opcion_c,
-        d: data.opcion_d
-      }[data.correcta.toLowerCase()];
+    // Validación mínima
+    const valida =
+      texto &&
+      categoria &&
+      ['a','b','c','d'].includes(correcta) &&
+      !isNaN(puntuacion) &&
+      opcionA && opcionB && opcionC && opcionD;
 
-      resultados.push({
-        pregunta: data.pregunta,
-        categoria: data.categoria,
-        dificultad: data.dificultad.toLowerCase(),
-        puntuacion: parseInt(data.puntuacion) || 10,
-        opcion1: data.opcion_a,
-        opcion2: data.opcion_b,
-        opcion3: data.opcion_c,
-        opcion4: data.opcion_d,
-        respuesta_correcta: respuestaCorrecta,
-        explicacion: data.explicacion || `La respuesta correcta es: ${respuestaCorrecta}`
-      });
-      console.log('✅ Fila válida procesada');
-    } else {
+    if (!valida) {
       errores.push(`Fila inválida: ${JSON.stringify(data)}`);
-      console.log('❌ Fila inválida:', data);
+      return;
     }
+
+    // Mapea letra correcta a texto
+    const respuestaCorrecta = { a: opcionA, b: opcionB, c: opcionC, d: opcionD }[correcta];
+
+    resultados.push({
+      pregunta:           texto,
+      categoria,
+      dificultad,
+      puntuacion,
+      opcion1:            opcionA,
+      opcion2:            opcionB,
+      opcion3:            opcionC,
+      opcion4:            opcionD,
+      respuesta_correcta: respuestaCorrecta,
+      explicacion,
+    });
+  };
+
+  // Función para limpiar archivo y enviar error
+  const finConError = (status, payload) => {
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    return res.status(status).json(payload);
   };
 
   try {
-    const ext = req.file.originalname.split('.').pop().toLowerCase();
-    
-    if (ext === 'csv') {
-      fs.createReadStream(req.file.path)
+    const ext = path.extname(req.file.originalname).toLowerCase();
+
+    if (ext === '.csv') {
+      fs.createReadStream(filePath)
         .pipe(csv())
         .on('data', procesarFila)
         .on('end', async () => {
           await manejarResultado(res, resultados, errores);
-          fs.unlinkSync(req.file.path);
+          fs.unlinkSync(filePath);
         })
-        .on('error', (err) => manejarError(res, err, req.file.path));
-    } else if (ext === 'xlsx' || ext === 'xls') {
-      const workbook = xlsx.readFile(req.file.path);
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const jsonData = xlsx.utils.sheet_to_json(sheet, { defval: "" });
-
-      jsonData.forEach(procesarFila);
+        .on('error', (err) => finConError(500, { error: 'Error al leer CSV' }));
+    } else if (ext === '.xlsx' || ext === '.xls') {
+      const workbook = xlsx.readFile(filePath);
+      const sheet1   = workbook.SheetNames[0];
+      const filas    = xlsx.utils.sheet_to_json(workbook.Sheets[sheet1], { defval: '' });
+      filas.forEach(procesarFila);
       await manejarResultado(res, resultados, errores);
-      fs.unlinkSync(req.file.path);
+      fs.unlinkSync(filePath);
     } else {
-      fs.unlinkSync(req.file.path);
-      return res.status(400).json({ error: 'Formato de archivo no soportado' });
+      return finConError(400, { error: 'Formato de archivo no soportado' });
     }
-  } catch (error) {
-    console.error('❌ Error al procesar archivo:', error);
-    if (!respuestaEnviada) {
-      res.status(500).json({ error: 'Error interno del servidor' });
-      respuestaEnviada = true;
-    }
+  } catch (err) {
+    console.error('❌ Error procesando archivo:', err);
+    return finConError(500, { error: 'Error interno al procesar archivo' });
   }
 };
 
 async function manejarResultado(res, resultados, errores) {
-  if (errores.length > 0) {
-    console.log('⚠️ Se encontraron errores:', errores.length);
+  if (errores.length) {
+    console.warn(`⚠️ ${errores.length} filas inválidas`);
     return res.status(400).json({
-      error: 'Algunas filas son inválidas',
+      error: 'Algunas filas inválidas',
       detalles: errores,
-      preguntasValidas: resultados,
+      validas: resultados.length,
     });
   }
 
   try {
-    await guardarPreguntas(resultados);
-    console.log('✅ Preguntas guardadas exitosamente');
+    const { count } = await guardarPreguntas(resultados);
     return res.json({
-      mensaje: 'Archivo procesado y preguntas guardadas',
-      preguntas: resultados,
+      mensaje: `${count} preguntas importadas correctamente`,
     });
-  } catch (dbError) {
-    console.error('❌ Error al guardar en la base de datos:', dbError);
-    return res.status(500).json({ error: 'Error al guardar en la base de datos' });
+  } catch (dbErr) {
+    console.error('❌ Error al guardar en BD:', dbErr);
+    return res.status(500).json({ error: 'Falló al guardar en la base de datos' });
   }
-}
-
-function manejarError(res, err, path) {
-  console.error('❌ Error al leer archivo:', err);
-  if (fs.existsSync(path)) {
-    fs.unlinkSync(path);
-  }
-  return res.status(500).json({ error: 'Error al procesar el archivo' });
 }
