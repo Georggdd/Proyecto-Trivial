@@ -46,8 +46,8 @@ const VistaRanking = ({ equipo }) => {
                     <div className="w-2/3 translate-y-[1vw] h-full relative flex items-center justify-center">
                         <img
                             src="../assets/img/tablero_base.png"
-                            className="w-full h-full object-contain" 
-                            style={{transform: "scale(0.8)" }}
+                            className="w-full h-full object-contain"
+                            style={{ transform: "scale(0.8)" }}
                             alt="Tablero mesa"
                         />
                         <div className="absolute w-full h-full z-40 flex flex-col justify-center items-center pl-[3%] pr-[6%]">
@@ -74,21 +74,18 @@ const VistaRanking = ({ equipo }) => {
                                     <p className="text-[1.5vw] text-naranja font-personalizada font-bold">Descarga de</p>
                                     <p className="text-[1.5vw] text-naranja font-personalizada font-bold">resultados:</p>
                                 </div>
+
                                 <div className="relative w-[4vw]">
-                                    <a
-                                        href="../assets/docs/Preguntas-Trivial-BBDD.xlsx"
-                                        download="Preguntas-Trivial-BBDD.xlsx"
-                                        className="block w-full h-full"
-                                    >
-                                        <img
-                                            src="../assets/img/carpeta_descarga_naranja.png"
-                                            alt="Descarga"
-                                            className="w-full"
-                                        />
-                                        <p className="absolute inset-0 flex items-center justify-center text-white font-personalizada text-[1.2vw] translate-y-[1vw]">
-                                            aquí
-                                        </p>
-                                    </a>
+                                    <img
+                                        src="../assets/img/carpeta_descarga_naranja.png"
+                                        alt="Descarga"
+                                        className="w-full"
+                                    />
+                                    <p className="absolute inset-0 flex items-center justify-center text-white font-personalizada text-[1.2vw] translate-y-[1vw]">
+                                        <a
+                                            href="http://localhost:3000/api/download-grupos"
+                                            download > aquí </a>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +95,7 @@ const VistaRanking = ({ equipo }) => {
 
             </div >
         </div >
-      
+
 
 
 
