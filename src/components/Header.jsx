@@ -45,6 +45,7 @@ const Header = () => {
         <div className="text-center relative">
           <h1 className="text-white text-5xl font-pinyon tracking-wide mb-3">
             El Educatrivial
+
           </h1>
           <span className="text-black bg-white text-xl font-secular px-10 mt-4 rounded">
             CUSTOMIZED

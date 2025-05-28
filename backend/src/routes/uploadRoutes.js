@@ -1,13 +1,48 @@
 import express from 'express';
-import multer from 'multer';//Para manejar formularios, necesario para subir archivos.
+import multer from 'multer';
+import path from 'path';
 import { procesarArchivo } from '../controllers/uploadController.js';
+import { verPreguntas } from '../controllers/customController.js';
 
-const router = express.Router(); //Crea un nuevo enrutador de Express que permite definir rutas de forma modular (por ejemplo, en un archivo separado del server.js principal).
-const upload = multer({ dest: 'uploads/' });//Inicializa multer y le indica que los archivos subidos se guarden temporalmente en la carpeta uploads/ del proyecto.
+const router = express.Router();
+
+// Configuración de multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+// Filtro de archivos
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Formato de archivo no soportado'));
+  }
+};
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB
+  }
+});
 
 router.post('/', upload.single('archivo'), procesarArchivo);
-/*Define una ruta POST / (relativa a donde se use este router).
-  upload.single('archivo'): middleware de multer que permite subir un único archivo con el campo archivo (el name="archivo" del formulario).
-  Luego, pasa el archivo a la función procesarArchivo, que se encargará de procesarlo, validarlo y guardar los datos en la base de datos.*/
+
+router.get('/test', async (req, res) => {
+  try {
+    const preguntas = await verPreguntas();
+    res.json(preguntas);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener preguntas' });
+  }
+});
 
 export default router;
