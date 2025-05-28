@@ -1,52 +1,39 @@
 import React from "react";
-import { useTurnoStore } from "../hooks/useTurnoStore";
+import ninioAvatar from "../assets/img/ninio.png";
+// Importa tu avatar por defecto desde public vía URL:
+// (con Vite funciona igual: la ruta empieza por '/assets/...' y el bundler lo expone)
 
-/**
- * Muestra un equipo con su avatar, nombre y puntos.
- * - Resalta en morado si es el turno de ese equipo.
- * - Late en naranja si va 1.º en la tabla (prop `destacado`).
- */
-const Ranking = ({ nombre, puntos = 0, imagen, destacado = false }) => {
-  const turnoActual = useTurnoStore((s) => s.turnoActual);
-  const equipos     = useTurnoStore((s) => s.equipos);
-  const esTurno     = equipos[turnoActual]?.nombre === nombre;
-
-  // Asegurar que puntos sea un número válido
+export default function Ranking({ nombre, puntos = 0, imagen }) {
   const puntosNormalizados = Number(puntos) || 0;
-
+  // Si 'imagen' viene null/undefined/'' caerá al import
+  const srcAvatar = imagen || ninioAvatar;
   return (
-    <div className="relative w-full flex items-center gap-4 rounded-xl p-2 overflow-hidden">
-      {/* Fondo morado animado -solo- cuando es su turno */}
-      {esTurno && (
-        <div className="absolute inset-0 bg-purple-700 opacity-70 animate-pulse z-0" />
-      )}
-
+    <div className="
+      w-full flex items-center gap-4 rounded-xl p-2
+      bg-naranja-50 border-2 border-orange-500
+    ">
       {/* Avatar */}
-      <div className="relative z-10 basis-[15%] flex-shrink-0 min-w-[60px]">
+      <div className="basis-[15%] flex-shrink-0 min-w-[60px]">
         <img
-          src={imagen ?? "/assets/img/ninio.png"}
-          alt="Avatar"
+          src={srcAvatar}
+          alt={nombre}
           className="w-full h-auto rounded-full"
         />
       </div>
 
       {/* Nombre */}
-      <div className="relative z-10 flex-grow bg-white text-naranja border-2 border-naranja rounded-full px-4 py-2 text-center font-bold overflow-hidden">
-        <p className="truncate text-[1.1rem] sm:text-[1.4rem]">{nombre}</p>
+      <div className="flex-grow text-center font-bold text-naranja">
+        <p className="truncate text-[1.1rem] sm:text-[1.4rem]">
+          {nombre}
+        </p>
       </div>
 
       {/* Puntos */}
-      <div className="relative z-10 basis-[20%] flex-shrink-0 bg-white text-naranja border-2 border-naranja rounded-full px-4 py-2 text-center font-bold">
-        <p
-          className={`${
-            destacado ? "animate-pulse scale-110" : ""
-          } text-[1.1rem] sm:text-[1.4rem]`}
-        >
+      <div className="basis-[20%] flex-shrink-0 text-center font-bold text-naranja">
+        <p className="text-[1.1rem] sm:text-[1.4rem]">
           {puntosNormalizados}
         </p>
       </div>
     </div>
   );
-};
-
-export default Ranking;
+}

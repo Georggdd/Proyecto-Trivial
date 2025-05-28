@@ -89,7 +89,7 @@ model Equipo {
   // FK → Partida
   partidaId   Int
   partida     Partida   @relation(fields: [partidaId], references: [id])
-
+  avatarMini  String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

@@ -11,6 +11,7 @@ import GuiaPanel from "../components/GuiaPanel";
 import { useTurnoStore } from "../hooks/useTurnoStore";
 import ModalPregunta from "../components/ModalPregunta";
 import { useCategoriaStore } from "../hooks/useCategoriaStore";
+import ninioAvatar from "../assets/img/ninio.png";
 
 function Tablero() {
   const navigate = useNavigate();
@@ -33,20 +34,18 @@ function Tablero() {
   }, [equipos]);
 
   useEffect(() => {
-    if (!partidaId) return;
-    (async () => {
-      try {
-        const res = await fetch(
-          `http://localhost:3000/api/equipos?partidaId=${partidaId}`
-        );
-        const data = await res.json();
-        console.log("[tablero] equipos cargados al iniciar:", data);
-        setEquipos(data);
-      } catch (err) {
-        console.error("Error al obtener equipos:", err);
-      }
-    })();
-  }, [partidaId, setEquipos]);
+  if (!partidaId) return;
+  (async () => {
+    const res = await fetch(`http://localhost:3000/api/equipos?partidaId=${partidaId}`);
+    const data = await res.json();
+    // Asigna por defecto la URL si avatarMini es null
+    const fijados = data.map(e => ({
+      ...e,
+      avatarMini: e.avatarMini || ninioAvatar,
+    }));
+    setEquipos(fijados);
+  })();
+}, [partidaId, setEquipos]);
 
   const manejarMovimiento = (numero) => {
     moverFicha(numero);
@@ -108,7 +107,7 @@ function Tablero() {
                   key={eq.id}
                   nombre={eq.nombre}
                   puntos={eq.puntos}
-                  imagen={eq.imagen}
+                  imagen={eq.avatarMini}    // ← usa la propiedad correcta
                   destacado={idx === 0}
                 />
               ));

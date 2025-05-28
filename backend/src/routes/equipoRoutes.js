@@ -1,11 +1,21 @@
 import express from 'express';
-import { crearEquipos } from '../controllers/equipoController.js';
-import { obtenerEquiposPorPartida } from '../controllers/equipoController.js';
-import { actualizarPuntos } from '../controllers/equipoController.js';
+import multer from 'multer';
+import {
+  crearEquipo,
+  obtenerEquiposPorPartida,
+  actualizarPuntos
+} from '../controllers/equipoController.js';
 
 const router = express.Router();
+const upload = multer({ dest: 'uploads/' });
 
-router.post('/', crearEquipos);
+// POST /api/equipos → recibe un solo equipo con campo 'avatar'
+router.post(
+  '/',
+  upload.single('avatar'),
+  crearEquipo
+);
+
 router.get('/', obtenerEquiposPorPartida);
 router.patch('/:id/puntos', actualizarPuntos);
 

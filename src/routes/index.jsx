@@ -1,18 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import PruebasElevenLabs from "../pages/Pruebas-elevenLabs";
 import VistaCategorias from "../pages/VistaCategorias";
 import Tablero from "../pages/Tablero";
 import Login from "../pages/Login";
 import Equipos from "../pages/Equipos";
 import PadreRanking from "../components/PadreRanking";
 import { Navigate } from "react-router-dom";
-import Prueba_tarjetas from "../pages/Prueba_tarjetas";
 
 const AppRoutes = ({ handleUpload, preguntas, error }) => {
   return (
     <Routes>
-      <Route path="/Eleven" element={<PruebasElevenLabs />} />
       <Route
         path="/Categorias"
         element={
@@ -30,7 +27,6 @@ const AppRoutes = ({ handleUpload, preguntas, error }) => {
       <Route path="/VR" element={<Navigate to="/VistaRanking" />} />
       <Route path="/VistaRanking" element={<PadreRanking />} />
       <Route path="/VistaCategorias" element={<VistaCategorias />} />
-      <Route path="/TarjetaPregunta" element={<Prueba_tarjetas />} />
     </Routes>
   );
 };
