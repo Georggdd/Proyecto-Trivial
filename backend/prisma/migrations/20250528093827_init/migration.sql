@@ -84,7 +84,6 @@ CREATE TABLE `RespuestaPartida` (
     `respuestaId` INTEGER NOT NULL,
     `esCorrecta` BOOLEAN NOT NULL,
     `puntosObtenidos` INTEGER NOT NULL,
-    `comodinActivado` BOOLEAN NOT NULL DEFAULT false,
 
     INDEX `RespuestaPartida_equipoId_idx`(`equipoId`),
     INDEX `RespuestaPartida_preguntaId_idx`(`preguntaId`),
@@ -115,7 +114,6 @@ CREATE TABLE `Customizable` (
     `opcion4` VARCHAR(191) NOT NULL,
     `respuesta_correcta` VARCHAR(191) NOT NULL,
     `puntuacion` INTEGER NOT NULL DEFAULT 10,
-    `dificultad` INTEGER NOT NULL,
     `explicacion` VARCHAR(191) NULL,
     `esCustom` BOOLEAN NOT NULL DEFAULT true,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

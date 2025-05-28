@@ -28,21 +28,19 @@ export const procesarArchivo = async (req, res) => {
 
   // Valida y transforma cada fila
   const procesarFila = (data) => {
-    // Extrae campos y normaliza
-    const texto      = data.pregunta?.trim();
-    const puntuacion = parseInt(data.puntuacion, 10);
-    const opcionA    = data.opcion_a?.trim();
-    const opcionB    = data.opcion_b?.trim();
-    const opcionC    = data.opcion_c?.trim();
-    const opcionD    = data.opcion_d?.trim();
-    const correcta   = data.correcta?.trim().toLowerCase();
-    const explicacion= data.explicacion?.trim() || '';
+    const texto       = data['pregunta']?.trim();
+    const puntuación  = parseInt(data['puntuación'], 10);
+    const opcionA     = data['opcion_a']?.trim();
+    const opcionB     = data['opcion_b']?.trim();
+    const opcionC     = data['opcion_c']?.trim();
+    const opcionD     = data['opcion_d']?.trim();
+    const correcta    = data['correcta']?.trim().toLowerCase();
+    const explicación = data['explicación']?.trim() || '';
 
-    // Validación mínima
     const valida =
       texto &&
-      ['a','b','c','d'].includes(correcta) &&
-      !isNaN(puntuacion) &&
+      ['a', 'b', 'c', 'd'].includes(correcta) &&
+      !isNaN(puntuación) &&
       opcionA && opcionB && opcionC && opcionD;
 
     if (!valida) {
@@ -50,22 +48,20 @@ export const procesarArchivo = async (req, res) => {
       return;
     }
 
-    // Mapea letra correcta a texto
     const respuestaCorrecta = { a: opcionA, b: opcionB, c: opcionC, d: opcionD }[correcta];
 
     resultados.push({
       pregunta:           texto,
-      puntuacion,
       opcion1:            opcionA,
       opcion2:            opcionB,
       opcion3:            opcionC,
       opcion4:            opcionD,
       respuesta_correcta: respuestaCorrecta,
-      explicacion,
+      ['puntuación']:     puntuación,
+      ['explicación']:    explicación,
     });
   };
 
-  // Función para limpiar archivo y enviar error
   const finConError = (status, payload) => {
     if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     return res.status(status).json(payload);
@@ -82,11 +78,11 @@ export const procesarArchivo = async (req, res) => {
           await manejarResultado(res, resultados, errores);
           fs.unlinkSync(filePath);
         })
-        .on('error', (err) => finConError(500, { error: 'Error al leer CSV' }));
+        .on('error', () => finConError(500, { error: 'Error al leer CSV' }));
     } else if (ext === '.xlsx' || ext === '.xls') {
       const workbook = xlsx.readFile(filePath);
-      const sheet1   = workbook.SheetNames[0];
-      const filas    = xlsx.utils.sheet_to_json(workbook.Sheets[sheet1], { defval: '' });
+      const sheet1 = workbook.SheetNames[0];
+      const filas = xlsx.utils.sheet_to_json(workbook.Sheets[sheet1], { defval: '' });
       filas.forEach(procesarFila);
       await manejarResultado(res, resultados, errores);
       fs.unlinkSync(filePath);

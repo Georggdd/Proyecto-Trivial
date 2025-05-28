@@ -1,12 +1,8 @@
-// src/controllers/customizableController.js
-
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 /**
  * Guarda un array de preguntas customizables en la base de datos.
- * Utiliza createMany para hacer un único query y skipDuplicates
- * para ignorar filas ya existentes según las columnas únicas.
  *
  * @param {Array<Object>} preguntas — Cada elemento debe tener:
  *    pregunta, dificultad, puntuacion,
@@ -15,21 +11,19 @@ const prisma = new PrismaClient();
  * @returns {Promise<Prisma.BatchPayload>}
  */
 export const guardarPreguntas = async (preguntas) => {
-  // Preparamos los datos en el formato que prisma.customizable.createMany espera
   const datos = preguntas.map((p) => ({
-    pregunta:           p.pregunta,
-    puntuacion:         Number(p.puntuacion) || 10,
-    opcion1:            p.opcion1,
-    opcion2:            p.opcion2,
-    opcion3:            p.opcion3,
-    opcion4:            p.opcion4,
-    respuesta_correcta: p.respuesta_correcta,
-    explicacion:        p.explicacion || '',
-    esCustom:           true,    // Marca que viene de archivo custom
+    pregunta:            p.pregunta,
+    opcion1:             p.opcion1,
+    opcion2:             p.opcion2,
+    opcion3:             p.opcion3,
+    opcion4:             p.opcion4,
+    respuesta_correcta:  p.respuesta_correcta,
+    puntuación:          parseInt(p['puntuación'], 10) || 10,
+    explicación:         p['explicación'] || '',
+    esCustom:            true,
   }));
 
   try {
-    // Inserción masiva con skipDuplicates para no fallar en duplicados
     const resultado = await prisma.customizable.createMany({
       data: datos,
       skipDuplicates: true,
@@ -46,7 +40,7 @@ export const guardarPreguntas = async (preguntas) => {
 /**
  * Recupera todas las preguntas customizables almacenadas.
  *
- * @returns {Promise<Prisma.Customizable[]>}
+ * @returns {Promise<Array>}
  */
 export const verPreguntas = async () => {
   try {

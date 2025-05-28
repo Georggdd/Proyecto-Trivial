@@ -182,8 +182,8 @@ model Customizable {
   opcion3            String
   opcion4            String
   respuesta_correcta String
-  puntuacion         Int     @default(10)
-  explicacion        String?
+  puntuación         Int     @default(10)
+  explicación        String?
   esCustom           Boolean @default(true)
 
   createdAt          DateTime @default(now())
