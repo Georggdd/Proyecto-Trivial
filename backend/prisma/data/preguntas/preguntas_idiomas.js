@@ -3,11 +3,10 @@
 const preguntasIdiomas = [
   {
     texto: "¿Cómo se dice hola en inglés?",
-    dificultad: 'facil',
-    puntuacion: 10,
-    categoriaNombre: 'Idiomas',
+    dificultad: "facil",
+    asignatura: "Ingles",
     respuestas: [
-      { texto: "Hello", esCorrecta: true, explicacion: 'La palabrahell significahol en inglés.' },
+      { texto: "Hello", esCorrecta: true },
       { texto: "Bye", esCorrecta: false },
       { texto: "Please", esCorrecta: false },
       { texto: "Thanks", esCorrecta: false },
@@ -15,12 +14,11 @@ const preguntasIdiomas = [
   },
   {
     texto: "¿Qué color es blue en español?",
-    dificultad: 'facil',
-    puntuacion: 10,
-    categoriaNombre: 'Idiomas',
+    dificultad: "facil",
+    asignatura: "Ingles",
     respuestas: [
       { texto: "Rojo", esCorrecta: false },
-      { texto: "Azul", esCorrecta: true, explicacion: 'Blue significa azul en español.' },
+      { texto: "Azul", esCorrecta: true },
       { texto: "Verde", esCorrecta: false },
       { texto: "Amarillo", esCorrecta: false },
     ],

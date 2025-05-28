@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
@@ -7,31 +7,42 @@ const Login = ({ onLoginSuccess }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [audioHabilitado, setAudioHabilitado] = useState(false);
+    const audioRef = useRef(null);
+    const intervalRef = useRef(null);
 
     useEffect(() => {
-        // Crear el elemento de audio
-        const audio = new Audio('/assets/audio/por-favor-inicie-sesion.mp3');
-        
-        // Función para reproducir el audio
-        const playAudio = () => {
-            audio.play().catch(error => {
-                console.error('Error al reproducir el audio:', error);
-            });
+        audioRef.current = new Audio('/assets/audio/por-favor-inicie-sesion.mp3');
+
+        const handleFirstClick = () => {
+            setAudioHabilitado(true);
         };
 
-        // Reproducir el audio inmediatamente
-        playAudio();
+        // Escuchar el primer clic en cualquier parte de la página
+        document.addEventListener('click', handleFirstClick);
 
-        // Configurar el intervalo para reproducir cada 15 segundos
-        const intervalId = setInterval(playAudio, 15000);
-
-        // Limpiar el intervalo cuando el componente se desmonte
         return () => {
-            clearInterval(intervalId);
-            audio.pause();
-            audio.currentTime = 0;
+            document.removeEventListener('click', handleFirstClick);
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+            }
         };
-    }, []); // El array vacío significa que esto solo se ejecutará una vez al montar el componente
+    }, []);
+
+    useEffect(() => {
+        if (audioHabilitado) {
+            const playAudio = () => {
+                audioRef.current.play().catch(() => {});
+            };
+            playAudio();
+            intervalRef.current = setInterval(playAudio, 15000);
+        }
+        return () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+        };
+    }, [audioHabilitado]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
