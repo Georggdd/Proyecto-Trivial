@@ -48,7 +48,7 @@ app.use('/api/categorias',categoriaRoutes);
 
 app.use('/api/upload',    uploadRoutes);    // subida de CSV/XLSX
 app.use('/api/ranking',   rankingRoutes);
-app.use('/api/download',  downloadRoutes);
+app.use('/api',  downloadRoutes);
 app.use('/api/reset',     resetRoutes);     // si lo sigues usando
 
 // Handler de errores de multer (subida de archivos)
