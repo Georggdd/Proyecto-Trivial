@@ -17,8 +17,7 @@ const HamburgerIcon = () => (
     />
   </svg>
 );
-
-const Header = () => {
+  const Header = ({ className = "" }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ const Header = () => {
   };
 
   return (
-    <header className="h-32 fixed top-0 left-0 right-0 z-50 w-full bg-[url('/assets/Fondo.svg')] shadow-lg bg-cover bg-center border-4 border-double border-orange-600">
+    <header className={`h-32 fixed top-0 left-0 right-0 z-50 w-full bg-[url('/assets/Fondo.svg')] shadow-lg bg-cover bg-center ${className}`}>
       <div className="container mx-auto h-full px-4 py-3 flex items-center justify-center">
         {/* Título */}
         <div className="text-center relative">

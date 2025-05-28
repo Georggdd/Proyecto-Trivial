@@ -40,7 +40,7 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
     <div className="flex flex-col items-center gap-2">
       <Feature_Categorias
         texto={
-          <span className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl">
+          <span className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl xl:w-[500px] xl:h-[100px] xl:text-4xl 2xl:w-[700px] 2xl:h-[130px] 2xl:text-5xl">
             {selectedFile ? selectedFile.name : "Customizar"}
           </span>
         }
@@ -55,7 +55,7 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
         className="hidden"
       />
       {mensaje && (
-        <p className={`text-black ${mensaje.startsWith('❌') ? 'text-red-600' : 'text-green-600'}`}>
+        <p className={`text-black ${mensaje.startsWith('❌') ? 'text-red-600' : 'text-green-600'}text-base 2xl:text-3xl`}>
           {mensaje}
         </p>
       )}

@@ -6,11 +6,11 @@ export default function Categorias({ texto, onClick, className }) {
   //Se agrega className para permitir personalizar el estilo del componente desde el lugar donde se usa sin alterar el código base del componente.
   return (
     <button //${} (template literals) que permite hacer cambios dinámicos
-      className={`${
-        Flotar
-          ? "bg-naranja text-white border-black transform translate-y-[-2px] cursor-pointer hover:scale-105 hover: transition-all duration-150" // True
-          : "bg-beige text-black border-orange-600" // False
-      } drop-shadow-2xl font-lemon border-2 py-3 px-6 rounded-lg transition-all duration-300 ease-in-out ${className}`} // Añadimos className aquí para
+      className={`
+        drop-shadow-2xl font-lemon border-2 py-3 px-6 rounded-lg transition-all duration-300 ease-in-out 
+        ${Flotar ? "transform translate-y-[-2px] hover:scale-105" : ""}
+        ${className}
+      `}
       onMouseEnter={() => setFlotar(true)} //permitir añadir clases extra cuando el componente se usa en otro archivo y no cambiar los estilos base.
       onMouseLeave={() => setFlotar(false)}
       onClick={onClick} //Ejecuta la función onClick que se le pase como prop. Lo permite que el botón realice acciones personalizadas cuando se usa en diferentes partes del código.
