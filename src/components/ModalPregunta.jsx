@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTurnoStore } from '../hooks/useTurnoStore';
 import TarjetaPregunta from './TarjetaPregunta';
+import { QuizSetupContext } from '../context/QuizSetupContext';
 
 export default function ModalPregunta({ visible, categoria, onClose }) {
   const { equipos, syncPuntos, addPuntos, actualizarEquipos, avanzarTurno } =
     useTurnoStore();
+  const { selectedFile } = useContext(QuizSetupContext);
+  const useCustom = Boolean(selectedFile);
+
 
   if (!visible) return null;
 
@@ -42,6 +46,7 @@ export default function ModalPregunta({ visible, categoria, onClose }) {
         categoria={categoria}
         equipos={equipos}
         onFinish={onFinish}
+        useCustom={useCustom}
       />
       <button
         onClick={() => {

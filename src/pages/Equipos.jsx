@@ -1,41 +1,44 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import TarjetaEquipo from "../components/TarjetaEquipo";
 import { usePartidaStore } from "../hooks/usePartidaStore";
 import { useTurnoStore } from "../hooks/useTurnoStore";
+import { QuizSetupContext } from "../context/QuizSetupContext";
 
-function Equipos() {
-  /* ---------- Navegación y state que viene de VistaCategorias ---------- */
+export default function Equipos() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const categoriaSeleccionada = location.state?.categoriaSeleccionada || null;
-  const selectedFile = location.state?.selectedFile || null;
+  const { 
+    selectedCategory, 
+    selectedFile, 
+    selectedTeams, 
+    setSelectedTeams 
+  } = useContext(QuizSetupContext);
 
-  /* ---------- Stores ---------- */
-  const setPartida = usePartidaStore((s) => s.setPartida);   // setter correcto
+  const setPartida = usePartidaStore((s) => s.setPartida);
   const setEquiposStore = useTurnoStore((s) => s.setEquipos);
 
-  /* ---------- Estado local: 5 tarjetas de equipo ---------- */
   const [equipos, setEquipos] = useState(
-    [...Array(5)].map((_, idx) => ({
-      nombre: `Equipo ${idx + 1}`,
+    Array.from({ length: 5 }, (_, i) => ({
+      nombre: `Equipo ${i + 1}`,
       integrantes: [],
-      enabled: false,          // empiezan desactivados
+      enabled: false,
+      imagenFile: null,
     }))
   );
 
   const actualizarEquipo = (index, datos) => {
-    const nuevos = [...equipos];
-    nuevos[index] = { ...nuevos[index], ...datos };
-    setEquipos(nuevos);
+    setEquipos((eqs) => {
+      const copia = [...eqs];
+      copia[index] = { ...copia[index], ...datos };
+      return copia;
+    });
   };
 
-  /* ---------- Guardar partida + equipos ---------- */
   const handleStart = async () => {
     try {
-      /* 1· Crear la partida */
-      const profesorId = localStorage.getItem("userId");        // viene del login
+      // 1. Crear partida en backend
+      const profesorId = localStorage.getItem("userId");
       const resPartida = await fetch("http://localhost:3000/api/partidas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,52 +47,46 @@ function Equipos() {
           profesorId: profesorId ? Number(profesorId) : undefined,
         }),
       });
-
       if (!resPartida.ok) throw new Error("No se pudo crear la partida");
-      const partida = await resPartida.json();                  // { id, codigo }
+      const partida = await resPartida.json();
 
-      /* 2· Guarda la partida en el store */
+      // 2. Guardar partida en el store
       setPartida(partida);
 
-      /* 3· Filtra los equipos habilitados y súbelos al store */
-      const equiposActivos = equipos.filter((e) => e.enabled);
-      setEquiposStore(equiposActivos);
+      // 3. Filtrar equipos habilitados
+      const activos = equipos.filter((e) => e.enabled);
+      setEquiposStore(activos);
+      setSelectedTeams(activos.map((e) => e.nombre));
 
-      /* 4· Envía uno a uno cada equipo con imagen */
-      for (const e of equiposActivos) {
+      // 4. Enviar cada equipo al backend
+      for (const e of activos) {
         const fd = new FormData();
-        fd.append('partidaId', partida.id);
-        fd.append('nombre', e.nombre);
-        fd.append('integrantes', e.integrantes.join(';'));
+        fd.append("partidaId", partida.id);
+        fd.append("nombre", e.nombre);
+        fd.append("integrantes", e.integrantes.join(";"));
         if (e.imagenFile) {
-          fd.append('avatar', e.imagenFile);
+          fd.append("avatar", e.imagenFile);
         }
-        const res = await fetch('http://localhost:3000/api/equipos', {
-          method: 'POST',
+        await fetch("http://localhost:3000/api/equipos", {
+          method: "POST",
           body: fd,
         });
-        // maneja res.ok / res.json() si lo necesitas…
       }
 
-      /* 5· Vuelve a VistaCategorias con flag de éxito */
-      navigate("/categorias", {
-        state: {
-          equiposConfigurados: true,
-          categoriaSeleccionada,
-          selectedFile,
-        },
-      });
+      // 5. Volver a VistaCategorias (START se habilitará allí)
+      navigate("/categorias");
     } catch (err) {
       console.error("Error al crear partida o equipos:", err);
       alert("No se pudo iniciar la partida. Revisa la consola.");
     }
   };
 
-  /* ---------- Render ---------- */
+  const puedeGuardar = equipos.some((e) => e.enabled);
+
   return (
     <div
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col"
-      style={{ backgroundImage: "url('/assets/Mesa.svg')" }}
+      className="min-h-screen bg-cover bg-center flex flex-col"
+      style={{ backgroundImage: "url('/assets/img/Mesa.svg')" }}
     >
       <Header />
 
@@ -97,19 +94,25 @@ function Equipos() {
         <h2 className="text-3xl mb-6">EQUIPOS</h2>
 
         <div className="flex flex-wrap justify-center items-center gap-6 max-w-7xl">
-          {equipos.map((equipo, index) => (
+          {equipos.map((equipo, idx) => (
             <TarjetaEquipo
-              key={index}
+              key={idx}
               nombreInicial={equipo.nombre}
               jugadoresIniciales={equipo.integrantes}
-              onUpdate={(datos) => actualizarEquipo(index, datos)}
+              imagenFile={equipo.imagenFile}
+              onUpdate={(datos) => actualizarEquipo(idx, datos)}
             />
           ))}
         </div>
 
         <button
           onClick={handleStart}
-          className="mt-8 bg-black hover:bg-gray-800 text-white text-xl px-6 py-2 rounded-full flex items-center gap-2 transition"
+          disabled={!puedeGuardar}
+          className={`mt-8 px-6 py-2 rounded-full flex items-center gap-2 transition ${
+            puedeGuardar
+              ? "bg-black hover:bg-gray-800 text-white"
+              : "bg-gray-300 text-gray-600 cursor-not-allowed"
+          }`}
         >
           Guardar Equipos
           <svg
@@ -124,5 +127,3 @@ function Equipos() {
     </div>
   );
 }
-
-export default Equipos;

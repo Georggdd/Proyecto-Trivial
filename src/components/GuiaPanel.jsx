@@ -9,7 +9,8 @@ const GuiaPanel = () => {
 
   const handleTerminar = () => {
     if (window.confirm("¿Quieres terminar el juego?")) {
-      navigate("/VistaRanking");
+      toggleGuia();             // cierra la guía
+      navigate("/padre-ranking");     // lleva a la vista ampliada de ranking
     }
   };
 

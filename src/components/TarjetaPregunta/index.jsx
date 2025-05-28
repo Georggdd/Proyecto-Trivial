@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CaraDelantera from './CaraDelantera';
 import CaraTrasera from './CaraTrasera';
 
-export default function TarjetaPregunta({ categoria, equipos, onFinish }) {
+export default function TarjetaPregunta({ categoria, equipos, onFinish, useCustom = false, }) {
     const numEquipos = equipos.length;
 
     const [pregunta, setPregunta] = useState(null);
@@ -17,24 +17,45 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`)
+        const url = useCustom
+            ? 'http://localhost:3000/api/upload/test'    // <-- endpoint custom
+            : `http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`;
+        console.log('🔍 Cargando preguntas desde', url);
+        fetch(url)
             .then(r => r.ok ? r.json() : Promise.reject('Error'))
             .then(data => {
                 const rnd = data[Math.floor(Math.random() * data.length)];
-                setPregunta({
-                    categoria: rnd.categoria.nombre,
-                    pregunta: rnd.texto,
-                    puntuacion: rnd.puntuacion,
-                    respuestas: rnd.respuestas.map(r => ({
-                        texto: r.texto,
-                        correcta: r.esCorrecta,
-                        explicacion: r.explicacion
-                    }))
-                });
+                if (useCustom) {
+                    // tu tabla Customizable tiene: pregunta, opcion1..4, respuesta_correcta, puntuacion, explicacion
+                    setPregunta({
+                        categoria: 'Custom',
+                        pregunta: rnd.pregunta,
+                        puntuacion: rnd.puntuacion,
+                        respuestas: [
+                            { texto: rnd.opcion1, correcta: rnd.respuesta_correcta === rnd.opcion1, explicacion: rnd.explicacion },
+                            { texto: rnd.opcion2, correcta: rnd.respuesta_correcta === rnd.opcion2, explicacion: rnd.explicacion },
+                            { texto: rnd.opcion3, correcta: rnd.respuesta_correcta === rnd.opcion3, explicacion: rnd.explicacion },
+                            { texto: rnd.opcion4, correcta: rnd.respuesta_correcta === rnd.opcion4, explicacion: rnd.explicacion },
+                        ]
+                    });
+                } else {
+                    setPregunta({
+                        categoria: rnd.categoria.nombre,
+                        pregunta: rnd.texto,
+                        puntuacion: rnd.puntuacion,
+                        respuestas: rnd.respuestas.map(r => ({
+                            texto: r.texto,
+                            correcta: r.esCorrecta,
+                            explicacion: r.explicacion
+                        }))
+                    });
+                }
             })
             .catch(console.error)
-            .finally(() => setLoading(false));
-    }, [categoria, round]);
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [categoria, round, useCustom]);
 
     useEffect(() => {
         setShow(false);

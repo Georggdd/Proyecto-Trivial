@@ -143,7 +143,6 @@ model RespuestaPartida {
   respuestaId     Int
   esCorrecta      Boolean
   puntosObtenidos Int
-  comodinActivado Boolean    @default(false)
 
   equipo          Equipo    @relation(fields: [equipoId], references: [id])
   pregunta        Pregunta  @relation(fields: [preguntaId], references: [id])
@@ -184,7 +183,6 @@ model Customizable {
   opcion4            String
   respuesta_correcta String
   puntuacion         Int     @default(10)
-  dificultad         Int
   explicacion        String?
   esCustom           Boolean @default(true)
 

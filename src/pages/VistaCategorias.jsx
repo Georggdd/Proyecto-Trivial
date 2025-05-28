@@ -1,19 +1,23 @@
-// src/pages/VistaCategorias.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Feature_Categorias from "../components/Feature_Categorias";
 import Customizar from "../components/Customizar";
+import { QuizSetupContext } from "../context/QuizSetupContext";
 
 export default function VistaCategorias({ onUpload, preguntas, error }) {
-  /* Estado general */
-  const [menuAbierto, setMenuAbierto] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
-  const [equiposHechos, setEquiposHechos] = useState(false);
   const navigate = useNavigate();
+  const {
+    selectedFile,
+    setSelectedFile,
+    selectedCategory,
+    setSelectedCategory,
+    selectedTeams,
+  } = useContext(QuizSetupContext);
 
-  /* Audio “Por favor elige…” */
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
+  // Audio “Por favor elige…”
   const [audioHabilitado, setAudioHabilitado] = useState(false);
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
@@ -27,8 +31,9 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
     document.addEventListener("click", handleFirstClick);
     return () => {
       document.removeEventListener("click", handleFirstClick);
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      clearInterval(intervalRef.current);
       audioRef.current?.pause();
+      if (audioRef.current) audioRef.current.currentTime = 0;
     };
   }, []);
 
@@ -40,22 +45,45 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
     return () => clearInterval(intervalRef.current);
   }, [audioHabilitado]);
 
-  /* START habilitado si… */
-  const puedeIniciar =
-    equiposHechos && (Boolean(selectedFile) || Boolean(categoriaSeleccionada));
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) navigate("/login");
+  }, [navigate]);
+
+  const subcategorias = [
+    "Idiomas",
+    "Música",
+    "Matemáticas",
+    "Biología",
+    "Geografía",
+    "Lengua",
+  ];
+  const SubcategoriaSelect = (sub) => {
+    setSelectedCategory(sub);
+    setMenuAbierto(false);
+    setSelectedFile(null);
+  };
+  const handleClickOutside = (e) => {
+    if (menuAbierto && !e.target.closest(".subcategorias-menu")) {
+      setMenuAbierto(false);
+    }
+  };
+
+  const equiposHechos = selectedTeams.length > 0;
+  const opcionesElegidas = [
+    Boolean(selectedCategory),
+    Boolean(selectedFile),
+    equiposHechos,
+  ].filter(Boolean).length;
+  const puedeIniciar = opcionesElegidas >= 2;
   const handleStart = () => {
     if (puedeIniciar) navigate("/tablero");
   };
 
-  /* Render */
   return (
     <div
       className="relative h-full min-h-screen flex flex-col bg-[url('/assets/img/Mesa.svg')] bg-cover border-4 border-double border-orange-600 overflow-hidden"
-      onClick={(e) => {
-        if (menuAbierto && !e.target.closest(".subcategorias-menu")) {
-          setMenuAbierto(false);
-        }
-      }}
+      onClick={handleClickOutside}
     >
       {/* Header */}
       <div
@@ -66,73 +94,78 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
         <Header />
       </div>
 
-      {/* Botonera */}
+      {/* Central: imagen + botones */}
       <div
-        className={`relative z-20 flex flex-col sm:flex-row items-center justify-center gap-6 w-full max-w-[90%] mx-auto py-8 transform transition-opacity duration-300 ${
+        className={`relative z-20 flex flex-col md:flex-row items-center justify-center flex-1 w-full max-w-[90%] mx-auto py-8 gap-8 transition-opacity duration-300 ${
           menuAbierto ? "opacity-30" : "opacity-100"
         }`}
       >
-        {/* 1. Categorías */}
-        <Feature_Categorias
-          texto={categoriaSeleccionada ?? "Categorías"}
-          onClick={() => {
-            setMenuAbierto((o) => !o);
-            if (categoriaSeleccionada) setCategoriaSeleccionada(null);
-            setSelectedFile(null);
-          }}
-          className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
-        />
-
-        {/* 2. Customizar (subir JSON) */}
-        <Customizar
-+          setSelectedFile={setSelectedFile}
-+          selectedFile={selectedFile}
-+          onUpload={onUpload}           // ← lógica de subida viene del Back-end
-+          className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
-+        />
-
-        {/* 3. Equipos */}
-        <Feature_Categorias
-          texto="Equipos"
-          onClick={() => navigate("/equipos")}
-          className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
-        />
-
-        {/* 4. START */}
-        <Feature_Categorias
-          texto="START"
-          onClick={handleStart}
-          className={`w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl ${
-            puedeIniciar
-              ? "cursor-pointer"
-              : "bg-orange-600 cursor-not-allowed"
+        {/* Imagen del profesor */}
+        <div
+          className={`flex-shrink-0 w-[200px] h-[250px] sm:w-[250px] sm:h-[320px] md:w-[300px] md:h-[380px] lg:w-[370px] lg:h-[470px] bg-[url('/assets/img/profesor.jpg')] bg-cover bg-center rounded-lg shadow-xl transition-opacity duration-300 ${
+            menuAbierto ? "opacity-40" : "opacity-70"
           }`}
         />
 
-        {selectedFile && (
-          <p className="text-white mt-2 truncate">
-            Archivo: {selectedFile.name}
-          </p>
-        )}
+        {/* Botones */}
+        <div className="flex flex-col items-center gap-6 w-full max-w-[500px]">
+          <Feature_Categorias
+            texto={selectedCategory ?? "Categorías"}
+            onClick={() => {
+              setMenuAbierto((o) => !o);
+              if (selectedCategory) setSelectedCategory(null);
+              setSelectedFile(null);
+            }}
+            className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl bg-white/80"
+          />
+
+          <Customizar
+            setSelectedFile={setSelectedFile}
+            selectedFile={selectedFile}
+            onUpload={onUpload}
+            className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl bg-white/80"
+          />
+
+          <Feature_Categorias
+            texto={
+              selectedTeams.length > 0
+                ? `Equipos (${selectedTeams.length})`
+                : "Equipos"
+            }
+            onClick={() => navigate("/equipos")}
+            className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl bg-white/80"
+          />
+
+          <Feature_Categorias
+            texto="START"
+            onClick={handleStart}
+            className={`w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl ${
+              puedeIniciar
+                ? "cursor-pointer bg-white/80"
+                : "bg-orange-600 cursor-not-allowed"
+            }`}
+          />
+
+          {selectedFile && (
+            <p className="text-white mt-2 truncate">
+              Archivo: {selectedFile.name}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Menú de subcategorías */}
       {menuAbierto && (
         <div className="absolute z-20 top-[20%] right-1/2 translate-x-1/2 subcategorias-menu">
           <div className="p-6 bg-white/80 rounded-lg shadow-lg flex flex-col gap-2">
-            {["Idiomas", "Música", "Matemáticas", "Biología", "Geografía", "Lengua"].map(
-              (sub) => (
-                <Feature_Categorias
-                  key={sub}
-                  texto={sub}
-                  onClick={() => {
-                    setCategoriaSeleccionada(sub);
-                    setMenuAbierto(false);
-                  }}
-                  className="w-[300px] h-[60px] text-2xl border-2 border-morado hover:border-black"
-                />
-              )
-            )}
+            {subcategorias.map((sub) => (
+              <Feature_Categorias
+                key={sub}
+                texto={sub}
+                onClick={() => SubcategoriaSelect(sub)}
+                className="w-[300px] h-[60px] text-2xl border-2 border-morado hover:border-black bg-white/80"
+              />
+            ))}
           </div>
         </div>
       )}

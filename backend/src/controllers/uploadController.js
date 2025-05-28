@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
 import xlsx from 'xlsx';
-import { guardarPreguntas } from './customizableController.js';
+import { guardarPreguntas } from './customController.js';
 
 // Asegúrate de que exista la carpeta uploads
 const uploadsDir = path.join(process.cwd(), 'uploads');
@@ -30,8 +30,6 @@ export const procesarArchivo = async (req, res) => {
   const procesarFila = (data) => {
     // Extrae campos y normaliza
     const texto      = data.pregunta?.trim();
-    const categoria  = data.categoria?.trim();
-    const dificultad = data.dificultad?.trim().toLowerCase();
     const puntuacion = parseInt(data.puntuacion, 10);
     const opcionA    = data.opcion_a?.trim();
     const opcionB    = data.opcion_b?.trim();
@@ -43,7 +41,6 @@ export const procesarArchivo = async (req, res) => {
     // Validación mínima
     const valida =
       texto &&
-      categoria &&
       ['a','b','c','d'].includes(correcta) &&
       !isNaN(puntuacion) &&
       opcionA && opcionB && opcionC && opcionD;
@@ -58,8 +55,6 @@ export const procesarArchivo = async (req, res) => {
 
     resultados.push({
       pregunta:           texto,
-      categoria,
-      dificultad,
       puntuacion,
       opcion1:            opcionA,
       opcion2:            opcionB,

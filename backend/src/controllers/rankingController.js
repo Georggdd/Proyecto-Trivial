@@ -1,34 +1,29 @@
+// backend/src/controllers/rankingController.js
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
-export const obtenerGrupos = async (req, res) => {
-  try { //extrae los datos desde la base de datos
-    const grupos = await prisma.grupo.findMany({
+export const obtenerRanking = async (req, res) => {
+  const partidaId = Number(req.query.partidaId);
+  if (!partidaId) {
+    return res.status(400).json({ error: 'Falta el parámetro partidaId' });
+  }
+
+  try {
+    const equipos = await prisma.equipo.findMany({
+      where: { partidaId },
       select: {
         id: true,
         nombre: true,
-        foto: true,
-        puntosTotales: { //se ha creado una relación entre tablas
-          select: {
-            puntosTotales: true,
-          },
-        },
+        avatarMini: true,
+        puntos: true,
       },
+      orderBy: { puntos: 'desc' },
     });
-
-//almacena los datos extraidos en variables
-    const gruposFormateados = grupos.map(g => ({
-      id: g.id,
-      nombre: g.nombre,
-      foto: g.foto,
-      puntos: g.puntosTotales?.puntosTotales ?? 0,
-    }));
-
-    res.json(gruposFormateados); //devuelve los datos al frontend.
-  
-} catch (error) {
-    console.error("Error al obtener grupos:", error.message);
-    res.status(500).json({ error: "Error al obtener grupos" });
+    res.json(equipos);
+  } catch (error) {
+    console.error('Error al obtener ranking:', error);
+    res.status(500).json({ error: 'No se pudo obtener el ranking' });
+  } finally {
+    await prisma.$disconnect();
   }
 };

@@ -1,21 +1,22 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-// Elimina todas las preguntas personalizadas y reinicia el contador de IDs
 export const resetPreguntasCustomizables = async (req, res) => {
   try {
-    // Borrar las preguntas personalizadas
-    await prisma.customizable.deleteMany({
-      where: { customizable: true },
+    // Borrar solo las preguntas marcadas como custom
+    const { count } = await prisma.customizable.deleteMany({
+      where: { esCustom: true },
     });
 
-    // Reiniciar el autoincremento del ID
+    // (Opcional) Reiniciar el AUTO_INCREMENT
     await prisma.$executeRaw`ALTER TABLE customizable AUTO_INCREMENT = 1`;
 
-    res.json({ mensaje: 'Preguntas personalizadas eliminadas y contador de IDs reiniciado correctamente.' });
+    res.json({
+      mensaje: `${count} preguntas customizables eliminadas correctamente.`,
+    });
   } catch (error) {
-    console.error('❌ Error al eliminar preguntas personalizadas:', error);
-    res.status(500).json({ error: 'Error al eliminar preguntas personalizadas' });
+    console.error('❌ Error al eliminar preguntas customizables:', error);
+    res.status(500).json({ error: 'Error al eliminar preguntas customizables' });
   } finally {
     await prisma.$disconnect();
   }

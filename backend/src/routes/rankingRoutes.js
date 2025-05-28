@@ -1,9 +1,10 @@
 import express from "express";
-import { obtenerGrupos } from "../controllers/rankingController.js";
+import { obtenerRanking } from "../controllers/rankingController.js";
+
 
 const router = express.Router();
 
 // Ruta para obtener los grupos
-router.get("/grupos", obtenerGrupos);
+router.get("/grupos", obtenerRanking);
 
 export default router;

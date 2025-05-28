@@ -2,28 +2,37 @@ import React, { useState } from "react";
 import Feature_Categorias from "./Feature_Categorias";
 
 const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
-// Estado para mostrar mensajes relacionados con el archivo
   const [mensaje, setMensaje] = useState("");
-// Estado para almacenar cualquier error que pueda ocurrir al procesar el archivo
   const [errores, setErrores] = useState([]);
 
-  // Función para manejar el cambio de archivo cuando el usuario selecciona un archivo
   const handleArchivoChange = async (e) => {
-    const archivo = e.target.files[0];// Obtiene el archivo seleccionado por el usuario
-    if (!archivo) return; // Si no hay archivo seleccionado, no hacer nada
+    const archivo = e.target.files[0];
+    if (!archivo) return;
 
-    setSelectedFile(archivo); // Se guarda localmente para mostrar el nombre
+    setSelectedFile(archivo);
     setMensaje("Subiendo archivo...");
-    setErrores([]);// Reinicia cualquier error anterior
+    setErrores([]);
 
     try {
-      await onUpload(archivo); // Llama a la función onUpload pasada como prop para subir el archivo al backend
-      setMensaje("✅ Archivo subido correctamente");
+      const res = await onUpload(archivo);
+      // si viene como Axios: res.data.mensaje, si viene como fetch/json: res.mensaje
+      const serverMsg = res?.data?.mensaje ?? res?.mensaje ?? "Archivo subido correctamente";
+      setMensaje(`✅ ${serverMsg}`);
     } catch (err) {
       console.error(err);
-      setMensaje("❌ No se pudo procesar el archivo");
-      setErrores([err.message || "Error desconocido"]);// Almacena el mensaje de error (si existe)
-      setSelectedFile(null);// Si el archivo no se pudo subir, limpia el archivo seleccionado
+      const data = err.response?.data || {};
+      // Mensaje principal de error
+      const errorMsg = data.error || err.message || "Error desconocido";
+      // Detalles de filas inválidas
+      const detalles = data.detalles || [];
+      // Formatear mensaje con número de filas inválidas si las hay
+      if (detalles.length > 0) {
+        setMensaje(`❌ ${errorMsg}: ${detalles.length} filas inválidas`);
+        setErrores(detalles);
+      } else {
+        setMensaje(`❌ ${errorMsg}`);
+      }
+      setSelectedFile(null);
     }
   };
 
@@ -35,9 +44,8 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
             {selectedFile ? selectedFile.name : "Customizar"}
           </span>
         }
-        //Este es el estado que guarda el archivo que el usuario ha seleccionado. Si selectedFile contiene un valor (es decir, si se ha seleccionado un archivo), se muestra el nombre del archivo con selectedFile.name.
-        onClick={() => document.getElementById("archivo").click()}// Simula un click en el input de tipo file
-        className="w-[300px] sm:w-[400px] h-[80px] sm:h-[90px] text-2xl sm:text-3xl"
+        onClick={() => document.getElementById("archivo").click()}
+        className={className}
       />
       <input
         id="archivo"
@@ -46,12 +54,15 @@ const Customizar = ({ setSelectedFile, onUpload, selectedFile, className }) => {
         onChange={handleArchivoChange}
         className="hidden"
       />
-      {mensaje && <p className="text-black">{mensaje}</p>} {/* Muestra el mensaje de estado, si existe */}
+      {mensaje && (
+        <p className={`text-black ${mensaje.startsWith('❌') ? 'text-red-600' : 'text-green-600'}`}>
+          {mensaje}
+        </p>
+      )}
       {errores.length > 0 && (
-        <ul className="text-red-400 text-sm text-left mt-2"> {/* Muestra los errores si existen */}
+        <ul className="text-red-400 text-sm text-left mt-2 w-full max-w-[500px] break-words">
           {errores.map((err, i) => (
             <li key={i}>{err}</li>
-            //Recorre cada error y lo muestra
           ))}
         </ul>
       )}

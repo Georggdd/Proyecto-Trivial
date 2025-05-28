@@ -18,7 +18,6 @@ export const guardarPreguntas = async (preguntas) => {
   // Preparamos los datos en el formato que prisma.customizable.createMany espera
   const datos = preguntas.map((p) => ({
     pregunta:           p.pregunta,
-    dificultad:         p.dificultad,
     puntuacion:         Number(p.puntuacion) || 10,
     opcion1:            p.opcion1,
     opcion2:            p.opcion2,

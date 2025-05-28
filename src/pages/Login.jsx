@@ -6,7 +6,6 @@ export default function Login({ onLoginSuccess }) {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const navigate = useNavigate();
 
   // Audio “Por favor, inicie sesión…”
@@ -57,15 +56,15 @@ export default function Login({ onLoginSuccess }) {
       const res = await fetch('http://localhost:3000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ usuario, password }),
+        body: JSON.stringify({ username: usuario, password })
       });
       const data = await res.json();
 
       if (res.ok) {
-        // Si necesitas guardar token:
-        // localStorage.setItem('token', data.token);
-        onLoginSuccess?.();          // opcional, si te hacía falta
-        navigate('/categorias');     // redirige al selector de categorías
+        // guarda el token si lo necesitas:
+        localStorage.setItem('token', data.token);
+        onLoginSuccess?.();
+        navigate('/categorias');
       } else {
         setError(data.error || 'Credenciales incorrectas');
       }
@@ -78,12 +77,13 @@ export default function Login({ onLoginSuccess }) {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: `url("/assets/Fondo.svg")` }}
+      style={{ backgroundImage: `url(/assets/Fondo.svg)` }}
     >
       <Header />
+
       <div
         className="relative bg-no-repeat bg-cover bg-center p-10 rounded shadow-lg w-full max-w-2xl min-h-[500px] flex items-center justify-center"
-        style={{ backgroundImage: `url("/assets/Pizarra-login.svg")` }}
+        style={{ backgroundImage: `url(/assets/Pizarra-login.svg)` }}
       >
         <img
           src="/assets/Profesor.svg"
@@ -92,53 +92,43 @@ export default function Login({ onLoginSuccess }) {
         />
 
         <form
+          className="text-white font-secular z-10"
           onSubmit={handleSubmit}
-          className="text-black z-10 flex flex-col items-center space-y-6"
         >
-          <img
-            src="/assets/img/Logo_educacion.png"
-            alt="Logo Trivial"
-            className="w-24 h-auto mb-4"
-          />
+          <div className="w-32 space-y-4 text-sm">
+            <img src="/img/Logo_educacion.png" alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />
 
-          {error && (
-            <div className="text-red-600 font-semibold">{error}</div>
-          )}
+            <div className="flex flex-col">
+              <label htmlFor="usuario" className="mb-1 text-black font-itim">Usuario:</label>
+              <input
+                id="usuario"
+                type="text"
+                value={usuario}
+                onChange={(e) => setUsuario(e.target.value)}
+                className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
+              />
+            </div>
 
-          <div className="w-64 flex flex-col gap-1">
-            <label htmlFor="usuario" className="font-itim">
-              Usuario:
-            </label>
-            <input
-              id="usuario"
-              type="text"
-              value={usuario}
-              onChange={(e) => setUsuario(e.target.value)}
-              className="w-full px-2 py-1 border border-gray-700 rounded-xl font-lemon"
-            />
+            <div className="flex flex-col">
+              <label htmlFor="password" className="mb-1 text-black font-itim">Contraseña:</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-24 px-2 py-1 text-base bg-[#446CD1] text-white rounded-xl hover:bg-[#365bb0] mx-auto block font-itim"
+            >
+              Entrar
+            </button>
           </div>
-
-          <div className="w-64 flex flex-col gap-1">
-            <label htmlFor="password" className="font-itim">
-              Contraseña:
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-2 py-1 border border-gray-700 rounded-xl font-lemon"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-32 px-4 py-2 bg-[#446CD1] text-white rounded-xl hover:bg-[#365bb0] transition font-itim"
-          >
-            Entrar
-          </button>
         </form>
       </div>
     </div>
   );
-}
+};

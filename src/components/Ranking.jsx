@@ -1,43 +1,40 @@
 import React from "react";
-import ninioAvatar from "../assets/img/ninio.png";
 
-export default function Ranking({
-  nombre,
-  puntos = 0,
-  imagen,     // nombre de archivo o url remota
-  destacado,  // para animar al líder (opcional)
-}) {
+/**
+ * Muestra un equipo con estilo uniforme en naranja.
+ */
+const Ranking = ({ nombre, puntos = 0, imagen }) => {
   const puntosNormalizados = Number(puntos) || 0;
-  const srcAvatar = imagen || ninioAvatar;
 
   return (
-    <div className="flex items-center justify-center w-full gap-[1vw] pb-[1vh] px-[12vh]">
+    <div className="
+      w-full flex items-center gap-4 rounded-xl p-2
+      bg-naranja-50 border-2 border-orange-500
+    ">
       {/* Avatar */}
-      <div className="w-[5vw] h-[5vw] overflow-hidden flex items-center justify-center rounded-full bg-white border-2 border-naranja">
+      <div className="basis-[15%] flex-shrink-0 min-w-[60px]">
         <img
-          src={srcAvatar.startsWith("http") ? srcAvatar : `http://localhost:3000/uploads/${srcAvatar}`}
-          alt={`Imagen del equipo ${nombre}`}
-          className="w-full h-full object-cover"
+          src={imagen || "/assets/img/ninio.png"}
+          alt={nombre}
+          className="w-full h-auto rounded-full"
         />
       </div>
 
-      {/* Nombre del equipo */}
-      <div className="w-2/4 bg-white rounded-full border-naranja border-2 text-naranja flex items-center justify-center min-h-[4vw] px-4 py-1 text-center">
-        <h3 className="font-personalizada text-[1.8vw] leading-tight">
+      {/* Nombre */}
+      <div className="flex-grow text-center font-bold text-naranja">
+        <p className="truncate text-[1.1rem] sm:text-[1.4rem]">
           {nombre}
-        </h3>
+        </p>
       </div>
 
       {/* Puntos */}
-      <div className="w-1/4 bg-white rounded-full border-naranja border-2 text-naranja font-bold flex items-center justify-center min-h-full">
-        <h3
-          className={`font-personalizada text-[1.8vw] text-center ${
-            destacado ? "animate-pulse scale-110" : ""
-          }`}
-        >
+      <div className="basis-[20%] flex-shrink-0 text-center font-bold text-naranja">
+        <p className="text-[1.1rem] sm:text-[1.4rem]">
           {puntosNormalizados}
-        </h3>
+        </p>
       </div>
     </div>
   );
-}
+};
+
+export default Ranking;

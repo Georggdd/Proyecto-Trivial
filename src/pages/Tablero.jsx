@@ -1,56 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ZonaInferior from "../components/ZonaInferior";
 import Ficha from "../components/Ficha";
 import { useJuegoStore } from "../hooks/useJuegoStore";
 import { usePartidaStore } from "../hooks/usePartidaStore";
+import { useTurnoStore } from "../hooks/useTurnoStore";               // ← IMPORT NECESARIO
 import { casillas } from "../components/Posiciones/tableroData";
 import Ranking from "../components/Ranking";
 import GuiaPanel from "../components/GuiaPanel";
-import { useTurnoStore } from "../hooks/useTurnoStore";
 import ModalPregunta from "../components/ModalPregunta";
-import { useCategoriaStore } from "../hooks/useCategoriaStore";
 import ninioAvatar from "../assets/img/ninio.png";
+import { QuizSetupContext } from "../context/QuizSetupContext";
 
-function Tablero() {
+export default function Tablero() {
   const navigate = useNavigate();
   const { partidaId } = usePartidaStore();
-  const categoriaSeleccionada = useCategoriaStore(
-    (s) => s.categoriaSeleccionada
-  );
+
+  // Traemos categoría, archivo y equipos desde el Context
+  const { selectedCategory, selectedFile, selectedTeams } = useContext(QuizSetupContext);
 
   const { fichaPos, casillasActivas, moverFicha, setValorDado } =
     useJuegoStore();
 
+  // Hooks de equipos/turno
   const equipos = useTurnoStore((s) => s.equipos);
   const setEquipos = useTurnoStore((s) => s.setEquipos);
   const avanzarTurno = useTurnoStore((s) => s.avanzarTurno);
 
   const [mostrarModal, setMostrarModal] = useState(false);
 
+  // Al montar, traemos los equipos de la partida
   useEffect(() => {
-    console.log("[tablero] equipos actualizados:", equipos);
-  }, [equipos]);
+    if (!partidaId) return;
+    (async () => {
+      const res = await fetch(
+        `http://localhost:3000/api/equipos?partidaId=${partidaId}`
+      );
+      const data = await res.json();
+      const fijados = data.map((e) => ({
+        ...e,
+        avatarMini: e.avatarMini || ninioAvatar,
+      }));
+      setEquipos(fijados);
+    })();
+  }, [partidaId, setEquipos]);
 
+  // Log para verificar lo recibido del Context
   useEffect(() => {
-  if (!partidaId) return;
-  (async () => {
-    const res = await fetch(`http://localhost:3000/api/equipos?partidaId=${partidaId}`);
-    const data = await res.json();
-    // Asigna por defecto la URL si avatarMini es null
-    const fijados = data.map(e => ({
-      ...e,
-      avatarMini: e.avatarMini || ninioAvatar,
-    }));
-    setEquipos(fijados);
-  })();
-}, [partidaId, setEquipos]);
+    console.log("[Tablero] Categoría:", selectedCategory);
+    console.log("[Tablero] Custom file:", selectedFile);
+    console.log("[Tablero] Teams from setup:", selectedTeams);
+  }, [selectedCategory, selectedFile, selectedTeams]);
 
   const manejarMovimiento = (numero) => {
     moverFicha(numero);
     setTimeout(() => setMostrarModal(true), 500);
   };
+
+  // Ordenamos para el ranking
+  const equiposOrdenados = [...equipos].sort((a, b) => b.puntos - a.puntos);
 
   return (
     <div
@@ -71,6 +80,7 @@ function Tablero() {
             alt="Tablero"
             className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 object-contain z-0"
           />
+          
 
           {casillasActivas.map((numero) => {
             const pos = casillas.find((c) => c.id === numero);
@@ -97,21 +107,15 @@ function Tablero() {
         {/* Mini-ranking */}
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[360px] w-[300px] z-40">
           <div className="space-y-4">
-            {(() => {
-              // ← Corrección aquí: spread correcto [...equipos]
-              const equiposOrdenados = [...equipos].sort(
-                (a, b) => b.puntos - a.puntos
-              );
-              return equiposOrdenados.map((eq, idx) => (
-                <Ranking
-                  key={eq.id}
-                  nombre={eq.nombre}
-                  puntos={eq.puntos}
-                  imagen={eq.avatarMini}    // ← usa la propiedad correcta
-                  destacado={idx === 0}
-                />
-              ));
-            })()}
+            {equiposOrdenados.map((eq, idx) => (
+              <Ranking
+                key={eq.id}
+                nombre={eq.nombre}
+                puntos={eq.puntos}
+                imagen={eq.avatarMini}
+                destacado={idx === 0}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -121,9 +125,8 @@ function Tablero() {
 
       <ModalPregunta
         visible={mostrarModal}
-        categoria={categoriaSeleccionada}
+        categoria={selectedCategory}
         onClose={() => {
-          console.log("[tablero] onClose modal → ocultar y avanzarTurno");
           setMostrarModal(false);
           avanzarTurno();
         }}
@@ -131,7 +134,5 @@ function Tablero() {
     </div>
   );
 }
-
-export default Tablero;
 
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { categoryBg } from '../../utils/categoriaColors';
+import ninioAvatar from '../../assets/img/ninio.png';
+
 export default function CaraDelantera({
   pregunta,
   equipos,
@@ -22,7 +24,7 @@ export default function CaraDelantera({
           {pregunta.categoria}
         </h1>
         <img
-          src="/assets/img/queso-color-blanco.png"
+          src="public\img\Logo_EducaTrivial.png"
           className="w-[15%] pt-6 absolute right-[15%]"
           alt=""
         />
@@ -78,8 +80,8 @@ export default function CaraDelantera({
           {/* Opciones */}
           {pregunta.respuestas.map((r, i) => {
             const quienes = respuestasEquipos
-              .map((resp, idx) => (resp?.texto === r.texto ? idx + 1 : null))
-              .filter(Boolean);
+              .map((resp, idx) => (resp?.texto === r.texto ? idx : null))
+              .filter((idx) => idx !== null);
 
             return (
               <button
@@ -101,12 +103,12 @@ export default function CaraDelantera({
 
                 {quienes.length > 0 && (
                   <div className="absolute bottom-1 right-4 flex flex-row-reverse space-x-1">
-                    {quienes.map((num) => (
+                    {quienes.map((idx) => (
                       <img
-                        key={num}
-                        src={`/assets/img/equipos/equipo-${num}.png`}
+                        key={idx}
+                        src={equipos[idx]?.avatarMini || ninioAvatar}
                         className="w-6 h-6 2xl:w-8 2xl:h-8 rounded-full border border-black"
-                        alt={`Equipo ${num}`}
+                        alt={`Equipo ${idx + 1}`}
                       />
                     ))}
                   </div>
