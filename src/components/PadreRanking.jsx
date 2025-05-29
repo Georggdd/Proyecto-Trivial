@@ -18,7 +18,7 @@ export const PadreRanking = () => {
         const equiposFormateados = data.map(g => ({
           nombre: g.nombre,
           puntos: g.puntos,
-          foto: g.avatarMini
+          foto: g.avatarMini // Mantener el mismo nombre del campo
         }));
         setEquipo(equiposFormateados);
       })

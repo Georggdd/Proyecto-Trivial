@@ -15,22 +15,43 @@ export default function ModalPregunta({ visible, categoria, onClose }) {
 
   const onFinish = async (respuestasEquipos, pregunta) => {
     const puntuacionBase = Number(pregunta.puntuacion || 10);
+    
+    // Verificar aciertos grupales antes de procesar puntuaciones
+    const juegoStore = useJuegoStore.getState();
+    juegoStore.verificarAciertosGrupales(respuestasEquipos);
+    
+    // Obtener el multiplicador actual si está disponible
+    const multiplicadorActual = juegoStore.multiplicadorDisponible ? juegoStore.multiplicador : 1;
 
     respuestasEquipos.forEach(async (resp, idx) => {
       if (resp?.correcta) {
         const eq = equipos[idx];
-        // Aplicar doble puntuación si estamos en casilla doble
-        const puntuacionFinal = esCasillaDoble ? puntuacionBase * 2 : puntuacionBase;
+        let puntuacionFinal = puntuacionBase;
         
+        // Aplicar multiplicadores
+        if (esCasillaDoble) puntuacionFinal *= 2;
+        puntuacionFinal *= multiplicadorActual;
+        
+        console.log('📊 Asignando puntos:', {
+          base: puntuacionBase,
+          multiplicadorCasilla: esCasillaDoble ? 2 : 1,
+          multiplicadorAciertos: multiplicadorActual,
+          final: puntuacionFinal
+        });
+
         try {
           await syncPuntos(eq.id, puntuacionFinal);
           addPuntos(eq.id, puntuacionFinal);
-          console.log(`Puntos asignados: ${puntuacionFinal} (${esCasillaDoble ? 'doble' : 'normal'})`);
         } catch (error) {
           console.error('Error al asignar puntos:', error);
         }
       }
     });
+
+    // Si se usó el multiplicador, resetearlo
+    if (multiplicadorActual > 1) {
+      juegoStore.usarMultiplicador();
+    }
 
     // Actualizar equipos en el store después de asignar puntos
     const pid = equipos[0]?.partidaId;
@@ -47,6 +68,16 @@ export default function ModalPregunta({ visible, categoria, onClose }) {
 
     avanzarTurno();
     onClose();
+  };
+
+  const handleRespuestaCorrecta = () => {
+    console.log('✅ Respuesta correcta - Incrementando aciertos');
+    useJuegoStore.getState().incrementarAciertos();
+  };
+
+  const handleRespuestaIncorrecta = () => {
+    console.log('❌ Respuesta incorrecta - Reseteando aciertos');
+    useJuegoStore.getState().resetearAciertos();
   };
 
   return (

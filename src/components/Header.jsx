@@ -40,7 +40,7 @@ const HamburgerIcon = () => (
         {/* Título */}
         <div className="text-center relative">
           <h1 className="text-white text-5xl font-pinyon tracking-wide mb-3">
-            EduK
+            EducaTrivial
           </h1>
         </div>
 

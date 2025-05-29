@@ -72,6 +72,11 @@ export default function Tablero() {
   // Ordenamos para el ranking
   const equiposOrdenados = [...equipos].sort((a, b) => b.puntos - a.puntos);
 
+  // Detectar puntuaciones empatadas
+  const puntuacionesEmpatadas = equiposOrdenados
+    .map(e => e.puntos)
+    .filter((valor, i, arr) => arr.indexOf(valor) !== i);
+
   return (
 
     <div
@@ -134,7 +139,7 @@ export default function Tablero() {
                 nombre={eq.nombre}
                 puntos={eq.puntos}
                 imagen={eq.avatarMini}
-                destacado={idx === 0}
+                destacado={puntuacionesEmpatadas.includes(eq.puntos)} // Cambiar aquí
               />
             ))}
           </div>
