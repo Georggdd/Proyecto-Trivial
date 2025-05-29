@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';      // para reconstruir __dirname
 import authRoutes from './routes/authRoutes.js';
 import partidaRoutes from './routes/partidaRoutes.js';
 import equipoRoutes from './routes/equipoRoutes.js';
+import equiposRoutes from './routes/equipos.js';
 import preguntasRoutes from './routes/preguntas.routes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
@@ -18,6 +19,7 @@ import { configurarEventosDeCierre } from './utils/shutdownHandler.js';
 dotenv.config();
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 // Reconstruir __dirname en ES Modules
@@ -33,16 +35,25 @@ app.use(cors({
 // JSON body parser
 app.use(express.json());
 
-// Servir estáticos:
-//  - /public → para tu carpeta public (assets, audio, etc.)
-//  - /uploads → para imágenes subidas
+// Sirve la carpeta 'public' (para imágenes, audio, etc.)
+app.use(express.static(path.join(process.cwd(), 'public')));
+
+
+// Sirve la carpeta public (imagenes como ninio.png)
 app.use(express.static(path.join(__dirname, '../public')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Sirve la carpeta uploads (imagenes subidas por usuario)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// Sirve la carpeta 'uploads' (para imágenes subidas por el usuario)
+// app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Montar rutas API
 app.use('/api/auth',      authRoutes);
 app.use('/api/partidas',  partidaRoutes);
 app.use('/api/equipos',   equipoRoutes);
+app.use('/api', equiposRoutes);
 app.use('/api/preguntas', preguntasRoutes);
 app.use('/api/categorias',categoriaRoutes);
 

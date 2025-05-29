@@ -2,9 +2,8 @@ import prisma from '../config/db.js';
 
 export const crearEquipo = async (req, res) => {
   // Si hay fichero, construyo la URL; si no, dejo null
-  const avatarMini = req.file
-    ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
-    : null;
+ const avatarMini = req.file ? `/uploads/${req.file.filename}` : null;
+
 
   const { nombre, integrantes, partidaId } = req.body;
   if (!partidaId) {

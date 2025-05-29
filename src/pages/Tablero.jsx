@@ -138,8 +138,8 @@ export default function Tablero() {
                 key={eq.id}
                 nombre={eq.nombre}
                 puntos={eq.puntos}
-                imagen={eq.avatarMini}
-                destacado={puntuacionesEmpatadas.includes(eq.puntos)} // Cambiar aquí
+                foto={eq.avatarMini}
+                destacado={idx === 0}
               />
             ))}
           </div>
