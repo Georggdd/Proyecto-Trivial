@@ -21,42 +21,31 @@ const ZonaInferior = ({ onDadoResultado }) => {
   const toggleGuia = useGuiaStore((state) => state.toggleGuia); // <-- esto es nuevo
 
   return (
-    <div className="border-b-4 border-x-4 border-double border-orange-600 relative w-full min-h-[10rem] h-fit">
+    <div className="border-b-4 border-x-4 border-double border-orange-600 relative w-full min-h-[8rem] h-fit"> {/* Reducido de 10rem a 8rem */}
       {/* Curva morada */}
-      <div className="absolute bottom-0 left-0 w-full h-44 bg-purple-700 rounded-t-[60%] z-0" />
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-purple-700 rounded-t-[60%] z-0" /> {/* Reducida altura de h-44 a h-32 */}
 
-      {/* Botones muy juntos y laterales más bajos */}
-      <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-24">
-        {/* Izquierda: abre Guía */}
+      {/* Botones más pequeños y juntos */}
+      <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-16"> {/* Ajustado margen top */}
+        {/* Botones más pequeños */}
         <BotonSimple
-          icono={"../assets/Tirada.svg"}
+          icono={"../assets/Guia.png"}
           onClick={toggleGuia}
-          extraClass="top-8"
+          extraClass="top-8 w-28 h-28" // Reducido de w-36 h-36
         />
 
-        {/* Botón centro: dado */}
         <DadoModal onResultado={onDadoResultado}>
           <img
             src={"../assets/Dado.svg"}
             alt="Tirar dado"
-            className="w-36 h-36 hover:scale-105 transition-transform"
+            className="w-28 h-28 hover:scale-105 transition-transform" // Reducido de w-36 h-36
           />
         </DadoModal>
 
-        {/* Resultado del dado */}
-        {valorDado && (
-          <img
-            src={carasDado[valorDado - 1]}
-            alt={`Dado ${valorDado}`}
-            className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-12 h-12"
-          />
-        )}
-
-        {/* Botón derecha */}
         <BotonSimple
-          icono={"../assets/Comodin.svg"}
+          icono={"../assets/Group.png"}
           onClick={() => alert('Usar comodín')}
-          extraClass="top-8"
+          extraClass="top-8 w-28 h-28" // Reducido de w-36 h-36
         />
       </div>
     </div>

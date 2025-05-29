@@ -76,53 +76,61 @@ export default function Login({ onLoginSuccess }) {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center"
+      className="min-h-screen flex flex-col items-center justify-center bg-no-repeat bg-cover bg-center py-8" // Añadido py-8 y flex-col
       style={{ backgroundImage: `url(/assets/Fondo.svg)` }}
     >
       <Header />
 
       <div
-        className="relative bg-no-repeat bg-cover bg-center p-10 rounded shadow-lg w-full max-w-2xl min-h-[500px] flex items-center justify-center"
+        className="relative bg-no-repeat bg-cover bg-center p-20 rounded shadow-lg w-full max-w-5xl min-h-[800px] flex items-center justify-center my-8" 
         style={{ backgroundImage: `url(/assets/Pizarra-login.svg)` }}
       >
         <img
           src="/assets/Profesor.svg"
           alt="Profesor"
-          className="hidden md:block absolute left-32 w-40 h-auto"
+          className="hidden md:block absolute left-40 w-64 h-auto" // Changed from left-48 to left-32
         />
 
         <form
           className="text-white font-secular z-10"
           onSubmit={handleSubmit}
         >
-          <div className="w-32 space-y-4 text-sm">
-            <img src="/img/Logo_educacion.png" alt="Logo Trivial" className="mx-auto w-24 h-auto mb-4" />
+          <div className="w-64 space-y-8 text-base"> {/* Aumentado w-64 y space-y-8 */}
+            <img 
+              src="/img/Logo_educacion.png" 
+              alt="Logo Trivial" 
+              className="mx-auto w-40 h-auto mb-8" // Aumentado w-40 y mb-8
+            />
 
             <div className="flex flex-col">
-              <label htmlFor="usuario" className="mb-1 text-black font-itim">Usuario:</label>
+              <label htmlFor="usuario" className="mb-2 text-black font-itim text-lg"> {/* Aumentado texto y margen */}
+                Usuario:
+              </label>
               <input
                 id="usuario"
                 type="text"
                 value={usuario}
                 onChange={(e) => setUsuario(e.target.value)}
-                className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
+                className="w-full px-3 py-3 border-2 border-gray-700 rounded-xl text-black font-lemon text-lg" // Aumentado padding y borde
               />
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="password" className="mb-1 text-black font-itim">Contraseña:</label>
+              <label htmlFor="password" className="mb-2 text-black font-itim text-lg"> {/* Aumentado texto y margen */}
+                Contraseña:
+              </label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-2 py-2 border border-gray-700 rounded-xl text-black font-lemon"
+                className="w-full px-3 py-3 border-2 border-gray-700 rounded-xl text-black font-lemon text-lg" // Aumentado padding y borde
               />
             </div>
 
             <button
               type="submit"
-              className="w-24 px-2 py-1 text-base bg-[#446CD1] text-white rounded-xl hover:bg-[#365bb0] mx-auto block font-itim"
+              className="w-32 px-4 py-2 text-lg bg-[#446CD1] text-white rounded-xl hover:bg-[#365bb0] mx-auto block font-itim" // Aumentado tamaño y padding
             >
               Entrar
             </button>

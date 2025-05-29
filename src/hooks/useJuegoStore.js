@@ -16,6 +16,12 @@ const casillasCirculoExterior = [
   67, 68, 69, 70, 71, 72
 ];
 
+// Añadir después de las constantes existentes
+const casillasDobles = [31, 38, 45, 52, 59, 66];
+// Después de las otras constantes
+const casillasVolverTirar = [33, 36, 40, 43, 47, 50, 54, 57, 61, 64, 68, 71];
+
+// Modificar la creación del store añadiendo la nueva propiedad
 export const useJuegoStore = create((set, get) => ({
   equipos: [
     { nombre: 'Equipo 1', casilla: 0, camino: null },
@@ -27,6 +33,7 @@ export const useJuegoStore = create((set, get) => ({
   valorDado: null,
   casillasActivas: [],
   fichaPos: casillas[0],
+  esCasillaDoble: false,
 
   setCaminoActual: (camino) => set({ caminoActual: camino }),
   setFichaIndex: (index) => set({ fichaIndex: index }),
@@ -124,9 +131,10 @@ export const useJuegoStore = create((set, get) => ({
         fichaIndex: id,
         fichaPos: { top: posicion.top, left: posicion.left },
         casillasActivas: [],
+        esCasillaDoble: casillasDobles.includes(id),
+        esVolverTirar: casillasVolverTirar.includes(id)  // Nueva propiedad
       };
 
-      // Si la casilla está en el círculo exterior, reinicia el camino actual
       if (casillasCirculoExterior.includes(id)) {
         nuevaData.caminoActual = null;
       }

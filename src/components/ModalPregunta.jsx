@@ -2,28 +2,37 @@ import React, { useContext } from 'react';
 import { useTurnoStore } from '../hooks/useTurnoStore';
 import TarjetaPregunta from './TarjetaPregunta';
 import { QuizSetupContext } from '../context/QuizSetupContext';
+import { useJuegoStore } from "../hooks/useJuegoStore";
 
 export default function ModalPregunta({ visible, categoria, onClose }) {
   const { equipos, syncPuntos, addPuntos, actualizarEquipos, avanzarTurno } =
     useTurnoStore();
+  const esCasillaDoble = useJuegoStore(state => state.esCasillaDoble);
   const { selectedFile } = useContext(QuizSetupContext);
   const useCustom = Boolean(selectedFile);
-
 
   if (!visible) return null;
 
   const onFinish = async (respuestasEquipos, pregunta) => {
-    const delta = Number(pregunta.puntuacion || 10);
+    const puntuacionBase = Number(pregunta.puntuacion || 10);
 
-    respuestasEquipos.forEach((resp, idx) => {
+    respuestasEquipos.forEach(async (resp, idx) => {
       if (resp?.correcta) {
         const eq = equipos[idx];
-        syncPuntos(eq.id, delta)
-          .then(() => addPuntos(eq.id, delta))
-          .catch(console.error);
+        // Aplicar doble puntuación si estamos en casilla doble
+        const puntuacionFinal = esCasillaDoble ? puntuacionBase * 2 : puntuacionBase;
+        
+        try {
+          await syncPuntos(eq.id, puntuacionFinal);
+          addPuntos(eq.id, puntuacionFinal);
+          console.log(`Puntos asignados: ${puntuacionFinal} (${esCasillaDoble ? 'doble' : 'normal'})`);
+        } catch (error) {
+          console.error('Error al asignar puntos:', error);
+        }
       }
     });
 
+    // Actualizar equipos en el store después de asignar puntos
     const pid = equipos[0]?.partidaId;
     if (pid) {
       try {

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useTurnoStore } from '../hooks/useTurnoStore';
 
 const carasDado = [
   { valor: 1, imagen: "/assets/Cara1.svg" },
@@ -14,6 +15,22 @@ const DadoModal = ({ children, onResultado }) => {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [caraActual, setCaraActual] = useState(null);
   const [animando, setAnimando] = useState(false);
+  
+  // Obtener el equipo actual
+  const turnoActual = useTurnoStore(state => state.turnoActual);
+  const equipos = useTurnoStore(state => state.equipos);
+  const equipoActual = equipos[turnoActual];
+
+  // Efecto para el cierre automático
+  useEffect(() => {
+    let timer;
+    if (mostrarModal && !animando) {
+      timer = setTimeout(() => {
+        cerrarModal();
+      }, 3000); // 3 segundos
+    }
+    return () => clearTimeout(timer);
+  }, [mostrarModal, animando]);
 
   const tirarDado = () => {
     setMostrarModal(true);
@@ -44,7 +61,7 @@ const DadoModal = ({ children, onResultado }) => {
 
   return (
     <>
-      <div onClick={tirarDado}>
+      <div onClick={tirarDado} data-testid="dado-btn">
         {children}
       </div>
 
@@ -54,9 +71,16 @@ const DadoModal = ({ children, onResultado }) => {
           onClick={cerrarModal}
         >
           <div
-            className="w-60 h-60 bg-white rounded-full flex items-center justify-center shadow-lg relative"
+            className="w-60 h-60 bg-white rounded-full flex flex-col items-center justify-center shadow-lg relative"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Nombre del equipo actual */}
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap">
+              <span className="text-white font-bold text-xl">
+                Turno de: {equipoActual?.nombre || 'Cargando...'}
+              </span>
+            </div>
+
             {caraActual && caraActual.imagen ? (
               <img
                 src={caraActual.imagen}

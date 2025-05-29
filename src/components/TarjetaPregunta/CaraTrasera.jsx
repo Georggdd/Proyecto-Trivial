@@ -20,7 +20,7 @@ export default function CaraTrasera({
           {pregunta.categoria}
         </h1>
         <img
-          src="/assets/img/queso-color-blanco.png"
+          src="\img\Logo_EducaTrivial.png"
           className="w-[15%] pt-6 absolute right-[15%]"
           alt=""
         />
