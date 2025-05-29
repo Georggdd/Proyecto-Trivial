@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import CaraDelantera from './CaraDelantera';
 import CaraTrasera from './CaraTrasera';
 
 export default function TarjetaPregunta({ categoria, equipos, onFinish, useCustom = false, }) {
     const numEquipos = equipos.length;
+    const audioRef = useRef(new Audio());
 
     const [pregunta, setPregunta] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -63,6 +64,51 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish, useCusto
         return () => clearTimeout(t);
     }, [round]);
 
+    // Función para obtener un audio aleatorio de un array
+    const getAudioAleatorio = (audios) => {
+        const indiceAleatorio = Math.floor(Math.random() * audios.length);
+        return audios[indiceAleatorio];
+    };
+
+    // Función para reproducir audio aleatorio basado en el porcentaje de aciertos
+    const reproducirAudioAleatorio = (respuestas) => {
+        const aciertos = respuestas.filter(r => r?.correcta).length;
+        const porcentajeAciertos = (aciertos / numEquipos) * 100;
+        
+        let audioPath;
+        if (porcentajeAciertos >= 70) {
+            // Array de audios para porcentaje >= 70%
+            const audiosExcelentes = [
+                '/assets/audio/excelente1.mp3',
+                '/assets/audio/excelente2.mp3',
+                '/assets/audio/excelente3.mp3'
+            ];
+            audioPath = getAudioAleatorio(audiosExcelentes);
+        } else if (porcentajeAciertos >= 50) {
+            // Array de audios para porcentaje >= 50%
+            const audiosBuenos = [
+                '/assets/audio/bueno1.mp3',
+                '/assets/audio/bueno2.mp3',
+                '/assets/audio/bueno3.mp3'
+            ];
+            audioPath = getAudioAleatorio(audiosBuenos);
+        } else if (porcentajeAciertos >= 35) {
+            // Array de audios para porcentaje >= 35%
+            const audiosRegulares = [
+                '/assets/audio/regular1.mp3',
+                '/assets/audio/regular2.mp3',
+                '/assets/audio/regular3.mp3'
+            ];
+            audioPath = getAudioAleatorio(audiosRegulares);
+        } else {
+            // Audio para porcentaje < 35%
+            audioPath = '/assets/audio/mal.mp3';
+        }
+
+        audioRef.current.src = audioPath;
+        audioRef.current.play().catch(error => console.error('Error al reproducir audio:', error));
+    };
+
     // Cuando un equipo elige
     const handleOpcionClick = (r) => {
         setRespuestasEquipos(prev => {
@@ -86,6 +132,7 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish, useCusto
     const handleEnviar = () => {
         if (respuestasEquipos.every(r => r !== null)) {
             setRespuestasCompletadas(true);
+            reproducirAudioAleatorio(respuestasEquipos);
         }
     };
 

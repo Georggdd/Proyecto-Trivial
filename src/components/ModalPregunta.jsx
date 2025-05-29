@@ -2,28 +2,58 @@ import React, { useContext } from 'react';
 import { useTurnoStore } from '../hooks/useTurnoStore';
 import TarjetaPregunta from './TarjetaPregunta';
 import { QuizSetupContext } from '../context/QuizSetupContext';
+import { useJuegoStore } from "../hooks/useJuegoStore";
 
 export default function ModalPregunta({ visible, categoria, onClose }) {
   const { equipos, syncPuntos, addPuntos, actualizarEquipos, avanzarTurno } =
     useTurnoStore();
+  const esCasillaDoble = useJuegoStore(state => state.esCasillaDoble);
   const { selectedFile } = useContext(QuizSetupContext);
   const useCustom = Boolean(selectedFile);
-
 
   if (!visible) return null;
 
   const onFinish = async (respuestasEquipos, pregunta) => {
-    const delta = Number(pregunta.puntuacion || 10);
+    const puntuacionBase = Number(pregunta.puntuacion || 10);
+    
+    // Verificar aciertos grupales antes de procesar puntuaciones
+    const juegoStore = useJuegoStore.getState();
+    juegoStore.verificarAciertosGrupales(respuestasEquipos);
+    
+    // Obtener el multiplicador actual si está disponible
+    const multiplicadorActual = juegoStore.multiplicadorDisponible ? juegoStore.multiplicador : 1;
 
-    respuestasEquipos.forEach((resp, idx) => {
+    respuestasEquipos.forEach(async (resp, idx) => {
       if (resp?.correcta) {
         const eq = equipos[idx];
-        syncPuntos(eq.id, delta)
-          .then(() => addPuntos(eq.id, delta))
-          .catch(console.error);
+        let puntuacionFinal = puntuacionBase;
+        
+        // Aplicar multiplicadores
+        if (esCasillaDoble) puntuacionFinal *= 2;
+        puntuacionFinal *= multiplicadorActual;
+        
+        console.log('📊 Asignando puntos:', {
+          base: puntuacionBase,
+          multiplicadorCasilla: esCasillaDoble ? 2 : 1,
+          multiplicadorAciertos: multiplicadorActual,
+          final: puntuacionFinal
+        });
+
+        try {
+          await syncPuntos(eq.id, puntuacionFinal);
+          addPuntos(eq.id, puntuacionFinal);
+        } catch (error) {
+          console.error('Error al asignar puntos:', error);
+        }
       }
     });
 
+    // Si se usó el multiplicador, resetearlo
+    if (multiplicadorActual > 1) {
+      juegoStore.usarMultiplicador();
+    }
+
+    // Actualizar equipos en el store después de asignar puntos
     const pid = equipos[0]?.partidaId;
     if (pid) {
       try {
@@ -38,6 +68,16 @@ export default function ModalPregunta({ visible, categoria, onClose }) {
 
     avanzarTurno();
     onClose();
+  };
+
+  const handleRespuestaCorrecta = () => {
+    console.log('✅ Respuesta correcta - Incrementando aciertos');
+    useJuegoStore.getState().incrementarAciertos();
+  };
+
+  const handleRespuestaIncorrecta = () => {
+    console.log('❌ Respuesta incorrecta - Reseteando aciertos');
+    useJuegoStore.getState().resetearAciertos();
   };
 
   return (

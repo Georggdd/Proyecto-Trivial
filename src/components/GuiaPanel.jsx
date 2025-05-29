@@ -34,9 +34,12 @@ const GuiaPanel = () => {
           <ul className="list-disc list-inside space-y-4 text-gray-700 text-base">
             <li>El objetivo es conseguir todos los quesitos.</li>
             <li>Cada 1000 puntos recibes un quesito</li>
-            <li>Al tirar el dado, se iluminan casillas posibles.</li>
+            <li>Al tirar el dado, se iluminan casillas posibles, las casillas especiales reciben colores disintos.</li>
+            <li>Si caes en tira otra vez se tira el dado automaticamente.</li>
+            <li>Si caes en un quesito recibiras un x2</li>
             <li>Las preguntas tienen dificultad variable.</li>
-            <li>Comodines positivos o negativos aparecen al azar.</li>
+            <li>Si todos los equipos aciertan 4 veces recibiran un x2 de puntos en la siguiente pregunta</li>
+            <li>En caso de acertar 8 seguidas recibireis un x3 de puntos</li>
           </ul>
 
           {/* Botón para cerrar guía */}

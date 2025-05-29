@@ -9,8 +9,6 @@ const Ranking = ({ nombre, puntos, foto, destacado }) => {
 console.log("foto recibida:", foto);
 console.log("src final:", src);  // ✅ ahora sí puedes usarlo
 
-
-
   return (
     <div className="flex items-center justify-center w-full gap-[1vw] pb-[1vh] px-[12vh]">
       {/* Imagen del equipo */}

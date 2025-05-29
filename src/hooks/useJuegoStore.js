@@ -16,6 +16,12 @@ const casillasCirculoExterior = [
   67, 68, 69, 70, 71, 72
 ];
 
+// Añadir después de las constantes existentes
+const casillasDobles = [31, 38, 45, 52, 59, 66];
+// Después de las otras constantes
+const casillasVolverTirar = [33, 36, 40, 43, 47, 50, 54, 57, 61, 64, 68, 71];
+
+// Modificar la creación del store añadiendo la nueva propiedad
 export const useJuegoStore = create((set, get) => ({
   equipos: [
     { nombre: 'Equipo 1', casilla: 0, camino: null },
@@ -27,6 +33,12 @@ export const useJuegoStore = create((set, get) => ({
   valorDado: null,
   casillasActivas: [],
   fichaPos: casillas[0],
+  esCasillaDoble: false,
+  aciertosConsecutivos: 0,
+  aciertosGrupales: 0,
+  multiplicador: 1,
+  multiplicadorDisponible: false,
+  multiplicadorUsado: false, // Nuevo estado para tracking
 
   setCaminoActual: (camino) => set({ caminoActual: camino }),
   setFichaIndex: (index) => set({ fichaIndex: index }),
@@ -124,9 +136,10 @@ export const useJuegoStore = create((set, get) => ({
         fichaIndex: id,
         fichaPos: { top: posicion.top, left: posicion.left },
         casillasActivas: [],
+        esCasillaDoble: casillasDobles.includes(id),
+        esVolverTirar: casillasVolverTirar.includes(id)  // Nueva propiedad
       };
 
-      // Si la casilla está en el círculo exterior, reinicia el camino actual
       if (casillasCirculoExterior.includes(id)) {
         nuevaData.caminoActual = null;
       }
@@ -142,4 +155,91 @@ export const useJuegoStore = create((set, get) => ({
       valorDado: null,
     }));
   },
+
+  incrementarAciertos: () => {
+    const prevAciertos = get().aciertosConsecutivos;
+    const aciertos = prevAciertos + 1;
+    console.log('🎯 Incrementando aciertos:', {
+      prevAciertos,
+      nuevosAciertos: aciertos
+    });
+
+    set({ aciertosConsecutivos: aciertos });
+
+    // Actualizar multiplicador según aciertos
+    if (aciertos >= 8) {
+      console.log('🌟 Desbloqueado multiplicador x3');
+      set({ multiplicador: 3, multiplicadorDisponible: true });
+    } else if (aciertos >= 4) {
+      console.log('⭐ Desbloqueado multiplicador x2');
+      set({ multiplicador: 2, multiplicadorDisponible: true });
+    }
+  },
+
+  resetearAciertos: () => {
+    console.log('🔄 Reseteando aciertos');
+    set({ aciertosConsecutivos: 0 });
+  },
+
+  // Nuevo método para verificar aciertos de todos los equipos
+  verificarAciertosGrupales: (respuestasEquipos) => {
+    const todosAcertaron = respuestasEquipos.every(resp => resp?.correcta);
+    const { aciertosGrupales, multiplicador, multiplicadorUsado } = get();
+
+    console.log('🎯 Verificando aciertos grupales:', {
+      respuestas: respuestasEquipos,
+      todosAcertaron,
+      aciertosActuales: aciertosGrupales,
+      multiplicadorActual: multiplicador,
+      multiplicadorYaUsado: multiplicadorUsado
+    });
+
+    if (todosAcertaron) {
+      const nuevosAciertos = aciertosGrupales + 1;
+      console.log('✨ Incrementando contador grupal:', nuevosAciertos);
+
+      if (nuevosAciertos >= 8) {
+        console.log('🌟 Activando multiplicador x3 para la siguiente ronda');
+        set({ 
+          multiplicador: 3,
+          multiplicadorDisponible: true,
+          aciertosGrupales: 0,
+          multiplicadorUsado: false // Reset al alcanzar x3
+        });
+      } else if (nuevosAciertos >= 4 && !multiplicadorUsado) {
+        console.log('⭐ Activando multiplicador x2 para la siguiente ronda');
+        set({ 
+          multiplicador: 2,
+          multiplicadorDisponible: true,
+          aciertosGrupales: nuevosAciertos
+        });
+      } else {
+        set({ aciertosGrupales: nuevosAciertos });
+      }
+    } else {
+      console.log('❌ No todos acertaron, reseteando contador');
+      set({ 
+        aciertosGrupales: 0,
+        multiplicador: 1,
+        multiplicadorDisponible: false,
+        multiplicadorUsado: false
+      });
+    }
+  },
+
+  usarMultiplicador: () => {
+    const { multiplicador, multiplicadorDisponible } = get();
+    
+    if (!multiplicadorDisponible) return 1;
+
+    const esMultiplicadorX2 = multiplicador === 2;
+    
+    set({ 
+      multiplicador: 1,
+      multiplicadorDisponible: false,
+      multiplicadorUsado: esMultiplicadorX2 ? true : false // Marcamos como usado si es x2
+    });
+    
+    return multiplicador;
+  }
 }));

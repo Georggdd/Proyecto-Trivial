@@ -54,7 +54,13 @@ const VistaRanking = ({ equipo }) => {
                             {ordenEquipo.map((x, y) => {
                                 const destacar = mismapuntuacion.includes(x.puntos);
                                 return (
-                                    <Ranking key={y} foto={x.foto} nombre={x.nombre} puntos={x.puntos} destacado={destacar} />
+                                    <Ranking
+                                        key={y}
+                                        nombre={x.nombre}
+                                        puntos={x.puntos}
+                                        imagen={x.foto} // Usar directamente el campo foto
+                                        destacado={destacar}
+                                    />
                                 );
                             })}
                         </div>
