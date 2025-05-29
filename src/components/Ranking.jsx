@@ -6,7 +6,7 @@ const Ranking = ({ nombre, puntos, foto, destacado }) => { //recibe los nombres 
       {/* Imagen de la BBDD*/}
    <div className="w-[5vw] h-[5vw] overflow-hidden flex items-center justify-center rounded-full bg-white border-2 border-naranja">
   <img
-    src={`http://localhost:3000/uploads/${foto}`}
+src={foto ? `http://localhost:3000/uploads/${foto}` : "/src/assets/img/ninio.png"}
     className="w-full h-full object-cover"
     alt={`Imagen del equipo ${nombre}`}
   />
