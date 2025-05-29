@@ -26,7 +26,7 @@ const __dirname  = path.dirname(__filename);
 
 // CORS: permite tu frontend de Vite y credenciales
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'http://localhost:5174',
   credentials: true,
 }));
 
