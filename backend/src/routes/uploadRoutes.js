@@ -1,8 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import { procesarArchivo } from '../controllers/uploadController.js';
-import { verPreguntas } from '../controllers/customController.js';
+import { procesarArchivo, verPreguntas } from '../controllers/uploadController.js';
 
 const router = express.Router();
 
@@ -18,7 +17,11 @@ const storage = multer.diskStorage({
 
 // Filtro de archivos
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+  const allowedTypes = [
+    'text/csv',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  ];
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -26,7 +29,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
@@ -34,8 +37,10 @@ const upload = multer({
   }
 });
 
+// Ruta principal para subir archivos
 router.post('/', upload.single('archivo'), procesarArchivo);
 
+// Ruta de test para ver preguntas almacenadas
 router.get('/test', async (req, res) => {
   try {
     const preguntas = await verPreguntas();

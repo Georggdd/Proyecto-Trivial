@@ -1,10 +1,10 @@
-// src/controllers/uploadController.js
-
 import fs from 'fs';
 import path from 'path';
-import csv from 'csv-parser';
 import xlsx from 'xlsx';
-import { guardarPreguntas } from './customController.js';
+import csv from 'csv-parser';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 // Asegúrate de que exista la carpeta uploads
 const uploadsDir = path.join(process.cwd(), 'uploads');
@@ -12,6 +12,7 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+// Controlador principal para procesar el archivo
 export const procesarArchivo = async (req, res) => {
   console.log('📝 Procesando archivo de preguntas customizadas…');
 
@@ -26,21 +27,21 @@ export const procesarArchivo = async (req, res) => {
   const resultados = [];
   const errores = [];
 
-  // Valida y transforma cada fila
   const procesarFila = (data) => {
     const texto       = data['pregunta']?.trim();
-    const puntuación  = parseInt(data['puntuación'], 10);
-    const opcionA     = data['opcion_a']?.trim();
-    const opcionB     = data['opcion_b']?.trim();
-    const opcionC     = data['opcion_c']?.trim();
-    const opcionD     = data['opcion_d']?.trim();
+    const puntuacion  = parseInt(data['puntuación'], 10);
+    const opcionA     = data['opción_a']?.trim();
+    const opcionB     = data['opción_b']?.trim();
+    const opcionC     = data['opción_c']?.trim();
+    const opcionD     = data['opción_d']?.trim();
     const correcta    = data['correcta']?.trim().toLowerCase();
-    const explicación = data['explicación']?.trim() || '';
+    const explicacion = data['explicación']?.trim() || '';
 
+    const opcionesValidas = ['a', 'b', 'c', 'd'];
     const valida =
       texto &&
-      ['a', 'b', 'c', 'd'].includes(correcta) &&
-      !isNaN(puntuación) &&
+      opcionesValidas.includes(correcta) &&
+      !isNaN(puntuacion) &&
       opcionA && opcionB && opcionC && opcionD;
 
     if (!valida) {
@@ -48,17 +49,25 @@ export const procesarArchivo = async (req, res) => {
       return;
     }
 
-    const respuestaCorrecta = { a: opcionA, b: opcionB, c: opcionC, d: opcionD }[correcta];
+    const opciones = {
+      a: opcionA,
+      b: opcionB,
+      c: opcionC,
+      d: opcionD,
+    };
+
+    const respuestaCorrecta = opciones[correcta];
 
     resultados.push({
-      pregunta:           texto,
-      opcion1:            opcionA,
-      opcion2:            opcionB,
-      opcion3:            opcionC,
-      opcion4:            opcionD,
-      respuesta_correcta: respuestaCorrecta,
-      ['puntuación']:     puntuación,
-      ['explicación']:    explicación,
+      pregunta:             texto,
+      opcion1:              opcionA,
+      opcion2:              opcionB,
+      opcion3:              opcionC,
+      opcion4:              opcionD,
+      respuesta_correcta:   respuestaCorrecta,
+      puntuacion:           puntuacion,
+      explicacion:          explicacion,
+      esCustom:             true,
     });
   };
 
@@ -95,6 +104,22 @@ export const procesarArchivo = async (req, res) => {
   }
 };
 
+// Función auxiliar para guardar en la base de datos
+async function guardarPreguntas(preguntas) {
+  try {
+    const resultado = await prisma.customizable.createMany({
+      data: preguntas,
+      skipDuplicates: true,
+    });
+    return resultado;
+  } catch (error) {
+    console.error('❌ Error al guardar preguntas customizadas:', error);
+    throw error;
+  }
+  // Nota: no desconectamos prisma aquí para evitar problemas si se llama varias veces
+}
+
+// Manejador del resultado final tras validación
 async function manejarResultado(res, resultados, errores) {
   if (errores.length) {
     console.warn(`⚠️ ${errores.length} filas inválidas`);
@@ -115,3 +140,13 @@ async function manejarResultado(res, resultados, errores) {
     return res.status(500).json({ error: 'Falló al guardar en la base de datos' });
   }
 }
+
+// Nueva función para listar las preguntas almacenadas en la base de datos
+export const verPreguntas = async () => {
+  try {
+    return await prisma.customizable.findMany();
+  } catch (error) {
+    console.error('❌ Error al obtener preguntas:', error);
+    throw error;
+  }
+};

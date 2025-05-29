@@ -175,16 +175,16 @@ model PuntuacionGrupo {
 // ──────────────────────────────────────────────
 
 model Customizable {
-  id                 Int     @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   pregunta           String
   opcion1            String
   opcion2            String
   opcion3            String
   opcion4            String
-  respuesta_correcta String
-  puntuación         Int     @default(10)
-  explicación        String?
-  esCustom           Boolean @default(true)
+  respuesta_correcta  String
+  puntuacion         Int      @default(10)
+  explicacion        String?
+  esCustom           Boolean  @default(true)
 
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
