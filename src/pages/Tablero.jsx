@@ -114,7 +114,7 @@ export default function Tablero() {
                 key={eq.id}
                 nombre={eq.nombre}
                 puntos={eq.puntos}
-                imagen={eq.avatarMini}
+                foto={eq.avatarMini}
                 destacado={idx === 0}
               />
             ))}
