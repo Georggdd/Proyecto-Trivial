@@ -62,6 +62,7 @@ export default function Tablero() {
   const equiposOrdenados = [...equipos].sort((a, b) => b.puntos - a.puntos);
 
   return (
+    
     <div
       className="flex flex-col min-h-screen w-full pt-32"
       style={{
@@ -70,9 +71,10 @@ export default function Tablero() {
         backgroundPosition: "center",
       }}
     >
-      <Header />
+      
+      <Header className="border-4 border-double border-orange-600"/>
 
-      <div className="flex-grow flex items-center justify-center gap-10 relative pb-10 px-8">
+      <div className="border-x-4 border-double border-orange-600 flex-grow flex items-center justify-center gap-10 relative pb-10 px-8">
         {/* Tablero */}
         <div className="relative aspect-square w-[90%] max-w-[700px]">
           <img
@@ -105,7 +107,7 @@ export default function Tablero() {
         </div>
 
         {/* Mini-ranking */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[360px] w-[300px] z-40">
+        <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[300px] w-[700px] z-40">
           <div className="space-y-4">
             {equiposOrdenados.map((eq, idx) => (
               <Ranking

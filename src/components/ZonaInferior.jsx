@@ -21,7 +21,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
   const toggleGuia = useGuiaStore((state) => state.toggleGuia); // <-- esto es nuevo
 
   return (
-    <div className="relative w-full min-h-[10rem] h-fit">
+    <div className="border-b-4 border-x-4 border-double border-orange-600 relative w-full min-h-[10rem] h-fit">
       {/* Curva morada */}
       <div className="absolute bottom-0 left-0 w-full h-44 bg-purple-700 rounded-t-[60%] z-0" />
 
