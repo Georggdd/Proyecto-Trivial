@@ -27,7 +27,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
 
       {/* Botones más pequeños y juntos */}
       <div className="relative w-full flex justify-center items-end gap-2 sm:gap-4 z-10 -mt-16"> {/* Ajustado margen top */}
-        {/* Botones más pequeños */}
+        {/* Botones laterales más pequeños */}
         <BotonSimple
           icono={"../assets/Guia.png"}
           onClick={toggleGuia}
@@ -38,7 +38,7 @@ const ZonaInferior = ({ onDadoResultado }) => {
           <img
             src={"../assets/Dado.svg"}
             alt="Tirar dado"
-            className="w-28 h-28 hover:scale-105 transition-transform" // Reducido de w-36 h-36
+            className="w-36 h-36 hover:scale-105 transition-transform" // Aumentado de w-28 h-28 a w-36 h-36
           />
         </DadoModal>
 
@@ -53,7 +53,3 @@ const ZonaInferior = ({ onDadoResultado }) => {
 };
 
 export default ZonaInferior;
-
-
-
-
