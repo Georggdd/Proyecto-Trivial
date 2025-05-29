@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import VistaRanking from '../pages/VistaRanking';
 
 export const PadreRanking = () => {
-    const [equipo, setEquipo] = useState([]);
+  const [equipo, setEquipo] = useState([]);
+  const location = useLocation();
 
-    useEffect(() => {
-    fetch("http://localhost:3000/api/ranking/grupos?partidaId=1") // Aquí llamas al backend //cambiar la ruta si fuese necesario
+  // Extrae partidaId de la query string
+  const params = new URLSearchParams(location.search);
+  const partidaId = params.get("partidaId");
+
+  useEffect(() => {
+    if (!partidaId) return;
+    fetch(`http://localhost:3000/api/ranking/grupos?partidaId=${partidaId}`)
       .then((res) => res.json())
       .then((data) => {
-        // Puedes mapear si quieres transformar los datos
         const equiposFormateados = data.map(g => ({
           nombre: g.nombre,
-          puntos: g.puntos, // o cualquier campo si ya existe
-        foto: g.avatarMini
+          puntos: g.puntos,
+          foto: g.avatarMini
         }));
         setEquipo(equiposFormateados);
       })
       .catch((error) => {
         console.error("Error al obtener datos del servidor:", error);
       });
-  }, []);
+  }, [partidaId]);
 
-    return (
-
-        <VistaRanking equipo={equipo} />
-
-    );
-}
+  return <VistaRanking equipo={equipo} />;
+};
 export default PadreRanking;

@@ -1,16 +1,19 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { usePartidaStore } from "../hooks/usePartidaStore";
 import useGuiaStore from "../hooks/useGuiaStore";
 
 const GuiaPanel = () => {
   const { guiaAbierta, toggleGuia } = useGuiaStore();
   const navigate = useNavigate();
+  const { partidaId } = usePartidaStore();
 
   const handleTerminar = () => {
     if (window.confirm("¿Quieres terminar el juego?")) {
       toggleGuia();             // cierra la guía
-      navigate("/padre-ranking");     // lleva a la vista ampliada de ranking
+      // Navega pasando el partidaId
+      navigate(`/padre-ranking?partidaId=${partidaId}`);     // lleva a la vista ampliada de ranking
     }
   };
 
