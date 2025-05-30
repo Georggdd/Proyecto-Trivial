@@ -27,10 +27,10 @@ const VistaRanking = ({ equipo }) => {
     return (
 
         <div className="h-screen w-screen relative flex flex-col bg-[url('../assets/img/Mesa.svg')] bg-cover border-4 border-double border-orange-600 overflow-hidden">
-            <div className="border-b-4 border-double border-orange-600">
-                <Header />
+            <div>
+                <Header className="border-4 border-double border-orange-600"/>
             </div>
-            <div className="relative w-full flex-grow">
+            <div className="relative w-full flex-grow transform translate-y-32 ">
 
                 {/* Imágenes de fondo (banderines y pizarra) */}
                 <img
