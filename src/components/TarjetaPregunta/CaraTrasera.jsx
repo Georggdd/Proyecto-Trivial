@@ -17,7 +17,7 @@ export default function CaraTrasera({
       {/* Header */}
       <div className={`${bgClass} w-full h-[19%] mt-7 flex items-center relative 2xl:gap-[30%]`}>
         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24">
-          {pregunta.categoria}
+          {pregunta.categoria} x {pregunta.puntuacion}
         </h1>
         <img
           src="\img\Logo_EducaTrivial.png"
