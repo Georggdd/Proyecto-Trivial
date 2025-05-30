@@ -21,7 +21,7 @@ export default function CaraTrasera({
         </h1>
         <img
           src="\img\Logo_EducaTrivial.png"
-          className="w-[15%] pt-6 absolute right-[15%]"
+          className="w-[15%] pt-6 absolute right-[15%] drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
           alt=""
         />
       </div>

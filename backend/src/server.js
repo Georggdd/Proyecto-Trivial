@@ -26,10 +26,14 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
-// CORS: permite tu frontend de Vite y credenciales
+// Servir archivos estáticos
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Configurar CORS antes de las rutas
 app.use(cors({
   origin: 'http://localhost:5173',
-  credentials: true,
+  credentials: true
 }));
 
 // JSON body parser
@@ -37,17 +41,6 @@ app.use(express.json());
 
 // Sirve la carpeta 'public' (para imágenes, audio, etc.)
 app.use(express.static(path.join(process.cwd(), 'public')));
-
-
-// Sirve la carpeta public (imagenes como ninio.png)
-app.use(express.static(path.join(__dirname, '../public')));
-
-// Sirve la carpeta uploads (imagenes subidas por usuario)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-
-// Sirve la carpeta 'uploads' (para imágenes subidas por el usuario)
-// app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Montar rutas API
 app.use('/api/auth',      authRoutes);

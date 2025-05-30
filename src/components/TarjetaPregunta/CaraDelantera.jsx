@@ -25,7 +25,7 @@ export default function CaraDelantera({
         </h1>
         <img
           src="public\img\Logo_EducaTrivial.png"
-          className="w-[15%] pt-6 absolute right-[15%]"
+          className="w-[15%] pt-6 absolute right-[15%] drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
           alt=""
         />
       </div>
@@ -35,7 +35,7 @@ export default function CaraDelantera({
         {/* Texto */}
         <div className="w-1/2 h-full flex flex-col items-center justify-center pl-2 ml-4">
           <div className="p-6 h-[90%] w-[90%] border-black border-2 rounded-2xl flex items-center justify-center text-center">
-            <h1 className="font-bold md:text-4xl 2xl:text-7xl text-black px-4">
+            <h1 className="font-bold text-4xl text-black px-4">
               {pregunta.pregunta}
             </h1>
           </div>

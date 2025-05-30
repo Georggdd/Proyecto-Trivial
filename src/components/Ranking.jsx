@@ -1,22 +1,35 @@
 import React from "react";
-import ninio from "../assets/img/ninio.png"; // usa import en lugar de ruta absoluta
+import ninioAvatar from "../assets/img/ninio.png";
 
 const Ranking = ({ nombre, puntos, foto, destacado }) => {
- const src = foto
-  ? (foto.startsWith("/uploads") ? `http://localhost:3000${foto}` : foto)
-  : "http://localhost:3000/images/ninio.png";  // Ruta pública al backend
+  // Construir la URL de la imagen correctamente
+  const imageSrc = (() => {
+    if (!foto) return ninioAvatar;
 
-console.log("foto recibida:", foto);
-console.log("src final:", src);  // ✅ ahora sí puedes usarlo
+    // Si la foto empieza con http, es una URL completa
+    if (foto.startsWith("http")) return foto;
+
+    // Si la foto empieza con /uploads, construir URL completa
+    if (foto.startsWith("/uploads")) {
+      return `http://localhost:3000${foto}`;
+    }
+
+    // En cualquier otro caso, usar la foto tal cual
+    return foto;
+  })();
 
   return (
     <div className="flex items-center justify-center w-full gap-[1vw] pb-[1vh] px-[12vh]">
       {/* Imagen del equipo */}
       <div className="w-[5vw] h-[5vw] overflow-hidden flex items-center justify-center rounded-full bg-white border-2 border-naranja">
         <img
-          src={src}
+          src={imageSrc}
           className="w-full h-full object-cover"
           alt={`Imagen del equipo ${nombre}`}
+          onError={(e) => {
+            console.log("Error cargando imagen:", imageSrc);
+            e.target.src = ninioAvatar;
+          }}
         />
       </div>
 

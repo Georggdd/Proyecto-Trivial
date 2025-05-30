@@ -58,13 +58,13 @@ export default function Tablero() {
     const esVolverTirar = useJuegoStore.getState().esVolverTirar;
 
     if (esVolverTirar) {
-      // No avanzamos turno y mostramos el dado después de un pequeño delay
+      // Mostrar el dado después de un pequeño delay sin avanzar turno
       setTimeout(() => {
         const dadoBtn = document.querySelector('[data-testid="dado-btn"]');
         if (dadoBtn) dadoBtn.click();
       }, 500);
     } else {
-      // Comportamiento normal - mostrar pregunta
+      // Mostrar la pregunta y avanzar turno después
       setTimeout(() => setMostrarModal(true), 500);
     }
   };
@@ -133,13 +133,13 @@ export default function Tablero() {
         {/* Mini-ranking */}
         <div className="absolute top-1/2 left-1/2 transform -translate-y-1/2 translate-x-[400px] w-[1000px] z-40">
           <div className="space-y-4">
-            {equiposOrdenados.map((eq, idx) => (
+            {equiposOrdenados.map((eq) => (
               <Ranking
                 key={eq.id}
                 nombre={eq.nombre}
                 puntos={eq.puntos}
                 foto={eq.avatarMini}
-                destacado={idx === 0}
+                destacado={puntuacionesEmpatadas.includes(eq.puntos)}  // Modificada esta línea
               />
             ))}
           </div>
@@ -148,13 +148,17 @@ export default function Tablero() {
 
       <ZonaInferior onDadoResultado={setValorDado} />
       <GuiaPanel />
-
+            
       <ModalPregunta
         visible={mostrarModal}
         categoria={selectedCategory}
         onClose={() => {
           setMostrarModal(false);
-          avanzarTurno();
+          // Solo avanzar turno si no es una casilla de volver a tirar
+          const esVolverTirar = useJuegoStore.getState().esVolverTirar;
+          if (!esVolverTirar) {
+            avanzarTurno();
+          }
         }}
       />
     </div>

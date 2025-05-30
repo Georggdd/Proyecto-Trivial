@@ -89,10 +89,10 @@ const ZonaInferior = ({ onDadoResultado }) => {
           extraClass={`top-8 w-28 h-28 relative ${!multiplicadorDisponible ? 'opacity-50' : 'animate-pulse'}`}
         >
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-yellow-400 drop-shadow-lg translate-y-6">
+            <span className="text-2xl font-bold text-yellow-400 drop-shadow-lg translate-y-11">
               x{multiplicador}
             </span>
-            <span className="text-sm text-white drop-shadow-lg translate-y-8">
+            <span className="text-sm text-white drop-shadow-lg translate-y-9">
               {aciertosGrupales}/8
             </span>
           </div>

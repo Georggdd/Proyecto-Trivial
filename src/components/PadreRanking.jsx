@@ -13,20 +13,27 @@ export const PadreRanking = () => {
   useEffect(() => {
     if (!partidaId) return;
     fetch(`http://localhost:3000/api/ranking/grupos?partidaId=${partidaId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const equiposFormateados = data.map(g => ({
-          nombre: g.nombre,
-          puntos: g.puntos,
-          foto: g.avatarMini // Mantener el mismo nombre del campo
-        }));
-        setEquipo(equiposFormateados);
-      })
-      .catch((error) => {
-        console.error("Error al obtener datos del servidor:", error);
-      });
-  }, [partidaId]);
+        .then((res) => res.json())
+        .then((data) => {
+            console.log('Datos recibidos:', data); // Para debug
+            const equiposFormateados = data.map(g => ({
+                nombre: g.nombre,
+                puntos: g.puntos,
+                foto: g.avatarMini 
+                    ? (g.avatarMini.startsWith('/uploads') 
+                        ? `http://localhost:3000${g.avatarMini}` 
+                        : g.avatarMini)
+                    : null
+            }));
+            console.log('Equipos formateados:', equiposFormateados); // Para debug
+            setEquipo(equiposFormateados);
+        })
+        .catch((error) => {
+            console.error("Error al obtener datos del servidor:", error);
+        });
+}, [partidaId]);
 
   return <VistaRanking equipo={equipo} />;
 };
+
 export default PadreRanking;

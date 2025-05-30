@@ -4,7 +4,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es el sustantivo en la frase El perro corre?",
     dificultad: "facil",
-    asignatura: "Lengua",
+    asignatura: "Lengua Castellana",
     respuestas: [
       { texto: "El", esCorrecta: false },
       { texto: "Perro", esCorrecta: true },
@@ -15,7 +15,7 @@ const preguntasLengua = [
   {
     texto: "¿Qué es un verbo?",
     dificultad: "facil",
-    asignatura: "Lengua",
+    asignatura: "Lengua Castellana",
     respuestas: [
       { texto: "Una acción", esCorrecta: true },
       { texto: "Un objeto", esCorrecta: false },
@@ -26,7 +26,7 @@ const preguntasLengua = [
   {
     texto: "¿Cuál es el plural de lápiz?",
     dificultad: "facil",
-    asignatura: "Lengua",
+    asignatura: "Lengua Castellana",
     respuestas: [
       { texto: "Lápizs", esCorrecta: false },
       { texto: "Lápices", esCorrecta: true, explicacion: "El plural correcto es lápices." },

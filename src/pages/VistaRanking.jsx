@@ -58,7 +58,7 @@ const VistaRanking = ({ equipo }) => {
                                         key={y}
                                         nombre={x.nombre}
                                         puntos={x.puntos}
-                                        imagen={x.foto} // Usar directamente el campo foto
+                                        foto={x.foto}  // Cambiado de 'imagen' a 'foto'
                                         destacado={destacar}
                                     />
                                 );

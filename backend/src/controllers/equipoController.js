@@ -1,24 +1,22 @@
 import prisma from '../config/db.js';
 
 export const crearEquipo = async (req, res) => {
-  // Si hay fichero, construyo la URL; si no, dejo null
- const avatarMini = req.file ? `/uploads/${req.file.filename}` : null;
-
+  // Si hay fichero, construimos la ruta relativa para los uploads
+  const avatarMini = req.file 
+    ? `/uploads/${req.file.filename}`  // Solo la ruta relativa, el frontend construirá la URL completa
+    : null;
 
   const { nombre, integrantes, partidaId } = req.body;
-  if (!partidaId) {
-    return res.status(400).json({ error: 'partidaId requerido' });
-  }
-
+  
   try {
     const equipo = await prisma.equipo.create({
       data: {
         nombre,
-        integrantes: Array.isArray(integrantes)
-          ? integrantes.join(';')
+        integrantes: Array.isArray(integrantes) 
+          ? integrantes.join(';') 
           : integrantes,
         partidaId: Number(partidaId),
-        avatarMini, // solo si se subió, deja null en caso contrario
+        avatarMini,
       },
     });
     res.status(201).json(equipo);
