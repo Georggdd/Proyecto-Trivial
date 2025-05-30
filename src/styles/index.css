@@ -39,6 +39,20 @@ Lo pongo en css y no en tailwind.config porque no lo he conseguido*/
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Milford Condensed';
+  src: url('/src/assets/fonts/MilfordCondensed.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Balmoral';
+  src: url('/fonts/Balmoral.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer components {
   .alineacion {
     @apply flex items-center justify-center;
