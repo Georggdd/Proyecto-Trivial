@@ -73,40 +73,72 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish, useCusto
     // Función para reproducir audio aleatorio basado en el porcentaje de aciertos
     const reproducirAudioAleatorio = (respuestas) => {
         const aciertos = respuestas.filter(r => r?.correcta).length;
-        const porcentajeAciertos = (aciertos / numEquipos) * 100;
+        const total = respuestas.length;
         
+        console.log(`Aciertos: ${aciertos}/${total} equipos`);
         let audioPath;
-        if (porcentajeAciertos >= 70) {
-            // Array de audios para porcentaje >= 70%
-            const audiosExcelentes = [
-                '/assets/audio/excelente1.mp3',
-                '/assets/audio/excelente2.mp3',
-                '/assets/audio/excelente3.mp3'
-            ];
-            audioPath = getAudioAleatorio(audiosExcelentes);
-        } else if (porcentajeAciertos >= 50) {
-            // Array de audios para porcentaje >= 50%
-            const audiosBuenos = [
-                '/assets/audio/bueno1.mp3',
-                '/assets/audio/bueno2.mp3',
-                '/assets/audio/bueno3.mp3'
-            ];
-            audioPath = getAudioAleatorio(audiosBuenos);
-        } else if (porcentajeAciertos >= 35) {
-            // Array de audios para porcentaje >= 35%
-            const audiosRegulares = [
-                '/assets/audio/regular1.mp3',
-                '/assets/audio/regular2.mp3',
-                '/assets/audio/regular3.mp3'
-            ];
-            audioPath = getAudioAleatorio(audiosRegulares);
+        
+        // Lógica específica según número de equipos
+        if (total === 2) {
+            if (aciertos === 2) {
+                audioPath = '/assets/audio/Impresionante.mp3';
+            } else if (aciertos === 1) {
+                audioPath = '/assets/audio/Buen.mp3';
+            } else {
+                audioPath = '/assets/audio/esfuerzo.mp3';
+            }
+        } else if (total === 3) {
+            if (aciertos === 3) {
+                audioPath = '/assets/audio/Impresionante.mp3';
+            } else if (aciertos === 2) {
+                audioPath = '/assets/audio/increible.mp3';
+            } else if (aciertos === 1) {
+                audioPath = '/assets/audio/Buen.mp3';
+            } else {
+                audioPath = '/assets/audio/esfuerzo.mp3';
+            }
+        } else if (total === 4) {
+            if (aciertos === 4) {
+                audioPath = '/assets/audio/Impresionante.mp3';
+            } else if (aciertos === 3) {
+                audioPath = '/assets/audio/increible.mp3';
+            } else if (aciertos === 2) {
+                audioPath = '/assets/audio/Buen.mp3';
+            } else if (aciertos === 1) {
+                audioPath = '/assets/audio/intencion.mp3';
+            } else {
+                audioPath = '/assets/audio/esfuerzo.mp3';
+            }
         } else {
-            // Audio para porcentaje < 35%
-            audioPath = '/assets/audio/mal.mp3';
+            // Para 5 o más equipos
+            if (aciertos === total) {
+                audioPath = '/assets/audio/Impresionante.mp3';
+            } else if (aciertos >= Math.ceil(total * 0.75)) {
+                audioPath = '/assets/audio/increible.mp3';
+            } else if (aciertos >= Math.ceil(total * 0.5)) {
+                audioPath = '/assets/audio/Buen.mp3';
+            } else if (aciertos >= 1) {
+                audioPath = '/assets/audio/intencion.mp3';
+            } else {
+                audioPath = '/assets/audio/esfuerzo.mp3';
+            }
         }
 
-        audioRef.current.src = audioPath;
-        audioRef.current.play().catch(error => console.error('Error al reproducir audio:', error));
+        console.log('🎵 Intentando reproducir:', audioPath);
+        
+        const audio = new Audio(audioPath);
+        
+        audio.addEventListener('loadeddata', () => {
+            audio.play()
+                .then(() => console.log('✅ Audio reproduciendo:', audioPath))
+                .catch(error => console.error('❌ Error reproduciendo:', error));
+        });
+
+        audio.addEventListener('error', (e) => {
+            console.error('❌ Error cargando audio:', audioPath, e);
+        });
+
+        audioRef.current = audio;
     };
 
     // Cuando un equipo elige
