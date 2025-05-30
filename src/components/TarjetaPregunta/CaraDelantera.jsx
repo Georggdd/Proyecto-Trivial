@@ -21,7 +21,7 @@ export default function CaraDelantera({
       {/* Header con color dinámico */}
       <div className={`${bgClass} w-full h-[19%] mt-7 flex items-center relative 2xl:gap-[30%]`}>
         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24">
-          {pregunta.categoria}
+          {pregunta.categoria} x {pregunta.puntuacion}
         </h1>
         <img
           src="public\img\Logo_EducaTrivial.png"
@@ -47,7 +47,7 @@ export default function CaraDelantera({
             <p className="mb-2 text-2xl text-left font-bold 2xl:text-3xl">
               {nombreEquipo}
             </p>
-            <div className="flex gap-4 absolute right-16">
+            <div className="flex gap-4 absolute right-24">
               <button
                 onClick={onRecargar}
                 className="border-black border-2 rounded-lg p-1"
