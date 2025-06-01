@@ -81,46 +81,46 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish, useCusto
         // Lógica específica según número de equipos
         if (total === 2) {
             if (aciertos === 2) {
-                audioPath = '/assets/audio/Impresionante.mp3';
+                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
             } else if (aciertos === 1) {
-                audioPath = '/assets/audio/Buen.mp3';
+                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
             } else {
-                audioPath = '/assets/audio/esfuerzo.mp3';
+                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
             }
         } else if (total === 3) {
             if (aciertos === 3) {
-                audioPath = '/assets/audio/Impresionante.mp3';
+                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
             } else if (aciertos === 2) {
-                audioPath = '/assets/audio/increible.mp3';
+                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
             } else if (aciertos === 1) {
-                audioPath = '/assets/audio/Buen.mp3';
+                audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
             } else {
-                audioPath = '/assets/audio/esfuerzo.mp3';
+                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
             }
         } else if (total === 4) {
             if (aciertos === 4) {
-                audioPath = '/assets/audio/Impresionante.mp3';
+                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
             } else if (aciertos === 3) {
-                audioPath = '/assets/audio/increible.mp3';
+                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
             } else if (aciertos === 2) {
-                audioPath = '/assets/audio/Buen.mp3';
+                audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
             } else if (aciertos === 1) {
-                audioPath = '/assets/audio/intencion.mp3';
+                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
             } else {
-                audioPath = '/assets/audio/esfuerzo.mp3';
+                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
             }
         } else {
             // Para 5 o más equipos
             if (aciertos === total) {
-                audioPath = '/assets/audio/Impresionante.mp3';
+                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
             } else if (aciertos >= Math.ceil(total * 0.75)) {
-                audioPath = '/assets/audio/increible.mp3';
+                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
             } else if (aciertos >= Math.ceil(total * 0.5)) {
-                audioPath = '/assets/audio/Buen.mp3';
+                audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
             } else if (aciertos >= 1) {
-                audioPath = '/assets/audio/intencion.mp3';
+                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
             } else {
-                audioPath = '/assets/audio/esfuerzo.mp3';
+                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
             }
         }
 

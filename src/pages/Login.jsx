@@ -14,7 +14,7 @@ export default function Login({ onLoginSuccess }) {
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio('/assets/audio/por-favor-inicie-sesion.mp3');
+    audioRef.current = new Audio('/assets/audio/01 Por favor inicie sesion_FEMENINO.mp3');
 
     const handleFirstClick = () => {
       setAudioHabilitado(true);

@@ -1,7 +1,8 @@
 // src/components/TarjetaPregunta/CaraTrasera.jsx
-import React from 'react';
-import { useTurnoStore } from '../../hooks/useTurnoStore';
+import React, { useContext } from 'react';
 import ninioAvatar from '../../assets/img/ninio.png';
+import { QuizSetupContext } from '../../context/QuizSetupContext';
+import { useTurnoStore } from '../../hooks/useTurnoStore';
 import { categoryBg } from '../../utils/categoriaColors';
 
 export default function CaraTrasera({
@@ -9,19 +10,31 @@ export default function CaraTrasera({
   respuestasEquipos,
   siguienteRonda,
 }) {
+
+  const { selectedFile } = useContext(QuizSetupContext);
+
+  const categoriasBase = ["Idiomas", "Música", "Matemáticas", "Biología", "Geografía", "Lengua"];
   const bgClass = categoryBg[pregunta.categoria] || 'bg-gray-800';
   const equipos = useTurnoStore((s) => s.equipos);
+
+  // Determinar si mostrar categoría normal o nombre de archivo
+  const esCategoriaBase = categoriasBase.includes(pregunta.categoria);
+  const textoCategoria = esCategoriaBase
+  ? pregunta.categoria
+  : selectedFile
+    ? `${selectedFile.name.split('.').slice(0, -1).join('.')}`
+    : "Custom";
 
   return (
     <div className="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center">
       {/* Header */}
       <div className={`${bgClass} w-full h-[19%] mt-7 flex items-center relative 2xl:gap-[30%]`}>
         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24">
-          {pregunta.categoria}
+          {textoCategoria} x {pregunta.puntuacion}
         </h1>
         <img
           src="\img\Logo_EducaTrivial.png"
-          className="w-[15%] pt-6 absolute right-[15%] drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
+          className="z-10 w-[15%] pt-6 absolute right-[15%] drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
           alt=""
         />
       </div>
@@ -46,8 +59,8 @@ export default function CaraTrasera({
               key={i}
               className={`
                 relative w-[75%] h-auto rounded-xl flex items-start gap-2
-                2xl:w-[75%] bg-white ${borde} pl-4 p-2 2xl:p-6
-                text-black text-xl font-bold 2xl:text-3xl transition-all
+                bg-white ${borde} pl-4 2xl:p-6
+                text-black text-xl font-bold lg:text-4xl transition-all
               `}
             >
               <img
@@ -63,14 +76,14 @@ export default function CaraTrasera({
                       <img
                         key={num}
                         src={equipos[num - 1]?.avatarMini || ninioAvatar}
-                        className="w-8 h-8 2xl:w-8 2xl:h-8 rounded-full border border-black"
+                        className="w-8 h-8 lg:w-10 lg:h-10 rounded-full border border-black"
                         alt={`Equipo ${num}`}
                       />
                     ))}
                   </div>
                 </div>
                 {esCorrecta && r.explicacion && (
-                  <p className="text-md font-light 2xl:text-xl text-black text-left font-secular leading-relaxed break-words">
+                  <p className="text-md font-light lg:text-2xl text-black text-left font-secular leading-relaxed break-words">
                     {r.explicacion}
                   </p>
                 )}
@@ -81,7 +94,7 @@ export default function CaraTrasera({
 
         <button
           onClick={siguienteRonda}
-          className="w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl 2xl:text-2xl 2xl:p-5 hover:bg-black hover:text-white transition"
+          className="w-72 rounded-md mt-2 p-2 border-2 border-gray-900 text-black text-xl lg:w-96 lg:text-3xl 2xl:p-5 hover:bg-black hover:text-white transition"
         >
           SIGUIENTE RONDA
         </button>

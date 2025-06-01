@@ -25,7 +25,7 @@ export default function VistaCategorias({ onUpload, preguntas, error }) {
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("/assets/audio/por-favor-elije.mp3");
+    audioRef.current = new Audio("/assets/audio/02 Por favor, elija un tema y defina lso equipos_FEMENINO.mp3");
     const handleFirstClick = () => {
       setAudioHabilitado(true);
       document.removeEventListener("click", handleFirstClick);

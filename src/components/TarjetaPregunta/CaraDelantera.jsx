@@ -1,6 +1,7 @@
-import React from 'react';
-import { categoryBg } from '../../utils/categoriaColors';
+import React, { useContext } from 'react';
 import ninioAvatar from '../../assets/img/ninio.png';
+import { QuizSetupContext } from '../../context/QuizSetupContext';
+import { categoryBg } from '../../utils/categoriaColors';
 
 export default function CaraDelantera({
   pregunta,
@@ -11,17 +12,30 @@ export default function CaraDelantera({
   onRecargar,
   onEnviar,
 }) {
+
+  const { selectedFile } = useContext(QuizSetupContext);
+
+  const categoriasBase = ["Idiomas", "Música", "Matemáticas", "Biología", "Geografía", "Lengua"];
   const bgClass = categoryBg[pregunta.categoria] || 'bg-gray-800';
   const yaRespondido = respuestasEquipos[equipoActual] !== null;
   const todosRespondieron = respuestasEquipos.every(r => r !== null);
   const nombreEquipo = equipos[equipoActual]?.nombre || `Equipo ${equipoActual + 1}`;
+
+  // Determinar si mostrar categoría normal o nombre de archivo
+  const esCategoriaBase = categoriasBase.includes(pregunta.categoria);
+  const textoCategoria = esCategoriaBase
+  ? pregunta.categoria
+  : selectedFile
+    ? `${selectedFile.name.split('.').slice(0, -1).join('.')}`
+    : "Custom";
+
 
   return (
     <div className="absolute inset-0 backface-hidden">
       {/* Header con color dinámico */}
       <div className={`${bgClass} w-full h-[19%] mt-7 flex items-center relative 2xl:gap-[30%]`}>
         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24">
-          {pregunta.categoria}
+          {textoCategoria} x {pregunta.puntuacion}
         </h1>
         <img
           src="public\img\Logo_EducaTrivial.png"
@@ -35,7 +49,7 @@ export default function CaraDelantera({
         {/* Texto */}
         <div className="w-1/2 h-full flex flex-col items-center justify-center pl-2 ml-4">
           <div className="p-6 h-[90%] w-[90%] border-black border-2 rounded-2xl flex items-center justify-center text-center">
-            <h1 className="font-bold text-4xl text-black px-4">
+            <h1 className="font-bold text-4xl lg:text-5xl text-black px-4">
               {pregunta.pregunta}
             </h1>
           </div>
@@ -45,9 +59,9 @@ export default function CaraDelantera({
         <div className="w-1/2 h-[87%] ml-10 flex flex-col justify-center gap-4">
           <div className="flex relative items-center">
             <p className="mb-2 text-2xl text-left font-bold 2xl:text-3xl">
-              {nombreEquipo}
+              {nombreEquipo} 
             </p>
-            <div className="flex gap-4 absolute right-16">
+            <div className="flex gap-4 absolute right-24">
               <button
                 onClick={onRecargar}
                 className="border-black border-2 rounded-lg p-1"
@@ -107,7 +121,7 @@ export default function CaraDelantera({
                       <img
                         key={idx}
                         src={equipos[idx]?.avatarMini || ninioAvatar}
-                        className="w-6 h-6 2xl:w-8 2xl:h-8 rounded-full border border-black"
+                        className="w-6 h-6 lg:w-10 lg:h-10 rounded-full border border-black"
                         alt={`Equipo ${idx + 1}`}
                       />
                     ))}
