@@ -15,6 +15,8 @@ import rankingRoutes from './routes/rankingRoutes.js';
 import downloadRoutes from './routes/downloadRoutes.js';
 import resetRoutes from './routes/resetRoutes.js';    // si aún lo necesitas
 import { configurarEventosDeCierre } from './utils/shutdownHandler.js';
+import respuestaPartidaRoutes from './routes/respuestaPartidaRoutes.js';
+
 
 dotenv.config();
 
@@ -54,6 +56,8 @@ app.use('/api/upload',    uploadRoutes);    // subida de CSV/XLSX
 app.use('/api/ranking',   rankingRoutes);
 app.use('/api',  downloadRoutes);
 app.use('/api/reset',     resetRoutes);     // si lo sigues usando
+app.use('/api/respuestaPartida', respuestaPartidaRoutes); // registrar respuestas de partida
+
 
 // Handler de errores de multer (subida de archivos)
 app.use((err, req, res, next) => {

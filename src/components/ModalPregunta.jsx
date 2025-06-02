@@ -18,71 +18,90 @@ export default function ModalPregunta({ visible, categoria, esCasillaDoble, casi
   if (!visible) return null;
 
   const onFinish = async (respuestasEquipos, pregunta) => {
-    const puntuacionBase = Number(pregunta.puntuacion || 10);
-    const juegoStore = useJuegoStore.getState();
-    
-    // Verificar aciertos grupales antes de procesar puntuaciones
-    juegoStore.verificarAciertosGrupales(respuestasEquipos);
-    
-    // Obtener multiplicadores
-    const multiplicadorAciertos = juegoStore.multiplicadorDisponible ? juegoStore.multiplicador : 1;
-    const multiplicadorCasilla = esCasillaDoble ? 2 : 1; // Aplicar x2 en casillas de quesito
+  const puntuacionBase = Number(pregunta.puntuacion || 10);
+  const juegoStore = useJuegoStore.getState();
 
-    respuestasEquipos.forEach(async (resp, idx) => {
-      if (resp?.correcta) {
-        const eq = equipos[idx];
-        
-        // Si es casilla de quesito, registrar el color ganado
-        if (esCasillaDoble) {
-          const colorQuesito = juegoStore.obtenerColorQuesito(casillaActual);
-          if (colorQuesito) {
-            juegoStore.registrarQuesito(eq.id, colorQuesito);
-          }
-        }
+  // Verificar aciertos grupales antes de procesar puntuaciones
+  juegoStore.verificarAciertosGrupales(respuestasEquipos);
 
-        let puntuacionFinal = puntuacionBase;
-        
-        // Aplicar multiplicadores en orden
-        puntuacionFinal *= multiplicadorCasilla; // Primero el de casilla
-        puntuacionFinal *= multiplicadorAciertos; // Luego el de aciertos
-        
-        console.log('📊 Asignando puntos:', {
-          base: puntuacionBase,
-          multiplicadorCasilla,
-          multiplicadorAciertos,
-          final: puntuacionFinal
-        });
+  const multiplicadorAciertos = juegoStore.multiplicadorDisponible ? juegoStore.multiplicador : 1;
+  const multiplicadorCasilla = esCasillaDoble ? 2 : 1;
 
-        try {
-          await syncPuntos(eq.id, puntuacionFinal);
-          addPuntos(eq.id, puntuacionFinal);
-        } catch (error) {
-          console.error('Error al asignar puntos:', error);
+  for (let idx = 0; idx < respuestasEquipos.length; idx++) {
+    const resp = respuestasEquipos[idx];
+    const eq = equipos[idx];
+
+    let esCorrecta = resp?.correcta || false;
+    let puntuacionFinal = 0;
+
+    if (esCorrecta) {
+      if (esCasillaDoble) {
+        const colorQuesito = juegoStore.obtenerColorQuesito(casillaActual);
+        if (colorQuesito) {
+          juegoStore.registrarQuesito(eq.id, colorQuesito);
         }
       }
-    });
 
-    // Si se usó el multiplicador, resetearlo
-    if (multiplicadorAciertos > 1) {
-      juegoStore.usarMultiplicador();
-    }
+      puntuacionFinal = puntuacionBase * multiplicadorCasilla * multiplicadorAciertos;
 
-    // Actualizar equipos en el store después de asignar puntos
-    const pid = equipos[0]?.partidaId;
-    if (pid) {
+      console.log('📊 Asignando puntos:', {
+        equipo: eq.nombre,
+        base: puntuacionBase,
+        multiplicadorCasilla,
+        multiplicadorAciertos,
+        final: puntuacionFinal,
+      });
+
       try {
-        const nuevos = await fetch(
-          `http://localhost:3000/api/equipos?partidaId=${pid}`
-        ).then((r) => r.json());
-        actualizarEquipos(nuevos);
-      } catch (e) {
-        console.error('Error recargando equipos', e);
+        await syncPuntos(eq.id, puntuacionFinal);
+        addPuntos(eq.id, puntuacionFinal);
+      } catch (error) {
+        console.error('❌ Error al asignar puntos:', error);
       }
     }
 
-    avanzarTurno();
-    onClose();
-  };
+    // ✅ Siempre registrar la respuesta, correcta o incorrecta
+    try {
+      const payload = {
+        partidaId: eq.partidaId,
+        equipoId: eq.id,
+        preguntaId: pregunta.id,
+        respuestaId: resp.respuestaId,  // si tienes este campo
+        esCorrecta,
+        puntosObtenidos: puntuacionFinal,
+      };
+
+      console.log('📤 Registrando respuesta en respuestaPartida:', payload);
+
+      await fetch("http://localhost:3000/api/respuestaPartida", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.error('❌ Error registrando en respuestaPartida:', error);
+    }
+  }
+
+  // Resetear el multiplicador si fue usado
+  if (multiplicadorAciertos > 1) {
+    juegoStore.usarMultiplicador();
+  }
+
+  // Recargar los equipos actualizados
+  const pid = equipos[0]?.partidaId;
+  if (pid) {
+    try {
+      const nuevos = await fetch(`http://localhost:3000/api/equipos?partidaId=${pid}`).then((r) => r.json());
+      actualizarEquipos(nuevos);
+    } catch (e) {
+      console.error('Error recargando equipos', e);
+    }
+  }
+
+  avanzarTurno();
+  onClose();
+};
 
   const handleRespuestaCorrecta = () => {
     console.log('✅ Respuesta correcta - Incrementando aciertos');
@@ -96,7 +115,7 @@ export default function ModalPregunta({ visible, categoria, esCasillaDoble, casi
 
   const handleRespuesta = async (esCorrecta) => {
     let puntosBase = esCorrecta ? 100 : 0;
-    
+
     // Si la respuesta es correcta, aplicar multiplicador
     if (esCorrecta) {
       const multFinal = usarMultiplicador();
@@ -105,11 +124,11 @@ export default function ModalPregunta({ visible, categoria, esCasillaDoble, casi
 
     // Actualizar puntos del equipo actual
     const nuevosEquipos = equipos.map((eq, idx) =>
-      idx === turnoActual 
+      idx === turnoActual
         ? { ...eq, puntos: eq.puntos + puntosBase }
         : eq
     );
-    
+
     setEquipos(nuevosEquipos);
     onClose();
   };
