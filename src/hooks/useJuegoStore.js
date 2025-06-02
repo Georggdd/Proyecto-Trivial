@@ -21,6 +21,25 @@ const casillasDobles = [31, 38, 45, 52, 59, 66];
 // Después de las otras constantes
 const casillasVolverTirar = [33, 36, 40, 43, 47, 50, 54, 57, 61, 64, 68, 71];
 
+// Función auxiliar para calcular el multiplicador basado en aciertos
+const calcularMultiplicador = (aciertos) => {
+  if (aciertos >= 8) return 3;
+  if (aciertos >= 6) return 2.5;
+  if (aciertos >= 4) return 2;
+  if (aciertos >= 2) return 1.5;
+  return 1;
+};
+
+// Mapeo de casillas a quesitos
+const mapaCasillasQuesitos = {
+  31: 'rosa',     // Casilla 31 da quesito rosa
+  38: 'azul',     // Casilla 38 da quesito azul
+  45: 'amarillo', // Casilla 45 da quesito amarillo
+  52: 'marron',   // Casilla 52 da quesito marrón
+  59: 'verde',    // Casilla 59 da quesito verde
+  66: 'naranja'   // Casilla 66 da quesito naranja
+};
+
 // Modificar la creación del store añadiendo la nueva propiedad
 export const useJuegoStore = create((set, get) => ({
   equipos: [
@@ -39,6 +58,7 @@ export const useJuegoStore = create((set, get) => ({
   multiplicador: 1,
   multiplicadorDisponible: false,
   multiplicadorUsado: false, // Nuevo estado para tracking
+  equiposQuesitos: {}, // Objeto para trackear quesitos por equipo: {equipoId: [colores]},
 
   setCaminoActual: (camino) => set({ caminoActual: camino }),
   setFichaIndex: (index) => set({ fichaIndex: index }),
@@ -184,14 +204,12 @@ export const useJuegoStore = create((set, get) => ({
   // Nuevo método para verificar aciertos de todos los equipos
   verificarAciertosGrupales: (respuestasEquipos) => {
     const todosAcertaron = respuestasEquipos.every(resp => resp?.correcta);
-    const { aciertosGrupales, multiplicador, multiplicadorUsado } = get();
+    const { aciertosGrupales } = get();
 
     console.log('🎯 Verificando aciertos grupales:', {
       respuestas: respuestasEquipos,
       todosAcertaron,
-      aciertosActuales: aciertosGrupales,
-      multiplicadorActual: multiplicador,
-      multiplicadorYaUsado: multiplicadorUsado
+      aciertosActuales: aciertosGrupales
     });
 
     if (todosAcertaron) {
@@ -199,30 +217,31 @@ export const useJuegoStore = create((set, get) => ({
       console.log('✨ Incrementando contador grupal:', nuevosAciertos);
 
       if (nuevosAciertos >= 8) {
-        console.log('🌟 Activando multiplicador x3 para la siguiente ronda');
+        // Al llegar a 8 aciertos, reiniciamos el contador
+        console.log('🔄 Reiniciando contador tras alcanzar 8 aciertos');
         set({ 
-          multiplicador: 3,
-          multiplicadorDisponible: true,
           aciertosGrupales: 0,
-          multiplicadorUsado: false // Reset al alcanzar x3
-        });
-      } else if (nuevosAciertos >= 4 && !multiplicadorUsado) {
-        console.log('⭐ Activando multiplicador x2 para la siguiente ronda');
-        set({ 
-          multiplicador: 2,
-          multiplicadorDisponible: true,
-          aciertosGrupales: nuevosAciertos
+          multiplicador: 1,
+          multiplicadorDisponible: false
         });
       } else {
-        set({ aciertosGrupales: nuevosAciertos });
+        // Calculamos el nuevo multiplicador basado en los aciertos
+        const nuevoMultiplicador = calcularMultiplicador(nuevosAciertos);
+        console.log(`🌟 Nuevo multiplicador: x${nuevoMultiplicador}`);
+        
+        set({ 
+          aciertosGrupales: nuevosAciertos,
+          multiplicador: nuevoMultiplicador,
+          multiplicadorDisponible: nuevoMultiplicador > 1
+        });
       }
     } else {
+      // Si fallan, se reinicia todo
       console.log('❌ No todos acertaron, reseteando contador');
       set({ 
         aciertosGrupales: 0,
         multiplicador: 1,
-        multiplicadorDisponible: false,
-        multiplicadorUsado: false
+        multiplicadorDisponible: false
       });
     }
   },
@@ -232,14 +251,36 @@ export const useJuegoStore = create((set, get) => ({
     
     if (!multiplicadorDisponible) return 1;
 
-    const esMultiplicadorX2 = multiplicador === 2;
+    // Guardamos el valor actual antes de resetearlo
+    const valorMultiplicador = multiplicador;
     
+    // Reseteamos el multiplicador
     set({ 
       multiplicador: 1,
-      multiplicadorDisponible: false,
-      multiplicadorUsado: esMultiplicadorX2 ? true : false // Marcamos como usado si es x2
+      multiplicadorDisponible: false
     });
     
-    return multiplicador;
+    // Retornamos el valor que se va a aplicar
+    return valorMultiplicador;
+  },
+
+  // Añadir método para registrar quesito ganado
+  registrarQuesito: (equipoId, color) => {
+    set((state) => {
+      const quesitosEquipo = state.equiposQuesitos[equipoId] || [];
+      if (!quesitosEquipo.includes(color)) {
+        return {
+          equiposQuesitos: {
+            ...state.equiposQuesitos,
+            [equipoId]: [...quesitosEquipo, color]
+          }
+        };
+      }
+      return state;
+    });
+  },
+
+  obtenerColorQuesito: (numeroCasilla) => {
+    return mapaCasillasQuesitos[numeroCasilla];
   }
 }));

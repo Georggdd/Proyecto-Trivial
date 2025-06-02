@@ -60,7 +60,7 @@ const GuiaPanel = () => {
                 <ul className="list-disc list-inside space-y-2 text-gray-700">
                   <li>
                     Preguntas correctas Custom: Puntos determinados por el archivo
-                    custom
+                    customizable
                   </li>
                   <li>Preguntas correctas Predefinidas: Puntos de 10 a 30</li>
                   <li>Bonus por racha: hasta x3 multiplicador</li>
@@ -90,10 +90,14 @@ const GuiaPanel = () => {
                   Sistema de Multiplicadores
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>Cada 2 aciertos grupales iras obteniendo beneficios:</li>
+                  <li>2 aciertos grupales: x1.5 disponible</li>
                   <li>4 aciertos grupales: x2 disponible</li>
+                  <li>6 aciertos grupales: x2.5 disponible</li>
                   <li>8 aciertos grupales: x3 disponible</li>
+                  <li>El multiplicador se aplica al siguiente acierto</li>
                   <li>El multiplicador se resetea al fallar</li>
-                  <li>El multiplicador se resetea al llegar al x3</li>
+                  <li>El multiplicador se resetea al usar el x3</li>
                 </ul>
               </section>
 
