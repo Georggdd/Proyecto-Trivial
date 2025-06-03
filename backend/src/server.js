@@ -1,22 +1,19 @@
-import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import express from 'express';
+import multer from 'multer'; // para el handler de errores
 import path from 'path';
-import multer from 'multer';              // para el handler de errores
-import { fileURLToPath } from 'url';      // para reconstruir __dirname
+import { fileURLToPath } from 'url'; // para reconstruir __dirname
 import authRoutes from './routes/authRoutes.js';
-import partidaRoutes from './routes/partidaRoutes.js';
-import equipoRoutes from './routes/equipoRoutes.js';
-import equiposRoutes from './routes/equipos.js';
-import preguntasRoutes from './routes/preguntas.routes.js';
 import categoriaRoutes from './routes/categoriaRoutes.js';
-import uploadRoutes from './routes/uploadRoutes.js';
-import rankingRoutes from './routes/rankingRoutes.js';
 import downloadRoutes from './routes/downloadRoutes.js';
-import resetRoutes from './routes/resetRoutes.js';    // si aún lo necesitas
+import equipoRoutes from './routes/equipoRoutes.js';
+import partidaRoutes from './routes/partidaRoutes.js';
+import preguntasRoutes from './routes/preguntas.routes.js';
+import rankingRoutes from './routes/rankingRoutes.js';
+import resetRoutes from './routes/resetRoutes.js'; // si aún lo necesitas
+import uploadRoutes from './routes/uploadRoutes.js';
 import { configurarEventosDeCierre } from './utils/shutdownHandler.js';
-import respuestaPartidaRoutes from './routes/respuestaPartidaRoutes.js';
-
 
 dotenv.config();
 
@@ -29,7 +26,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
 // Servir archivos estáticos
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, '../public')));
 
 // Configurar CORS antes de las rutas
@@ -48,7 +45,6 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 app.use('/api/auth',      authRoutes);
 app.use('/api/partidas',  partidaRoutes);
 app.use('/api/equipos',   equipoRoutes);
-app.use('/api', equiposRoutes);
 app.use('/api/preguntas', preguntasRoutes);
 app.use('/api/categorias',categoriaRoutes);
 
@@ -56,8 +52,6 @@ app.use('/api/upload',    uploadRoutes);    // subida de CSV/XLSX
 app.use('/api/ranking',   rankingRoutes);
 app.use('/api',  downloadRoutes);
 app.use('/api/reset',     resetRoutes);     // si lo sigues usando
-app.use('/api/respuestaPartida', respuestaPartidaRoutes); // registrar respuestas de partida
-
 
 // Handler de errores de multer (subida de archivos)
 app.use((err, req, res, next) => {

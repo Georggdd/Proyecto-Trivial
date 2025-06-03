@@ -15,6 +15,7 @@ export const downloadResultadoExcel = async (req, res) => {
 
     // -----------------------CONSTANTES----------------------------------
     //--------------------------------------------------------------------
+
     const equipos = await prisma.equipo.findMany({
       where: { partidaId: ultimoPartidaId },
       select: {
@@ -24,6 +25,27 @@ export const downloadResultadoExcel = async (req, res) => {
       },
       orderBy: { puntos: 'desc' }
     });
+    //------------------------------------------------------------------------
+    const fallosPorGrupo = await prisma.respuestaPartida.findMany({
+      where: {
+        esCorrecta: false,
+        equipo: {
+          partidaId: ultimoPartidaId,
+        },
+      },
+      select: {
+        equipo: {
+          select: { nombre: true }
+        },
+        pregunta: {
+          select: { texto: true }
+        },
+        respuesta: {
+          select: { texto: true }
+        }
+      }
+    });
+
 
     // --- Crear Excel ---
     const workbook = new ExcelJS.Workbook();
@@ -42,84 +64,72 @@ export const downloadResultadoExcel = async (req, res) => {
 
     // Encabezados de columnas
 
-
+    // Define columnas solo con clave y ancho
     worksheet.columns = [
-      { header: 'Nombre del equipo', key: 'nombre', width: 30 },
-      { header: 'Integrantes', key: 'integrantes', width: 60 },
-      { header: 'Puntuación', key: 'puntos', width: 12 }
+      { key: 'nombre', width: 30 },
+      { key: 'integrantes', width: 60 },
+      { key: 'puntos', width: 12 }
     ];
+
+    // Agrega encabezados manualmente en la fila 2
     const headerRow = worksheet.getRow(2);
+    headerRow.values = ['Nombre del equipo', 'Integrantes', 'Puntuación'];
     headerRow.font = { bold: true };
     headerRow.alignment = { horizontal: 'center' };
-    headerRow.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FFDCE6F1' }
-    };
+    headerRow.height = 20; // Opcional
+    headerRow.commit();
 
-    // Agregar filas con datos
+    let currentRow = 3; // Comenzar desde la fila 3 para los datos
+    // quita los ; almacenados en integrantes y lo sustituye por , para que sea más legible
     equipos.forEach(equipo => {
       // Si integrantes está guardado como string separado por ';', mejor mostrar con comas
       const integrantesFormateados = equipo.integrantes
         ? equipo.integrantes.split(';').join(', ')
         : '';
 
-      worksheet.addRow({
-        nombre: equipo.nombre,
-        integrantes: integrantesFormateados,
-        puntos: equipo.puntos ?? 0,
-      });
+      const row = worksheet.getRow(currentRow++);
+      row.values = [equipo.nombre, integrantesFormateados, equipo.puntos ?? 0];
+      row.commit();
+    });
+    //-------------------------AÑADE LOS DATAOS DEL equipo, INTEGRANTES Y PUNTUACIÓN-------------------
+
+
+  worksheet.addRow([]);
+
+
+  // ---------------------------PREGUNTAS FALLADAS-----------------
+  // Equipo y pregunta fallada
+
+  Object.entries(fallosPorGrupo).forEach(([equipo, preguntas]) => {
+    // Agrega la fila con el nombre del grupo en negrita
+    const rowGroup = worksheet.addRow([equipo.nombre]);
+    rowGroup.font = { bold: true };
+    rowGroup.alignment = { horizontal: 'left' };
+
+    // Agrega una fila por cada pregunta fallada
+    preguntas.forEach(pregunta => {
+      const row = worksheet.addRow([pregunta.texto]);
+      row.alignment = { horizontal: 'left' };
     });
 
+    // Línea vacía opcional para separar grupos visualmente
     worksheet.addRow([]);
+  });
 
 
-    // ---------------------------PREGUNTAS FALLADAS-----------------
-    // Título sección fallos
-    // worksheet.getRow(17).values = ['Equipos e Integrantes'];
-    // const fallosheaderRow = worksheet.getRow(17);
-    // fallosheaderRow.font = { bold: true };
-    // fallosheaderRow.alignment = { horizontal: 'center' };
-    // fallosheaderRow.fill = {
-    //   type: 'pattern',
-    //   pattern: 'solid',
-    //   fgColor: { argb: 'FFDCE6F1' }
-    // };
+  //-----------------------------------------------------------------------------------------------
+  // Preparar descarga
+  res.setHeader(
+    'Content-Type',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  );
+  res.setHeader('Content-Disposition', 'attachment; filename="resultados.xlsx"');
 
-    // // Equipo y pregunta fallada
-    // Object.entries(fallosPorGrupo).forEach(([grupoNombre, preguntas]) => {
-    //   // Agrega la fila con el nombre del grupo en negrita
-    //   const rowGroup = worksheet.addRow([grupoNombre]);
-    //   rowGroup.font = { bold: true };
-    //   rowGroup.alignment = { horizontal: 'left' };
+  await workbook.xlsx.write(res);
+  res.end();
 
-    //   // Agrega una fila por cada pregunta fallada
-    //   preguntas.forEach(pregunta => {
-    //     const row = worksheet.addRow([pregunta]);
-    //     row.alignment = { horizontal: 'left' };
-    //   });
-
-    //   // Línea vacía opcional para separar grupos visualmente
-    //   worksheet.addRow([]);
-    // });
-
-
-    //-----------------------------------------------------------------------------------------------
-
-
-
-    // Preparar descarga
-    res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    );
-    res.setHeader('Content-Disposition', 'attachment; filename="resultados.xlsx"');
-
-    await workbook.xlsx.write(res);
-    res.end();
-
-  } catch (error) {
-    console.error('Error al generar Excel:', error);
-    res.status(500).json({ error: 'Error al generar Excel' });
-  }
+} catch (error) {
+  console.error('Error al generar Excel:', error);
+  res.status(500).json({ error: 'Error al generar Excel' });
+}
 };

@@ -1,135 +1,107 @@
 import React, { useContext } from 'react';
+import { QuizSetupContext } from '../context/QuizSetupContext';
+import { useJuegoStore } from "../hooks/useJuegoStore";
 import { useTurnoStore } from '../hooks/useTurnoStore';
 import TarjetaPregunta from './TarjetaPregunta';
-import { QuizSetupContext } from '../context/QuizSetupContext';
-import { useJuegoStore } from '../hooks/useJuegoStore';
 
 export default function ModalPregunta({ visible, categoria, esCasillaDoble, casillaActual, onClose }) {
-  const { syncPuntos, addPuntos, actualizarEquipos, avanzarTurno } = useTurnoStore();
+  const {
+    equipos,
+    registrarRespuesta,
+    actualizarEquipos,
+    syncPuntos,
+    addPuntos,
+    avanzarTurno
+  } = useTurnoStore();
+
   const { selectedFile } = useContext(QuizSetupContext);
   const useCustom = Boolean(selectedFile);
-
-  const multiplicador = useJuegoStore((s) => s.multiplicador);
-  const usarMultiplicador = useJuegoStore((s) => s.usarMultiplicador);
-  const turnoActual = useTurnoStore((s) => s.turnoActual);
-  const equipos = useTurnoStore((s) => s.equipos);
-  const setEquipos = useTurnoStore((s) => s.setEquipos);
 
   if (!visible) return null;
 
   const onFinish = async (respuestasEquipos, pregunta) => {
-  const puntuacionBase = Number(pregunta.puntuacion || 10);
-  const juegoStore = useJuegoStore.getState();
+    const juegoStore = useJuegoStore.getState();
+    const puntuacionBase = Number(pregunta.puntuacion || 10);
 
-  // Verificar aciertos grupales antes de procesar puntuaciones
-  juegoStore.verificarAciertosGrupales(respuestasEquipos);
+    const multiplicadorAciertos = juegoStore.multiplicadorDisponible ? juegoStore.multiplicador : 1;
+    const multiplicadorCasilla = esCasillaDoble ? 2 : 1;
 
-  const multiplicadorAciertos = juegoStore.multiplicadorDisponible ? juegoStore.multiplicador : 1;
-  const multiplicadorCasilla = esCasillaDoble ? 2 : 1;
+    for (let idx = 0; idx < respuestasEquipos.length; idx++) {
+      const resp = respuestasEquipos[idx];
+      const eq = equipos[idx];
 
-  for (let idx = 0; idx < respuestasEquipos.length; idx++) {
-    const resp = respuestasEquipos[idx];
-    const eq = equipos[idx];
+      const correcta = !!resp?.correcta;
+      let puntos = correcta ? puntuacionBase : 0;
 
-    let esCorrecta = resp?.correcta || false;
-    let puntuacionFinal = 0;
-
-    if (esCorrecta) {
-      if (esCasillaDoble) {
-        const colorQuesito = juegoStore.obtenerColorQuesito(casillaActual);
+      if (correcta && esCasillaDoble) {
+        const colorQuesito = juegoStore.obtenerColorQuesito?.(casillaActual);
         if (colorQuesito) {
-          juegoStore.registrarQuesito(eq.id, colorQuesito);
+          juegoStore.registrarQuesito?.(eq.id, colorQuesito);
         }
       }
 
-      puntuacionFinal = puntuacionBase * multiplicadorCasilla * multiplicadorAciertos;
+      if (correcta) {
+        puntos *= multiplicadorAciertos * multiplicadorCasilla;
+      }
 
-      console.log('📊 Asignando puntos:', {
-        equipo: eq.nombre,
-        base: puntuacionBase,
-        multiplicadorCasilla,
-        multiplicadorAciertos,
-        final: puntuacionFinal,
-      });
+      // REGISTRO ROBUSTO
+      if (
+        pregunta?.id &&
+        typeof resp?.idRespuestaSeleccionada !== 'undefined' &&
+        typeof correcta !== 'undefined' &&
+        typeof puntos !== 'undefined'
+      ) {
+        try {
+          console.log("📤 Enviando a backend:", {
+            preguntaId: pregunta.id,
+            respuestaId: resp.idRespuestaSeleccionada,
+            esCorrecta: correcta,
+            puntosObtenidos: puntos,
+          });
 
-      try {
-        await syncPuntos(eq.id, puntuacionFinal);
-        addPuntos(eq.id, puntuacionFinal);
-      } catch (error) {
-        console.error('❌ Error al asignar puntos:', error);
+          await registrarRespuesta(eq.id, {
+            preguntaId: pregunta.id,
+            respuestaId: resp.idRespuestaSeleccionada,
+            esCorrecta: correcta,
+            puntosObtenidos: puntos,
+          });
+        } catch (error) {
+          console.error('❌ Error registrando respuesta partida:', error);
+        }
+      } else {
+        console.warn("⚠️ Datos incompletos para registrar respuesta:", {
+          preguntaId: pregunta?.id,
+          respuestaId: resp?.idRespuestaSeleccionada,
+          correcta,
+          puntos,
+        });
+
+        try {
+          await syncPuntos(eq.id, puntos);
+          addPuntos(eq.id, puntos);
+        } catch (error) {
+          console.error('❌ Error al sumar puntos (fallback):', error);
+        }
       }
     }
 
-    // ✅ Siempre registrar la respuesta, correcta o incorrecta
-    try {
-      const payload = {
-        partidaId: eq.partidaId,
-        equipoId: eq.id,
-        preguntaId: pregunta.id,
-        respuestaId: resp.respuestaId,  // si tienes este campo
-        esCorrecta,
-        puntosObtenidos: puntuacionFinal,
-      };
-
-      console.log('📤 Registrando respuesta en respuestaPartida:', payload);
-
-      await fetch("http://localhost:3000/api/respuestaPartida", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-    } catch (error) {
-      console.error('❌ Error registrando en respuestaPartida:', error);
-    }
-  }
-
-  // Resetear el multiplicador si fue usado
-  if (multiplicadorAciertos > 1) {
-    juegoStore.usarMultiplicador();
-  }
-
-  // Recargar los equipos actualizados
-  const pid = equipos[0]?.partidaId;
-  if (pid) {
-    try {
-      const nuevos = await fetch(`http://localhost:3000/api/equipos?partidaId=${pid}`).then((r) => r.json());
-      actualizarEquipos(nuevos);
-    } catch (e) {
-      console.error('Error recargando equipos', e);
-    }
-  }
-
-  avanzarTurno();
-  onClose();
-};
-
-  const handleRespuestaCorrecta = () => {
-    console.log('✅ Respuesta correcta - Incrementando aciertos');
-    useJuegoStore.getState().incrementarAciertos();
-  };
-
-  const handleRespuestaIncorrecta = () => {
-    console.log('❌ Respuesta incorrecta - Reseteando aciertos');
-    useJuegoStore.getState().resetearAciertos();
-  };
-
-  const handleRespuesta = async (esCorrecta) => {
-    let puntosBase = esCorrecta ? 100 : 0;
-
-    // Si la respuesta es correcta, aplicar multiplicador
-    if (esCorrecta) {
-      const multFinal = usarMultiplicador();
-      puntosBase *= multFinal;
+    if (multiplicadorAciertos > 1) {
+      juegoStore.usarMultiplicador();
     }
 
-    // Actualizar puntos del equipo actual
-    const nuevosEquipos = equipos.map((eq, idx) =>
-      idx === turnoActual
-        ? { ...eq, puntos: eq.puntos + puntosBase }
-        : eq
-    );
+    const pid = equipos[0]?.partidaId;
+    if (pid) {
+      try {
+        const nuevos = await fetch(
+          `http://localhost:3000/api/equipos?partidaId=${pid}`
+        ).then((r) => r.json());
+        actualizarEquipos(nuevos);
+      } catch (e) {
+        console.error('❌ Error recargando equipos', e);
+      }
+    }
 
-    setEquipos(nuevosEquipos);
+    avanzarTurno();
     onClose();
   };
 

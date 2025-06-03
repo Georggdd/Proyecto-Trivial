@@ -68,8 +68,83 @@ export const actualizarPuntos = async (req, res) => {
       where: { id },
       data: { puntos: nuevosPuntos },
     });
-
+    
     res.json(equipoActualizado);
+  } catch (err) {
+    console.error('Error al actualizar puntos:', err);
+    res.status(500).json({ error: 'No se pudieron actualizar los puntos' });
+  }
+};
+
+    export const registrarRespuestaPartida = async (req, res) => {
+  const equipoId = Number(req.params.id);
+  const { preguntaId, respuestaId, esCorrecta, puntosObtenidos } = req.body;
+
+  // Validación básica
+  if (
+    !preguntaId ||
+    !respuestaId ||
+    esCorrecta === undefined ||
+    puntosObtenidos === undefined
+  ) {
+    return res.status(400).json({ error: 'Faltan datos obligatorios' });
+  }
+
+  try {
+    // 1. Verificar que los registros existen
+    const [equipo, pregunta, respuesta] = await Promise.all([
+      prisma.equipo.findUnique({ where: { id: equipoId } }),
+      prisma.pregunta.findUnique({ where: { id: preguntaId } }),
+      prisma.respuesta.findUnique({ where: { id: respuestaId } }),
+    ]);
+
+    if (!equipo || !pregunta || !respuesta) {
+      return res.status(404).json({ error: 'Equipo, pregunta o respuesta no encontrados' });
+    }
+
+    // 2. Insertar nueva respuesta
+    await prisma.respuestaPartida.create({
+      data: {
+        equipoId,
+        preguntaId,
+        respuestaId,
+        esCorrecta,
+        puntosObtenidos,
+      },
+    });
+
+    // 3. Sumar puntos automáticamente al equipo
+    await prisma.equipo.update({
+      where: { id: equipoId },
+      data: {
+        puntos: {
+          increment: puntosObtenidos,
+        },
+      },
+    });
+
+    // 4. Consultar historial completo
+    const historial = await prisma.respuestaPartida.findMany({
+      where: { equipoId },
+      orderBy: { id: 'asc' },
+      include: {
+        pregunta: true,
+        respuesta: true,
+      },
+    });
+
+    // 5. Obtener puntos actualizados
+    const equipoActualizado = await prisma.equipo.findUnique({
+      where: { id: equipoId },
+      select: { puntos: true },
+    });
+
+    res.status(201).json({
+      equipoId,
+      puntosTotales: equipoActualizado.puntos,
+      historial,
+    });
+
   } catch (err) {
     console.error('Error al actualizar puntos:', err);
     res.status(500).json({ error: 'No se pudieron actualizar los puntos' });

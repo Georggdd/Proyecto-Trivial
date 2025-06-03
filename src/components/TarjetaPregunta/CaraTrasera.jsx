@@ -30,7 +30,7 @@ export default function CaraTrasera({
       {/* Header */}
       <div className={`${bgClass} w-full h-[19%] mt-7 flex items-center relative 2xl:gap-[30%]`}>
         <h1 className="text-white text-7xl pt-3 pl-16 font-secular 2xl:text-8xl 2xl:pl-24">
-          {textoCategoria} x {pregunta.puntuacion}
+          {textoCategoria} ({pregunta.puntuacion} puntos)
         </h1>
         <img
           src="\img\Logo_EducaTrivial.png"
@@ -71,12 +71,12 @@ export default function CaraTrasera({
               <div className="flex-1 flex flex-col gap-2 relative">
                 <div className="flex gap-4">
                   <span className="whitespace-nowrap">{r.texto}</span>
-                  <div className="flex gap-1">
+                  <div className="flex gap-3">
                     {quienes.map((num) => (
                       <img
                         key={num}
                         src={equipos[num - 1]?.avatarMini || ninioAvatar}
-                        className="w-8 h-8 lg:w-10 lg:h-10 rounded-full border border-black"
+                        className="w-[10%] h-[10%] lg:w-10 lg:h-10 rounded-full border border-black"
                         alt={`Equipo ${num}`}
                       />
                     ))}

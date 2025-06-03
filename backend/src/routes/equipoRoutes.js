@@ -1,9 +1,11 @@
 import express from 'express';
 import multer from 'multer';
+
 import {
+  actualizarPuntos,
   crearEquipo,
   obtenerEquiposPorPartida,
-  actualizarPuntos
+  registrarRespuestaPartida
 } from '../controllers/equipoController.js';
 
 const router = express.Router();
@@ -18,5 +20,7 @@ router.post(
 
 router.get('/', obtenerEquiposPorPartida);
 router.patch('/:id/puntos', actualizarPuntos);
+router.patch('/:id/respuestas-partida', registrarRespuestaPartida);
+
 
 export default router;

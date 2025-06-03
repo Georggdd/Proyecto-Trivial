@@ -1,214 +1,169 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CaraDelantera from './CaraDelantera';
 import CaraTrasera from './CaraTrasera';
 
-export default function TarjetaPregunta({ categoria, equipos, onFinish, useCustom = false, }) {
-    const numEquipos = equipos.length;
-    const audioRef = useRef(new Audio());
+export default function TarjetaPregunta({ categoria, equipos, onFinish, useCustom = false }) {
+  const numEquipos = equipos.length;
+  const audioRef = useRef(new Audio());
 
-    const [pregunta, setPregunta] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [turnLocal, setTurnLocal] = useState(0);
-    const [respuestasEquipos, setRespuestasEquipos] = useState(
-        Array(numEquipos).fill(null)
-    );
-    const [respuestasCompletadas, setRespuestasCompletadas] = useState(false);
-    const [show, setShow] = useState(false);
-    const [round, setRound] = useState(0);
+  const [pregunta, setPregunta] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [turnLocal, setTurnLocal] = useState(0);
+  const [respuestasEquipos, setRespuestasEquipos] = useState(Array(numEquipos).fill(null));
+  const [respuestasCompletadas, setRespuestasCompletadas] = useState(false);
+  const [show, setShow] = useState(false);
+  const [round, setRound] = useState(0);
 
-    useEffect(() => {
-        setLoading(true);
-        const url = useCustom
-            ? 'http://localhost:3000/api/upload/test'    // <-- endpoint custom
-            : `http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`;
-        console.log('🔍 Cargando preguntas desde', url);
-        fetch(url)
-            .then(r => r.ok ? r.json() : Promise.reject('Error'))
-            .then(data => {
-                const rnd = data[Math.floor(Math.random() * data.length)];
-                if (useCustom) {
-                    // tu tabla Customizable tiene: pregunta, opcion1..4, respuesta_correcta, puntuacion, explicacion
-                    setPregunta({
-                        categoria: 'Custom',
-                        pregunta: rnd.pregunta,
-                        puntuacion: rnd.puntuacion,
-                        respuestas: [
-                            { texto: rnd.opcion1, correcta: rnd.respuesta_correcta === rnd.opcion1, explicacion: rnd.explicacion },
-                            { texto: rnd.opcion2, correcta: rnd.respuesta_correcta === rnd.opcion2, explicacion: rnd.explicacion },
-                            { texto: rnd.opcion3, correcta: rnd.respuesta_correcta === rnd.opcion3, explicacion: rnd.explicacion },
-                            { texto: rnd.opcion4, correcta: rnd.respuesta_correcta === rnd.opcion4, explicacion: rnd.explicacion },
-                        ]
-                    });
-                } else {
-                    setPregunta({
-                        categoria: rnd.categoria.nombre,
-                        pregunta: rnd.texto,
-                        puntuacion: rnd.puntuacion,
-                        respuestas: rnd.respuestas.map(r => ({
-                            texto: r.texto,
-                            correcta: r.esCorrecta,
-                            explicacion: r.explicacion
-                        }))
-                    });
-                }
-            })
-            .catch(console.error)
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [categoria, round, useCustom]);
+  useEffect(() => {
+    setLoading(true);
+    const url = useCustom
+      ? 'http://localhost:3000/api/upload/test'
+      : `http://localhost:3000/api/preguntas/${encodeURIComponent(categoria)}`;
 
-    useEffect(() => {
-        setShow(false);
-        const t = setTimeout(() => setShow(true), 400);
-        return () => clearTimeout(t);
-    }, [round]);
+    console.log('Cargando preguntas desde', url);
 
-    // Función para obtener un audio aleatorio de un array
-    const getAudioAleatorio = (audios) => {
-        const indiceAleatorio = Math.floor(Math.random() * audios.length);
-        return audios[indiceAleatorio];
-    };
+    fetch(url)
+      .then(res => res.ok ? res.json() : Promise.reject('Error al cargar preguntas'))
+      .then(data => {
+        const rnd = data[Math.floor(Math.random() * data.length)];
 
-    // Función para reproducir audio aleatorio basado en el porcentaje de aciertos
-    const reproducirAudioAleatorio = (respuestas) => {
-        const aciertos = respuestas.filter(r => r?.correcta).length;
-        const total = respuestas.length;
-        
-        console.log(`Aciertos: ${aciertos}/${total} equipos`);
-        let audioPath;
-        
-        // Lógica específica según número de equipos
-        if (total === 2) {
-            if (aciertos === 2) {
-                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
-            } else if (aciertos === 1) {
-                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
-            } else {
-                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
-            }
-        } else if (total === 3) {
-            if (aciertos === 3) {
-                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
-            } else if (aciertos === 2) {
-                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
-            } else if (aciertos === 1) {
-                audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
-            } else {
-                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
-            }
-        } else if (total === 4) {
-            if (aciertos === 4) {
-                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
-            } else if (aciertos === 3) {
-                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
-            } else if (aciertos === 2) {
-                audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
-            } else if (aciertos === 1) {
-                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
-            } else {
-                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
-            }
+        if (useCustom) {
+          const idPregunta = Date.now(); // ID único para la pregunta
+          setPregunta({
+            id: idPregunta,
+            categoria: 'Custom',
+            pregunta: rnd.pregunta,
+            puntuacion: rnd.puntuacion ?? 10,
+            respuestas: [
+              { id: `${idPregunta}-1`, texto: rnd.opcion1, correcta: rnd.respuesta_correcta === rnd.opcion1, explicacion: rnd.explicacion },
+              { id: `${idPregunta}-2`, texto: rnd.opcion2, correcta: rnd.respuesta_correcta === rnd.opcion2, explicacion: rnd.explicacion },
+              { id: `${idPregunta}-3`, texto: rnd.opcion3, correcta: rnd.respuesta_correcta === rnd.opcion3, explicacion: rnd.explicacion },
+              { id: `${idPregunta}-4`, texto: rnd.opcion4, correcta: rnd.respuesta_correcta === rnd.opcion4, explicacion: rnd.explicacion },
+            ]
+          });
         } else {
-            // Para 5 o más equipos
-            if (aciertos === total) {
-                audioPath = '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3';
-            } else if (aciertos >= Math.ceil(total * 0.75)) {
-                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
-            } else if (aciertos >= Math.ceil(total * 0.5)) {
-                audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
-            } else if (aciertos >= 1) {
-                audioPath = '/assets/audio/09 Interesante respuesta algunos acertaron y otros..._FEMENINO.mp3';
-            } else {
-                audioPath = '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3';
-            }
+          setPregunta({
+            id: rnd.id,
+            categoria: rnd.categoria?.nombre,
+            pregunta: rnd.texto,
+            puntuacion: rnd.puntuacion ?? 10,
+            respuestas: rnd.respuestas.map(r => ({
+              id: r.id,
+              texto: r.texto,
+              correcta: r.esCorrecta,
+              explicacion: r.explicacion
+            }))
+          });
         }
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [categoria, round, useCustom]);
 
-        console.log('🎵 Intentando reproducir:', audioPath);
-        
-        const audio = new Audio(audioPath);
-        
-        audio.addEventListener('loadeddata', () => {
-            audio.play()
-                .then(() => console.log('✅ Audio reproduciendo:', audioPath))
-                .catch(error => console.error('❌ Error reproduciendo:', error));
-        });
+  useEffect(() => {
+    setShow(false);
+    const t = setTimeout(() => setShow(true), 400);
+    return () => clearTimeout(t);
+  }, [round]);
 
-        audio.addEventListener('error', (e) => {
-            console.error('❌ Error cargando audio:', audioPath, e);
-        });
+  const reproducirAudioAleatorio = (respuestas) => {
+    const aciertos = respuestas.filter(r => r?.correcta).length;
+    const total = respuestas.length;
+    let audioPath = '/assets/audio/esfuerzo.mp3';
 
-        audioRef.current = audio;
-    };
+    if (total === 2) {
+      audioPath = aciertos === 2 ? '/assets/audio/Impresionante.mp3'
+        : aciertos === 1 ? '/assets/audio/Buen.mp3' : audioPath;
+    } else if (total === 3) {
+      audioPath = aciertos === 3 ? '/assets/audio/Impresionante.mp3'
+        : aciertos === 2 ? '/assets/audio/increible.mp3'
+        : aciertos === 1 ? '/assets/audio/Buen.mp3' : audioPath;
+    } else if (total === 4) {
+      audioPath = aciertos === 4 ? '/assets/audio/Impresionante.mp3'
+        : aciertos === 3 ? '/assets/audio/increible.mp3'
+        : aciertos === 2 ? '/assets/audio/Buen.mp3'
+        : aciertos === 1 ? '/assets/audio/intencion.mp3' : audioPath;
+    } else if (total >= 5) {
+      const ratio = aciertos / total;
+      audioPath = ratio === 1 ? '/assets/audio/Impresionante.mp3'
+        : ratio >= 0.75 ? '/assets/audio/increible.mp3'
+        : ratio >= 0.5 ? '/assets/audio/Buen.mp3'
+        : ratio >= 0.1 ? '/assets/audio/intencion.mp3' : audioPath;
+    }
 
-    // Cuando un equipo elige
-    const handleOpcionClick = (r) => {
-        setRespuestasEquipos(prev => {
-            const cop = [...prev];
-            cop[turnLocal] = r;
-            return cop;
-        });
-        if (turnLocal < numEquipos - 1) {
-            setTurnLocal(turnLocal + 1);
-        }
-    };
+    const audio = new Audio(audioPath);
+    audio.addEventListener('loadeddata', () => audio.play().catch(console.error));
+    audio.addEventListener('error', (e) => console.error('❌ Error cargando audio:', e));
+    audioRef.current = audio;
+  };
 
-    // Borra todas las respuestas y vuelve al equipo 0
-    const handleRecargar = () => {
-        setRespuestasEquipos(Array(numEquipos).fill(null));
-        setTurnLocal(0);
-        setRespuestasCompletadas(false);
-    };
+  const handleOpcionClick = (r) => {
+    setRespuestasEquipos(prev => {
+      const cop = [...prev];
+      cop[turnLocal] = {
+        idRespuestaSeleccionada: r.id,
+        texto: r.texto,
+        correcta: r.correcta,
+        explicacion: r.explicacion
+      };
+      return cop;
+    });
 
-    // Envía sólo si TODOS han respondido
-    const handleEnviar = () => {
-        if (respuestasEquipos.every(r => r !== null)) {
-            setRespuestasCompletadas(true);
-            reproducirAudioAleatorio(respuestasEquipos);
-        }
-    };
+    if (turnLocal < numEquipos - 1) {
+      setTurnLocal(turnLocal + 1);
+    }
+  };
 
-    // Tras ver resultados, reinicia y notifica al padre
-    const siguienteRonda = () => {
-        onFinish(respuestasEquipos, pregunta);
-        setRespuestasEquipos(Array(numEquipos).fill(null));
-        setTurnLocal(0);
-        setRespuestasCompletadas(false);
-        setRound(r => r + 1);
-    };
+  const handleRecargar = () => {
+    setRespuestasEquipos(Array(numEquipos).fill(null));
+    setTurnLocal(0);
+    setRespuestasCompletadas(false);
+  };
 
-    if (loading) return <p className="text-center mt-10 text-xl">Cargando pregunta…</p>;
-    if (!pregunta) return <p className="text-center mt-10 text-xl">No hay preguntas.</p>;
+  const handleEnviar = () => {
+    if (respuestasEquipos.every(r => r !== null)) {
+      setRespuestasCompletadas(true);
+      reproducirAudioAleatorio(respuestasEquipos);
+    }
+  };
 
-    return (
-        <div className="h-full w-full flex items-center justify-center perspective">
-            <div className="h-[70%] w-full flex items-center justify-center">
-                <section
-                    className={`
-            relative w-[65%] 2xl:w-[70%] h-full rounded-lg bg-white
-            border-black border-[4px] transform transition-transform
-            duration-1000 ease-out transform-style-preserve-3d
-            ${show ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
-            ${respuestasCompletadas ? 'rotate-y-180' : ''}
-          `}
-                >
-                    <CaraDelantera
-                        pregunta={pregunta}
-                        equipoActual={turnLocal}
-                        equipos={equipos}              // <–– así reconoce el índice del equipo
-                        respuestasEquipos={respuestasEquipos}
-                        onOpcionClick={handleOpcionClick}     // <–– clic registra respuesta
-                        onRecargar={handleRecargar}
-                        onEnviar={handleEnviar}
-                    />
+  const siguienteRonda = () => {
+    onFinish(respuestasEquipos, pregunta);
+    setRespuestasEquipos(Array(numEquipos).fill(null));
+    setTurnLocal(0);
+    setRespuestasCompletadas(false);
+    setRound(r => r + 1);
+  };
 
-                    <CaraTrasera
-                        pregunta={pregunta}
-                        respuestasEquipos={respuestasEquipos}
-                        siguienteRonda={siguienteRonda}
-                    />
-                </section>
-            </div>
-        </div>
-    );
+  if (loading) return <p className="text-center mt-10 text-xl">Cargando pregunta…</p>;
+  if (!pregunta) return <p className="text-center mt-10 text-xl">No hay preguntas.</p>;
+
+  return (
+    <div className="h-full w-full flex items-center justify-center perspective">
+      <div className="h-[70%] w-full flex items-center justify-center">
+        <section className={`
+          relative w-[65%] 2xl:w-[70%] h-full rounded-lg bg-white
+          border-black border-[4px] transform transition-transform
+          duration-1000 ease-out transform-style-preserve-3d
+          ${show ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
+          ${respuestasCompletadas ? 'rotate-y-180' : ''}
+        `}>
+          <CaraDelantera
+            pregunta={pregunta}
+            equipoActual={turnLocal}
+            equipos={equipos}
+            respuestasEquipos={respuestasEquipos}
+            onOpcionClick={handleOpcionClick}
+            onRecargar={handleRecargar}
+            onEnviar={handleEnviar}
+          />
+          <CaraTrasera
+            pregunta={pregunta}
+            respuestasEquipos={respuestasEquipos}
+            siguienteRonda={siguienteRonda}
+          />
+        </section>
+      </div>
+    </div>
+  );
 }
