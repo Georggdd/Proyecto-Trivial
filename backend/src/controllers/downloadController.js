@@ -26,7 +26,7 @@ export const downloadResultadoExcel = async (req, res) => {
       orderBy: { puntos: 'desc' }
     });
     //------------------------------------------------------------------------
-    const fallosPorGrupo = await prisma.respuestaPartida.findMany({
+    const fallosPorGrupo = await prisma.RespuestaPartida.findMany({
       where: {
         esCorrecta: false,
         equipo: {
@@ -39,13 +39,9 @@ export const downloadResultadoExcel = async (req, res) => {
         },
         pregunta: {
           select: { texto: true }
-        },
-        respuesta: {
-          select: { texto: true }
         }
       }
     });
-
 
     // --- Crear Excel ---
     const workbook = new ExcelJS.Workbook();
@@ -94,29 +90,24 @@ export const downloadResultadoExcel = async (req, res) => {
     //-------------------------AÑADE LOS DATAOS DEL equipo, INTEGRANTES Y PUNTUACIÓN-------------------
 
 
-  worksheet.addRow([]);
+    worksheet.addRow([]);
 
 
-  // ---------------------------PREGUNTAS FALLADAS-----------------
-  // Equipo y pregunta fallada
+    // ---------------------------PREGUNTAS FALLADAS-----------------
+    // Equipo y pregunta fallada
 
-  Object.entries(fallosPorGrupo).forEach(([equipo, preguntas]) => {
-    // Agrega la fila con el nombre del grupo en negrita
-    const rowGroup = worksheet.addRow([equipo.nombre]);
-    rowGroup.font = { bold: true };
-    rowGroup.alignment = { horizontal: 'left' };
+    fallosPorGrupo.forEach(({ equipo, pregunta }) => {
+      const rowGroup = worksheet.addRow([equipo.nombre]);
+      rowGroup.font = { bold: true };
+      rowGroup.alignment = { horizontal: 'left' };
 
-    // Agrega una fila por cada pregunta fallada
-    preguntas.forEach(pregunta => {
       const row = worksheet.addRow([pregunta.texto]);
       row.alignment = { horizontal: 'left' };
+
+      worksheet.addRow([]); // Espacio después de cada fallo
     });
 
-    // Línea vacía opcional para separar grupos visualmente
-    worksheet.addRow([]);
-  });
-
-
+    
   //-----------------------------------------------------------------------------------------------
   // Preparar descarga
   res.setHeader(
