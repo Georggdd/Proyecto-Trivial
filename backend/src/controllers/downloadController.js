@@ -77,6 +77,8 @@ export const downloadResultadoExcel = async (req, res) => {
 
     let currentRow = 3; // Comenzar desde la fila 3 para los datos
     // quita los ; almacenados en integrantes y lo sustituye por , para que sea más legible
+
+    //-------------------------AÑADE LOS DATAOS DEL equipo, INTEGRANTES Y PUNTUACIÓN-------------------
     equipos.forEach(equipo => {
       // Si integrantes está guardado como string separado por ';', mejor mostrar con comas
       const integrantesFormateados = equipo.integrantes
@@ -87,40 +89,87 @@ export const downloadResultadoExcel = async (req, res) => {
       row.values = [equipo.nombre, integrantesFormateados, equipo.puntos ?? 0];
       row.commit();
     });
-    //-------------------------AÑADE LOS DATAOS DEL equipo, INTEGRANTES Y PUNTUACIÓN-------------------
 
+    // Añadir fila vacía y aumentar currentRow para reservarla
+    worksheet.getRow(currentRow++).commit();
 
-    worksheet.addRow([]);
-
-
-    // ---------------------------PREGUNTAS FALLADAS-----------------
-    // Equipo y pregunta fallada
-
-    fallosPorGrupo.forEach(({ equipo, pregunta }) => {
-      const rowGroup = worksheet.addRow([equipo.nombre]);
-      rowGroup.font = { bold: true };
-      rowGroup.alignment = { horizontal: 'left' };
-
-      const row = worksheet.addRow([pregunta.texto]);
-      row.alignment = { horizontal: 'left' };
-
-      worksheet.addRow([]); // Espacio después de cada fallo
+    // Comprobar si hay respuestas customizables para la partida
+    const hayCustomizables = await prisma.respuestaCustomizable.findFirst({
+      where: {
+        equipo: {
+          partidaId: ultimoPartidaId
+        }
+      },
+      select: { id: true } // no importa qué, solo saber si existe
     });
 
-    
-  //-----------------------------------------------------------------------------------------------
-  // Preparar descarga
-  res.setHeader(
-    'Content-Type',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  );
-  res.setHeader('Content-Disposition', 'attachment; filename="resultados.xlsx"');
+    // Agrupar errores por equipo
+    let agrupadas = {};
 
-  await workbook.xlsx.write(res);
-  res.end();
+    // ---------------------------SELECCIONAR INFO CUSTOMIZABLE O DEL JUEGO-----------------
+    if (hayCustomizables) {
+      // Obtener preguntas falladas en modo customizable
+      const fallosCustomizables = await prisma.respuestaCustomizable.findMany({
+        where: {
+          esCorrecta: false,
+          equipo: {
+            partidaId: ultimoPartidaId
+          }
+        },
+        select: {
+          equipo: { select: { nombre: true } },
+          customizable: { select: { pregunta: true } }
+        }
 
-} catch (error) {
-  console.error('Error al generar Excel:', error);
-  res.status(500).json({ error: 'Error al generar Excel' });
-}
+      });
+      // ---------------------------PREGUNTAS FALLADAS CUSTOMIZABLE-----------------
+      fallosCustomizables.forEach(({ equipo, customizable }) => {
+        if (!agrupadas[equipo.nombre]) {
+          agrupadas[equipo.nombre] = [];
+        }
+        agrupadas[equipo.nombre].push(customizable.pregunta);
+      });
+
+    } else {
+      // ---------------------------PREGUNTAS FALLADAS DEL JUEGO-----------------
+      fallosPorGrupo.forEach(({ equipo, pregunta }) => {
+        if (!agrupadas[equipo.nombre]) {
+          agrupadas[equipo.nombre] = [];
+        }
+        agrupadas[equipo.nombre].push(pregunta.texto);
+      });
+    }
+    // Escribir errores agrupados por equipo
+    Object.entries(agrupadas).forEach(([nombreEquipo, preguntas]) => {
+      const rowEquipo = worksheet.getRow(currentRow++);
+      rowEquipo.getCell(1).value = `Nombre del equipo: ${nombreEquipo}`;
+      rowEquipo.font = { bold: true };
+      rowEquipo.commit();
+
+      preguntas.forEach(textoPregunta => {
+        const row = worksheet.getRow(currentRow++);
+        row.getCell(1).value = `• ${textoPregunta}`;
+        row.alignment = { horizontal: 'left' };
+        row.commit();
+      });
+
+      worksheet.getRow(currentRow++).commit(); // fila vacía entre equipos
+    });
+
+
+    //-----------------------------------------------------------------------------------------------
+    // Preparar descarga
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    res.setHeader('Content-Disposition', 'attachment; filename="resultados.xlsx"');
+
+    await workbook.xlsx.write(res);
+    res.end();
+
+  } catch (error) {
+    console.error('Error al generar Excel:', error);
+    res.status(500).json({ error: 'Error al generar Excel' });
+  }
 };
