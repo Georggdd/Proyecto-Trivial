@@ -8,6 +8,7 @@ export default function ModalPregunta({ visible, categoria, esCasillaDoble, casi
   const {
     equipos,
     registrarRespuesta,
+    registrarRespuestaCustomizable,
     actualizarEquipos,
     syncPuntos,
     addPuntos,
@@ -44,43 +45,54 @@ export default function ModalPregunta({ visible, categoria, esCasillaDoble, casi
         puntos *= multiplicadorAciertos * multiplicadorCasilla;
       }
 
-      // REGISTRO ROBUSTO
-      if (
-        pregunta?.id &&
-        typeof resp?.idRespuestaSeleccionada !== 'undefined' &&
-        typeof correcta !== 'undefined' &&
-        typeof puntos !== 'undefined'
-      ) {
+      if (useCustom) {
+        // Registro para preguntas customizables
         try {
-          console.log("📤 Enviando a backend:", {
-            preguntaId: pregunta.id,
-            respuestaId: resp.idRespuestaSeleccionada,
+          console.log("📤 Enviando respuesta CUSTOMIZABLE al backend", {
+            customizableId: pregunta.id,
             esCorrecta: correcta,
-            puntosObtenidos: puntos,
           });
 
-          await registrarRespuesta(eq.id, {
-            preguntaId: pregunta.id,
-            respuestaId: resp.idRespuestaSeleccionada,
+          await registrarRespuestaCustomizable(eq.id, {
+            customizableId: pregunta.id, // TIENE QUE VENIR DE TABLA CUSTOMIZABLE AQUÍ EL ERROR
             esCorrecta: correcta,
-            puntosObtenidos: puntos,
           });
         } catch (error) {
-          console.error('❌ Error registrando respuesta partida:', error);
+          console.error('❌ Error registrando respuesta customizable:', error);
         }
       } else {
-        console.warn("⚠️ Datos incompletos para registrar respuesta:", {
-          preguntaId: pregunta?.id,
-          respuestaId: resp?.idRespuestaSeleccionada,
-          correcta,
-          puntos,
-        });
+        // Registro para preguntas normales
+        if (
+          pregunta?.id &&
+          typeof resp?.idRespuestaSeleccionada !== 'undefined' &&
+          typeof correcta !== 'undefined' &&
+          typeof puntos !== 'undefined'
+        ) {
+          try {
+            console.log("📤 Enviando respuesta al backend:", {
+              preguntaId: pregunta.id,
+              respuestaId: resp.idRespuestaSeleccionada,
+              esCorrecta: correcta,
+              puntosObtenidos: puntos,
+            });
 
-        try {
-          await syncPuntos(eq.id, puntos);
-          addPuntos(eq.id, puntos);
-        } catch (error) {
-          console.error('❌ Error al sumar puntos (fallback):', error);
+            await registrarRespuesta(eq.id, {
+              preguntaId: pregunta.id,
+              respuestaId: resp.idRespuestaSeleccionada,
+              esCorrecta: correcta,
+              puntosObtenidos: puntos,
+            });
+          } catch (error) {
+            console.error('❌ Error registrando respuesta partida:', error);
+          }
+        } else {
+          // Fallback si falta algún dato, suma puntos directamente
+          try {
+            await syncPuntos(eq.id, puntos);
+            addPuntos(eq.id, puntos);
+          } catch (error) {
+            console.error('❌ Error al sumar puntos (fallback):', error);
+          }
         }
       }
     }

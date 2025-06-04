@@ -39,12 +39,12 @@ enum PreguntaDificultad {
 // ──────────────────────────────────────────────
 
 model Usuario {
-  id        Int        @id @default(autoincrement())
-  username  String     @unique
-  password  String
-  rol       UsuarioRol @default(PROFESOR)
+  id       Int        @id @default(autoincrement())
+  username String     @unique
+  password String
+  rol      UsuarioRol @default(PROFESOR)
 
-  Partidas  Partida[]  @relation("ProfesorPartidas")
+  Partidas Partida[] @relation("ProfesorPartidas")
 }
 
 // ──────────────────────────────────────────────
@@ -52,34 +52,36 @@ model Usuario {
 // ──────────────────────────────────────────────
 
 model Partida {
-  id            Int       @id @default(autoincrement())
-  codigo        String    @unique
+  id            Int           @id @default(autoincrement())
+  codigo        String        @unique
   estado        EstadoPartida @default(EN_CURSO)
   profesorId    Int?
-  fechaCreacion DateTime  @default(now())
+  fechaCreacion DateTime      @default(now())
 
-  Equipos       Equipo[]   @relation("PartidaEquipos")
-  profesor      Usuario?   @relation("ProfesorPartidas", fields: [profesorId], references: [id])
+  Equipos         Equipo[]          @relation("PartidaEquipos")
+  profesor        Usuario?          @relation("ProfesorPartidas", fields: [profesorId], references: [id])
+  PuntuacionGrupo PuntuacionGrupo[]
 
   @@index([profesorId])
-  PuntuacionGrupo PuntuacionGrupo[]
 }
 
 model Equipo {
-  id            Int       @id @default(autoincrement())
-  nombre        String
-  integrantes   String
-  puntos        Int       @default(0)
-  avatarMini    String?
+  id          Int     @id @default(autoincrement())
+  nombre      String
+  integrantes String
+  puntos      Int     @default(0)
+  avatarMini  String?
 
-  partidaId     Int
-  partida       Partida   @relation("PartidaEquipos", fields: [partidaId], references: [id])
+  partidaId Int
+  partida   Partida @relation("PartidaEquipos", fields: [partidaId], references: [id])
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  Respuestas    RespuestaPartida[]  // histórico de respuestas
-  Puntuacion    PuntuacionGrupo?
+  Respuestas RespuestaPartida[] // histórico de respuestas
+  RespuestasCustomizable RespuestaCustomizable[] // respuestas a preguntas personalizadas
+  
+  Puntuacion PuntuacionGrupo?
 
   @@index([partidaId])
 }
@@ -89,45 +91,45 @@ model Equipo {
 // ──────────────────────────────────────────────
 
 model Categoria {
-  id         Int        @id @default(autoincrement())
-  nombre     String     @unique
-  preguntas  Pregunta[]
+  id        Int        @id @default(autoincrement())
+  nombre    String     @unique
+  preguntas Pregunta[]
 
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Pregunta {
-  id                Int                  @id @default(autoincrement())
-  texto             String
-  dificultad        PreguntaDificultad
-  puntuacion        Int                  @default(10)
+  id         Int                @id @default(autoincrement())
+  texto      String
+  dificultad PreguntaDificultad
+  puntuacion Int                @default(10)
 
-  categoriaId       Int
-  categoria         Categoria            @relation(fields: [categoriaId], references: [id])
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
 
   respuestas        Respuesta[]
   respuestasPartida RespuestaPartida[]
 
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([categoriaId])
 }
 
 model Respuesta {
-  id                Int                  @id @default(autoincrement())
-  texto             String
-  esCorrecta        Boolean
-  explicacion       String?
+  id          Int     @id @default(autoincrement())
+  texto       String
+  esCorrecta  Boolean
+  explicacion String?
 
-  preguntaId        Int
-  pregunta          Pregunta             @relation(fields: [preguntaId], references: [id])
+  preguntaId Int
+  pregunta   Pregunta @relation(fields: [preguntaId], references: [id])
 
   respuestasPartida RespuestaPartida[]
 
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([preguntaId])
 }
@@ -137,16 +139,16 @@ model Respuesta {
 // ──────────────────────────────────────────────
 
 model RespuestaPartida {
-  id              Int       @id @default(autoincrement())
-  equipoId        Int       // antes era grupoId
+  id              Int     @id @default(autoincrement())
+  equipoId        Int // antes era grupoId
   preguntaId      Int
   respuestaId     Int
   esCorrecta      Boolean
   puntosObtenidos Int
 
-  equipo          Equipo    @relation(fields: [equipoId], references: [id])
-  pregunta        Pregunta  @relation(fields: [preguntaId], references: [id])
-  respuesta       Respuesta @relation(fields: [respuestaId], references: [id])
+  equipo    Equipo    @relation(fields: [equipoId], references: [id])
+  pregunta  Pregunta  @relation(fields: [preguntaId], references: [id])
+  respuesta Respuesta @relation(fields: [respuestaId], references: [id])
 
   @@index([equipoId])
   @@index([preguntaId])
@@ -158,13 +160,13 @@ model RespuestaPartida {
 // ──────────────────────────────────────────────
 
 model PuntuacionGrupo {
-  id            Int     @id @default(autoincrement())
-  equipoId      Int     @unique
+  id            Int @id @default(autoincrement())
+  equipoId      Int @unique
   partidaId     Int
   puntosTotales Int
 
-  equipo        Equipo   @relation(fields: [equipoId], references: [id])
-  partida       Partida  @relation(fields: [partidaId], references: [id])
+  equipo  Equipo  @relation(fields: [equipoId], references: [id])
+  partida Partida @relation(fields: [partidaId], references: [id])
 
   @@index([equipoId])
   @@index([partidaId])
@@ -175,17 +177,36 @@ model PuntuacionGrupo {
 // ──────────────────────────────────────────────
 
 model Customizable {
-  id                 Int      @id @default(autoincrement())
+  id                 Int     @id @default(autoincrement())
   pregunta           String
   opcion1            String
   opcion2            String
   opcion3            String
   opcion4            String
-  respuesta_correcta  String
-  puntuacion         Int      @default(10)
+  respuesta_correcta String
+  puntuacion         Int     @default(10)
   explicacion        String?
-  esCustom           Boolean  @default(true)
+  esCustom           Boolean @default(true)
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  respuestaCustomizable RespuestaCustomizable[]
+}
+
+// ──────────────────────────────────────────────
+//  RESPUESTAS CUSTOMIZABLES
+// ──────────────────────────────────────────────
+
+model RespuestaCustomizable {
+  id             Int     @id @default(autoincrement())
+  equipoId       Int
+  customizableId Int
+  esCorrecta     Boolean
+
+  equipo       Equipo       @relation(fields: [equipoId], references: [id])
+  customizable Customizable @relation(fields: [customizableId], references: [id])
+  
+  @@index([equipoId])
+  @@index([customizableId])
+
 }

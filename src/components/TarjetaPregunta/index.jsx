@@ -28,17 +28,16 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish, useCusto
         const rnd = data[Math.floor(Math.random() * data.length)];
 
         if (useCustom) {
-          const idPregunta = Date.now(); // ID único para la pregunta
           setPregunta({
-            id: idPregunta,
+            id: rnd.id,
             categoria: 'Custom',
             pregunta: rnd.pregunta,
             puntuacion: rnd.puntuacion ?? 10,
             respuestas: [
-              { id: `${idPregunta}-1`, texto: rnd.opcion1, correcta: rnd.respuesta_correcta === rnd.opcion1, explicacion: rnd.explicacion },
-              { id: `${idPregunta}-2`, texto: rnd.opcion2, correcta: rnd.respuesta_correcta === rnd.opcion2, explicacion: rnd.explicacion },
-              { id: `${idPregunta}-3`, texto: rnd.opcion3, correcta: rnd.respuesta_correcta === rnd.opcion3, explicacion: rnd.explicacion },
-              { id: `${idPregunta}-4`, texto: rnd.opcion4, correcta: rnd.respuesta_correcta === rnd.opcion4, explicacion: rnd.explicacion },
+              { id: `${rnd.id}-1`, texto: rnd.opcion1, correcta: rnd.respuesta_correcta === rnd.opcion1, explicacion: rnd.explicacion },
+              { id: `${rnd.id}-2`, texto: rnd.opcion2, correcta: rnd.respuesta_correcta === rnd.opcion2, explicacion: rnd.explicacion },
+              { id: `${rnd.id}-3`, texto: rnd.opcion3, correcta: rnd.respuesta_correcta === rnd.opcion3, explicacion: rnd.explicacion },
+              { id: `${rnd.id}-4`, texto: rnd.opcion4, correcta: rnd.respuesta_correcta === rnd.opcion4, explicacion: rnd.explicacion },
             ]
           });
         } else {

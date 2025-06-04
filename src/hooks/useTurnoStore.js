@@ -50,37 +50,73 @@ export const useTurnoStore = create((set, get) => ({
         ...state.historialRespuestas,
         [idEquipo]: [...historialActual, respuestaData],
       };
-  
+
       return { historialRespuestas: nuevoHistorial };
     });
-  
+
     try {
-      // Enviar al nuevo endpoint de respuestas de partida
       const res = await fetch(`http://localhost:3000/api/equipos/${idEquipo}/respuestas-partida`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(respuestaData),
       });
-  
+
       if (!res.ok) throw new Error("Error al guardar respuesta en el backend");
-  
+
       const json = await res.json();
       console.log("[store] Respuesta registrada correctamente:", json);
-  
-      // Opcional: actualizar puntos desde backend
+
+      // Actualizar puntos desde backend
       set((state) => {
         const nuevosEquipos = state.equipos.map((e) =>
           e.id === idEquipo ? { ...e, puntos: json.puntosTotales } : e
         );
         return { equipos: nuevosEquipos };
       });
-  
+
       return json;
     } catch (error) {
       console.error("[store] Error al registrar respuesta en el backend:", error);
     }
   },
 
+  registrarRespuestaCustomizable: async (idEquipo, respuestaData) => {
+    // Actualiza el store localmente para reflejar respuesta inmediata
+    set((state) => {
+      const historialActual = state.historialRespuestas[idEquipo] || [];
+      const nuevoHistorial = {
+        ...state.historialRespuestas,
+        [idEquipo]: [...historialActual, respuestaData],
+      };
+
+      return { historialRespuestas: nuevoHistorial };
+    });
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/equipos/${idEquipo}/respuestas-customizable`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(respuestaData),
+      });
+
+      if (!res.ok) throw new Error("Error al guardar respuesta customizable en el backend");
+
+      const json = await res.json();
+      console.log("[store] Respuesta customizable registrada correctamente:", json);
+
+      // Actualizar puntos desde backend si aplica
+      set((state) => {
+        const nuevosEquipos = state.equipos.map((e) =>
+          e.id === idEquipo ? { ...e, puntos: json.puntosTotales } : e
+        );
+        return { equipos: nuevosEquipos };
+      });
+
+      return json;
+    } catch (error) {
+      console.error("[store] Error al registrar respuesta customizable en el backend:", error);
+    }
+  },
 
   avanzarTurno: () => {
     set((state) => {

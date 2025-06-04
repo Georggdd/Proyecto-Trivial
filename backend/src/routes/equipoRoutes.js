@@ -5,8 +5,11 @@ import {
   actualizarPuntos,
   crearEquipo,
   obtenerEquiposPorPartida,
-  registrarRespuestaPartida
+  registrarRespuestaPartida,
+  registrarRespuestaCustomizable,
 } from '../controllers/equipoController.js';
+
+
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
@@ -21,6 +24,9 @@ router.post(
 router.get('/', obtenerEquiposPorPartida);
 router.patch('/:id/puntos', actualizarPuntos);
 router.patch('/:id/respuestas-partida', registrarRespuestaPartida);
+router.patch('/:id/respuestas-customizable', registrarRespuestaCustomizable);
+
+
 
 
 export default router;
