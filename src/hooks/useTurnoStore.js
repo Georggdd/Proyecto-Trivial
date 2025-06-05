@@ -1,13 +1,27 @@
 import { create } from "zustand";
 
 export const useTurnoStore = create((set, get) => ({
-  equipos: [],
+  equipos: [],            // cada equipo debe tener { id, nombre, puntos, quesitosVisitados: [], quesitosUnicos: 0, … }
   turnoActual: 0,
   historialRespuestas: {},
 
   setEquipos: (eqs) => {
     console.log("[store] setEquipos:", eqs);
     set(() => ({ equipos: eqs, turnoActual: 0 }));
+  },
+
+  // -----------------------------
+  // Función para actualizar quesitos en el store local
+  // -----------------------------
+  actualizarQuesitosEquipo: (equipoId, nuevosVisitados, nuevosUnicos) => {
+    set((state) => {
+      const nuevosEquipos = state.equipos.map((eq) =>
+        eq.id === equipoId
+          ? { ...eq, quesitosVisitados: nuevosVisitados, quesitosUnicos: nuevosUnicos }
+          : eq
+      );
+      return { equipos: nuevosEquipos };
+    });
   },
 
   actualizarEquipos: (eqs) => {
@@ -28,14 +42,11 @@ export const useTurnoStore = create((set, get) => ({
 
   syncPuntos: async (id, delta) => {
     console.log(`[store] syncPuntos → id=${id}, delta=${delta}`);
-    const res = await fetch(
-      `http://localhost:3000/api/equipos/${id}/puntos`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ delta }),
-      }
-    );
+    const res = await fetch(`http://localhost:3000/api/equipos/${id}/puntos`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ delta }),
+    });
     if (!res.ok) throw new Error("Error al sincronizar puntos");
     const json = await res.json();
     console.log("[store] syncPuntos response:", json);
@@ -50,16 +61,18 @@ export const useTurnoStore = create((set, get) => ({
         ...state.historialRespuestas,
         [idEquipo]: [...historialActual, respuestaData],
       };
-
       return { historialRespuestas: nuevoHistorial };
     });
 
     try {
-      const res = await fetch(`http://localhost:3000/api/equipos/${idEquipo}/respuestas-partida`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(respuestaData),
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/equipos/${idEquipo}/respuestas-partida`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(respuestaData),
+        }
+      );
 
       if (!res.ok) throw new Error("Error al guardar respuesta en el backend");
 
@@ -88,16 +101,18 @@ export const useTurnoStore = create((set, get) => ({
         ...state.historialRespuestas,
         [idEquipo]: [...historialActual, respuestaData],
       };
-
       return { historialRespuestas: nuevoHistorial };
     });
 
     try {
-      const res = await fetch(`http://localhost:3000/api/equipos/${idEquipo}/respuestas-customizable`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(respuestaData),
-      });
+      const res = await fetch(
+        `http://localhost:3000/api/equipos/${idEquipo}/respuestas-customizable`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(respuestaData),
+        }
+      );
 
       if (!res.ok) throw new Error("Error al guardar respuesta customizable en el backend");
 
@@ -124,5 +139,5 @@ export const useTurnoStore = create((set, get) => ({
       console.log("[store] avanzarTurno → turnoActual =", next);
       return { turnoActual: next };
     });
-  },
+  }
 }));

@@ -8,7 +8,7 @@ datasource db {
 }
 
 // ──────────────────────────────────────────────
-//  ENUMS
+//  ENUMS (unificados de ambas ramas)
 // ──────────────────────────────────────────────
 
 enum UsuarioRol {
@@ -35,7 +35,7 @@ enum PreguntaDificultad {
 }
 
 // ──────────────────────────────────────────────
-//  MODELOS DE USO GENERAL
+//  MODELOS (fusionados con todo el contenido de ambas ramas)
 // ──────────────────────────────────────────────
 
 model Usuario {
@@ -44,12 +44,9 @@ model Usuario {
   password String
   rol      UsuarioRol @default(PROFESOR)
 
+  // Relación con Partida (Profesor que creó/gestionó la partida)
   Partidas Partida[] @relation("ProfesorPartidas")
 }
-
-// ──────────────────────────────────────────────
-//  PARTIDA, EQUIPO E INTEGRANTES
-// ──────────────────────────────────────────────
 
 model Partida {
   id            Int           @id @default(autoincrement())
@@ -58,6 +55,7 @@ model Partida {
   profesorId    Int?
   fechaCreacion DateTime      @default(now())
 
+  // Relaciones
   Equipos         Equipo[]          @relation("PartidaEquipos")
   profesor        Usuario?          @relation("ProfesorPartidas", fields: [profesorId], references: [id])
   PuntuacionGrupo PuntuacionGrupo[]
@@ -70,25 +68,26 @@ model Equipo {
   nombre      String
   integrantes String
   puntos      Int     @default(0)
-  avatarMini  String?
+  avatar      String? // Solo existía en la rama “quesitos”
+  avatarMini  String? // Ambas ramas lo tenían
 
   partidaId Int
   partida   Partida @relation("PartidaEquipos", fields: [partidaId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  // Campos exclusivos de la rama “quesitos”:
+  respuestasPartidaJson Json? // Antes era Json[]; contiene respuestas en JSON
+  quesitosVisitados     Json? @default("[]") // Lista de quesitos ya visitados (JSON)
+  quesitosUnicos        Int   @default(0) // Contador de quesitos únicos
 
-  Respuestas RespuestaPartida[] // histórico de respuestas
-  RespuestasCustomizable RespuestaCustomizable[] // respuestas a preguntas personalizadas
-  
-  Puntuacion PuntuacionGrupo?
+  // Campos de la rama “descarga de datos”:
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  respuestasPartida      RespuestaPartida[] // Relación (histórico de respuestas)
+  respuestasCustomizable RespuestaCustomizable[] // Relación a respuestas de preguntas personalizadas
+  puntuacion             PuntuacionGrupo? // Relación uno a uno (en ambas ramas existía, pero aquí la hacemos opcional)
 
   @@index([partidaId])
 }
-
-// ──────────────────────────────────────────────
-//  PREGUNTAS Y RESPUESTAS
-// ──────────────────────────────────────────────
 
 model Categoria {
   id        Int        @id @default(autoincrement())
@@ -102,14 +101,14 @@ model Categoria {
 model Pregunta {
   id         Int                @id @default(autoincrement())
   texto      String
-  dificultad PreguntaDificultad
+  dificultad PreguntaDificultad @default(facil)
   puntuacion Int                @default(10)
 
   categoriaId Int
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
 
-  respuestas        Respuesta[]
-  respuestasPartida RespuestaPartida[]
+  respuestas        Respuesta[] // Opciones para esta pregunta
+  respuestasPartida RespuestaPartida[] // Relación al histórico de cada partida
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -126,7 +125,7 @@ model Respuesta {
   preguntaId Int
   pregunta   Pregunta @relation(fields: [preguntaId], references: [id])
 
-  respuestasPartida RespuestaPartida[]
+  respuestasPartida RespuestaPartida[] // Cada respuesta dada en las partidas
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -134,13 +133,9 @@ model Respuesta {
   @@index([preguntaId])
 }
 
-// ──────────────────────────────────────────────
-//  HISTÓRICO DE RESPUESTAS EN PARTIDA
-// ──────────────────────────────────────────────
-
 model RespuestaPartida {
   id              Int     @id @default(autoincrement())
-  equipoId        Int // antes era grupoId
+  equipoId        Int
   preguntaId      Int
   respuestaId     Int
   esCorrecta      Boolean
@@ -150,14 +145,11 @@ model RespuestaPartida {
   pregunta  Pregunta  @relation(fields: [preguntaId], references: [id])
   respuesta Respuesta @relation(fields: [respuestaId], references: [id])
 
+  @@unique([equipoId, preguntaId])
   @@index([equipoId])
   @@index([preguntaId])
   @@index([respuestaId])
 }
-
-// ──────────────────────────────────────────────
-//  PUNTUACIÓN AGREGADA POR EQUIPO
-// ──────────────────────────────────────────────
 
 model PuntuacionGrupo {
   id            Int @id @default(autoincrement())
@@ -172,10 +164,6 @@ model PuntuacionGrupo {
   @@index([partidaId])
 }
 
-// ──────────────────────────────────────────────
-//  PREGUNTAS CUSTOMIZADAS
-// ──────────────────────────────────────────────
-
 model Customizable {
   id                 Int     @id @default(autoincrement())
   pregunta           String
@@ -188,14 +176,12 @@ model Customizable {
   explicacion        String?
   esCustom           Boolean @default(true)
 
+  // Relación que solo existía en la rama “descarga de datos”
+  respuestaCustomizable RespuestaCustomizable[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  respuestaCustomizable RespuestaCustomizable[]
 }
-
-// ──────────────────────────────────────────────
-//  RESPUESTAS CUSTOMIZABLES
-// ──────────────────────────────────────────────
 
 model RespuestaCustomizable {
   id             Int     @id @default(autoincrement())
@@ -205,8 +191,10 @@ model RespuestaCustomizable {
 
   equipo       Equipo       @relation(fields: [equipoId], references: [id])
   customizable Customizable @relation(fields: [customizableId], references: [id])
-  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   @@index([equipoId])
   @@index([customizableId])
-
 }

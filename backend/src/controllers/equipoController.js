@@ -16,6 +16,7 @@ export const crearEquipo = async (req, res) => {
           : integrantes,
         partidaId: Number(partidaId),
         avatarMini,
+        // Prisma usará los defaults para quesitosVisitados y quesitosUnicos
       },
     });
     res.status(201).json(equipo);
@@ -41,6 +42,9 @@ export const obtenerEquiposPorPartida = async (req, res) => {
         integrantes: true,
         puntos: true,
         avatarMini: true,
+        // Ahora sí devolvemos los campos de quesitos:
+        quesitosVisitados: true,
+        quesitosUnicos: true
       },
     });
     res.json(equipos);
@@ -91,33 +95,43 @@ export const registrarRespuestaPartida = async (req, res) => {
   try {
     const [equipo, pregunta, respuesta] = await Promise.all([
       prisma.equipo.findUnique({ where: { id: equipoId } }),
-      prisma.pregunta.findUnique({ where: { id: preguntaId } }),
-      prisma.respuesta.findUnique({ where: { id: respuestaId } }),
+      prisma.pregunta.findUnique({ where: { id: Number(preguntaId) } }),
+      prisma.respuesta.findUnique({ where: { id: Number(respuestaId) } }),
     ]);
 
     if (!equipo || !pregunta || !respuesta) {
       return res.status(404).json({ error: 'Equipo, pregunta o respuesta no encontrados' });
     }
 
-    await prisma.respuestaPartida.create({
-      data: {
-        equipoId,
-        preguntaId,
-        respuestaId,
-        esCorrecta,
-        puntosObtenidos,
+    // Aquí reemplazamos create por upsert:
+    await prisma.respuestaPartida.upsert({
+      where: {
+        equipoId_preguntaId: {
+          equipoId: equipoId,
+          preguntaId: Number(preguntaId),
+        }
+      },
+      update: {
+        respuestaId: Number(respuestaId),
+        esCorrecta: Boolean(esCorrecta),
+        puntosObtenidos: Number(puntosObtenidos),
+      },
+      create: {
+        equipo:   { connect: { id: equipoId } },
+        pregunta: { connect: { id: Number(preguntaId) } },
+        respuesta: { connect: { id: Number(respuestaId) } },
+        esCorrecta: Boolean(esCorrecta),
+        puntosObtenidos: Number(puntosObtenidos),
       },
     });
 
+    // Luego actualizas puntos sólo una vez con increment:
     await prisma.equipo.update({
       where: { id: equipoId },
-      data: {
-        puntos: {
-          increment: puntosObtenidos,
-        },
-      },
+      data: { puntos: { increment: Number(puntosObtenidos) } },
     });
 
+    // Construyes el historial actualizado
     const historial = await prisma.respuestaPartida.findMany({
       where: { equipoId },
       orderBy: { id: 'asc' },
@@ -132,26 +146,23 @@ export const registrarRespuestaPartida = async (req, res) => {
       select: { puntos: true },
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       equipoId,
       puntosTotales: equipoActualizado.puntos,
       historial,
     });
   } catch (err) {
-    console.error('Error al actualizar puntos:', err);
-    res.status(500).json({ error: 'No se pudieron actualizar los puntos' });
+    console.error('Error en registrarRespuestaPartida:', err);
+    return res.status(500).json({ error: 'Error al registrar respuesta de partida' });
   }
 };
-
-  
 
 export const registrarRespuestaCustomizable = async (req, res) => {
   console.log('🟡 Entrando a registrarRespuestaCustomizable');
   console.log('🔢 req.params.id:', req.params.id);
   console.log('📦 req.body:', req.body);
 
- 
-  const equipoId = Number(req.params.id);
+  const equipoId     = Number(req.params.id);
   const { customizableId, esCorrecta } = req.body;
 
   if (!customizableId || esCorrecta === undefined) {
@@ -161,7 +172,7 @@ export const registrarRespuestaCustomizable = async (req, res) => {
   try {
     const [equipo, customizable] = await Promise.all([
       prisma.equipo.findUnique({ where: { id: equipoId } }),
-      prisma.customizable.findUnique({ where: { id: customizableId } }),
+      prisma.customizable.findUnique({ where: { id: customizableId } })
     ]);
 
     if (!equipo || !customizable) {
@@ -176,14 +187,13 @@ export const registrarRespuestaCustomizable = async (req, res) => {
       },
     });
 
-    // Opcional: devolver puntos actualizados si lo manejas en tu lógica
     const equipoActualizado = await prisma.equipo.findUnique({
       where: { id: equipoId },
       select: { puntos: true },
     });
 
     res.status(201).json({
-      mensaje: 'Respuesta registrada correctamente',
+      mensaje: 'Respuesta custom registradda correctamente',
       respuesta: nuevaRespuesta,
       puntosTotales: equipoActualizado?.puntos ?? 0,
     });

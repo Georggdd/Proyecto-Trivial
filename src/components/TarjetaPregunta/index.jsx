@@ -68,26 +68,44 @@ export default function TarjetaPregunta({ categoria, equipos, onFinish, useCusto
   const reproducirAudioAleatorio = (respuestas) => {
     const aciertos = respuestas.filter(r => r?.correcta).length;
     const total = respuestas.length;
-    let audioPath = '/assets/audio/esfuerzo.mp3';
+    // Audio por defecto para cuando hay pocos aciertos
+    let audioPath = '/assets/audio/07 Gran esfuerzo de todos los equipos, algunos..._FEMENINO.mp3';
 
     if (total === 2) {
-      audioPath = aciertos === 2 ? '/assets/audio/Impresionante.mp3'
-        : aciertos === 1 ? '/assets/audio/Buen.mp3' : audioPath;
+      audioPath = aciertos === 2 
+        ? '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3'
+        : aciertos === 1 
+        ? '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3' 
+        : audioPath;
     } else if (total === 3) {
-      audioPath = aciertos === 3 ? '/assets/audio/Impresionante.mp3'
-        : aciertos === 2 ? '/assets/audio/increible.mp3'
-        : aciertos === 1 ? '/assets/audio/Buen.mp3' : audioPath;
+      audioPath = aciertos === 3 
+        ? '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3'
+        : aciertos === 2 
+        ? '/assets/audio/08 Genial la mayoria habeis acertado la respuesta_FEMENINO.mp3'
+        : aciertos === 1 
+        ? '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3' 
+        : audioPath;
     } else if (total === 4) {
-      audioPath = aciertos === 4 ? '/assets/audio/Impresionante.mp3'
-        : aciertos === 3 ? '/assets/audio/increible.mp3'
-        : aciertos === 2 ? '/assets/audio/Buen.mp3'
-        : aciertos === 1 ? '/assets/audio/intencion.mp3' : audioPath;
+      audioPath = aciertos === 4 
+        ? '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3'
+        : aciertos === 3 
+        ? '/assets/audio/08 Genial la mayoria habeis acertado la respuesta_FEMENINO.mp3'
+        : aciertos === 2 
+        ? '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3'
+        : aciertos === 1 
+        ? '/assets/audio/05 No es correcto pero os felicito por el intento_FEMENINO.mp3' 
+        : audioPath;
     } else if (total >= 5) {
       const ratio = aciertos / total;
-      audioPath = ratio === 1 ? '/assets/audio/Impresionante.mp3'
-        : ratio >= 0.75 ? '/assets/audio/increible.mp3'
-        : ratio >= 0.5 ? '/assets/audio/Buen.mp3'
-        : ratio >= 0.1 ? '/assets/audio/intencion.mp3' : audioPath;
+      audioPath = ratio === 1 
+        ? '/assets/audio/03 Impresionante lo habeis clavado_FEMENINO.mp3'
+        : ratio >= 0.75 
+        ? '/assets/audio/08 Genial la mayoria habeis acertado la respuesta_FEMENINO.mp3'
+        : ratio >= 0.5 
+        ? '/assets/audio/04 Buen intento a veces intentarlo es lo que cuenta_FEMENINO.mp3'
+        : ratio >= 0.1 
+        ? '/assets/audio/06 buen intento pero no es la respuesta correcta_FEMENINO.mp3' 
+        : audioPath;
     }
 
     const audio = new Audio(audioPath);

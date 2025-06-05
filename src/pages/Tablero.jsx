@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import ZonaInferior from "../components/ZonaInferior";
 import Ficha from "../components/Ficha";
-import { useJuegoStore } from "../hooks/useJuegoStore";
+import { useJuegoStore, casillasVolverTirar } from "../hooks/useJuegoStore";
 import { usePartidaStore } from "../hooks/usePartidaStore";
-import { useTurnoStore } from "../hooks/useTurnoStore";               // ← IMPORT NECESARIO
+import { useTurnoStore } from "../hooks/useTurnoStore";
 import { casillas } from "../components/Posiciones/tableroData";
 import Ranking from "../components/Ranking";
 import GuiaPanel from "../components/GuiaPanel";
@@ -20,33 +20,30 @@ const estiloOverride = `
     padding-right: 0.5rem !important;
     gap: 0.75rem !important;
     margin-bottom: 0.5rem !important;
-    justify-content: flex-start !important; /* Todo pegado a la izquierda */
-    /* Eliminar el transform que causaba el solapamiento */
+    justify-content: flex-start !important;
   }
   
   .ranking-override {
-  position: relative !important;
-  z-index: 10 !important;
-}
+    position: relative !important;
+    z-index: 10 !important;
+  }
 
-  /* Contenedor de la imagen - hacerlo circular y proporcional y aumentar tamaño en un 50% */
   .ranking-override > div > div:first-child {
-    width: 6vw !important;             /* Aumentado de 4vw a 6vw (50% más) */
-    height: 6vw !important;            /* Aumentado de 4vw a 6vw (50% más) */
-    min-width: 4.5rem !important;      /* Aumentado de 3rem a 4.5rem (50% más) */
-    min-height: 4.5rem !important;     /* Aumentado de 3rem a 4.5rem (50% más) */
-    max-width: 6rem !important;        /* Aumentado de 4rem a 6rem (50% más) */
-    max-height: 6rem !important;       /* Aumentado de 4rem a 6rem (50% más) */
-    border-radius: 50% !important;     /* Asegura forma circular */
-    overflow: hidden !important;       /* Mantiene el contenido dentro del círculo */
+    width: 6vw !important;
+    height: 6vw !important;
+    min-width: 4.5rem !important;
+    min-height: 4.5rem !important;
+    max-width: 6rem !important;
+    max-height: 6rem !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    flex-shrink: 0 !important;         /* Evita que el círculo se comprima */
-    aspect-ratio: 1/1 !important;      /* Mantiene proporción cuadrada dentro del contenedor */
+    flex-shrink: 0 !important;
+    aspect-ratio: 1/1 !important;
   }
 
-  /* La imagen dentro del contenedor circular */
   .ranking-override img {
     width: 100% !important;
     height: 100% !important;
@@ -54,46 +51,43 @@ const estiloOverride = `
     border-radius: 50% !important;
   }
 
-  /* Contenedor del nombre */
   .ranking-override > div > .w-2\\/4 {
     flex: 1 !important;
-    min-height: 4vw !important;        /* Mantener consistencia con el diseño original */
+    min-height: 4vw !important;
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
-    max-height: 4rem !important;       /* Controlar altura máxima */
+    max-height: 4rem !important;
   }
 
-  /* Contenedor de puntos */
   .ranking-override > div > .w-1\\/4 {
-    min-height: 4vw !important;        /* Igualar con otros elementos */
+    min-height: 4vw !important;
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
-    max-height: 4rem !important;       /* Controlar altura máxima */
+    max-height: 4rem !important;
   }
 
-  /* Ajustar el texto */
   .ranking-override h3 {
-    font-size: 1.2rem !important;      /* Fuente más pequeña */
+    font-size: 1.2rem !important;
     line-height: 1.2 !important;
-    white-space: normal !important;    /* Permitir salto de línea */
-    margin: 0 !important;              /* Quitar márgenes externos */
+    white-space: normal !important;
+    margin: 0 !important;
   }
 `;
-// ───────────────────────────────────────────────────────────
 
 export default function Tablero() {
   const navigate = useNavigate();
   const { partidaId } = usePartidaStore();
-
-  // Traemos categoría, archivo y equipos desde el Context
   const { selectedCategory, selectedFile, selectedTeams } = useContext(QuizSetupContext);
 
-  const { fichaPos, casillasActivas, moverFicha, setValorDado } =
-    useJuegoStore();
+  // Extraemos estado de juego
+  const { fichaPos, casillasActivas, moverFicha, setValorDado, fichaIndex } = useJuegoStore();
+  const esCasillaDoble  = useJuegoStore((s) => s.esCasillaDoble);
+  // Nota: ya no usamos directamente esVolverTirar en manejarMovimiento
+  // const esVolverTirar = useJuegoStore((s) => s.esVolverTirar);
 
   // Hooks de equipos/turno
-  const equipos = useTurnoStore((s) => s.equipos);
-  const setEquipos = useTurnoStore((s) => s.setEquipos);
+  const equipos      = useTurnoStore((s) => s.equipos);
+  const setEquipos   = useTurnoStore((s) => s.setEquipos);
   const avanzarTurno = useTurnoStore((s) => s.avanzarTurno);
 
   const [mostrarModal, setMostrarModal] = useState(false);
@@ -102,15 +96,19 @@ export default function Tablero() {
   useEffect(() => {
     if (!partidaId) return;
     (async () => {
-      const res = await fetch(
-        `http://localhost:3000/api/equipos?partidaId=${partidaId}`
-      );
-      const data = await res.json();
-      const fijados = data.map((e) => ({
-        ...e,
-        avatarMini: e.avatarMini || ninioAvatar,
-      }));
-      setEquipos(fijados);
+      try {
+        const res = await fetch(`http://localhost:3000/api/equipos?partidaId=${partidaId}`);
+        const data = await res.json();
+        const fijados = data.map((e) => ({
+          ...e,
+          avatarMini: e.avatarMini || ninioAvatar,
+          quesitosVisitados: e.quesitosVisitados || [],    // inicializamos si es necesario
+          quesitosUnicos:    e.quesitosUnicos    || 0
+        }));
+        setEquipos(fijados);
+      } catch (err) {
+        console.error("[Tablero] Error al cargar equipos:", err);
+      }
     })();
   }, [partidaId, setEquipos]);
 
@@ -121,12 +119,21 @@ export default function Tablero() {
     console.log("[Tablero] Teams from setup:", selectedTeams);
   }, [selectedCategory, selectedFile, selectedTeams]);
 
+  /**
+   * Manejar el click sobre la casilla número `numero`.
+   * 1) Compruebo localmente si "numero" está en casillasVolverTirar.
+   * 2) Llamo a moverFicha(numero).
+   * 3) Si es volver a tirar, disparo el dado, si no, abro el modal.
+   */
   const manejarMovimiento = (numero) => {
-    moverFicha(numero);
-    const esVolverTirar = useJuegoStore.getState().esVolverTirar;
-    const esCasillaDoble = useJuegoStore.getState().esCasillaDoble; // Añadir esta línea
+    // --- 1) Compruebo localmente si es "volver a tirar"
+    const esVolverLocal = casillasVolverTirar.includes(numero);
 
-    if (esVolverTirar) {
+    // --- 2) Muevo la ficha en el store (actualiza fichaIndex, esCasillaDoble, esVolverTirar internamente)
+    moverFicha(numero);
+
+    // --- 3) Segun si es volver a tirar o no, lanzo dado otra vez o abro el modal
+    if (esVolverLocal) {
       setTimeout(() => {
         const dadoBtn = document.querySelector('[data-testid="dado-btn"]');
         if (dadoBtn) dadoBtn.click();
@@ -140,15 +147,12 @@ export default function Tablero() {
 
   // Ordenamos para el ranking
   const equiposOrdenados = [...equipos].sort((a, b) => b.puntos - a.puntos);
-
-  // Detectar puntuaciones empatadas
   const puntuacionesEmpatadas = equiposOrdenados
-    .map(e => e.puntos)
+    .map((e) => e.puntos)
     .filter((valor, i, arr) => arr.indexOf(valor) !== i);
 
   return (
     <>
-      {/* Inyectamos aquí el <style> en línea para anular las clases de Tailwind en Ranking */}
       <style dangerouslySetInnerHTML={{ __html: estiloOverride }} />
 
       <div
@@ -161,32 +165,26 @@ export default function Tablero() {
       >
         <Header className="border-4 border-double border-orange-600" />
 
-        {/* Añade GuiaPanel aquí */}
         <GuiaPanel />
 
-        <main className="flex-grow flex flex-col relative border-x-4 border-double border-orange-600 
-  pt-16 
-  pb-32 
-  sm:pb-36 
-  md:pb-40 
-  lg:pb-44 
-  xl:pb-36     // Reducido para dar más espacio a los botones
-  2xl:pb-32"
->
-          <div className="grid grid-cols-12 h-[calc(100%-140px)] w-full px-4"> {/* Aumentado de 100px a 140px */}
-            {/* Columna izquierda - aumentada a 3 */}
+        <main
+          className="flex-grow flex flex-col relative border-x-4 border-double border-orange-600 pt-16 pb-32 
+                     sm:pb-36 md:pb-40 lg:pb-44 xl:pb-36 2xl:pb-32"
+        >
+          <div className="grid grid-cols-12 h-[calc(100%-140px)] w-full px-4">
             <div className="col-span-3" />
 
-            {/* Columna central - ajustada para 1920x1080 */}
-            <div className="col-span-6 flex justify-center items-start pt-8 xl:pt-4"> 
-              <div className={`
-    relative aspect-square mx-auto
-    w-[900px]
-    lg:w-[700px]
-    xl:w-[350px]
-    2xl:w-[680px]  /* Para 1920x1080 */
-    3xl:w-[800px]  /* Para 1440p */
-  `}>
+            <div className="col-span-6 flex justify-center items-start pt-8 xl:pt-4">
+              <div
+                className={`
+                  relative aspect-square mx-auto
+                  w-[900px]
+                  lg:w-[700px]
+                  xl:w-[350px]
+                  2xl:w-[680px]
+                  3xl:w-[800px]
+                `}
+              >
                 <img
                   src="assets/img/Tablero Trivial_final.jpg"
                   alt="Tablero"
@@ -214,7 +212,8 @@ export default function Tablero() {
                       onClick={() => manejarMovimiento(numero)}
                     >
                       <div
-                        className={`w-[50%] h-[50%] rounded-full bg-white bg-opacity-80 border-4 
+                        className={`
+                          w-[50%] h-[50%] rounded-full bg-white bg-opacity-80 border-4
                           ${esDoble
                             ? "border-yellow-400 shadow-[0_0_15px_4px_#fbbf24]"
                             : esVolverTirar
@@ -232,10 +231,11 @@ export default function Tablero() {
               </div>
             </div>
 
-            {/* Columna derecha - ranking */}
-            <div className="col-span-3 flex items-center h-full pt-8"> 
-              <div className="w-full space-y-2 rounded-lg p-2 max-h-[80vh] overflow-y-auto
-                lg:-ml-8 md:-ml-4 sm:-ml-2"> {/* Margin left responsivo */}
+            <div className="col-span-3 flex items-center h-full pt-8">
+              <div
+                className="w-full space-y-2 rounded-lg p-2 max-h-[80vh] overflow-y-auto
+                           lg:-ml-8 md:-ml-4 sm:-ml-2"
+              >
                 {equiposOrdenados.map((eq) => (
                   <div key={eq.id} className="ranking-override">
                     <Ranking
@@ -250,16 +250,15 @@ export default function Tablero() {
             </div>
           </div>
 
-          {/* Zona inferior - Posicionamiento fijo en la parte inferior */}
           <div className="absolute bottom-0 left-0 right-0 xl:mb-4 2xl:mb-0">
             <ZonaInferior onDadoResultado={setValorDado} />
           </div>
 
-          {/* Añadir ModalPregunta aquí */}
           <ModalPregunta
             visible={mostrarModal}
             categoria={selectedCategory}
-            esCasillaDoble={useJuegoStore((s) => s.esCasillaDoble)} // Añadir esta prop
+            esCasillaDoble={esCasillaDoble}
+            casillaActual={fichaIndex}    // <-- Se añade esta prop
             onClose={() => setMostrarModal(false)}
           />
         </main>
@@ -267,5 +266,6 @@ export default function Tablero() {
     </>
   );
 }
+
 
 
