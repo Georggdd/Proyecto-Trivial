@@ -3,21 +3,32 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export const login = async (req, res) => {
-  const { usuario, password } = req.body;
+  const { username: userFromBody, usuario, password } = req.body;
+  const username = userFromBody ?? usuario;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Faltan credenciales' });
+  }
 
   try {
-    const user = await prisma.usuario.findUnique({
-      where: { usuario },
+    const u = await prisma.usuario.findUnique({
+      where: { username }
     });
+    if (!u) {
+      return res.status(404).json({ error: 'Usuario o contraseña incorrectos' });
+    }
 
-    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const valid = await bcrypt.compare(password, u.password);
+    if (!valid) {
+      return res.status(401).json({ error: 'Contraseña incorrecta' });
+    }
 
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(401).json({ error: 'Contraseña incorrecta' });
-
-    const token = jwt.sign({ id: user.id, usuario: user.usuario }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    // Firmamos el token con el objeto Prisma 'u', no con la variable 'user'
+    const token = jwt.sign(
+      { id: u.id, username: u.username },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
     res.json({ message: 'Login exitoso', token });
   } catch (err) {

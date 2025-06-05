@@ -19,6 +19,8 @@ coverage/      # Archivos de cobertura de tests
 .cache-loader
 .parcel-cache
 .next/
+/backend/.env
+.env
 
 # 🚀 Archivos sensibles
 .env           # Variables de entorno (API keys, DB, etc.)
@@ -28,6 +30,7 @@ coverage/      # Archivos de cobertura de tests
 .env.production
 .prisma/*      # Prisma migrations (opcional si quieres ignorarlas)
 !/prisma/schema.prisma  # Excepción para el schema de Prisma
+*.env
 
 # 🚀 Configuración de editores y sistema
 .vscode/

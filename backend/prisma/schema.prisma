@@ -7,135 +7,194 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model partidatorespuestapartida {
-  A String
-  B String
+// ──────────────────────────────────────────────
+//  ENUMS (unificados de ambas ramas)
+// ──────────────────────────────────────────────
 
-  @@unique([A, B], map: "_PartidaToRespuestaPartida_AB_unique")
-  @@index([B], map: "_PartidaToRespuestaPartida_B_index")
-  @@map("_partidatorespuestapartida")
+enum UsuarioRol {
+  ADMIN
+  PROFESOR
 }
 
-model casilla {
-  id       String       @id @default(uuid())
-  tipo     casilla_tipo
-  efecto   String
-  posicion Int
+enum EstadoPartida {
+  ESPERANDO
+  EN_CURSO
+  FINALIZADA
 }
 
-model grupo {
-  id        String  @id @default(uuid())
-  nombre    String
-  foto      String?
-  activo    Boolean @default(true)
-  partidaId String
-
-  @@index([partidaId], map: "Grupo_partidaId_fkey")
-}
-
-model integrante {
-  id      String @id @default(uuid())
-  nombre  String
-  grupoId String
-
-  @@index([grupoId], map: "Integrante_grupoId_fkey")
-}
-
-model partida {
-  id            String         @id @default(uuid())
-  codigo        String         @unique(map: "Partida_codigo_key")
-  estado        partida_estado
-  fechaCreacion DateTime       @default(now())
-  profesorId    String
-
-  @@index([profesorId], map: "Partida_profesorId_fkey")
-}
-
-model pregunta {
-  id         String              @id @default(uuid())
-  asignatura pregunta_asignatura
-  dificultad pregunta_dificultad
-  texto      String
-}
-
-model puntuaciongrupo {
-  id            String @id
-  grupoId       String @unique(map: "PuntuacionGrupo_grupoId_key")
-  partidaId     String
-  puntosTotales Int
-
-  @@index([partidaId], map: "PuntuacionGrupo_partidaId_fkey")
-}
-
-model respuesta {
-  id         String  @id @default(uuid())
-  preguntaId String
-  texto      String
-  esCorrecta Boolean
-
-  @@index([preguntaId], map: "Respuesta_preguntaId_fkey")
-}
-
-model respuestapartida {
-  id              String  @id  @default(uuid())
-  grupoId         String
-  preguntaId      String
-  respuestaId     String
-  esCorrecta      Boolean
-  puntosObtenidos Int
-  comodinActivado Boolean @default(false)
-
-  @@index([grupoId], map: "RespuestaPartida_grupoId_fkey")
-  @@index([preguntaId], map: "RespuestaPartida_preguntaId_fkey")
-  @@index([respuestaId], map: "RespuestaPartida_respuestaId_fkey")
-}
-
-model tirada {
-  id          String   @id @default(uuid())
-  grupoId     String
-  partidaId   String
-  valorDado   Int
-  casillaId   String
-  fechaTirada DateTime @default(now())
-
-  @@index([casillaId], map: "Tirada_casillaId_fkey")
-  @@index([grupoId], map: "Tirada_grupoId_fkey")
-  @@index([partidaId], map: "Tirada_partidaId_fkey")
-}
-
-model usuario {
-  id       String @id @default(uuid())
-  usuario  String @unique
-  password String
-}
-
-enum pregunta_asignatura {
-  Matematicas
-  Historia
-  Ciencias
-  Lengua
-  Ingles
-}
-
-enum casilla_tipo {
+enum CasillaTipo {
   normal
   suerte
   mala_suerte
 }
 
-enum partida_estado {
-  esperando
-  en_curso
-  finalizada
-}
-
-enum pregunta_dificultad {
+enum PreguntaDificultad {
   facil
-  intermedia
+  media
   dificil
 }
 
-enum usuario_rol {
-  admin
-  profesor
+// ──────────────────────────────────────────────
+//  MODELOS (fusionados con todo el contenido de ambas ramas)
+// ──────────────────────────────────────────────
+
+model Usuario {
+  id       Int        @id @default(autoincrement())
+  username String     @unique
+  password String
+  rol      UsuarioRol @default(PROFESOR)
+
+  // Relación con Partida (Profesor que creó/gestionó la partida)
+  Partidas Partida[] @relation("ProfesorPartidas")
+}
+
+model Partida {
+  id            Int           @id @default(autoincrement())
+  codigo        String        @unique
+  estado        EstadoPartida @default(EN_CURSO)
+  profesorId    Int?
+  fechaCreacion DateTime      @default(now())
+
+  // Relaciones
+  Equipos         Equipo[]          @relation("PartidaEquipos")
+  profesor        Usuario?          @relation("ProfesorPartidas", fields: [profesorId], references: [id])
+  PuntuacionGrupo PuntuacionGrupo[]
+
+  @@index([profesorId])
+}
+
+model Equipo {
+  id          Int     @id @default(autoincrement())
+  nombre      String
+  integrantes String
+  puntos      Int     @default(0)
+  avatar      String? // Solo existía en la rama “quesitos”
+  avatarMini  String? // Ambas ramas lo tenían
+
+  partidaId Int
+  partida   Partida @relation("PartidaEquipos", fields: [partidaId], references: [id])
+
+  // Campos exclusivos de la rama “quesitos”:
+  respuestasPartidaJson Json? // Antes era Json[]; contiene respuestas en JSON
+  quesitosVisitados     Json? @default("[]") // Lista de quesitos ya visitados (JSON)
+  quesitosUnicos        Int   @default(0) // Contador de quesitos únicos
+
+  // Campos de la rama “descarga de datos”:
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  respuestasPartida      RespuestaPartida[] // Relación (histórico de respuestas)
+  respuestasCustomizable RespuestaCustomizable[] // Relación a respuestas de preguntas personalizadas
+  puntuacion             PuntuacionGrupo? // Relación uno a uno (en ambas ramas existía, pero aquí la hacemos opcional)
+
+  @@index([partidaId])
+}
+
+model Categoria {
+  id        Int        @id @default(autoincrement())
+  nombre    String     @unique
+  preguntas Pregunta[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Pregunta {
+  id         Int                @id @default(autoincrement())
+  texto      String
+  dificultad PreguntaDificultad @default(facil)
+  puntuacion Int                @default(10)
+
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+
+  respuestas        Respuesta[] // Opciones para esta pregunta
+  respuestasPartida RespuestaPartida[] // Relación al histórico de cada partida
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoriaId])
+}
+
+model Respuesta {
+  id          Int     @id @default(autoincrement())
+  texto       String
+  esCorrecta  Boolean
+  explicacion String?
+
+  preguntaId Int
+  pregunta   Pregunta @relation(fields: [preguntaId], references: [id])
+
+  respuestasPartida RespuestaPartida[] // Cada respuesta dada en las partidas
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([preguntaId])
+}
+
+model RespuestaPartida {
+  id              Int     @id @default(autoincrement())
+  equipoId        Int
+  preguntaId      Int
+  respuestaId     Int
+  esCorrecta      Boolean
+  puntosObtenidos Int
+
+  equipo    Equipo    @relation(fields: [equipoId], references: [id])
+  pregunta  Pregunta  @relation(fields: [preguntaId], references: [id])
+  respuesta Respuesta @relation(fields: [respuestaId], references: [id])
+
+  @@unique([equipoId, preguntaId])
+  @@index([equipoId])
+  @@index([preguntaId])
+  @@index([respuestaId])
+}
+
+model PuntuacionGrupo {
+  id            Int @id @default(autoincrement())
+  equipoId      Int @unique
+  partidaId     Int
+  puntosTotales Int
+
+  equipo  Equipo  @relation(fields: [equipoId], references: [id])
+  partida Partida @relation(fields: [partidaId], references: [id])
+
+  @@index([equipoId])
+  @@index([partidaId])
+}
+
+model Customizable {
+  id                 Int     @id @default(autoincrement())
+  pregunta           String
+  opcion1            String
+  opcion2            String
+  opcion3            String
+  opcion4            String
+  respuesta_correcta String
+  puntuacion         Int     @default(10)
+  explicacion        String?
+  esCustom           Boolean @default(true)
+
+  // Relación que solo existía en la rama “descarga de datos”
+  respuestaCustomizable RespuestaCustomizable[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RespuestaCustomizable {
+  id             Int     @id @default(autoincrement())
+  equipoId       Int
+  customizableId Int
+  esCorrecta     Boolean
+
+  equipo       Equipo       @relation(fields: [equipoId], references: [id])
+  customizable Customizable @relation(fields: [customizableId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([equipoId])
+  @@index([customizableId])
 }
