@@ -69,6 +69,7 @@ Responde correctamente, aprovecha las **casillas especiales** y los **bonus por 
 Para hacer la experiencia más dinámica y entretenida, el juego incluye **audios interactivos** que comentan el desarrollo de la partida en distintos momentos.  
 Estos audios han sido generados mediante la herramienta **ElevenLabs**, utilizando voces naturales con IA para anunciar turnos, resultados y mensajes motivacionales.
 
+---
 
 ## 🔧 Tecnologías
 
@@ -217,8 +218,12 @@ Este proyecto ha sido desarrollado por un grupo de estudiantes de **DAM/DAW** co
 
 - **Francisco Jiménez Moral**
 
+---
+
 ## 📝 Licencia
 
 Este proyecto ha sido desarrollado con fines educativos.  
 Queda prohibido su uso comercial sin autorización previa.
+
+---
 
