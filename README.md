@@ -64,6 +64,11 @@ Responde correctamente, aprovecha las **casillas especiales** y los **bonus por 
 - **Casillas verdes** → turno extra
 
 ---
+## 🔊 Audios interactivos
+
+Para hacer la experiencia más dinámica y entretenida, el juego incluye **audios interactivos** que comentan el desarrollo de la partida en distintos momentos.  
+Estos audios han sido generados mediante la herramienta **ElevenLabs**, utilizando voces naturales con IA para anunciar turnos, resultados y mensajes motivacionales.
+
 
 ## 🔧 Tecnologías
 
