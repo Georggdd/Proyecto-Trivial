@@ -1,8 +1,9 @@
 import express from 'express';
-import { resetPreguntasCustomizables } from '../controllers/resetController.js';
+import { resetTodoMenosUsuariosYPreguntas } from '../controllers/resetController.js';
 
 const router = express.Router();
 
-router.delete('/preguntas', resetPreguntasCustomizables);
+// Nueva ruta para resetear todo menos usuarios y preguntas/respuestas predefinidas
+router.delete('/todo', resetTodoMenosUsuariosYPreguntas);
 
 export default router;
