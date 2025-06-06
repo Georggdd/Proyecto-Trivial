@@ -48,16 +48,20 @@ Responde correctamente, aprovecha las **casillas especiales** y los **bonus por 
 - Preguntas correctas:
   - **Personalizadas (Archivo externo)**: puntuación definida en el archivo.
   - **Predefinidas**: entre **10 y 30 puntos**.
-- **Bonus por racha**:
-  - 2 aciertos grupales: x1.5
-  - 4 aciertos grupales: x2
-  - 6 aciertos grupales: x2.5
-  - 8 aciertos grupales: x3
-- El **multiplicador se aplica al siguiente acierto**.
-- El **multiplicador se resetea** si:
-  - Se falla una pregunta.
-  - Se usa el x3.
+- **Multiplicadores por Quesitos**:
+ Cada vez que tu equipo consigue un quesito único, aumenta su multiplicador de puntos para las siguientes preguntas.  
+**Tabla de multiplicadores:**
 
+- 0 quesitos: x1  
+- 1 quesito: x1.2  
+- 2 quesitos: x1.4  
+- 3 quesitos: x1.7  
+- 4 quesitos: x2.1  
+- 5 quesitos: x2.5  
+- 6 quesitos: x3  
+
+El multiplicador se aplica automáticamente a cada acierto, ¡y se mantiene aunque falles!  
+Si vuelves a acertar en una casilla de quesito ya visitada, solo se aplica el multiplicador, no el x2.
 ### 🌟 Casillas Especiales
 
 - **Quesito** → x2 puntos  
