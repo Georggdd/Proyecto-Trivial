@@ -23,12 +23,12 @@ const HamburgerIcon = () => (
 
   const handleCerrarSesion = async () => {
     setMenuOpen(false); // Cierra el menú inmediatamente
-
+  
     try {
-      await fetch("http://localhost:3000/api/reset/preguntas", { method: "DELETE" });
-      console.log("✅ Preguntas eliminadas");
+      await fetch("http://localhost:3000/api/reset/todo", { method: "DELETE" });
+      console.log("✅ Base de datos reseteada");
     } catch (error) {
-      console.error("❌ Error al eliminar preguntas:", error);
+      console.error("❌ Error al resetear la base de datos:", error);
     }
     localStorage.removeItem("token");
     navigate("/login");
@@ -39,7 +39,7 @@ const HamburgerIcon = () => (
       <div className="container mx-auto h-full px-4 py-3 flex items-center justify-center">
         {/* Título */}
         <div className="text-center relative">
-          <h1 className="text-white text-5xl font-pinyon tracking-wide mb-3">
+          <h1 className="text-white text-7xl font-balmoralplain tracking-wide mb-3">
             EducaTrivial
           </h1>
         </div>

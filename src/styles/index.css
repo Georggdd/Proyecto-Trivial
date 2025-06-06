@@ -53,6 +53,13 @@ Lo pongo en css y no en tailwind.config porque no lo he conseguido*/
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'BalmoralPlain';
+  src: url('../assets/fonts/BalmoralPlainRegular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer components {
   .alineacion {
     @apply flex items-center justify-center;

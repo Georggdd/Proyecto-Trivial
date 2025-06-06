@@ -113,7 +113,7 @@ export default function CaraDelantera({
                       <img
                         key={idx}
                         src={equipos[idx]?.avatarMini || ninioAvatar}
-                        className="w-[10%] h-[10%] lg:w-10 rounded-full border border-black"
+                        className="w-[10%] h-[10%] lg:w-10 lg:h-10 rounded-full border border-black"
                         alt={`Equipo ${idx + 1}`}
                       />
                     ))}

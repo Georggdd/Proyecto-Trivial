@@ -45,10 +45,8 @@ const GuiaPanel = () => {
                   Objetivo
                 </h3>
                 <p className="text-gray-700">
-                  Consigue todos los puntos que puedas para ganar el juego. Cada
-                  equipo debe responder preguntas correctamente y acumular puntos,
-                  aprovechad las casillas especiales y los bonus por aciertos
-                  consecutivos
+                  Consigue la mayor cantidad de puntos posible respondiendo preguntas correctamente. 
+                  Aprovecha las casillas especiales, los quesitos y los multiplicadores para llevar a tu equipo a la victoria.
                 </p>
               </section>
 
@@ -59,11 +57,17 @@ const GuiaPanel = () => {
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-700">
                   <li>
-                    Preguntas correctas Custom: Puntos determinados por el archivo
-                    customizable
+                    <b>Preguntas personalizadas:</b> Los puntos los define el archivo que subas.
                   </li>
-                  <li>Preguntas correctas Predefinidas: Puntos de 10 a 30</li>
-                  <li>Bonus por racha: hasta x3 multiplicador</li>
+                  <li>
+                    <b>Preguntas predefinidas:</b> Pueden valer entre 10 y 30 puntos según la dificultad.
+                  </li>
+                  <li>
+                    <b>Casilla de quesito:</b> Si aciertas por primera vez en una casilla de quesito, ¡ganas el doble de puntos!
+                  </li>
+                  <li>
+                    <b>Multiplicadores:</b> Cuantos más quesitos únicos consigas, mayor será tu multiplicador de puntos.
+                  </li>
                 </ul>
               </section>
 
@@ -75,29 +79,67 @@ const GuiaPanel = () => {
                 <div className="space-y-2 text-gray-700">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded-full bg-yellow-400"></div>
-                    <p>Quesito (x2 puntos)</p>
+                    <p>
+                      <b>Quesito:</b> Si aciertas en una casilla de quesito que tu equipo no había visitado, obtienes el doble de puntos y sumas un quesito único.
+                    </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded-full bg-green-400"></div>
-                    <p>Tirar otra vez</p>
+                    <p>
+                      <b>Volver a tirar:</b> Si caes aquí, tu equipo puede lanzar el dado de nuevo.
+                    </p>
                   </div>
                 </div>
               </section>
 
-              {/* Multiplicadores */}
+              {/* Multiplicadores por Quesitos */}
               <section>
                 <h3 className="text-xl font-semibold text-naranja mb-3">
-                  Sistema de Multiplicadores
+                  Multiplicadores por Quesitos
                 </h3>
                 <ul className="list-disc list-inside space-y-2 text-gray-700">
-                  <li>Cada 2 aciertos grupales iras obteniendo beneficios:</li>
-                  <li>2 aciertos grupales: x1.5 disponible</li>
-                  <li>4 aciertos grupales: x2 disponible</li>
-                  <li>6 aciertos grupales: x2.5 disponible</li>
-                  <li>8 aciertos grupales: x3 disponible</li>
-                  <li>El multiplicador se aplica al siguiente acierto</li>
-                  <li>El multiplicador se resetea al fallar</li>
-                  <li>El multiplicador se resetea al usar el x3</li>
+                  <li>
+                    Cada vez que tu equipo consigue un quesito único, aumenta su multiplicador de puntos para las siguientes preguntas.
+                  </li>
+                  <li>
+                    <b>Tabla de multiplicadores:</b>
+                    <ul className="ml-4 list-disc">
+                      <li>0 quesitos: x1</li>
+                      <li>1 quesito: x1.2</li>
+                      <li>2 quesitos: x1.4</li>
+                      <li>3 quesitos: x1.7</li>
+                      <li>4 quesitos: x2.1</li>
+                      <li>5 quesitos: x2.5</li>
+                      <li>6 quesitos: x3</li>
+                    </ul>
+                  </li>
+                  <li>
+                    El multiplicador se aplica automáticamente a cada acierto, ¡y se mantiene aunque falles!
+                  </li>
+                  <li>
+                    Si vuelves a acertar en una casilla de quesito ya visitada, solo se aplica el multiplicador, no el x2.
+                  </li>
+                </ul>
+              </section>
+
+              {/* Otras funcionalidades */}
+              <section>
+                <h3 className="text-xl font-semibold text-naranja mb-3">
+                  Otras funcionalidades del juego
+                </h3>
+                <ul className="list-disc list-inside space-y-2 text-gray-700">
+                  <li>
+                    Puedes subir tus propias preguntas personalizadas en formato Excel  antes de empezar la partida.
+                  </li>
+                  <li>
+                    Terminar el juego te llevara a el ranking final muestra la puntuación de todos los equipos y permite descargar los resultados en Excel.
+                  </li>
+                  <li>
+                    El juego es por turnos: cada equipo tiene un turno donde podra elegir a donde moverse.
+                  </li>
+                  <li>
+                    El tablero y las posiciones de los equipos se actualizan en tiempo real.
+                  </li>
                 </ul>
               </section>
 
@@ -113,7 +155,7 @@ const GuiaPanel = () => {
                       alt="Dado"
                       className="w-8 h-8"
                     />
-                    <span>Tirar dado</span>
+                    <span>Lanzar dado</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <img
@@ -121,7 +163,15 @@ const GuiaPanel = () => {
                       alt="Multiplicador"
                       className="w-8 h-8"
                     />
-                    <span>Indicador de Multiplicador</span>
+                    <span>Ver multiplicadores de cada equipo</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src="/assets/Guia.png"
+                      alt="Guía"
+                      className="w-8 h-8"
+                    />
+                    <span>Abrir esta guía</span>
                   </div>
                 </div>
               </section>
